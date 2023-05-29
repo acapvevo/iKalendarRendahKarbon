@@ -19,6 +19,12 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next, ...$guards)
     {
+        if(in_array('admin', $guards, true) && Auth::guard('admin')->check()) {
+            return redirect(route('admin.dashboard'));
+        }
+        if(in_array('super_admin', $guards, true) && Auth::guard('super_admin')->check()) {
+            return redirect(route('super_admin.dashboard'));
+        }
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
