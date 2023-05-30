@@ -19,6 +19,8 @@ class SuperAdmin extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'image',
+        'username',
         'password',
     ];
 

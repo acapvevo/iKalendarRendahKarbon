@@ -13,63 +13,81 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
-    Route::get('/', [DashboardController::class, 'index'])
-        ->middleware('auth:admin');
+    Route::middleware('guest:admin')->group(function () {
 
-    Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->middleware('auth:admin')
-        ->name('dashboard');
+        Route::get('/register', [RegisteredUserController::class, 'create'])
+            ->name('register');
 
-    Route::get('/register', [RegisteredUserController::class, 'create'])
-        ->middleware('guest:admin')
-        ->name('register');
+        Route::post('/register', [RegisteredUserController::class, 'store']);
 
-    Route::post('/register', [RegisteredUserController::class, 'store'])
-        ->middleware('guest:admin');
+        Route::get('/login', [AuthenticatedSessionController::class, 'create'])
+            ->name('login');
 
-    Route::get('/login', [AuthenticatedSessionController::class, 'create'])
-        ->middleware('guest:admin')
-        ->name('login');
+        Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 
-    Route::post('/login', [AuthenticatedSessionController::class, 'store'])
-        ->middleware('guest:admin');
+        Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])
+            ->name('password.request');
 
-    Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])
-        ->middleware('guest:admin')
-        ->name('password.request');
+        Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
+            ->name('password.email');
 
-    Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
-        ->middleware('guest:admin')
-        ->name('password.email');
+        Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])
+            ->name('password.reset');
 
-    Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])
-        ->middleware('guest:admin')
-        ->name('password.reset');
+        Route::post('/reset-password', [NewPasswordController::class, 'store'])
+            ->name('password.update');
+    });
 
-    Route::post('/reset-password', [NewPasswordController::class, 'store'])
-        ->middleware('guest:admin')
-        ->name('password.update');
+    Route::middleware('auth:admin')->group(function () {
 
-    Route::get('/verify-email', [EmailVerificationPromptController::class, '__invoke'])
-        ->middleware('auth:admin')
-        ->name('verification.notice');
+        Route::get('/verify-email', [EmailVerificationPromptController::class, '__invoke'])
+            ->name('verification.notice');
 
-    Route::get('/verify-email/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
-        ->middleware(['auth:admin', 'signed', 'throttle:6,1'])
-        ->name('verification.verify');
+        Route::get('/verify-email/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
+            ->middleware(['signed', 'throttle:6,1'])
+            ->name('verification.verify');
 
-    Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-        ->middleware(['auth:admin', 'throttle:6,1'])
-        ->name('verification.send');
+        Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+            ->middleware(['throttle:6,1'])
+            ->name('verification.send');
 
-    Route::get('/confirm-password', [ConfirmablePasswordController::class, 'show'])
-        ->middleware('auth:admin')
-        ->name('password.confirm');
+        Route::get('/confirm-password', [ConfirmablePasswordController::class, 'show'])
+            ->name('password.confirm');
 
-    Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store'])
-        ->middleware('auth:admin');
+        Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store']);
 
-    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-        ->middleware('auth:admin')
-        ->name('logout');
+        Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+            ->name('logout');
+
+        Route::get('/', [DashboardController::class, 'index']);
+
+        Route::get('/dashboard', [DashboardController::class, 'index'])
+            ->name('dashboard');
+
+        // User Management routes
+        Route::prefix('user')->name('user.')->group(function () {
+
+            //Profile
+            Route::prefix('profile')->name('profile.')->group(function () {
+                Route::get('', [ProfileController::class, 'view'])->name('view');
+                Route::patch('', [ProfileController::class, 'update'])->name('update');
+            });
+
+            //Setting
+            Route::prefix('setting')->name('setting.')->group(function () {
+                Route::get('', [SettingController::class, 'view'])->name('view');
+            });
+
+            //Password
+            Route::prefix('password')->name('password.')->group(function () {
+                Route::patch('', [PasswordController::class, 'update'])->name('update');
+            });
+
+            //Profile Picture
+            Route::prefix('picture')->name('picture.')->group(function () {
+                Route::patch('', [PictureController::class, 'update'])->name('update');
+                Route::get('', [PictureController::class, 'show'])->name('show');
+            });
+        });
+    });
 });
