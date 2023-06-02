@@ -1,15 +1,19 @@
 <?php
 
-use App\Http\Controllers\Admin\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Admin\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\Admin\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Admin\Auth\EmailVerificationPromptController;
-use App\Http\Controllers\Admin\Auth\NewPasswordController;
-use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Admin\Auth\RegisteredUserController;
-use App\Http\Controllers\Admin\Auth\VerifyEmailController;
-use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\User\PictureController;
+use App\Http\Controllers\Admin\User\ProfileController;
+use App\Http\Controllers\Admin\User\SettingController;
+use App\Http\Controllers\Admin\User\PasswordController;
+use App\Http\Controllers\Admin\Auth\NewPasswordController;
+use App\Http\Controllers\Admin\Auth\VerifyEmailController;
+use App\Http\Controllers\Admin\Auth\RegisteredUserController;
+use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Admin\Auth\ConfirmablePasswordController;
+use App\Http\Controllers\Admin\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Admin\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Admin\Auth\EmailVerificationNotificationController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
@@ -70,7 +74,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
             //Profile
             Route::prefix('profile')->name('profile.')->group(function () {
                 Route::get('', [ProfileController::class, 'view'])->name('view');
-                Route::patch('', [ProfileController::class, 'update'])->name('update');
             });
 
             //Setting
@@ -78,14 +81,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::get('', [SettingController::class, 'view'])->name('view');
             });
 
-            //Password
-            Route::prefix('password')->name('password.')->group(function () {
-                Route::patch('', [PasswordController::class, 'update'])->name('update');
-            });
-
             //Profile Picture
             Route::prefix('picture')->name('picture.')->group(function () {
-                Route::patch('', [PictureController::class, 'update'])->name('update');
                 Route::get('', [PictureController::class, 'show'])->name('show');
             });
         });

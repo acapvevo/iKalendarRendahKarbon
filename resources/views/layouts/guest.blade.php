@@ -40,7 +40,7 @@
                 </div>
                 <!--//auth-body-->
 
-                <footer class="app-auth-footer">
+                <footer class="app-auth-footer fixed-bottom">
                     @include('components.footer')
                 </footer>
                 <!--//app-auth-footer-->

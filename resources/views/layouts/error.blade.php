@@ -50,7 +50,7 @@
     <!--//container-->
 
 
-    <footer class="app-footer">
+    <footer class="app-footer fixed-bottom">
         @include('components.footer')
     </footer>
     <!--//app-footer-->

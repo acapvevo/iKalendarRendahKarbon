@@ -2,7 +2,7 @@
 
 @section('menu')
     <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-        aria-expanded="false"><img src="assets/images/user.png" alt="user profile"></a>
+        aria-expanded="false"><img src="{{ isset(Auth::user()->image) ? route('admin.user.picture.show') : asset('assets/images/user.png') }}" alt="user profile"></a>
     <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
         <li><a class="dropdown-item" href="account.html">Account</a></li>
         <li><a class="dropdown-item" href="settings.html">Settings</a></li>
