@@ -48,6 +48,10 @@ return [
             'driver' => 'session',
             'provider' => 'admins',
         ],
+        'community' => [
+            'driver' => 'session',
+            'provider' => 'communities',
+        ],
     ],
 
     /*
@@ -85,6 +89,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
         ],
+        'communities' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Community::class,
+        ],
     ],
 
     /*
@@ -117,6 +125,12 @@ return [
         ],
         'admins' => [
             'provider' => 'admins',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'communities' => [
+            'provider' => 'communities',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
