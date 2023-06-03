@@ -26,3 +26,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+let Country = require('country-state-city').Country;
+let State = require('country-state-city').State;
+let City = require('country-state-city').City;

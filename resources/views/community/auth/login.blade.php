@@ -1,56 +1,86 @@
-<x-community-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+@extends('layouts.guest')
 
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
+@section('classname', 'app-login')
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+@section('title')
+    <h2 class="auth-heading text-center mb-5">Log in to Portal</h2>
+@endsection
 
-        <form method="POST" action="{{ route('community.login') }}">
+@section('content')
+    @if (session('status'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('status') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Oops!, Something went wrong.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    <div class="auth-form-container text-start">
+        <form class="auth-form login-form" action="{{ route('community.login') }}" method="post">
             @csrf
 
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="username">
+                    Username:
+                </span>
+                <input type="text" class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}"
+                    placeholder="Enter Your Username" id="username" name="username" aria-label="Username" aria-describedby="username"
+                    value="{{ old('username') }}">
+                @error('username')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
 
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="current-password" />
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="password">
+                    Password:
+                </span>
+                <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
+                    placeholder="Enter Your Password" id="password" name="password" aria-label="password" aria-describedby="password">
+                @error('password')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
 
-            <!-- Remember Me -->
-            <div class="block mt-4">
-                <label for="remember_me" class="inline-flex items-center">
-                    <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
+            <div class="extra mt-3 row justify-content-between">
+                <div class="col-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="remember" name="remember">
+                        <label class="form-check-label" for="remember">
+                            Remember me
+                        </label>
+                    </div>
+                </div>
+                <!--//col-6-->
+                <div class="col-6">
+                    <div class="forgot-password text-end">
+                        <a href="{{ route('community.password.request') }}">Forgot password?</a>
+                    </div>
+                </div>
+                <!--//col-6-->
             </div>
+            <!--//extra-->
 
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('community.password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('community.password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-
-                <x-button class="ml-3">
-                    {{ __('Log in') }}
-                </x-button>
+            <!--//form-group-->
+            <div class="text-center">
+                <button type="submit" class="btn app-btn-primary w-100 theme-btn mx-auto">Log
+                    In</button>
             </div>
         </form>
-    </x-auth-card>
-</x-community-guest-layout>
+
+        <div class="auth-option text-center pt-5">No Account? Sign up <a class="text-link"
+                href="{{ route('community.register') }}">here</a>.
+        </div>
+    </div>
+    <!--//auth-form-container-->
+@endsection

@@ -27,7 +27,7 @@
 
             <div class="input-group mb-3">
                 <span class="input-group-text" id="username">
-                    <iconify-icon icon="mdi:user"></iconify-icon>
+                    Username:
                 </span>
                 <input type="text" class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}"
                     placeholder="Username" id="username" name="username" aria-label="Username" aria-describedby="username"
@@ -39,10 +39,9 @@
                 @enderror
             </div>
 
-            <!--//form-group-->
             <div class="input-group mb-3">
                 <span class="input-group-text" id="password">
-                    <iconify-icon icon="mdi:password"></iconify-icon>
+                    Password:
                 </span>
                 <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
                     placeholder="Password" id="password" name="password" aria-label="password" aria-describedby="password"

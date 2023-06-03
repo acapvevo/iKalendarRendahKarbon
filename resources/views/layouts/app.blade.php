@@ -24,6 +24,7 @@
         rel="stylesheet" />
     @livewireStyles
     <link id="theme-style" rel="stylesheet" href="{{ asset('assets/css/portal.css') }}">
+    <link id="theme-style" rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
 
     <!-- Page Specific CSS -->
     @yield('styles')
@@ -129,6 +130,8 @@
         src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/date-1.4.1/fh-3.3.2/r-2.4.1/sc-2.1.1/sb-1.4.2/sp-2.1.2/datatables.min.js">
     </script>
     <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.13.4/sorting/natural.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="{{ asset('assets/js/plugin.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="{{ asset('assets/js/showModalOnError.js') }}"></script>
 

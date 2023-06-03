@@ -36,9 +36,19 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:communities',
-            'password' => 'required|string|confirmed|min:8',
+            'account.username' => 'required|string|max:255|unique:communities,username',
+            'account.email' => 'required|string|email|max:255|unique:communities,email',
+            'account.password' => 'required|string|confirmed|min:8',
+            'profile.name' => 'required|string|max:255',
+            'profile.identification_number' => 'required|string|regex:/^\d{6}-\d{2}-\d{4}$/',
+            'profile.phone_number' => 'required|string|unique:App\Models\Community,phone_number',
+            'address.address_line_1' => 'required|string|max:255',
+            'address.address_line_2' => 'required|string|max:255',
+            'address.address_line_3' => 'sometimes|string|max:255',
+            'address.city' => 'required|string|max:255',
+            'address.postcode' => 'required|string|max:255',
+            'address.state' => 'required|string|in:JOHOR',
+            'address.country' => 'required|string|in:MALAYSIA',
         ]);
 
         Auth::guard('community')->login($community = Community::create([

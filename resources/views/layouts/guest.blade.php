@@ -19,6 +19,7 @@
     <!-- App CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7/dist/sweetalert2.min.css">
     <link id="theme-style" rel="stylesheet" href="{{ asset('assets/css/portal.css') }}">
+    <link id="theme-style" rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
     @livewireStyles
 
     <!-- Page Specific CSS -->
@@ -72,11 +73,15 @@
     <!--//row-->
 
     <!-- App JS -->
+    <script src="{{ asset('assets/plugins/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.slim.js"
         integrity="sha256-7GO+jepT9gJe9LB4XFf8snVOjX3iYNb0FHYr5LI1N5c=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7/dist/sweetalert2.all.min.js"></script>
     @livewireScripts
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="{{ asset('assets/js/plugin.js') }}"></script>
 
     @include('components.alert')
 
