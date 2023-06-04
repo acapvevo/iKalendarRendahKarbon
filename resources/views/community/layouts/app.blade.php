@@ -1,36 +1,40 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+@extends('layouts.app')
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+@section('menu')
+    <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+        aria-expanded="false"><img
+            src="{{ isset(Auth::user()->image) ? route('community.user.picture.show') : asset('assets/images/user.png') }}"
+            alt="user profile"></a>
+    <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
+        <li><a class="dropdown-item" href="{{ route('community.user.profile.view') }}">Profile</a></li>
+        <li><a class="dropdown-item" href="{{ route('community.user.setting.view') }}">Settings</a></li>
+        <li>
+            <hr class="dropdown-divider">
+        </li>
+        <form action="{{ route('community.logout') }}" method="post">
+            @csrf
+            <a class="dropdown-item" href="#"
+                onclick="event.preventDefault(); this.closest('form').submit();">Logout</a>
+        </form>
+    </ul>
+@endsection
 
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+@section('sidebar')
+    <nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
+        <ul class="app-menu list-unstyled accordion" id="menu-accordion">
+            @include('community.layouts.sidebar.main')
+        </ul>
+        <!--//app-menu-->
+    </nav>
+    <!--//app-nav-->
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-</head>
-<body class="font-sans antialiased">
-<div class="min-h-screen bg-gray-100">
-@include('community.layouts.navigation')
-
-<!-- Page Heading -->
-    <header class="bg-white shadow">
-        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            {{ $header }}
-        </div>
-    </header>
-
-    <!-- Page Content -->
-    <main>
-        {{ $slot }}
-    </main>
-</div>
-</body>
-</html>
+    <div class="app-sidepanel-footer">
+        <nav class="app-nav app-nav-footer">
+            <ul class="app-menu footer-menu list-unstyled">
+                @include('community.layouts.sidebar.footer')
+            </ul>
+            <!--//footer-menu-->
+        </nav>
+    </div>
+    <!--//app-sidepanel-footer-->
+@endsection

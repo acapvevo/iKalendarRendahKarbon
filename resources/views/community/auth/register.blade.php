@@ -336,5 +336,13 @@
                 document.getElementById("communityRegistrationForm").submit();
             }
         }
+
+        $('#identification_number').mask('000000-00-0000', {
+            'translation': {
+                0: {
+                    pattern: /[0-9]/
+                }
+            }
+        });
     </script>
 @endsection

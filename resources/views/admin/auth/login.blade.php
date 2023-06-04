@@ -27,10 +27,10 @@
 
             <div class="input-group mb-3">
                 <span class="input-group-text" id="username">
-                    Username:
+                    <i class="fa-solid fa-user"></i>
                 </span>
                 <input type="text" class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}"
-                    placeholder="Username" id="username" name="username" aria-label="Username" aria-describedby="username"
+                    placeholder="Enter Your Username" id="username" name="username" aria-label="Username" aria-describedby="username"
                     value="{{ old('username') }}">
                 @error('username')
                     <div class="invalid-feedback">
@@ -41,10 +41,10 @@
 
             <div class="input-group mb-3">
                 <span class="input-group-text" id="password">
-                    Password:
+                    <i class="fa-solid fa-key"></i>
                 </span>
                 <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
-                    placeholder="Password" id="password" name="password" aria-label="password" aria-describedby="password"
+                    placeholder="Enter Your Password" id="password" name="password" aria-label="password" aria-describedby="password"
                     value="{{ old('password') }}">
                 @error('password')
                     <div class="invalid-feedback">

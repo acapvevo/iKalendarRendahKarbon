@@ -1,17 +1,12 @@
-<x-community-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('community.layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    You're logged in as Community!
-                </div>
-            </div>
-        </div>
-    </div>
-</x-community-app-layout>
+@section('title')
+    <h1 class="app-page-title">Dashboard</h1>
+@endsection
+
+@section('breadcrumbs')
+    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+@endsection
+
+@section('content')
+@endsection
