@@ -13,7 +13,7 @@
     <div class="card">
         <h1 class="card-header text-center">Profile Picture</h1>
         <div class="card-body">
-            @livewire('admin.user.setting.profile-picture-form', ['user' => $user])
+            @livewire('admin.user.setting.profile', ['user' => $user])
         </div>
     </div>
 
@@ -22,7 +22,7 @@
     <div class="card">
         <h1 class="card-header text-center">Password</h1>
         <div class="card-body">
-            @livewire('admin.user.setting.password-form', ['user' => $user])
+            @livewire('admin.user.setting.password', ['user' => $user])
         </div>
     </div>
 @endsection

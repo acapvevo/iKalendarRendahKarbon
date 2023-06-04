@@ -42,7 +42,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    @livewire('admin.user.profile-form', ['user' => $user])
+                    @livewire('admin.user.profile', ['user' => $user])
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick='$("#updateUserForm").trigger("reset");'

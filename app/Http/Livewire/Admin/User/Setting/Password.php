@@ -6,12 +6,11 @@ use App\Models\Admin;
 use Livewire\Component;
 use Illuminate\Support\Facades\Hash;
 
-class PasswordForm extends Component
+class Password extends Component
 {
-
     public $password;
     public $password_confirmation;
-    
+
     public Admin $user;
 
     public function mount($user)

@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('community.layouts.app')
 
 @section('title')
     <h1 class="app-page-title">User Setting</h1>
@@ -13,7 +13,7 @@
     <div class="card">
         <h1 class="card-header text-center">Profile Picture</h1>
         <div class="card-body">
-            @livewire('admin.user.setting.profile-picture-form', ['user' => $user])
+            @livewire('community.user.setting.profile', ['user' => $user])
         </div>
     </div>
 
@@ -22,7 +22,7 @@
     <div class="card">
         <h1 class="card-header text-center">Password</h1>
         <div class="card-body">
-            @livewire('admin.user.setting.password-form', ['user' => $user])
+            @livewire('community.user.setting.password', ['user' => $user])
         </div>
     </div>
 @endsection

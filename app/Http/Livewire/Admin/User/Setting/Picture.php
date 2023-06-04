@@ -8,7 +8,7 @@ use Livewire\WithFileUploads;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
-class ProfilePictureForm extends Component
+class Picture extends Component
 {
     use WithFileUploads;
 

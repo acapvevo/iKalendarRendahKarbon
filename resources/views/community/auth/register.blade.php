@@ -22,7 +22,7 @@
                 $showAccount = false;
                 $showProfile = false;
                 $showAddress = false;
-
+                
                 if ($errors->any('profile.*')) {
                     $showProfile = true;
                 } elseif ($errors->any('address.*')) {
@@ -204,7 +204,7 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <div class="col">
+                        <div class="col-12 col-lg-6">
                             <label for="address.postcode" class="form-label">Postcode:</label>
                             <input type="text"
                                 class="form-control {{ $errors->has('address.postcode') ? 'is-invalid' : '' }}"
@@ -218,7 +218,7 @@
                                 </div>
                             @enderror
                         </div>
-                        <div class="col">
+                        <div class="col-12 col-lg-6">
                             <label for="address.city" class="form-label">City:</label>
                             <input type="text"
                                 class="form-control {{ $errors->has('address.city') ? 'is-invalid' : '' }}"
@@ -234,7 +234,7 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <div class="col">
+                        <div class="col-12 col-lg-6">
                             <label for="address.state" class="form-label">State:</label>
                             <input type="text"
                                 class="form-control {{ $errors->has('address.state') ? 'is-invalid' : '' }}"
@@ -248,7 +248,7 @@
                                 </div>
                             @enderror
                         </div>
-                        <div class="col">
+                        <div class="col-12 col-lg-6">
                             <label for="address.country" class="form-label">Country:</label>
                             <input type="text"
                                 class="form-control {{ $errors->has('address.country') ? 'is-invalid' : '' }}"
