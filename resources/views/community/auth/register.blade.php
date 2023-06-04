@@ -53,11 +53,13 @@
                     aria-labelledby="nav-account-tab" tabindex="0">
 
                     <div class="mb-3">
-                        <label for="username" class="form-label">Username:</label>
-                        <input type="text" class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}"
-                            placeholder="Enter Your Username" id="username" name="username" aria-label="username"
-                            aria-describedby="username" value="{{ old('username') }}" required>
-                        @error('username')
+                        <label for="account.username" class="form-label">Username:</label>
+                        <input type="text"
+                            class="form-control {{ $errors->has('account.username') ? 'is-invalid' : '' }}"
+                            placeholder="Enter Your Username" id="account.username" name="account[username]"
+                            aria-label="username" aria-describedby="username" value="{{ old('account.username') }}"
+                            required>
+                        @error('account.username')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
@@ -65,11 +67,11 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email Address:</label>
-                        <input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
-                            placeholder="Enter Your Email Address" id="email" name="email" aria-label="email"
-                            aria-describedby="email" value="{{ old('email') }}" required>
-                        @error('email')
+                        <label for="account.email" class="form-label">Email Address:</label>
+                        <input type="email" class="form-control {{ $errors->has('account.email') ? 'is-invalid' : '' }}"
+                            placeholder="Enter Your Email Address" id="account.email" name="account[email]"
+                            aria-label="email" aria-describedby="email" value="{{ old('account.email') }}" required>
+                        @error('account.email')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
@@ -77,24 +79,26 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="password" class="form-label">Password:</label>
-                        <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
-                            placeholder="Enter Your Password" id="password" name="password" aria-label="password"
-                            aria-describedby="password" required>
-                        @error('password')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="password_confirmation" class="form-label">Password Confirmation:</label>
+                        <label for="account.password" class="form-label">Password:</label>
                         <input type="password"
-                            class="form-control {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}"
-                            placeholder="Enter Your Password Again" id="password_confirmation" name="password_confirmation"
-                            aria-label="password_confirmation" aria-describedby="password_confirmation" required>
-                        @error('password_confirmation')
+                            class="form-control {{ $errors->has('account.password') ? 'is-invalid' : '' }}"
+                            placeholder="Enter Your Password" id="account.password" name="account[password]"
+                            aria-label="password" aria-describedby="password" required>
+                        @error('account.password')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="account.password_confirmation" class="form-label">Password Confirmation:</label>
+                        <input type="password"
+                            class="form-control {{ $errors->has('account.password_confirmation') ? 'is-invalid' : '' }}"
+                            placeholder="Enter Your Password Again" id="account.password_confirmation"
+                            name="account[password_confirmation]" aria-label="password_confirmation"
+                            aria-describedby="password_confirmation" required>
+                        @error('account.password_confirmation')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
@@ -158,14 +162,13 @@
                     aria-labelledby="nav-address-tab" tabindex="0">
 
                     <div class="mb-3">
-                        <label for="address.address_line_1" class="form-label">Address Line 1:</label>
+                        <label for="address.line_1" class="form-label">Address Line 1:</label>
                         <input type="text"
-                            class="form-control {{ $errors->has('address.address_line_1') ? 'is-invalid' : '' }}"
-                            placeholder="Enter Your Address Line 1" id="address.address_line_1"
-                            name="address[address_line_1]" aria-label="address_line_1" aria-describedby="address_line_1"
-                            oninput="this.value = this.value.toUpperCase()" value="{{ old('address.address_line_1') }}"
-                            required>
-                        @error('address.address_line_1')
+                            class="form-control {{ $errors->has('address.line_1') ? 'is-invalid' : '' }}"
+                            placeholder="Enter Your Address Line 1" id="address.line_1" name="address[line_1]"
+                            aria-label="line_1" aria-describedby="line_1" oninput="this.value = this.value.toUpperCase()"
+                            value="{{ old('address.line_1') }}" required>
+                        @error('address.line_1')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
@@ -173,14 +176,13 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="address.address_line_2" class="form-label">Address Line 2:</label>
+                        <label for="address.line_2" class="form-label">Address Line 2:</label>
                         <input type="text"
-                            class="form-control {{ $errors->has('address.address_line_2') ? 'is-invalid' : '' }}"
-                            placeholder="Enter Your Address Line 2" id="address.address_line_2"
-                            name="address[address_line_2]" aria-label="address_line_2" aria-describedby="address_line_2"
-                            oninput="this.value = this.value.toUpperCase()" value="{{ old('address.address_line_2') }}"
-                            required>
-                        @error('address.address_line_2')
+                            class="form-control {{ $errors->has('address.line_2') ? 'is-invalid' : '' }}"
+                            placeholder="Enter Your Address Line 2" id="address.line_2" name="address[line_2]"
+                            aria-label="line_2" aria-describedby="line_2" oninput="this.value = this.value.toUpperCase()"
+                            value="{{ old('address.line_2') }}" required>
+                        @error('address.line_2')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
@@ -188,21 +190,17 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="address.address_line_3" class="form-label">Address Line 3:</label>
+                        <label for="address.line_3" class="form-label">Address Line 3:</label>
                         <input type="text"
-                            class="form-control {{ $errors->has('address.address_line_3') ? 'is-invalid' : '' }}"
-                            placeholder="Enter Your Address Line 3" id="address.address_line_3"
-                            name="address[address_line_3]" aria-label="address_line_3" aria-describedby="address_line_3"
-                            oninput="this.value = this.value.toUpperCase()" value="{{ old('address.address_line_3') }}"
-                            required>
-                        @error('address.address_line_3')
+                            class="form-control {{ $errors->has('address.line_3') ? 'is-invalid' : '' }}"
+                            placeholder="Enter Your Address Line 3" id="address.line_3" name="address[line_3]"
+                            aria-label="line_3" aria-describedby="line_3" oninput="this.value = this.value.toUpperCase()"
+                            value="{{ old('address.line_3') }}">
+                        @error('address.line_3')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
                         @enderror
-                    </div>
-
-                    <div class="mb-3">
                     </div>
 
                     <div class="mb-3 row">
@@ -243,7 +241,7 @@
                                 placeholder="Enter Your State" id="address.state" name="address[state]"
                                 aria-label="state" aria-describedby="state"
                                 oninput="this.value = this.value.toUpperCase()"
-                                value="{{ old('address.state', 'JOHOR') }}" required>
+                                value="{{ old('address.state', 'JOHOR') }}" readonly required>
                             @error('address.state')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -257,7 +255,7 @@
                                 placeholder="Enter Your Country" id="address.country" name="address[country]"
                                 aria-label="country" aria-describedby="country"
                                 oninput="this.value = this.value.toUpperCase()"
-                                value="{{ old('address.country', 'MALAYSIA') }}" required>
+                                value="{{ old('address.country', 'MALAYSIA') }}" readonly required>
                             @error('address.country')
                                 <div class="invalid-feedback">
                                     {{ $message }}

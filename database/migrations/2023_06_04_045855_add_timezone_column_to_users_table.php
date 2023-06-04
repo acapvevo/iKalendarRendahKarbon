@@ -24,6 +24,12 @@ class AddTimezoneColumnToUsersTable extends Migration
                 $table->string('timezone')->after('remember_token')->nullable();
             });
         }
+
+        if (!Schema::hasColumn('communities', 'timezone')) {
+            Schema::table('communities', function (Blueprint $table) {
+                $table->string('timezone')->after('remember_token')->nullable();
+            });
+        }
     }
 
     /**
@@ -38,6 +44,10 @@ class AddTimezoneColumnToUsersTable extends Migration
         });
 
         Schema::table('admins', function (Blueprint $table) {
+            $table->dropColumn('timezone');
+        });
+
+        Schema::table('communities', function (Blueprint $table) {
             $table->dropColumn('timezone');
         });
     }

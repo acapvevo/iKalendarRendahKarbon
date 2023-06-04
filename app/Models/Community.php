@@ -18,8 +18,13 @@ class Community extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'identification_number',
+        'phone_number',
+        'image',
+        'username',
         'email',
         'password',
+        'timezone',
     ];
 
     /**
@@ -40,4 +45,12 @@ class Community extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the Address associated with the Community.
+     */
+    public function address()
+    {
+        return $this->hasOne(Address::class);
+    }
 }

@@ -22,6 +22,7 @@ class SuperAdmin extends Authenticatable
         'image',
         'username',
         'password',
+        'timezone',
     ];
 
     /**
