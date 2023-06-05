@@ -59,4 +59,9 @@ class Profile extends Component
 
         redirect(route('community.user.profile.view'))->with('success', 'Your Profile has been updated successfully');
     }
+
+    public function render()
+    {
+        return view('livewire.community.user.profile');
+    }
 }

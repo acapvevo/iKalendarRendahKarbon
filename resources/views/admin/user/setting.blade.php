@@ -13,7 +13,7 @@
     <div class="card">
         <h1 class="card-header text-center">Profile Picture</h1>
         <div class="card-body">
-            @livewire('admin.user.setting.profile', ['user' => $user])
+            @livewire('admin.user.setting.picture', ['user' => $user])
         </div>
     </div>
 

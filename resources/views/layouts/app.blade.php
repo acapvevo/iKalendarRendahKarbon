@@ -110,7 +110,7 @@
     <!--//app-wrapper-->
 
 
-    <!-- Javascript -->
+    <!-- Bootstrap JS -->
     <script src="{{ asset('assets/plugins/popper.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
 

@@ -52,4 +52,9 @@ class Picture extends Component
 
         redirect(route('admin.user.setting.view'))->with('success', 'Your Profile Picture has been updated successfully');
     }
+
+    public function render()
+    {
+        return view('livewire.admin.user.setting.picture');
+    }
 }

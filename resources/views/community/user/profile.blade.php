@@ -21,28 +21,24 @@
                     Update
                 </button>
             </div>
-            <div class="table-repsonsive">
+            <div class="table-responsive">
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
                             <th class="w-25">Name</th>
                             <td>{{ $user->name }}</td>
-                        </tr>
-                        <tr>
                             <th class="w-25">Identification Card (I/C) No.</th>
                             <td>{{ $user->identification_number }}</td>
                         </tr>
                         <tr>
                             <th class="w-25">Phone Number</th>
                             <td>{{ $user->phone_number }}</td>
-                        </tr>
-                        <tr>
                             <th class="w-25">Email</th>
                             <td>{{ $user->email }}</td>
                         </tr>
                         <tr>
                             <th class="w-25">Address</th>
-                            <td>{{ $user->address->line_1 }}, <br>
+                            <td colspan="3">{{ $user->address->line_1 }}, <br>
                                 {{ $user->address->line_2 }}, <br>
                                 {!! $user->address->line_3 ? $user->address->line_3 . ', <br>' : '' !!}
                                 {{ $user->address->postcode }} {{ $user->address->city }}, <br>

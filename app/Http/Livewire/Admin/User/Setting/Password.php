@@ -40,4 +40,9 @@ class Password extends Component
 
         return redirect(route('admin.user.setting.view'))->with('success', 'Your Password have been updated successfully');
     }
+
+    public function render()
+    {
+        return view('livewire.admin.user.setting.password');
+    }
 }

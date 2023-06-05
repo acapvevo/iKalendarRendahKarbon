@@ -78,10 +78,6 @@
                     In</button>
             </div>
         </form>
-
-        <div class="auth-option text-center pt-5">No Account? Sign up <a class="text-link"
-                href="{{ route('admin.register') }}">here</a>.
-        </div>
     </div>
     <!--//auth-form-container-->
 @endsection

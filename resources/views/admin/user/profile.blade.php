@@ -17,7 +17,7 @@
                     Update
                 </button>
             </div>
-            <div class="table-repsonsive">
+            <div class="table-responsive">
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
