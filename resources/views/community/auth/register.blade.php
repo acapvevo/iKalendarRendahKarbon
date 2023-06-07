@@ -1,10 +1,8 @@
 @extends('layouts.guest')
 
-@section('classname', 'app-signup')
+@section('apps', 'iKalendar Karbon')
 
-@section('title')
-    <h2 class="auth-heading text-center mb-5">Sign up to iKalendar</h2>
-@endsection
+@section('title', 'Login As Community')
 
 @section('styles')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
@@ -12,103 +10,88 @@
 @endsection
 
 @section('content')
-    <div class="auth-form-container text-start mx-auto">
-        <!--//auth-form-->
-        <form class="auth-form auth-signup-form" method="post" action="{{ route('community.register') }}"
-            onsubmit="process(event)" id="communityRegistrationForm">
-            @csrf
+    <div class="col-lg-7">
+        <!-- Basic registration form-->
+        <div class="card shadow-lg border-0 rounded-lg mt-5">
+            <div class="card-header justify-content-center">
+                <h3 class="fw-light my-4 text-center">Create Account As Community</h3>
+            </div>
+            <div class="card-body">
+                <!-- Registration form-->
+                <form class="auth-form auth-signup-form" method="post" action="{{ route('community.register') }}"
+                    onsubmit="process(event)" id="communityRegistrationForm">
+                    @csrf
 
-            @php
-                $showAccount = false;
-                $showProfile = false;
-                $showAddress = false;
-                
-                if ($errors->any('profile.*')) {
-                    $showProfile = true;
-                } elseif ($errors->any('address.*')) {
-                    $showAddress = true;
-                } else {
-                    $showAccount = true;
-                }
-            @endphp
-
-            <nav>
-                <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist">
-                    <button class="nav-link {{ $showAccount ? 'active' : '' }}" id="nav-account-tab" data-bs-toggle="tab"
-                        data-bs-target="#nav-account" type="button" role="tab" aria-controls="nav-account"
-                        aria-selected="{{ $showAccount ? 'true' : 'false' }}">Account
-                        {!! $errors->has('account.*') ? '<span class="badge text-bg-danger">!</span>' : '' !!}</button>
-                    <button class="nav-link {{ $showProfile ? 'active' : '' }}" id="nav-profile-tab" data-bs-toggle="tab"
-                        data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile"
-                        aria-selected="{{ $showProfile ? 'true' : 'false' }}">Profile
-                        {!! $errors->has('profile.*') ? '<span class="badge text-bg-danger">!</span>' : '' !!}</button>
-                    <button class="nav-link {{ $showAddress ? 'active' : '' }}" id="nav-address-tab" data-bs-toggle="tab"
-                        data-bs-target="#nav-address" type="button" role="tab" aria-controls="nav-address"
-                        aria-selected="{{ $showAddress ? 'true' : 'false' }}">Address
-                        {!! $errors->has('address.*') ? '<span class="badge text-bg-danger">!</span>' : '' !!}</button>
-                </div>
-            </nav>
-            <div class="tab-content pt-3 pb-3" id="nav-tabContent">
-                <div class="tab-pane fade {{ $showAccount ? 'show active' : '' }}" id="nav-account" role="tabpanel"
-                    aria-labelledby="nav-account-tab" tabindex="0">
-
-                    <div class="mb-3">
-                        <label for="account.username" class="form-label">Username:</label>
-                        <input type="text"
-                            class="form-control {{ $errors->has('account.username') ? 'is-invalid' : '' }}"
-                            placeholder="Enter Your Username" id="account.username" name="account[username]"
-                            aria-label="username" aria-describedby="username" value="{{ old('account.username') }}"
-                            required>
-                        @error('account.username')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
+                    <div class="pt-3 pb-3">
+                        <hr>
+                        <h5 class="text-center">Account</h5>
+                        <hr>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="account.email" class="form-label">Email Address:</label>
-                        <input type="email" class="form-control {{ $errors->has('account.email') ? 'is-invalid' : '' }}"
-                            placeholder="Enter Your Email Address" id="account.email" name="account[email]"
-                            aria-label="email" aria-describedby="email" value="{{ old('account.email') }}" required>
-                        @error('account.email')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
+                    <!--Account-->
+                    <div class="mb-3 row">
+                        <div class="col-12 col-lg-6">
+                            <label for="account.username" class="form-label">Username:</label>
+                            <input type="text"
+                                class="form-control {{ $errors->has('account.username') ? 'is-invalid' : '' }}"
+                                placeholder="Enter Your Username" id="account.username" name="account[username]"
+                                aria-label="username" aria-describedby="username" value="{{ old('account.username') }}"
+                                required>
+                            @error('account.username')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label for="account.email" class="form-label">Email Address:</label>
+                            <input type="email"
+                                class="form-control {{ $errors->has('account.email') ? 'is-invalid' : '' }}"
+                                placeholder="Enter Your Email Address" id="account.email" name="account[email]"
+                                aria-label="email" aria-describedby="email" value="{{ old('account.email') }}" required>
+                            @error('account.email')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="account.password" class="form-label">Password:</label>
-                        <input type="password"
-                            class="form-control {{ $errors->has('account.password') ? 'is-invalid' : '' }}"
-                            placeholder="Enter Your Password" id="account.password" name="account[password]"
-                            aria-label="password" aria-describedby="password" required>
-                        @error('account.password')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
+                    <div class="mb-3 row">
+                        <div class="col-12 col-lg-6">
+                            <label for="account.password" class="form-label">Password:</label>
+                            <input type="password"
+                                class="form-control {{ $errors->has('account.password') ? 'is-invalid' : '' }}"
+                                placeholder="Enter Your Password" id="account.password" name="account[password]"
+                                aria-label="password" aria-describedby="password" required>
+                            @error('account.password')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label for="account.password_confirmation" class="form-label">Password Confirmation:</label>
+                            <input type="password"
+                                class="form-control {{ $errors->has('account.password_confirmation') ? 'is-invalid' : '' }}"
+                                placeholder="Enter Your Password Again" id="account.password_confirmation"
+                                name="account[password_confirmation]" aria-label="password_confirmation"
+                                aria-describedby="password_confirmation" required>
+                            @error('account.password_confirmation')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="account.password_confirmation" class="form-label">Password Confirmation:</label>
-                        <input type="password"
-                            class="form-control {{ $errors->has('account.password_confirmation') ? 'is-invalid' : '' }}"
-                            placeholder="Enter Your Password Again" id="account.password_confirmation"
-                            name="account[password_confirmation]" aria-label="password_confirmation"
-                            aria-describedby="password_confirmation" required>
-                        @error('account.password_confirmation')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
+                    <div class="pt-3 pb-3">
+                        <hr>
+                        <h5 class="text-center">Profile</h5>
+                        <hr>
                     </div>
 
-                </div>
-                <div class="tab-pane fade {{ $showProfile ? 'show active' : '' }}" id="nav-profile" role="tabpanel"
-                    aria-labelledby="nav-profile-tab" tabindex="0">
-
+                    <!--Profile-->
                     <div class="mb-3">
                         <label for="profile.name" class="form-label">Name:</label>
                         <input type="text" class="form-control {{ $errors->has('profile.name') ? 'is-invalid' : '' }}"
@@ -122,45 +105,49 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3">
-                        <label for="profile.identification_number" class="form-label">I/C Number:</label>
-                        <input type="text"
-                            class="form-control {{ $errors->has('profile.identification_number') ? 'is-invalid' : '' }}"
-                            placeholder="Enter Your I/C Number (XXXXXX-XX-XXXX)" id="profile.identification_number"
-                            name="profile[identification_number]" aria-label="identification_number"
-                            aria-describedby="identification_number" value="{{ old('profile.identification_number') }}"
-                            required>
-                        <div class="invalid-feedback" id="invalid-ic" style="display: none;">
-                            Your I/C Number is NOT valid
-                        </div>
-                        @error('profile.identification_number')
-                            <div class="invalid-feedback">
-                                {{ $message }}
+                    <div class="mb-3 row">
+                        <div class="col-12 col-lg-6">
+                            <label for="profile.identification_number" class="form-label">I/C Number:</label>
+                            <input type="text"
+                                class="form-control {{ $errors->has('profile.identification_number') ? 'is-invalid' : '' }}"
+                                placeholder="Enter Your I/C Number (XXXXXX-XX-XXXX)" id="profile.identification_number"
+                                name="profile[identification_number]" aria-label="identification_number"
+                                aria-describedby="identification_number" value="{{ old('profile.identification_number') }}"
+                                required>
+                            <div class="invalid-feedback" id="invalid-ic" style="display: none;">
+                                Your I/C Number is NOT valid
                             </div>
-                        @enderror
+                            @error('profile.identification_number')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label for="profile.phone_number" class="form-label">Phone Number:</label>
+                            <input type="text"
+                                class="form-control {{ $errors->has('profile.phone_number') ? 'is-invalid' : '' }}"
+                                placeholder="Enter Your Phone Number" id="profile.phone_number"
+                                name="profile[phone_number]" aria-label="phone_number" aria-describedby="phone_number"
+                                value="{{ old('profile.phone_number') }}" required>
+                            <div class="invalid-feedback" id="alert-error-phoneNumber" style="display: none;">
+                                Your Phone Number in NOT valid
+                            </div>
+                            @error('profile.phone_number')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="profile.phone_number" class="form-label">Phone Number:</label>
-                        <input type="text"
-                            class="form-control {{ $errors->has('profile.phone_number') ? 'is-invalid' : '' }}"
-                            placeholder="Enter Your Phone Number" id="profile.phone_number" name="profile[phone_number]"
-                            aria-label="phone_number" aria-describedby="phone_number"
-                            value="{{ old('profile.phone_number') }}" required>
-                        <div class="invalid-feedback" id="alert-error-phoneNumber" style="display: none;">
-                            Your Phone Number in NOT valid
-                        </div>
-                        @error('profile.phone_number')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
+                    <div class="pt-3 pb-3">
+                        <hr>
+                        <h5 class="text-center">Address</h5>
+                        <hr>
                     </div>
 
-                </div>
-                <div class="tab-pane fade {{ $showAddress ? 'show active' : '' }}" id="nav-address" role="tabpanel"
-                    aria-labelledby="nav-address-tab" tabindex="0">
-
+                    <!--Address-->
                     <div class="mb-3">
                         <label for="address.line_1" class="form-label">Address Line 1:</label>
                         <input type="text"
@@ -262,37 +249,32 @@
                                 </div>
                             @enderror
                         </div>
-
                     </div>
-                </div>
-            </div>
 
-            <div class="pt-3 pb-3">
-                <div class="mb-3 d-flex justify-content-center align-items-center">
-                    {!! htmlFormSnippet() !!}
-                    @error('g-recaptcha-response')
-                        <div class="invalid-feedback d-block">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-            </div>
+                    <div class="pt-3 pb-3 d-flex justify-content-center align-items-center">
+                        {!! htmlFormSnippet() !!}
+                        @error('g-recaptcha-response')
+                            <div class="invalid-feedback d-block">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
 
-
-            <div class="text-center">
-                <button type="submit" id="register" class="btn app-btn-primary w-100 theme-btn mx-auto">Sign
-                    Up</button>
+                    <!-- Form Group (create account submit)-->
+                    <div class="pt-3 pb-3 d-flex justify-content-center align-items-center">
+                        <button class="btn btn-primary btn-block" type="submit">Create Account</button>
+                    </div>
+                </form>
             </div>
-        </form>
-        <div class="auth-option text-center pt-5">Already have an account? <a class="text-link" href="login.html">Log
-                in</a>
+            <div class="card-footer text-center">
+                <div class="small"><a href="{{ route('community.login') }}">Have an account? Go to login</a></div>
+            </div>
         </div>
     </div>
-    <!--//auth-form-container-->
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('assets/js/mykad.min.js') }}"></script>
+    <script src="{{ asset('js/mykad.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
     <script>

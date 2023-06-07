@@ -2,145 +2,208 @@
 <html lang="en">
 
 <head>
-    <title>Portal - Bootstrap 5 Admin Dashboard Template For Developers</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>@yield('title') - @yield('apps')</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png') }}" />
 
-    <!-- Meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FONT AWESOME CSS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        crossorigin="anonymous" />
 
-    <meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
-    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">
-    <link rel="shortcut icon" href="{{ asset('assets/favicon.ico') }}">
-
-    <!-- FontAwesome JS-->
-    <script defer src="{{ asset('assets/plugins/fontawesome/js/all.min.js') }}"></script>
-
-    <!-- App CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7/dist/sweetalert2.min.css">
-    <!-- include DataTable css -->
+    <!-- DATATABLE CSS-->
     <link
-        href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/date-1.4.1/fh-3.3.2/r-2.4.1/sc-2.1.1/sb-1.4.2/sp-2.1.2/datatables.min.css"
+        href="https://cdn.datatables.net/v/bs5/dt-1.13.4/b-2.3.6/b-html5-2.3.6/fh-3.3.2/r-2.4.1/sb-1.4.2/datatables.min.css"
         rel="stylesheet" />
+
+    <!-- SWEET ALERT 2 CSS-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.10/dist/sweetalert2.min.css">
+
+    <!-- EASYMDE CSS-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- FLATPICKR CSS-->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- APP CSS-->
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
     @livewireStyles
-    <link id="theme-style" rel="stylesheet" href="{{ asset('assets/css/portal.css') }}">
-    <link id="theme-style" rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
 
-    <!-- Page Specific CSS -->
+    <!-- PAGE SPECIFIC CSS-->
     @yield('styles')
-
 </head>
 
-<body class="app">
-    <header class="app-header fixed-top">
-        <div class="app-header-inner">
-            <div class="container-fluid py-2">
-                <div class="app-header-content">
-                    <div class="row justify-content-between align-items-center">
-
-                        <div class="col-auto">
-                            <a id="sidepanel-toggler" class="sidepanel-toggler d-inline-block d-xl-none" href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                    viewBox="0 0 30 30" role="img">
-                                    <title>Menu</title>
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
-                                        stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path>
-                                </svg>
-                            </a>
-                        </div>
-                        <!--//col-->
-
-                        <div class="app-utilities col-auto">
-                            <div class="app-utility-item app-user-dropdown dropdown">
-                                @yield('menu')
-                            </div>
-                            <!--//app-user-dropdown-->
-                        </div>
-                        <!--//app-utilities-->
-                    </div>
-                    <!--//row-->
+<body class="{{ isset($isRTL) && $isRTL ? 'layout-rtl' : '' }} nav-fixed">
+    <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white"
+        id="sidenavAccordion">
+        <!-- Sidenav Toggle Button-->
+        <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle"><i
+                data-feather="menu"></i></button>
+        @include('components.logo', ['home' => $home])
+        <!-- Navbar Items-->
+        <ul class="navbar-nav align-items-center ms-auto">
+            <!-- Alerts Dropdown-->
+            <li class="nav-item dropdown no-caret d-none d-sm-block me-3 dropdown-notifications">
+                <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownAlerts"
+                    href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false"><i data-feather="bell"
+                        class="{{ isset($alertCount) && $alertCount ? 'link-danger' : 'link-primary' }}"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up"
+                    aria-labelledby="navbarDropdownAlerts">
+                    <h6 class="dropdown-header dropdown-notifications-header">
+                        <i class="me-2" data-feather="bell"></i>
+                        Alerts Center &nbsp;{!! isset($alertCount) && $alertCount ? '<span class="badge bg-danger">{$alertCount}</span>' : '' !!}
+                    </h6>
+                    @yield('alerts')
+                    <a class="dropdown-item dropdown-notifications-footer" href="#!">View All Alerts</a>
                 </div>
-                <!--//app-header-content-->
-            </div>
-            <!--//container-fluid-->
+            </li>
+            <!-- Messages Dropdown-->
+            <li class="nav-item dropdown no-caret d-none d-sm-block me-3 dropdown-notifications">
+                <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownMessages"
+                    href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false"><i data-feather="mail"
+                        class="{{ isset($messageCount) && $messageCount ? 'link-danger' : 'link-primary' }}"></i></a>
+                <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up"
+                    aria-labelledby="navbarDropdownMessages">
+                    <h6 class="dropdown-header dropdown-notifications-header">
+                        <i class="me-2" data-feather="mail"></i>
+                        Message Center &nbsp;{!! isset($messageCount) && $messageCount ? '<span class="badge bg-danger">{$messageCount}</span>' : '' !!}
+                    </h6>
+                    @yield('messages')
+                    <!-- Footer Link-->
+                    <a class="dropdown-item dropdown-notifications-footer" href="#!">Read All Messages</a>
+                </div>
+            </li>
+            <!-- User Dropdown-->
+            <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
+                <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage"
+                    href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false"><img class="img-fluid"
+                        src="@yield('picture'){{ asset('assets/img/illustrations/profiles/profile-1.png') }}" /></a>
+                <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up"
+                    aria-labelledby="navbarDropdownUserImage">
+                    <h6 class="dropdown-header d-flex align-items-center">
+                        <img class="dropdown-user-img"
+                            src="@yield('picture'){{ asset('assets/img/illustrations/profiles/profile-1.png') }}" />
+                        <div class="dropdown-user-details">
+                            <div class="dropdown-user-details-name">@yield('name')</div>
+                            <div class="dropdown-user-details-email">@yield('email')</div>
+                        </div>
+                    </h6>
+                    <div class="dropdown-divider"></div>
+                    @yield('topmenu')
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sidenav shadow-right @yield('sidenav_colour', 'sidenav-light')">
+                <div class="sidenav-menu">
+                    <div class="nav accordion" id="accordionSidenav">
+                        <!-- Sidenav Menu Heading (Account)-->
+                        <!-- * * Note: * * Visible only on and above the sm breakpoint-->
+                        <div class="sidenav-menu-heading d-sm-none">Account</div>
+                        <!-- Sidenav Link (Alerts)-->
+                        <!-- * * Note: * * Visible only on and above the sm breakpoint-->
+                        <a class="nav-link d-sm-none" href="@yield('alert-href')">
+                            <div class="nav-link-icon"><i data-feather="bell"></i></div>
+                            Alerts
+                            {!! isset($alertCount) && $alertCount
+                                ? '<span class="badge bg-warning-soft text-warning ms-auto">{$alertCount} New!</span>'
+                                : '' !!}
+                        </a>
+                        <!-- Sidenav Link (Messages)-->
+                        <!-- * * Note: * * Visible only on and above the sm breakpoint-->
+                        <a class="nav-link d-sm-none" href="@yield('message-href')">
+                            <div class="nav-link-icon"><i data-feather="mail"></i></div>
+                            Messages
+                            {!! isset($messageCount) && $messageCount
+                                ? '<span class="badge bg-warning-soft text-warning ms-auto">{$messageCount} New!</span>'
+                                : '' !!}
+                        </a>
+                        @yield('sidemenu')
+                    </div>
+                </div>
+                <!-- Sidenav Footer-->
+                <div class="sidenav-footer">
+                    <div class="sidenav-footer-content">
+                        <div class="sidenav-footer-subtitle">Logged in as:</div>
+                        <div class="sidenav-footer-title">@yield('name')</div>
+                    </div>
+                </div>
+            </nav>
         </div>
-        <!--//app-header-inner-->
-        <div id="app-sidepanel" class="app-sidepanel">
-            <div id="sidepanel-drop" class="sidepanel-drop"></div>
-            <div class="sidepanel-inner d-flex flex-column">
-                <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
-                @include('components.logo.app')
-                <!--//app-branding-->
-
-                @yield('sidebar')
-
-            </div>
-            <!--//sidepanel-inner-->
-        </div>
-        <!--//app-sidepanel-->
-    </header>
-    <!--//app-header-->
-
-    <div class="app-wrapper">
-
-        <div class="app-content pt-3 p-md-3 p-lg-4">
-            <div class="container-xl">
-
-                @yield('title')
-
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        @yield('breadcrumbs')
-                    </ol>
-                </nav>
-
+        <div id="layoutSidenav_content">
+            <main>
+                @yield('header')
+                <!-- Main page content-->
                 @yield('content')
-
-            </div>
-            <!--//container-fluid-->
+            </main>
+            @include('layouts.footer')
         </div>
-        <!--//app-content-->
-
-        <footer class="app-footer fixed-bottom">
-            @include('components.footer')
-        </footer>
-        <!--//app-footer-->
-
     </div>
-    <!--//app-wrapper-->
 
+    <!-- JQUERY JS-->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" crossorigin="anonymous">
+    </script>
 
-    <!-- Bootstrap JS -->
-    <script src="{{ asset('assets/plugins/popper.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+    <!-- FONT AWESOME JS-->
+    <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/js/all.min.js"
+        crossorigin="anonymous"></script>
 
-    <!-- Charts JS -->
-    <script src="{{ asset('assets/plugins/chart.js/chart.min.js') }}"></script>
+    <!-- FEATHER ICONS JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js" crossorigin="anonymous">
+    </script>
 
-    <!-- App JS -->
-    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.js"
-        integrity="sha256-7GO+jepT9gJe9LB4XFf8snVOjX3iYNb0FHYr5LI1N5c=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-mask-plugin@1.14.16/dist/jquery.mask.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7/dist/sweetalert2.all.min.js"></script>
-    @livewireScripts
-    <!-- include DataTable js -->
+    <!-- ICONIFY JS-->
+    <script src="https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js"></script>
+
+    <!-- BOOTSTRAP JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
+    </script>
+
+    <!-- CHART JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.umd.min.js"></script>
+
+    <!-- JSZIP JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+
+    <!-- PDFMAKE JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-    <script
-        src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/date-1.4.1/fh-3.3.2/r-2.4.1/sc-2.1.1/sb-1.4.2/sp-2.1.2/datatables.min.js">
-    </script>
-    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.13.4/sorting/natural.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="{{ asset('assets/js/plugin.js') }}"></script>
-    <script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="{{ asset('assets/js/showModalOnError.js') }}"></script>
 
+    <!-- DATATABLE JS-->
+    <script
+        src="https://cdn.datatables.net/v/bs5/dt-1.13.4/b-2.3.6/b-html5-2.3.6/fh-3.3.2/r-2.4.1/sb-1.4.2/datatables.min.js">
+    </script>
+    <script src="https://cdn.datatables.net/plug-ins/1.13.4/sorting/natural.js"></script>
+
+    <!-- SWEET ALERT 2 JS-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.10/dist/sweetalert2.all.min.js"></script>
+
+    <!-- EASYMDE JS-->
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+
+    <!-- FLATPICKR JS-->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- APP JS-->
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/scripts.js') }}"></script>
+    <script src="{{ asset('js/showModalOnError.js') }}"></script>
+    @livewireScripts
     @include('components.alert')
 
-    <!-- Page Specific JS -->
+    <!-- PAGE SPECIFIC JS-->
     @yield('scripts')
-
 </body>
 
 </html>

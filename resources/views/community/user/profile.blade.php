@@ -1,51 +1,69 @@
 @extends('community.layouts.app')
 
+@section('title', 'User Profile')
+
 @section('styles')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
 @endsection
 
-@section('title')
-    <h1 class="app-page-title">User Profile</h1>
-@endsection
-
-@section('breadcrumbs')
-    <li class="breadcrumb-item"><a href="#">User</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Profile</li>
+@section('header')
+    <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+        <div class="container-xl px-4">
+            <div class="page-header-content pt-4">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-auto mt-4">
+                        <h1 class="page-header-title">
+                            <div class="page-header-icon"><i data-feather="user"></i></div>
+                            User Profile
+                        </h1>
+                    </div>
+                </div>
+                <nav class="mt-4 rounded" aria-label="breadcrumb">
+                    <ol class="breadcrumb px-3 py-2 rounded mb-0">
+                        <li class="breadcrumb-item"><a href="#">User</a></li>
+                        <li class="breadcrumb-item active">Profile</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </header>
 @endsection
 
 @section('content')
-    <div class="card">
-        <div class="card-body">
-            <div class="pt-3 pb-3 d-grid gap-2 d-md-flex justify-content-md-end">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateUserModal">
-                    Update
-                </button>
-            </div>
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <tbody>
-                        <tr>
-                            <th class="w-25">Name</th>
-                            <td>{{ $user->name }}</td>
-                            <th class="w-25">Identification Card (I/C) No.</th>
-                            <td>{{ $user->identification_number }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-25">Phone Number</th>
-                            <td>{{ $user->phone_number }}</td>
-                            <th class="w-25">Email</th>
-                            <td>{{ $user->email }}</td>
-                        </tr>
-                        <tr>
-                            <th class="w-25">Address</th>
-                            <td colspan="3">{{ $user->address->line_1 }}, <br>
-                                {{ $user->address->line_2 }}, <br>
-                                {!! $user->address->line_3 ? $user->address->line_3 . ', <br>' : '' !!}
-                                {{ $user->address->postcode }} {{ $user->address->city }}, <br>
-                                {{ $user->address->state }}, {{ $user->address->country }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+    <div class="container-xl px-4 mt-n10">
+        <div class="card">
+            <div class="card-body">
+                <div class="pt-3 pb-3 d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateUserModal">
+                        Update
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th class="w-25">Name</th>
+                                <td>{{ $user->name }}</td>
+                                <th class="w-25">Identification Card (I/C) No.</th>
+                                <td>{{ $user->identification_number }}</td>
+                            </tr>
+                            <tr>
+                                <th class="w-25">Phone Number</th>
+                                <td>{{ $user->phone_number }}</td>
+                                <th class="w-25">Email</th>
+                                <td>{{ $user->email }}</td>
+                            </tr>
+                            <tr>
+                                <th class="w-25">Address</th>
+                                <td colspan="3">{{ $user->address->line_1 }}, <br>
+                                    {{ $user->address->line_2 }}, <br>
+                                    {!! $user->address->line_3 ? $user->address->line_3 . ', <br>' : '' !!}
+                                    {{ $user->address->postcode }} {{ $user->address->city }}, <br>
+                                    {{ $user->address->state }}, {{ $user->address->country }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -71,7 +89,7 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('assets/js/mykad.min.js') }}"></script>
+    <script src="{{ asset('js/mykad.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
     <script>
