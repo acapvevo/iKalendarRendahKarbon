@@ -1,24 +1,27 @@
 <?php
 
-use App\Http\Controllers\SuperAdmin\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\SuperAdmin\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\SuperAdmin\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\SuperAdmin\Auth\EmailVerificationPromptController;
-use App\Http\Controllers\SuperAdmin\Auth\NewPasswordController;
-use App\Http\Controllers\SuperAdmin\Auth\PasswordResetLinkController;
-use App\Http\Controllers\SuperAdmin\Auth\RegisteredUserController;
-use App\Http\Controllers\SuperAdmin\Auth\VerifyEmailController;
-use App\Http\Controllers\SuperAdmin\DashboardController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SuperAdmin\DashboardController;
+use App\Http\Controllers\SuperAdmin\User\PictureController;
+use App\Http\Controllers\SuperAdmin\User\ProfileController;
+use App\Http\Controllers\SuperAdmin\User\SettingController;
+use App\Http\Controllers\SuperAdmin\Auth\NewPasswordController;
+use App\Http\Controllers\SuperAdmin\Auth\VerifyEmailController;
+use App\Http\Controllers\SuperAdmin\Auth\RegisteredUserController;
+use App\Http\Controllers\SuperAdmin\Auth\PasswordResetLinkController;
+use App\Http\Controllers\SuperAdmin\Auth\ConfirmablePasswordController;
+use App\Http\Controllers\SuperAdmin\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\SuperAdmin\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\SuperAdmin\Auth\EmailVerificationNotificationController;
 
 Route::prefix('super_admin')->name('super_admin.')->group(function () {
 
     Route::middleware('guest:super_admin')->group(function () {
 
-        Route::get('/register', [RegisteredUserController::class, 'create'])
-            ->name('register');
+        // Route::get('/register', [RegisteredUserController::class, 'create'])
+        //     ->name('register');
 
-        Route::post('/register', [RegisteredUserController::class, 'store']);
+        // Route::post('/register', [RegisteredUserController::class, 'store']);
 
         Route::get('/login', [AuthenticatedSessionController::class, 'create'])
             ->name('login');
@@ -63,5 +66,24 @@ Route::prefix('super_admin')->name('super_admin.')->group(function () {
 
         Route::get('/dashboard', [DashboardController::class, 'index'])
             ->name('dashboard');
+
+        // User Management routes
+        Route::prefix('user')->name('user.')->group(function () {
+
+            //Profile
+            Route::prefix('profile')->name('profile.')->group(function () {
+                Route::get('', [ProfileController::class, 'view'])->name('view');
+            });
+
+            //Setting
+            Route::prefix('setting')->name('setting.')->group(function () {
+                Route::get('', [SettingController::class, 'view'])->name('view');
+            });
+
+            //Profile Picture
+            Route::prefix('picture')->name('picture.')->group(function () {
+                Route::get('', [PictureController::class, 'show'])->name('show');
+            });
+        });
     });
 });
