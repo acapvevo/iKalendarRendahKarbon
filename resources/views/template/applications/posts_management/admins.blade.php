@@ -33,7 +33,8 @@
     <div class="container-fluid px-4">
         <div class="card">
             <div class="card-body">
-                <table id="datatablesSimple">
+                <div class="table-responsive">
+                    <table id="datatablesSimple" class="table table-bordered">
                     <thead>
                         <tr>
                             <th>Post Title</th>
@@ -154,6 +155,7 @@
                     </tbody>
                 </table>
             </div>
+        </div>
         </div>
     </div>
 @endsection

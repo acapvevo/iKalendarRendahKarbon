@@ -3,8 +3,6 @@
 @section('title', 'Dashboard')
 
 @section('styles')
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
 @endsection
 
 @section('header')
@@ -102,145 +100,147 @@
                             </div>
                             <!-- Dashboard Tab Pane 2-->
                             <div class="tab-pane fade" id="activities" role="tabpanel" aria-labelledby="activities-pill">
-                                <table id="datatablesSimple">
-                                    <thead>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Event</th>
-                                            <th>Time</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Event</th>
-                                            <th>Time</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <tr>
-                                            <td>01/13/20</td>
-                                            <td>
-                                                <i class="me-2 text-green" data-feather="zap"></i>
-                                                Server online
-                                            </td>
-                                            <td>1:21 AM</td>
-                                        </tr>
-                                        <tr>
-                                            <td>01/13/20</td>
-                                            <td>
-                                                <i class="me-2 text-red" data-feather="zap-off"></i>
-                                                Server restarted
-                                            </td>
-                                            <td>1:00 AM</td>
-                                        </tr>
-                                        <tr>
-                                            <td>01/12/20</td>
-                                            <td>
-                                                <i class="me-2 text-purple" data-feather="shopping-cart"></i>
-                                                New order placed! Order #
-                                                <a href="#!">1126550</a>
-                                            </td>
-                                            <td>5:45 AM</td>
-                                        </tr>
-                                        <tr>
-                                            <td>01/12/20</td>
-                                            <td>
-                                                <i class="me-2 text-blue" data-feather="user"></i>
-                                                Valerie Luna submitted
-                                                <a href="#!">quarter four report</a>
-                                            </td>
-                                            <td>4:23 PM</td>
-                                        </tr>
-                                        <tr>
-                                            <td>01/12/20</td>
-                                            <td>
-                                                <i class="me-2 text-yellow" data-feather="database"></i>
-                                                Database backup created
-                                            </td>
-                                            <td>3:51 AM</td>
-                                        </tr>
-                                        <tr>
-                                            <td>01/12/20</td>
-                                            <td>
-                                                <i class="me-2 text-purple" data-feather="shopping-cart"></i>
-                                                New order placed! Order #
-                                                <a href="#!">1126549</a>
-                                            </td>
-                                            <td>1:22 AM</td>
-                                        </tr>
-                                        <tr>
-                                            <td>01/11/20</td>
-                                            <td>
-                                                <i class="me-2 text-blue" data-feather="user-plus"></i>
-                                                New user created:
-                                                <a href="#!">Sam Malone</a>
-                                            </td>
-                                            <td>4:18 PM</td>
-                                        </tr>
-                                        <tr>
-                                            <td>01/11/20</td>
-                                            <td>
-                                                <i class="me-2 text-purple" data-feather="shopping-cart"></i>
-                                                New order placed! Order #
-                                                <a href="#!">1126548</a>
-                                            </td>
-                                            <td>4:02 PM</td>
-                                        </tr>
-                                        <tr>
-                                            <td>01/11/20</td>
-                                            <td>
-                                                <i class="me-2 text-purple" data-feather="shopping-cart"></i>
-                                                New order placed! Order #
-                                                <a href="#!">1126547</a>
-                                            </td>
-                                            <td>3:47 PM</td>
-                                        </tr>
-                                        <tr>
-                                            <td>01/11/20</td>
-                                            <td>
-                                                <i class="me-2 text-green" data-feather="zap"></i>
-                                                Server online
-                                            </td>
-                                            <td>1:19 AM</td>
-                                        </tr>
-                                        <tr>
-                                            <td>01/11/20</td>
-                                            <td>
-                                                <i class="me-2 text-red" data-feather="zap-off"></i>
-                                                Server restarted
-                                            </td>
-                                            <td>1:00 AM</td>
-                                        </tr>
-                                        <tr>
-                                            <td>01/10/20</td>
-                                            <td>
-                                                <i class="me-2 text-purple" data-feather="shopping-cart"></i>
-                                                New order placed! Order #
-                                                <a href="#!">1126547</a>
-                                            </td>
-                                            <td>5:31 PM</td>
-                                        </tr>
-                                        <tr>
-                                            <td>01/10/20</td>
-                                            <td>
-                                                <i class="me-2 text-purple" data-feather="shopping-cart"></i>
-                                                New order placed! Order #
-                                                <a href="#!">1126546</a>
-                                            </td>
-                                            <td>12:13 PM</td>
-                                        </tr>
-                                        <tr>
-                                            <td>01/10/20</td>
-                                            <td>
-                                                <i class="me-2 text-blue" data-feather="user"></i>
-                                                Diane Chambers submitted
-                                                <a href="#!">quarter four report</a>
-                                            </td>
-                                            <td>10:56 AM</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div class="table-responsive">
+                                    <table id="datatablesSimple" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Event</th>
+                                                <th>Time</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Event</th>
+                                                <th>Time</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            <tr>
+                                                <td>01/13/20</td>
+                                                <td>
+                                                    <i class="me-2 text-green" data-feather="zap"></i>
+                                                    Server online
+                                                </td>
+                                                <td>1:21 AM</td>
+                                            </tr>
+                                            <tr>
+                                                <td>01/13/20</td>
+                                                <td>
+                                                    <i class="me-2 text-red" data-feather="zap-off"></i>
+                                                    Server restarted
+                                                </td>
+                                                <td>1:00 AM</td>
+                                            </tr>
+                                            <tr>
+                                                <td>01/12/20</td>
+                                                <td>
+                                                    <i class="me-2 text-purple" data-feather="shopping-cart"></i>
+                                                    New order placed! Order #
+                                                    <a href="#!">1126550</a>
+                                                </td>
+                                                <td>5:45 AM</td>
+                                            </tr>
+                                            <tr>
+                                                <td>01/12/20</td>
+                                                <td>
+                                                    <i class="me-2 text-blue" data-feather="user"></i>
+                                                    Valerie Luna submitted
+                                                    <a href="#!">quarter four report</a>
+                                                </td>
+                                                <td>4:23 PM</td>
+                                            </tr>
+                                            <tr>
+                                                <td>01/12/20</td>
+                                                <td>
+                                                    <i class="me-2 text-yellow" data-feather="database"></i>
+                                                    Database backup created
+                                                </td>
+                                                <td>3:51 AM</td>
+                                            </tr>
+                                            <tr>
+                                                <td>01/12/20</td>
+                                                <td>
+                                                    <i class="me-2 text-purple" data-feather="shopping-cart"></i>
+                                                    New order placed! Order #
+                                                    <a href="#!">1126549</a>
+                                                </td>
+                                                <td>1:22 AM</td>
+                                            </tr>
+                                            <tr>
+                                                <td>01/11/20</td>
+                                                <td>
+                                                    <i class="me-2 text-blue" data-feather="user-plus"></i>
+                                                    New user created:
+                                                    <a href="#!">Sam Malone</a>
+                                                </td>
+                                                <td>4:18 PM</td>
+                                            </tr>
+                                            <tr>
+                                                <td>01/11/20</td>
+                                                <td>
+                                                    <i class="me-2 text-purple" data-feather="shopping-cart"></i>
+                                                    New order placed! Order #
+                                                    <a href="#!">1126548</a>
+                                                </td>
+                                                <td>4:02 PM</td>
+                                            </tr>
+                                            <tr>
+                                                <td>01/11/20</td>
+                                                <td>
+                                                    <i class="me-2 text-purple" data-feather="shopping-cart"></i>
+                                                    New order placed! Order #
+                                                    <a href="#!">1126547</a>
+                                                </td>
+                                                <td>3:47 PM</td>
+                                            </tr>
+                                            <tr>
+                                                <td>01/11/20</td>
+                                                <td>
+                                                    <i class="me-2 text-green" data-feather="zap"></i>
+                                                    Server online
+                                                </td>
+                                                <td>1:19 AM</td>
+                                            </tr>
+                                            <tr>
+                                                <td>01/11/20</td>
+                                                <td>
+                                                    <i class="me-2 text-red" data-feather="zap-off"></i>
+                                                    Server restarted
+                                                </td>
+                                                <td>1:00 AM</td>
+                                            </tr>
+                                            <tr>
+                                                <td>01/10/20</td>
+                                                <td>
+                                                    <i class="me-2 text-purple" data-feather="shopping-cart"></i>
+                                                    New order placed! Order #
+                                                    <a href="#!">1126547</a>
+                                                </td>
+                                                <td>5:31 PM</td>
+                                            </tr>
+                                            <tr>
+                                                <td>01/10/20</td>
+                                                <td>
+                                                    <i class="me-2 text-purple" data-feather="shopping-cart"></i>
+                                                    New order placed! Order #
+                                                    <a href="#!">1126546</a>
+                                                </td>
+                                                <td>12:13 PM</td>
+                                            </tr>
+                                            <tr>
+                                                <td>01/10/20</td>
+                                                <td>
+                                                    <i class="me-2 text-blue" data-feather="user"></i>
+                                                    Diane Chambers submitted
+                                                    <a href="#!">quarter four report</a>
+                                                </td>
+                                                <td>10:56 AM</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -634,12 +634,8 @@
 @endsection
 
 @section('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="{{ asset('templates/assets/demo/chart-area-demo.js') }}"></script>
-    <script src="{{ asset('templates/assets/demo/chart-pie-demo.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
-        crossorigin="anonymous"></script>
-    <script src="{{ asset('templates/js/datatables/datatables-simple-demo.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
-    <script src="{{ asset('templates/js/litepicker.js') }}"></script>
+    <script src="{{ asset('assets/demo/chart-area-demo.js') }}"></script>
+    <script src="{{ asset('assets/demo/chart-pie-demo.js') }}"></script>
+    <script src="{{ asset('js/datatables/datatables-simple-demo.js') }}"></script>
+    <script src="{{ asset('js/litepicker.js') }}"></script>
 @endsection

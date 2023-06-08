@@ -38,86 +38,88 @@
     <div class="container-fluid px-4">
         <div class="card">
             <div class="card-body">
-                <table id="datatablesSimple">
-                    <thead>
-                        <tr>
-                            <th>Group Name</th>
-                            <th>Total Members</th>
-                            <th>Created Date</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Group Name</th>
-                            <th>Total Members</th>
-                            <th>Created Date</th>
-                            <th>Actions</th>
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        <tr>
-                            <td>Sales</td>
-                            <td>8</td>
-                            <td>20 Jun 2021</td>
-                            <td>
-                                <button class="btn btn-datatable btn-icon btn-transparent-dark me-2" type="button"
-                                    data-bs-toggle="modal" data-bs-target="#editGroupModal"><i
-                                        data-feather="edit"></i></button>
-                                <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i
-                                        data-feather="trash-2"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Developers</td>
-                            <td>6</td>
-                            <td>20 Jun 2021</td>
-                            <td>
-                                <button class="btn btn-datatable btn-icon btn-transparent-dark me-2" type="button"
-                                    data-bs-toggle="modal" data-bs-target="#editGroupModal"><i
-                                        data-feather="edit"></i></button>
-                                <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i
-                                        data-feather="trash-2"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Marketing</td>
-                            <td>3</td>
-                            <td>20 Jun 2021</td>
-                            <td>
-                                <button class="btn btn-datatable btn-icon btn-transparent-dark me-2" type="button"
-                                    data-bs-toggle="modal" data-bs-target="#editGroupModal"><i
-                                        data-feather="edit"></i></button>
-                                <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i
-                                        data-feather="trash-2"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Managers</td>
-                            <td>6</td>
-                            <td>20 Jun 2021</td>
-                            <td>
-                                <button class="btn btn-datatable btn-icon btn-transparent-dark me-2" type="button"
-                                    data-bs-toggle="modal" data-bs-target="#editGroupModal"><i
-                                        data-feather="edit"></i></button>
-                                <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i
-                                        data-feather="trash-2"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Customer</td>
-                            <td>10</td>
-                            <td>20 Jun 2021</td>
-                            <td>
-                                <button class="btn btn-datatable btn-icon btn-transparent-dark me-2" type="button"
-                                    data-bs-toggle="modal" data-bs-target="#editGroupModal"><i
-                                        data-feather="edit"></i></button>
-                                <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i
-                                        data-feather="trash-2"></i></a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table id="datatablesSimple" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Group Name</th>
+                                <th>Total Members</th>
+                                <th>Created Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Group Name</th>
+                                <th>Total Members</th>
+                                <th>Created Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            <tr>
+                                <td>Sales</td>
+                                <td>8</td>
+                                <td>20 Jun 2021</td>
+                                <td>
+                                    <button class="btn btn-datatable btn-icon btn-transparent-dark me-2" type="button"
+                                        data-bs-toggle="modal" data-bs-target="#editGroupModal"><i
+                                            data-feather="edit"></i></button>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i
+                                            data-feather="trash-2"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Developers</td>
+                                <td>6</td>
+                                <td>20 Jun 2021</td>
+                                <td>
+                                    <button class="btn btn-datatable btn-icon btn-transparent-dark me-2" type="button"
+                                        data-bs-toggle="modal" data-bs-target="#editGroupModal"><i
+                                            data-feather="edit"></i></button>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i
+                                            data-feather="trash-2"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Marketing</td>
+                                <td>3</td>
+                                <td>20 Jun 2021</td>
+                                <td>
+                                    <button class="btn btn-datatable btn-icon btn-transparent-dark me-2" type="button"
+                                        data-bs-toggle="modal" data-bs-target="#editGroupModal"><i
+                                            data-feather="edit"></i></button>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i
+                                            data-feather="trash-2"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Managers</td>
+                                <td>6</td>
+                                <td>20 Jun 2021</td>
+                                <td>
+                                    <button class="btn btn-datatable btn-icon btn-transparent-dark me-2" type="button"
+                                        data-bs-toggle="modal" data-bs-target="#editGroupModal"><i
+                                            data-feather="edit"></i></button>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i
+                                            data-feather="trash-2"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Customer</td>
+                                <td>10</td>
+                                <td>20 Jun 2021</td>
+                                <td>
+                                    <button class="btn btn-datatable btn-icon btn-transparent-dark me-2" type="button"
+                                        data-bs-toggle="modal" data-bs-target="#editGroupModal"><i
+                                            data-feather="edit"></i></button>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i
+                                            data-feather="trash-2"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

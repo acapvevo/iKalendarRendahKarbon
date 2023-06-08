@@ -23,10 +23,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.10/dist/sweetalert2.min.css">
 
     <!-- EASYMDE CSS-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
 
     <!-- FLATPICKR CSS-->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- LITEPICKER CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
 
     <!-- APP CSS-->
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
@@ -191,6 +194,9 @@
 
     <!-- EASYMDE JS-->
     <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+
+    <!-- LITEPICKER JS-->
+    <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
 
     <!-- FLATPICKR JS-->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

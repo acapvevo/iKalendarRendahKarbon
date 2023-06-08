@@ -3,7 +3,6 @@
 @section('title', 'Dashboard')
 
 @section('styles')
-    <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
 @endsection
 
 @section('header')
@@ -40,7 +39,7 @@
                         </a>
                     </div>
                     <div class="col d-none d-lg-block mt-xxl-n4"><img class="img-fluid px-xl-4 mt-xxl-n5"
-                            src="{{asset('assets/img/illustrations/statistics.svg')}}" /></div>
+                            src="{{ asset('assets/img/illustrations/statistics.svg') }}" /></div>
                 </div>
             </div>
         </div>
@@ -123,7 +122,7 @@
                 <!-- Illustration card example-->
                 <div class="card mb-4">
                     <div class="card-body text-center p-5">
-                        <img class="img-fluid mb-5" src="{{asset('assets/img/illustrations/data-report.svg')}}" />
+                        <img class="img-fluid mb-5" src="{{ asset('assets/img/illustrations/data-report.svg') }}" />
                         <h4>Report generation</h4>
                         <p class="mb-4">Ready to get started? Let us know now! It's time to start building that dashboard
                             you've been waiting to create!</p>
@@ -249,10 +248,9 @@
 @endsection
 
 @section('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="{{ asset('templates/assets/demo/chart-area-demo.js') }}"></script>
-    <script src="{{ asset('templates/assets/demo/chart-bar-demo.js') }}"></script>
-    <script src="{{ asset('templates/assets/demo/chart-pie-demo.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
-    <script src="{{ asset('templates/js/litepicker.js') }}"></script>
+    <script src="{{ asset('assets/demo/chart-area-demo.js') }}"></script>
+    <script src="{{ asset('assets/demo/chart-bar-demo.js') }}"></script>
+    <script src="{{ asset('assets/demo/chart-pie-demo.js') }}"></script>
+    <script src="{{ asset('js/datatables/datatables-simple-demo.js') }}"></script>
+    <script src="{{ asset('js/litepicker.js') }}"></script>
 @endsection
