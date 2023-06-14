@@ -1,8 +1,8 @@
 @extends('layouts.guest')
 
-@yield('apps', 'SB Admin Pro')
+@section('apps', 'SB Admin Pro')
 
-@yield('title', 'Login')
+@section('title', 'Login')
 
 @section('content')
     <div class="col-lg-5">
