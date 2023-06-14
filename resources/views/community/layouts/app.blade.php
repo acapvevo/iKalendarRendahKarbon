@@ -103,21 +103,23 @@
 
 @section('name', Auth::user()->name)
 @section('email', Auth::user()->email)
+@section('picture', Auth::user()->image ? route('community.user.picture.show') :
+    asset('assets/img/illustrations/profiles/profile-1.png'))
 
 @section('topmenu')
     <a class="dropdown-item" href="{{ route('community.user.profile.view') }}">
         <div class="dropdown-item-icon"><i data-feather="user"></i></div>
-        Profile
+        {{ __('Profile') }}
     </a>
     <a class="dropdown-item" href="{{ route('community.user.setting.view') }}">
         <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
-        Setting
+        {{ __('Setting') }}
     </a>
     <form action="{{ route('community.logout') }}" method="post">
         @csrf
         <a class="dropdown-item" href="#!" onclick="event.preventDefault(); this.closest('form').submit();">
             <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
-            Logout
+            {{ __('Logout') }}
         </a>
     </form>
 @endsection
@@ -126,6 +128,6 @@
     <!-- Sidenav Link (Dashboard)-->
     <a class="nav-link" href="{{ route('community.dashboard') }}">
         <div class="nav-link-icon"><i data-feather="activity"></i></div>
-        Dashboard
+        {{ __('Dashboard') }}
     </a>
 @endsection

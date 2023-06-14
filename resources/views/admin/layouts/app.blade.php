@@ -103,6 +103,8 @@
 
 @section('name', Auth::user()->name)
 @section('email', Auth::user()->email)
+@section('picture', Auth::user()->image ? route('admin.user.picture.show') :
+    asset('assets/img/illustrations/profiles/profile-1.png'))
 
 @section('topmenu')
     <a class="dropdown-item" href="{{ route('admin.user.profile.view') }}">

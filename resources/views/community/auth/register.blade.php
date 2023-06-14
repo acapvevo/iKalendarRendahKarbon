@@ -2,7 +2,7 @@
 
 @section('apps', 'iKalendar Karbon')
 
-@section('title', 'Login As Community')
+@section('title', __('Register As Community'))
 
 @section('styles')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
@@ -14,7 +14,7 @@
         <!-- Basic registration form-->
         <div class="card shadow-lg border-0 rounded-lg mt-5">
             <div class="card-header justify-content-center">
-                <h3 class="fw-light my-4 text-center">Create Account As Community</h3>
+                <h3 class="fw-light my-4 text-center">{{ __('Create Account As Community') }}</h3>
             </div>
             <div class="card-body">
                 <!-- Registration form-->
@@ -24,17 +24,17 @@
 
                     <div class="pt-3 pb-3">
                         <hr>
-                        <h5 class="text-center">Account</h5>
+                        <h5 class="text-center">{{ __('Account') }}</h5>
                         <hr>
                     </div>
 
                     <!--Account-->
                     <div class="mb-3 row">
                         <div class="col-12 col-lg-6">
-                            <label for="account.username" class="form-label">Username:</label>
+                            <label for="account.username" class="form-label">{{ __('Username') }}:</label>
                             <input type="text"
                                 class="form-control {{ $errors->has('account.username') ? 'is-invalid' : '' }}"
-                                placeholder="Enter Your Username" id="account.username" name="account[username]"
+                                placeholder="{{ __('Enter Your Username') }}" id="account.username" name="account[username]"
                                 aria-label="username" aria-describedby="username" value="{{ old('account.username') }}"
                                 required>
                             @error('account.username')
@@ -44,10 +44,10 @@
                             @enderror
                         </div>
                         <div class="col-12 col-lg-6">
-                            <label for="account.email" class="form-label">Email Address:</label>
+                            <label for="account.email" class="form-label">{{ __('Email Address') }}:</label>
                             <input type="email"
                                 class="form-control {{ $errors->has('account.email') ? 'is-invalid' : '' }}"
-                                placeholder="Enter Your Email Address" id="account.email" name="account[email]"
+                                placeholder="{{ __('Enter Your Email Address') }}" id="account.email" name="account[email]"
                                 aria-label="email" aria-describedby="email" value="{{ old('account.email') }}" required>
                             @error('account.email')
                                 <div class="invalid-feedback">
@@ -59,10 +59,10 @@
 
                     <div class="mb-3 row">
                         <div class="col-12 col-lg-6">
-                            <label for="account.password" class="form-label">Password:</label>
+                            <label for="account.password" class="form-label">{{ __('Password') }}:</label>
                             <input type="password"
                                 class="form-control {{ $errors->has('account.password') ? 'is-invalid' : '' }}"
-                                placeholder="Enter Your Password" id="account.password" name="account[password]"
+                                placeholder="{{ __('Enter Your Password') }}" id="account.password" name="account[password]"
                                 aria-label="password" aria-describedby="password" required>
                             @error('account.password')
                                 <div class="invalid-feedback">
@@ -71,10 +71,10 @@
                             @enderror
                         </div>
                         <div class="col-12 col-lg-6">
-                            <label for="account.password_confirmation" class="form-label">Password Confirmation:</label>
+                            <label for="account.password_confirmation" class="form-label">{{ __('Password Confirmation') }}:</label>
                             <input type="password"
                                 class="form-control {{ $errors->has('account.password_confirmation') ? 'is-invalid' : '' }}"
-                                placeholder="Enter Your Password Again" id="account.password_confirmation"
+                                placeholder="{{ __('Enter Your Password Again') }}" id="account.password_confirmation"
                                 name="account[password_confirmation]" aria-label="password_confirmation"
                                 aria-describedby="password_confirmation" required>
                             @error('account.password_confirmation')
@@ -87,15 +87,15 @@
 
                     <div class="pt-3 pb-3">
                         <hr>
-                        <h5 class="text-center">Profile</h5>
+                        <h5 class="text-center">{{ __('Profile') }}</h5>
                         <hr>
                     </div>
 
                     <!--Profile-->
                     <div class="mb-3">
-                        <label for="profile.name" class="form-label">Name:</label>
+                        <label for="profile.name" class="form-label">{{ __('Name') }}:</label>
                         <input type="text" class="form-control {{ $errors->has('profile.name') ? 'is-invalid' : '' }}"
-                            placeholder="Enter Your Name" id="profile.name" name="profile[name]" aria-label="name"
+                            placeholder="{{ __('Enter Your Name') }}" id="profile.name" name="profile[name]" aria-label="name"
                             oninput="this.value = this.value.toUpperCase()" aria-describedby="name"
                             value="{{ old('profile.name') }}" required>
                         @error('profile.name')
@@ -107,15 +107,15 @@
 
                     <div class="mb-3 row">
                         <div class="col-12 col-lg-6">
-                            <label for="profile.identification_number" class="form-label">I/C Number:</label>
+                            <label for="profile.identification_number" class="form-label">{{ __('Identification Card Number') }}:</label>
                             <input type="text"
                                 class="form-control {{ $errors->has('profile.identification_number') ? 'is-invalid' : '' }}"
-                                placeholder="Enter Your I/C Number (XXXXXX-XX-XXXX)" id="profile.identification_number"
+                                placeholder="{{ __('Enter Your Identification Card Number') }} (XXXXXX-XX-XXXX)" id="profile.identification_number"
                                 name="profile[identification_number]" aria-label="identification_number"
                                 aria-describedby="identification_number" value="{{ old('profile.identification_number') }}"
                                 required>
                             <div class="invalid-feedback" id="invalid-ic" style="display: none;">
-                                Your I/C Number is NOT valid
+                                {{ __('Your Identification Card Number is NOT valid') }}
                             </div>
                             @error('profile.identification_number')
                                 <div class="invalid-feedback">
@@ -124,14 +124,14 @@
                             @enderror
                         </div>
                         <div class="col-12 col-lg-6">
-                            <label for="profile.phone_number" class="form-label">Phone Number:</label>
+                            <label for="profile.phone_number" class="form-label">{{ __('Phone Number') }}:</label>
                             <input type="text"
                                 class="form-control {{ $errors->has('profile.phone_number') ? 'is-invalid' : '' }}"
-                                placeholder="Enter Your Phone Number" id="profile.phone_number"
-                                name="profile[phone_number]" aria-label="phone_number" aria-describedby="phone_number"
+                                placeholder="{{ __('Enter Your Phone Number') }}" id="profile.phone_number" name="profile[phone_number]"
+                                aria-label="phone_number" aria-describedby="phone_number"
                                 value="{{ old('profile.phone_number') }}" required>
                             <div class="invalid-feedback" id="alert-error-phoneNumber" style="display: none;">
-                                Your Phone Number in NOT valid
+                                {{ __('Your Phone Number in NOT valid') }}
                             </div>
                             @error('profile.phone_number')
                                 <div class="invalid-feedback">
@@ -143,16 +143,16 @@
 
                     <div class="pt-3 pb-3">
                         <hr>
-                        <h5 class="text-center">Address</h5>
+                        <h5 class="text-center">{{ __('Address') }}</h5>
                         <hr>
                     </div>
 
                     <!--Address-->
                     <div class="mb-3">
-                        <label for="address.line_1" class="form-label">Address Line 1:</label>
+                        <label for="address.line_1" class="form-label">{{ __('Address Line 1') }}:</label>
                         <input type="text"
                             class="form-control {{ $errors->has('address.line_1') ? 'is-invalid' : '' }}"
-                            placeholder="Enter Your Address Line 1" id="address.line_1" name="address[line_1]"
+                            placeholder="{{ __('Enter Your Address Line 1') }}" id="address.line_1" name="address[line_1]"
                             aria-label="line_1" aria-describedby="line_1" oninput="this.value = this.value.toUpperCase()"
                             value="{{ old('address.line_1') }}" required>
                         @error('address.line_1')
@@ -163,10 +163,10 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="address.line_2" class="form-label">Address Line 2:</label>
+                        <label for="address.line_2" class="form-label">{{ __('Address Line 2') }}:</label>
                         <input type="text"
                             class="form-control {{ $errors->has('address.line_2') ? 'is-invalid' : '' }}"
-                            placeholder="Enter Your Address Line 2" id="address.line_2" name="address[line_2]"
+                            placeholder="{{ __('Enter Your Address Line 2') }}" id="address.line_2" name="address[line_2]"
                             aria-label="line_2" aria-describedby="line_2" oninput="this.value = this.value.toUpperCase()"
                             value="{{ old('address.line_2') }}" required>
                         @error('address.line_2')
@@ -177,10 +177,10 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="address.line_3" class="form-label">Address Line 3:</label>
+                        <label for="address.line_3" class="form-label">{{ __('Address Line 3') }}:</label>
                         <input type="text"
                             class="form-control {{ $errors->has('address.line_3') ? 'is-invalid' : '' }}"
-                            placeholder="Enter Your Address Line 3" id="address.line_3" name="address[line_3]"
+                            placeholder="{{ __('Enter Your Address Line 3') }}" id="address.line_3" name="address[line_3]"
                             aria-label="line_3" aria-describedby="line_3" oninput="this.value = this.value.toUpperCase()"
                             value="{{ old('address.line_3') }}">
                         @error('address.line_3')
@@ -192,10 +192,10 @@
 
                     <div class="mb-3 row">
                         <div class="col-12 col-lg-6">
-                            <label for="address.postcode" class="form-label">Postcode:</label>
+                            <label for="address.postcode" class="form-label">{{ __('Postcode') }}:</label>
                             <input type="text"
                                 class="form-control {{ $errors->has('address.postcode') ? 'is-invalid' : '' }}"
-                                placeholder="Enter Your Postcode" id="address.postcode" name="address[postcode]"
+                                placeholder="{{ __('Enter Your Postcode') }}" id="address.postcode" name="address[postcode]"
                                 aria-label="postcode" aria-describedby="postcode"
                                 oninput="this.value = this.value.toUpperCase()" value="{{ old('address.postcode') }}"
                                 required>
@@ -206,10 +206,10 @@
                             @enderror
                         </div>
                         <div class="col-12 col-lg-6">
-                            <label for="address.city" class="form-label">City:</label>
+                            <label for="address.city" class="form-label">{{ __('City') }}:</label>
                             <input type="text"
                                 class="form-control {{ $errors->has('address.city') ? 'is-invalid' : '' }}"
-                                placeholder="Enter Your City" id="address.city" name="address[city]" aria-label="city"
+                                placeholder="{{ __('Enter Your City') }}" id="address.city" name="address[city]" aria-label="city"
                                 aria-describedby="city" oninput="this.value = this.value.toUpperCase()"
                                 value="{{ old('address.city') }}" required>
                             @error('address.city')
@@ -222,10 +222,10 @@
 
                     <div class="mb-3 row">
                         <div class="col-12 col-lg-6">
-                            <label for="address.state" class="form-label">State:</label>
+                            <label for="address.state" class="form-label">{{ __('State') }}:</label>
                             <input type="text"
                                 class="form-control {{ $errors->has('address.state') ? 'is-invalid' : '' }}"
-                                placeholder="Enter Your State" id="address.state" name="address[state]"
+                                placeholder="{{ __('Enter Your State') }}" id="address.state" name="address[state]"
                                 aria-label="state" aria-describedby="state"
                                 oninput="this.value = this.value.toUpperCase()"
                                 value="{{ old('address.state', 'JOHOR') }}" readonly required>
@@ -236,10 +236,10 @@
                             @enderror
                         </div>
                         <div class="col-12 col-lg-6">
-                            <label for="address.country" class="form-label">Country:</label>
+                            <label for="address.country" class="form-label">{{ __('Country') }}:</label>
                             <input type="text"
                                 class="form-control {{ $errors->has('address.country') ? 'is-invalid' : '' }}"
-                                placeholder="Enter Your Country" id="address.country" name="address[country]"
+                                placeholder="{{ __('Enter Your Country') }}" id="address.country" name="address[country]"
                                 aria-label="country" aria-describedby="country"
                                 oninput="this.value = this.value.toUpperCase()"
                                 value="{{ old('address.country', 'MALAYSIA') }}" readonly required>
@@ -262,12 +262,12 @@
 
                     <!-- Form Group (create account submit)-->
                     <div class="pt-3 pb-3 d-flex justify-content-center align-items-center">
-                        <button class="btn btn-primary btn-block" type="submit">Create Account</button>
+                        <button class="btn btn-primary btn-block" type="submit">{{ __('Create Account') }}</button>
                     </div>
                 </form>
             </div>
             <div class="card-footer text-center">
-                <div class="small"><a href="{{ route('community.login') }}">Have an account? Go to login</a></div>
+                <div class="small"><a href="{{ route('community.login') }}">{{ __('Have an account? Go to login') }}</a></div>
             </div>
         </div>
     </div>

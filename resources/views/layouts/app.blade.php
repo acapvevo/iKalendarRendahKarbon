@@ -60,10 +60,11 @@
                     aria-labelledby="navbarDropdownAlerts">
                     <h6 class="dropdown-header dropdown-notifications-header">
                         <i class="me-2" data-feather="bell"></i>
-                        Alerts Center &nbsp;{!! isset($alertCount) && $alertCount ? '<span class="badge bg-danger">{$alertCount}</span>' : '' !!}
+                        {{ __('Alerts Center') }} &nbsp;{!! isset($alertCount) && $alertCount ? '<span class="badge bg-danger">{$alertCount}</span>' : '' !!}
                     </h6>
                     @yield('alerts')
-                    <a class="dropdown-item dropdown-notifications-footer" href="#!">View All Alerts</a>
+                    <a class="dropdown-item dropdown-notifications-footer"
+                        href="#!">{{ __('View All Alerts') }}</a>
                 </div>
             </li>
             <!-- Messages Dropdown-->
@@ -76,24 +77,23 @@
                     aria-labelledby="navbarDropdownMessages">
                     <h6 class="dropdown-header dropdown-notifications-header">
                         <i class="me-2" data-feather="mail"></i>
-                        Message Center &nbsp;{!! isset($messageCount) && $messageCount ? '<span class="badge bg-danger">{$messageCount}</span>' : '' !!}
+                        {{ __('Message Center') }} &nbsp;{!! isset($messageCount) && $messageCount ? '<span class="badge bg-danger">{$messageCount}</span>' : '' !!}
                     </h6>
                     @yield('messages')
                     <!-- Footer Link-->
-                    <a class="dropdown-item dropdown-notifications-footer" href="#!">Read All Messages</a>
+                    <a class="dropdown-item dropdown-notifications-footer"
+                        href="#!">{{ __('Read All Messages') }}</a>
                 </div>
             </li>
             <!-- User Dropdown-->
             <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
                 <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage"
                     href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false"><img class="img-fluid"
-                        src="@yield('picture'){{ asset('assets/img/illustrations/profiles/profile-1.png') }}" /></a>
+                    aria-expanded="false"><img class="img-fluid" src="@yield('picture')" /></a>
                 <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up"
                     aria-labelledby="navbarDropdownUserImage">
                     <h6 class="dropdown-header d-flex align-items-center">
-                        <img class="dropdown-user-img"
-                            src="@yield('picture'){{ asset('assets/img/illustrations/profiles/profile-1.png') }}" />
+                        <img class="dropdown-user-img" src="@yield('picture')" />
                         <div class="dropdown-user-details">
                             <div class="dropdown-user-details-name">@yield('name')</div>
                             <div class="dropdown-user-details-email">@yield('email')</div>
@@ -112,12 +112,12 @@
                     <div class="nav accordion" id="accordionSidenav">
                         <!-- Sidenav Menu Heading (Account)-->
                         <!-- * * Note: * * Visible only on and above the sm breakpoint-->
-                        <div class="sidenav-menu-heading d-sm-none">Account</div>
+                        <div class="sidenav-menu-heading d-sm-none">{{ __('Account') }}</div>
                         <!-- Sidenav Link (Alerts)-->
                         <!-- * * Note: * * Visible only on and above the sm breakpoint-->
                         <a class="nav-link d-sm-none" href="@yield('alert-href')">
                             <div class="nav-link-icon"><i data-feather="bell"></i></div>
-                            Alerts
+                            {{ __('Alerts') }}
                             {!! isset($alertCount) && $alertCount
                                 ? '<span class="badge bg-warning-soft text-warning ms-auto">{$alertCount} New!</span>'
                                 : '' !!}
@@ -126,7 +126,7 @@
                         <!-- * * Note: * * Visible only on and above the sm breakpoint-->
                         <a class="nav-link d-sm-none" href="@yield('message-href')">
                             <div class="nav-link-icon"><i data-feather="mail"></i></div>
-                            Messages
+                            {{ __('Messages') }}
                             {!! isset($messageCount) && $messageCount
                                 ? '<span class="badge bg-warning-soft text-warning ms-auto">{$messageCount} New!</span>'
                                 : '' !!}
@@ -137,7 +137,7 @@
                 <!-- Sidenav Footer-->
                 <div class="sidenav-footer">
                     <div class="sidenav-footer-content">
-                        <div class="sidenav-footer-subtitle">Logged in as:</div>
+                        <div class="sidenav-footer-subtitle">{{ __('Logged in as') }}:</div>
                         <div class="sidenav-footer-title">@yield('name')</div>
                     </div>
                 </div>

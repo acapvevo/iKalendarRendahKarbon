@@ -14,6 +14,7 @@ use App\Http\Controllers\Community\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Community\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Community\Auth\EmailVerificationNotificationController;
 
+
 Route::prefix('community')->name('community.')->group(function () {
 
     Route::middleware('guest:community')->group(function () {
