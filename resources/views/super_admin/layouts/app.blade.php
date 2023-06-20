@@ -1,36 +1,133 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+@extends('layouts.app')
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+@php
+    $home = route('super_admin.dashboard');
+@endphp
 
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+@section('apps', 'iKalendar Karbon')
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-</head>
-<body class="font-sans antialiased">
-<div class="min-h-screen bg-gray-100">
-@include('super_admin.layouts.navigation')
-
-<!-- Page Heading -->
-    <header class="bg-white shadow">
-        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            {{ $header }}
+@section('alerts')
+    <!-- Example Alert 1-->
+    <a class="dropdown-item dropdown-notifications-item" href="#!">
+        <div class="dropdown-notifications-item-icon bg-warning"><i data-feather="activity"></i></div>
+        <div class="dropdown-notifications-item-content">
+            <div class="dropdown-notifications-item-content-details">December 29, 2021</div>
+            <div class="dropdown-notifications-item-content-text">This is an alert message. It's
+                nothing serious, but it requires your attention.</div>
         </div>
-    </header>
+    </a>
+    <!-- Example Alert 2-->
+    <a class="dropdown-item dropdown-notifications-item" href="#!">
+        <div class="dropdown-notifications-item-icon bg-info"><i data-feather="bar-chart"></i></div>
+        <div class="dropdown-notifications-item-content">
+            <div class="dropdown-notifications-item-content-details">December 22, 2021</div>
+            <div class="dropdown-notifications-item-content-text">A new monthly report is ready. Click
+                here to view!</div>
+        </div>
+    </a>
+    <!-- Example Alert 3-->
+    <a class="dropdown-item dropdown-notifications-item" href="#!">
+        <div class="dropdown-notifications-item-icon bg-danger"><i class="fas fa-exclamation-triangle"></i></div>
+        <div class="dropdown-notifications-item-content">
+            <div class="dropdown-notifications-item-content-details">December 8, 2021</div>
+            <div class="dropdown-notifications-item-content-text">Critical system failure, systems
+                shutting down.</div>
+        </div>
+    </a>
+    <!-- Example Alert 4-->
+    <a class="dropdown-item dropdown-notifications-item" href="#!">
+        <div class="dropdown-notifications-item-icon bg-success"><i data-feather="user-plus"></i>
+        </div>
+        <div class="dropdown-notifications-item-content">
+            <div class="dropdown-notifications-item-content-details">December 2, 2021</div>
+            <div class="dropdown-notifications-item-content-text">New user request. Woody has requested
+                access to the organization.</div>
+        </div>
+    </a>
+@endsection
 
-    <!-- Page Content -->
-    <main>
-        {{ $slot }}
-    </main>
-</div>
-</body>
-</html>
+@section('messages')
+    <!-- Example Message 1  -->
+    <a class="dropdown-item dropdown-notifications-item" href="#!">
+        <img class="dropdown-notifications-item-img" src="{{ asset('assets/img/illustrations/profiles/profile-2.png') }}" />
+        <div class="dropdown-notifications-item-content">
+            <div class="dropdown-notifications-item-content-text">Lorem ipsum dolor sit amet,
+                consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+                aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+            <div class="dropdown-notifications-item-content-details">Thomas Wilcox · 58m</div>
+        </div>
+    </a>
+    <!-- Example Message 2-->
+    <a class="dropdown-item dropdown-notifications-item" href="#!">
+        <img class="dropdown-notifications-item-img" src="{{ asset('assets/img/illustrations/profiles/profile-3.png') }}" />
+        <div class="dropdown-notifications-item-content">
+            <div class="dropdown-notifications-item-content-text">Lorem ipsum dolor sit amet,
+                consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+                aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+            <div class="dropdown-notifications-item-content-details">Emily Fowler · 2d</div>
+        </div>
+    </a>
+    <!-- Example Message 3-->
+    <a class="dropdown-item dropdown-notifications-item" href="#!">
+        <img class="dropdown-notifications-item-img" src="{{ asset('assets/img/illustrations/profiles/profile-4.png') }}" />
+        <div class="dropdown-notifications-item-content">
+            <div class="dropdown-notifications-item-content-text">Lorem ipsum dolor sit amet,
+                consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+                aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+            <div class="dropdown-notifications-item-content-details">Marshall Rosencrantz · 3d</div>
+        </div>
+    </a>
+    <!-- Example Message 4-->
+    <a class="dropdown-item dropdown-notifications-item" href="#!">
+        <img class="dropdown-notifications-item-img" src="{{ asset('assets/img/illustrations/profiles/profile-5.png') }}" />
+        <div class="dropdown-notifications-item-content">
+            <div class="dropdown-notifications-item-content-text">Lorem ipsum dolor sit amet,
+                consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+                aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+            <div class="dropdown-notifications-item-content-details">Colby Newton · 3d</div>
+        </div>
+    </a>
+@endsection
+
+@section('name', Auth::user()->name)
+@section('email', Auth::user()->email)
+@section('picture', Auth::user()->image ? route('super_admin.user.picture.show') :
+    asset('assets/img/illustrations/profiles/profile-1.png'))
+
+@section('topmenu')
+    <a class="dropdown-item" href="{{ route('super_admin.user.profile.view') }}">
+        <div class="dropdown-item-icon"><i data-feather="user"></i></div>
+        Profile
+    </a>
+    <a class="dropdown-item" href="{{ route('super_admin.user.setting.view') }}">
+        <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
+        Setting
+    </a>
+    <form action="{{ route('super_admin.logout') }}" method="post">
+        @csrf
+        <a class="dropdown-item" href="#!" onclick="event.preventDefault(); this.closest('form').submit();">
+            <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
+            Logout
+        </a>
+    </form>
+@endsection
+
+@section('sidemenu')
+    <!-- Sidenav Link (Dashboard)-->
+    <a class="nav-link" href="{{ route('super_admin.dashboard') }}">
+        <div class="nav-link-icon"><i data-feather="activity"></i></div>
+        Dashboard
+    </a>
+@endsection

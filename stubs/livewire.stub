@@ -1,0 +1,23 @@
+<?php
+
+namespace [namespace];
+
+use Livewire\Component;
+
+class [class] extends Component
+{
+    protected function rules()
+    {
+        return [];
+    }
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
+
+    public function render()
+    {
+        return view('[view]');
+    }
+}

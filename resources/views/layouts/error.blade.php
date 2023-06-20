@@ -2,72 +2,106 @@
 <html lang="en">
 
 <head>
-    <title>Portal - Bootstrap 5 Admin Dashboard Template For Developers</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
-    <!-- Meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title') - @yield('apps')</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png') }}" />
 
-    <meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
-    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">
-    <link rel="shortcut icon" href="{{ asset('assets/favicon.ico') }}">
+    <!-- FONT AWESOME CSS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        crossorigin="anonymous" />
 
-    <!-- FontAwesome JS-->
-    <script defer src="{{ asset('assets/plugins/fontawesome/js/all.min.js') }}"></script>
+    <!-- DATATABLE CSS-->
+    <link
+        href="https://cdn.datatables.net/v/bs5/dt-1.13.4/b-2.3.6/b-html5-2.3.6/fh-3.3.2/r-2.4.1/sb-1.4.2/datatables.min.css"
+        rel="stylesheet" />
 
-    <!-- App CSS -->
-    <link id="theme-style" rel="stylesheet" href="{{ asset('assets/css/portal.css') }}">
+    <!-- SWEET ALERT 2 CSS-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.10/dist/sweetalert2.min.css">
 
-    <!-- Page Specific CSS -->
+    <!-- EASYMDE CSS-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- FLATPICKR CSS-->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- APP CSS-->
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
+    @livewireStyles
+
+    <!-- PAGE SPECIFIC CSS-->
     @yield('styles')
 </head>
 
-<body class="app app-404-page">
-
-    <div class="container mb-5">
-        <div class="row">
-            <div class="col-12 col-md-11 col-lg-7 col-xl-6 mx-auto">
-                <div class="app-branding text-center mb-5">
-                    @include('components.logo.error')
-
-                </div>
-                <!--//app-branding-->
-                <div class="app-card p-5 text-center shadow-sm">
-                    <h1 class="page-title mb-4">@yield('code')<br><span class="font-weight-light">
-                            @yield('message')</span></h1>
-                    <div class="mb-4">
-                        @yield('description')
-
+<body class="bg-white">
+    <div id="layoutError">
+        <div id="layoutError_content">
+            <main>
+                <div class="container-xl px-4">
+                    <div class="row justify-content-center">
+                        @yield('content')
                     </div>
-                    <a class="btn app-btn-primary" href="{{ route('welcome') }}">Go to home page</a>
                 </div>
-            </div>
-            <!--//col-->
+            </main>
         </div>
-        <!--//row-->
+        <div id="layoutError_footer">
+            @include('layouts.footer')
+        </div>
     </div>
-    <!--//container-->
 
+    <!-- JQUERY JS-->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" crossorigin="anonymous"></script>
 
-    <footer class="app-footer fixed-bottom">
-        @include('components.footer')
-    </footer>
-    <!--//app-footer-->
+    <!-- FONT AWESOME JS-->
+    <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/js/all.min.js"
+        crossorigin="anonymous"></script>
 
-    <!-- Javascript -->
-    <script src="{{ asset('assets/plugins/popper.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+    <!-- FEATHER ICONS JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js" crossorigin="anonymous">
+    </script>
 
-    <!-- Charts JS -->
-    <script src="{{ asset('assets/plugins/chart.js/chart.min.js') }}"></script>
+    <!-- ICONIFY JS-->
+    <script src="https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js"></script>
 
-    <!-- App JS -->
-    <script src="{{ asset('assets/js/app.js') }}"></script>
+    <!-- BOOTSTRAP JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
+    </script>
 
-    <!-- Page Specific JS -->
+    <!-- CHART JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.umd.min.js"></script>
+
+    <!-- JSZIP JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+
+    <!-- PDFMAKE JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
+    <!-- DATATABLE JS-->
+    <script
+        src="https://cdn.datatables.net/v/bs5/dt-1.13.4/b-2.3.6/b-html5-2.3.6/fh-3.3.2/r-2.4.1/sb-1.4.2/datatables.min.js">
+    </script>
+    <script src="https://cdn.datatables.net/plug-ins/1.13.4/sorting/natural.js"></script>
+
+    <!-- SWEET ALERT 2 JS-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.10/dist/sweetalert2.all.min.js"></script>
+
+    <!-- EASYMDE JS-->
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+
+    <!-- FLATPICKR JS-->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- APP JS-->
+    <script src="{{ asset('js/scripts.js') }}"></script>
+    @livewireScripts
+
+    <!-- PAGE SPECIFIC JS-->
     @yield('scripts')
-
 </body>
 
 </html>

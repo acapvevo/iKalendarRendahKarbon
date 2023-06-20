@@ -5,7 +5,6 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\User\PictureController;
 use App\Http\Controllers\Admin\User\ProfileController;
 use App\Http\Controllers\Admin\User\SettingController;
-use App\Http\Controllers\Admin\User\PasswordController;
 use App\Http\Controllers\Admin\Auth\NewPasswordController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;

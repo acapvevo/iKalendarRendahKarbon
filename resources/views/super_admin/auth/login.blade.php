@@ -1,56 +1,81 @@
-<x-super_admin-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+@extends('layouts.guest')
 
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
+@section('apps', 'iKalendar Karbon')
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+@section('title', 'Login As Super Admin')
 
-        <form method="POST" action="{{ route('super_admin.login') }}">
-            @csrf
-
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+@section('content')
+    <div class="col-lg-5">
+        <!-- Basic login form-->
+        <div class="card shadow-lg border-0 rounded-lg mt-5">
+            <div class="card-header justify-content-center">
+                <h3 class="fw-light my-4 text-center">Login As Super Admin</h3>
             </div>
+            <div class="card-body">
+                <!-- Login form-->
+                <form class="auth-form login-form" action="{{ route('super_admin.login') }}" method="post">
+                    @csrf
 
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
+                    @if (session('status'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('status') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
 
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="current-password" />
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Oops!, Something went wrong.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+
+                    <!-- Form Group (Username)-->
+                    <div class="mb-3">
+                        <label class="small mb-1" for="username">Username</label>
+                        <input type="text" class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}"
+                            placeholder="Enter Your Username" id="username" name="username" aria-label="Username"
+                            aria-describedby="username" value="{{ old('username') }}">
+                        @error('username')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <!-- Form Group (password)-->
+                    <div class="mb-3">
+                        <label class="small mb-1" for="password">Password</label>
+                        <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
+                            placeholder="Enter Your Password" id="password" name="password" aria-label="password"
+                            aria-describedby="password" value="{{ old('password') }}">
+                        @error('password')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <!-- Form Group (remember password checkbox)-->
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" id="remember" name="remember" type="checkbox" />
+                            <label class="form-check-label" for="remember">Remember
+                                password</label>
+                        </div>
+                    </div>
+
+                    <!-- Form Group (login box)-->
+                    <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                        <a class="small" href="{{ route('super_admin.password.request') }}">Forgot Password?</a>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+                </form>
             </div>
-
-            <!-- Remember Me -->
-            <div class="block mt-4">
-                <label for="remember_me" class="inline-flex items-center">
-                    <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('super_admin.password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('super_admin.password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-
-                <x-button class="ml-3">
-                    {{ __('Log in') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-super_admin-guest-layout>
+            {{-- <div class="card-footer text-center">
+                <div class="small"><a href="{{ route('super_admin.register') }}">Need an account? Sign up!</a>
+                </div>
+            </div> --}}
+        </div>
+    </div>
+@endsection

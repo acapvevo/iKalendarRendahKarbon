@@ -2,94 +2,111 @@
 <html lang="en">
 
 <head>
-    <title>Portal - Bootstrap 5 Admin Dashboard Template For Developers</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
-    <!-- Meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title') - @yield('apps')</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png') }}" />
 
-    <meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
-    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">
-    <link rel="shortcut icon" href="{{ asset('assets/favicon.ico') }}">
+    <!-- FONT AWESOME CSS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        crossorigin="anonymous" />
 
-    <!-- FontAwesome JS-->
-    <script defer src="{{ asset('assets/plugins/fontawesome/js/all.min.js') }}"></script>
+    <!-- DATATABLE CSS-->
+    <link
+        href="https://cdn.datatables.net/v/bs5/dt-1.13.4/b-2.3.6/b-html5-2.3.6/fh-3.3.2/r-2.4.1/sb-1.4.2/datatables.min.css"
+        rel="stylesheet" />
 
-    <!-- App CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7/dist/sweetalert2.min.css">
-    <link id="theme-style" rel="stylesheet" href="{{ asset('assets/css/portal.css') }}">
-    <link id="theme-style" rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
+    <!-- SWEET ALERT 2 CSS-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.10/dist/sweetalert2.min.css">
+
+    <!-- EASYMDE CSS-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- FLATPICKR CSS-->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- APP CSS-->
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
     @livewireStyles
 
-    <!-- Page Specific CSS -->
+    <!-- PAGE SPECIFIC CSS-->
     @yield('styles')
-
 </head>
 
-<body class="app @yield('classname') p-0">
-    <div class="row g-0 app-auth-wrapper">
-        <div class="col-12 col-md-7 col-lg-6 auth-main-col text-center p-5">
-            <div class="d-flex flex-column align-content-end">
-                <div class="app-auth-body mx-auto">
-                    @include('components.logo.guest')
-
-                    @yield('title')
-
-                    @yield('content')
-
-                </div>
-                <!--//auth-body-->
-
-                <footer class="app-auth-footer fixed-bottom">
-                    @include('components.footer')
-                </footer>
-                <!--//app-auth-footer-->
-            </div>
-            <!--//flex-column-->
-        </div>
-        <!--//auth-main-col-->
-        <div class="col-12 col-md-5 col-lg-6 h-100 auth-background-col">
-            <div class="auth-background-holder">
-            </div>
-            <div class="auth-background-mask"></div>
-            <div class="auth-background-overlay p-3 p-lg-5">
-                <div class="d-flex flex-column align-content-end h-100">
-                    <div class="h-100"></div>
-                    <div class="overlay-content p-3 p-lg-4 rounded">
-                        <h5 class="mb-3 overlay-title">Explore Portal Admin Template</h5>
-                        <div>Portal is a free Bootstrap 5 admin dashboard template. You can download and view the
-                            template license <a
-                                href="https://themes.3rdwavemedia.com/bootstrap-templates/admin-dashboard/portal-free-bootstrap-admin-dashboard-template-for-developers/">here</a>.
-                        </div>
+<body class="bg-primary">
+    <div id="layoutAuthentication">
+        <div id="layoutAuthentication_content">
+            <main>
+                <div class="container-xl px-4">
+                    <div class="row justify-content-center">
+                        @yield('content')
                     </div>
                 </div>
-            </div>
-            <!--//auth-background-overlay-->
+            </main>
         </div>
-        <!--//auth-background-col-->
-
+        <div id="layoutAuthentication_footer">
+            @include('layouts.footer', ['colour' => 'dark'])
+        </div>
     </div>
-    <!--//row-->
 
-    <!-- App JS -->
-    <script src="{{ asset('assets/plugins/popper.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.js"
-        integrity="sha256-7GO+jepT9gJe9LB4XFf8snVOjX3iYNb0FHYr5LI1N5c=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-mask-plugin@1.14.16/dist/jquery.mask.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7/dist/sweetalert2.all.min.js"></script>
+    <!-- JQUERY JS-->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" crossorigin="anonymous">
+    </script>
+
+    <!-- FONT AWESOME JS-->
+    <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/js/all.min.js"
+        crossorigin="anonymous"></script>
+
+    <!-- FEATHER ICONS JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js" crossorigin="anonymous">
+    </script>
+
+    <!-- ICONIFY JS-->
+    <script src="https://code.iconify.design/iconify-icon/1.0.0-beta.3/iconify-icon.min.js"></script>
+
+    <!-- BOOTSTRAP JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
+    </script>
+
+    <!-- CHART JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.umd.min.js"></script>
+
+    <!-- JSZIP JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+
+    <!-- PDFMAKE JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
+    <!-- DATATABLE JS-->
+    <script
+        src="https://cdn.datatables.net/v/bs5/dt-1.13.4/b-2.3.6/b-html5-2.3.6/fh-3.3.2/r-2.4.1/sb-1.4.2/datatables.min.js">
+    </script>
+    <script src="https://cdn.datatables.net/plug-ins/1.13.4/sorting/natural.js"></script>
+
+    <!-- SWEET ALERT 2 JS-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.10/dist/sweetalert2.all.min.js"></script>
+
+    <!-- EASYMDE JS-->
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+
+    <!-- FLATPICKR JS-->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- APP JS-->
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/scripts.js') }}"></script>
     @livewireScripts
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="{{ asset('assets/js/plugin.js') }}"></script>
-
     @include('components.alert')
 
-    <!-- Page Specific JS -->
+    <!-- PAGE SPECIFIC JS-->
     @yield('scripts')
-
-
 </body>
 
 </html>
