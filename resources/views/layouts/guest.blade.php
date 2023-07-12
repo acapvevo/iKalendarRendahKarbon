@@ -36,6 +36,7 @@
 
     <!-- PAGE SPECIFIC CSS-->
     @yield('styles')
+    @stack('styles')
 </head>
 
 <body class="bg-primary">
@@ -107,6 +108,7 @@
 
     <!-- PAGE SPECIFIC JS-->
     @yield('scripts')
+    @stack('scripts')
 </body>
 
 </html>

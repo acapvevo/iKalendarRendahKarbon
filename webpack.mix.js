@@ -15,3 +15,5 @@ mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         //
     ]);
+
+mix.copy('node_modules/intl-tel-input/build/js/utils.js', 'public/js/intl-tel-input/js');

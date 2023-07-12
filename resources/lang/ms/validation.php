@@ -94,6 +94,8 @@ return [
     'prohibited_if'        => 'Ruangan :attribute adalah dilarang apabila :other adalah :value.',
     'prohibited_unless'    => 'Ruangan :attribute adalah dilarang kecuali :other adalah di :values.',
     'prohibits'            => 'The :attribute field prohibits :other from being present.',
+    'phone'                => 'Ruangan :attribute mestilah nombor telefon yang sah.',
+    'recaptcha'            => 'Ralat Captcha! Cuba lagi kemudian atau hubungi pentadbir laman web.',
     'regex'                => 'Format :attribute tidak sah.',
     'required'             => 'Ruangan :attribute diperlukan.',
     'required_array_keys'  => 'The :attribute field must contain entries for: :values.',

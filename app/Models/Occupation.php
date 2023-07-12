@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Address extends Model
+class Occupation extends Model
 {
     use HasFactory;
 
@@ -17,26 +17,21 @@ class Address extends Model
      */
     protected $fillable = [
         'community_id',
-        'category',
-        'line_1',
-        'line_2',
-        'line_3',
-        'city',
-        'postcode',
-        'state',
-        'country',
+        'place',
+        'position',
+        'sector',
     ];
 
     /**
-     * Get the Community that owns the Address.
+     * Get the Community that owns the Occupation.
      */
     public function community()
     {
         return $this->belongsTo(Community::class);
     }
 
-    public function getCategory()
+    public function getSector()
     {
-        return DB::table('address_category')->where('code', $this->category)->first();
+        return DB::table('occupation_sector_type')->where('code', $this->sector)->first();
     }
 }

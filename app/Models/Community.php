@@ -53,4 +53,12 @@ class Community extends Authenticatable
     {
         return $this->hasOne(Address::class);
     }
+
+    /**
+     * Get the Occupation associated with the Community.
+     */
+    public function occupation()
+    {
+        return $this->hasOne(Occupation::class);
+    }
 }

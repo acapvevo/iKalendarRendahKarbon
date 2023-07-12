@@ -260,7 +260,6 @@ class Datatable
      *  @param  array   $data       Search Builder data
      *  @param  Builder $dbObj      Default Builder Object
      *  @param  array   $columns    Column information array
-     *  @return Builder             Added Search Builder's Clause Builder Object
      */
     static function search_builder($data, $dbObj, $columns)
     {

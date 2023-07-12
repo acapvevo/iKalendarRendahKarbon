@@ -15,14 +15,17 @@ class CreateCommunitiesTable extends Migration
     {
         Schema::create('communities', function (Blueprint $table) {
             $table->id();
+
             $table->string('name');
-            $table->string('identification_number')->unique();
+            $table->string('identification_number')->unique()->nullable();
             $table->string('phone_number')->unique();
             $table->string('image')->nullable();
 
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('password');
+
+            $table->boolean('isVerified')->default(false);
 
             $table->timestamp('email_verified_at')->nullable();
 
