@@ -6,12 +6,22 @@ use Livewire\Component;
 use App\Models\Competition;
 use Illuminate\Validation\Rule;
 use App\Models\Question as QuestionModel;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Question extends Component
 {
+    use LivewireAlert;
+
     public Competition $competition;
     public $questions;
     public QuestionModel $question;
+
+    public function getListeners()
+    {
+        return [
+            'delete'
+        ];
+    }
 
     protected function rules()
     {
@@ -19,6 +29,7 @@ class Question extends Component
             'question.competition_id' => 'required|integer|exists:competitions,id',
             'question.text' => 'required|string|max:2048',
             'question.example' => 'required|string|max:2048',
+            'question.category' => 'required|string|exists:question_category,code',
         ];
     }
 
@@ -53,7 +64,7 @@ class Question extends Component
 
         $this->question->save();
 
-        redirect(route('admin.contest.question.list'))->with('success', __("alerts.question_create", ['text' => $this->question->name]));
+        redirect(route('admin.contest.question.list', ['competition_id' => $this->competition->id]))->with('success', __("alerts.question_create", ['text' => $this->question->text]));
     }
 
     public function update()
@@ -62,7 +73,7 @@ class Question extends Component
 
         $this->question->save();
 
-        redirect(route('admin.contest.question.list'))->with('success', __("alerts.question_update", ['text' => $this->question->name]));
+        redirect(route('admin.contest.question.list', ['competition_id' => $this->competition->id]))->with('success', __("alerts.question_update", ['text' => $this->question->text]));
     }
 
     public function close()
@@ -73,14 +84,34 @@ class Question extends Component
         $this->resetErrorBag();
     }
 
-    public function delete($id)
+    public function askDelete($id)
     {
         $question = QuestionModel::find($id);
-        $questionText = $question->text;
+
+        $this->alert('warning', __('Warning'), [
+            'inputAttributes' => [
+                'id' => $id
+             ],
+            'position' => 'center',
+            'timer' => null,
+            'toast' => true,
+            'text' => __("alerts.question_delete_confirmation", ['text' => $question->text]),
+            'showConfirmButton' => true,
+            'showCancelButton' => true,
+            'cancelButtonText' => __('Cancel'),
+            'confirmButtonText' => __('Confirm'),
+            'onConfirmed' => 'delete',
+            'onDismissed' => '',
+        ]);
+    }
+
+    public function delete($response)
+    {
+        $question = QuestionModel::find($response['data']['inputAttributes']['id']);
 
         $question->delete();
 
-        redirect(route('admin.contest.question.list'))->with('success', __("alerts.question_delete", ['text' => $questionText]));
+        redirect(route('admin.contest.question.list', ['competition_id' => $this->competition->id]))->with('success', __("alerts.question_delete"));
     }
 
     public function render()

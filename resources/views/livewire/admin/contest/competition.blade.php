@@ -25,21 +25,21 @@
                             <div class="btn-toolbar justify-content-center" role="toolbar"
                                 aria-label="Toolbar with button groups">
                                 <div class="btn-group" role="group" aria-label="Action Button">
-                                    <button type="button" data-bs-toggle="tooltip"
-                                        data-bs-title="{{ __('View Competition') }}" class="btn btn-primary btn-sm"
-                                        data-bs-toggle="modal" data-bs-target="#viewCompetitionModal"
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#viewCompetitionModal"
                                         wire:click.prevent='open({{ $competition->id }})'>
-                                        <i data-feather="eye"></i>
+                                        <i data-bs-toggle="tooltip" data-bs-title="{{ __('View Competition') }}"
+                                            data-feather="eye"></i>
                                     </button>
-                                    <button type="button" data-bs-toggle="tooltip"
-                                        data-bs-title="{{ __('Update Competition') }}" class="btn btn-primary btn-sm"
-                                        data-bs-toggle="modal" data-bs-target="#updateCompetitionModal"
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#updateCompetitionModal"
                                         wire:click.prevent='open({{ $competition->id }})'>
-                                        <i data-feather="edit-2"></i>
+                                        <i data-bs-toggle="tooltip" data-bs-title="{{ __('Update Competition') }}"
+                                            data-feather="edit-2"></i>
                                     </button>
-                                    <button type="button" data-bs-toggle="tooltip"
-                                        data-bs-title="{{ __('Delete Competition') }}" class="btn btn-primary btn-sm"
-                                        wire:click.prevent='delete({{ $competition->id }})'><i
+                                    <button type="button" class="btn btn-primary btn-sm"
+                                        wire:click.prevent='askDelete({{ $competition->id }})'><i data-bs-toggle="tooltip"
+                                            data-bs-title="{{ __('Delete Competition') }}"
                                             data-feather="trash-2"></i></button>
                                 </div>
                                 <div class="ps-3 btn-group" role="group" aria-label="Question">

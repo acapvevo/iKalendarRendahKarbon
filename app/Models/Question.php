@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Question extends Model
 {
@@ -18,6 +19,7 @@ class Question extends Model
         'competition_id',
         'text',
         'example',
+        'category',
     ];
 
     /**
@@ -25,8 +27,7 @@ class Question extends Model
      *
      * @var array
      */
-    protected $casts = [
-    ];
+    protected $casts = [];
 
     /**
      * Get the Competition that owns the Question.
@@ -42,5 +43,10 @@ class Question extends Model
     public function answers()
     {
         return $this->hasMany(Answer::class);
+    }
+
+    public function getCategory()
+    {
+        return DB::table('question_category')->where('code', $this->category)->first();
     }
 }

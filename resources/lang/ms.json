@@ -145,7 +145,7 @@
     "Form Validation Error": "Ralat Validasi Borang",
     "Please Check Your Input": "Sila lihat semula Input anda",
     "Information": "Informasi",
-    "Warning": "Warning",
+    "Warning": "Amaran",
     "Confirmation": "Pengesahan",
     "API Error": "Ralat API",
     "Please Try Again Later": "Sila cuba sebentar lagi",
@@ -172,5 +172,10 @@
     "Delete Question": "Padam Soalan",
     "(No need to put '?' symbol)": "(Tidak perlu menambah simbol '?')",
     "Enter The Question": "Sila Masukkan Soalan",
-    "Enter Question Example Answer": "Sila masukkan Contoh Jawapan bagi Soalan ini"
+    "Enter Question Example Answer": "Sila masukkan Contoh Jawapan bagi Soalan ini",
+    "Cancel": "Batal",
+    "Water": "Air",
+    "Electric": "Elektrik",
+    "Recycle": "Kitar Semula",
+    "Used Oil": "Minyak Terpakai"
 }

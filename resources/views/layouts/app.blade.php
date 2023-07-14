@@ -207,6 +207,7 @@
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="{{ asset('js/showModalOnError.js') }}"></script>
     @livewireScripts
+    <x-livewire-alert::scripts />
     @include('components.alert')
 
     <!-- PAGE SPECIFIC JS-->

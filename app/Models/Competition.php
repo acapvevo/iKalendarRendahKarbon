@@ -60,4 +60,9 @@ class Competition extends Model
             ]);
         }
     }
+
+    public function deleteMonth()
+    {
+        $this->months->delete();
+    }
 }

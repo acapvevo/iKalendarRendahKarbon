@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuestionsTable extends Migration
+class CreateQuestionCategoryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreateQuestionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('questions', function (Blueprint $table) {
+        Schema::create('question_category', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('competition_id');
-            $table->foreign('competition_id')->references('id')->on('competitions')->onDelete('cascade');
-
-            $table->string('text');
-            $table->string('example');
-            $table->char('category');
+            $table->char('code', 2);
+            $table->string('name');
 
             $table->timestamps();
         });
@@ -34,6 +30,6 @@ class CreateQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('questions');
+        Schema::dropIfExists('question_category');
     }
 }

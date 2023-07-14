@@ -4,12 +4,22 @@ namespace App\Http\Livewire\Admin\Contest;
 
 use Livewire\Component;
 use Illuminate\Validation\Rule;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Models\Competition as CompetitionModel;
 
 class Competition extends Component
 {
+    use LivewireAlert;
+
     public $competitions;
     public CompetitionModel $competition;
+
+    public function getListeners()
+    {
+        return [
+            'delete'
+        ];
+    }
 
     protected function rules()
     {
@@ -72,14 +82,34 @@ class Competition extends Component
         $this->resetErrorBag();
     }
 
-    public function delete($id)
+    public function askDelete($id)
     {
         $competition = CompetitionModel::find($id);
-        $competitionName = $competition->name;
+
+        $this->alert('warning', __('Warning'), [
+            'inputAttributes' => [
+                'id' => $id
+            ],
+            'position' => 'center',
+            'timer' => null,
+            'toast' => true,
+            'text' => __("alerts.competition_delete_confirmation", ['name' => $competition->name]),
+            'showConfirmButton' => true,
+            'showCancelButton' => true,
+            'cancelButtonText' => __('Cancel'),
+            'confirmButtonText' => __('Confirm'),
+            'onConfirmed' => 'delete',
+            'onDismissed' => '',
+        ]);
+    }
+
+    public function delete($response)
+    {
+        $competition = CompetitionModel::find($response['data']['inputAttributes']['id']);
 
         $competition->delete();
 
-        redirect(route('admin.contest.competition.list'))->with('success', __("alerts.competition_delete", ['name' => $competitionName]));
+        redirect(route('admin.contest.competition.list'))->with('success', __("alerts.competition_delete"));
     }
 
     public function render()

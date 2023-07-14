@@ -11,33 +11,35 @@
                 <tr>
                     <th>{{ __('Question') }}</th>
                     <th>{{ __('Example Answer') }}</th>
+                    <th>{{ __('Category') }}</th>
                     <th>{{ __('Menu') }}</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($questions as $question)
                     <tr>
-                        <td>{{ $question->text }}</td>
+                        <td>{{ $question->text }}?</td>
                         <td>{{ $question->example }}</td>
+                        <td>{{ __($question->getCategory()->name) }}</td>
                         <td>
                             <div class="btn-toolbar justify-content-center" role="toolbar"
                                 aria-label="Toolbar with button groups">
                                 <div class="btn-group" role="group" aria-label="Action Button">
-                                    <button type="button" data-bs-toggle="tooltip"
-                                        data-bs-title="{{ __('View Question') }}" class="btn btn-primary btn-sm"
-                                        data-bs-toggle="modal" data-bs-target="#viewQuestionModal"
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#viewQuestionModal"
                                         wire:click.prevent='open({{ $question->id }})'>
-                                        <i data-feather="eye"></i>
+                                        <i data-bs-toggle="tooltip" data-bs-title="{{ __('View Question') }}"
+                                            data-feather="eye"></i>
                                     </button>
-                                    <button type="button" data-bs-toggle="tooltip"
-                                        data-bs-title="{{ __('Update Question') }}" class="btn btn-primary btn-sm"
-                                        data-bs-toggle="modal" data-bs-target="#updateQuestionModal"
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#updateQuestionModal"
                                         wire:click.prevent='open({{ $question->id }})'>
-                                        <i data-feather="edit-2"></i>
+                                        <i data-bs-toggle="tooltip" data-bs-title="{{ __('Update Question') }}"
+                                            data-feather="edit-2"></i>
                                     </button>
-                                    <button type="button" data-bs-toggle="tooltip"
-                                        data-bs-title="{{ __('Delete Question') }}" class="btn btn-primary btn-sm"
-                                        wire:click.prevent='delete({{ $question->id }})'><i
+                                    <button type="button" class="btn btn-primary btn-sm"
+                                        wire:click.prevent='askDelete({{ $question->id }})'><i data-bs-toggle="tooltip"
+                                            data-bs-title="{{ __('Delete Question') }}"
                                             data-feather="trash-2"></i></button>
                                 </div>
                             </div>
@@ -88,6 +90,21 @@
                             @enderror
                         </div>
 
+                        <div class="mb-3">
+                            <label for="category" class="form-label">{{ __('Category') }}</label>
+                            <div id="category">
+                                @foreach (DB::table('question_category')->get() as $index => $category)
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio"
+                                            wire:model.lazy='question.category' id="category{{ $index }}"
+                                            value="{{ $category->code }}">
+                                        <label class="form-check-label"
+                                            for="category{{ $index }}">{{ __($category->name) }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -115,11 +132,15 @@
                         <table class="table table-bordered">
                             <tr>
                                 <th>{{ __('Text') }}</th>
-                                <td>{{ $question->text }}</td>
+                                <td>{{ $question->text }}?</td>
                             </tr>
                             <tr>
                                 <th>{{ __('Example Answer') }}</th>
                                 <td>{{ $question->example }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ __('Category') }}</th>
+                                <td>{{ __($question->getCategory()->name ?? '') }}</td>
                             </tr>
                         </table>
                     </div>
@@ -170,6 +191,21 @@
                                     {{ $message }}
                                 </div>
                             @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="category" class="form-label">{{ __('Category') }}</label>
+                            <div id="category">
+                                @foreach (DB::table('question_category')->get() as $index => $category)
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio"
+                                            wire:model.lazy='question.category' id="category{{ $index }}"
+                                            value="{{ $category->code }}">
+                                        <label class="form-check-label"
+                                            for="category{{ $index }}">{{ __($category->name) }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
 
                     </form>
