@@ -38,6 +38,7 @@
 
     <!-- PAGE SPECIFIC CSS-->
     @yield('styles')
+    @stack('styles')
 </head>
 
 <body class="{{ isset($isRTL) && $isRTL ? 'layout-rtl' : '' }} nav-fixed">
@@ -210,6 +211,7 @@
 
     <!-- PAGE SPECIFIC JS-->
     @yield('scripts')
+    @stack('scripts')
 </body>
 
 </html>
