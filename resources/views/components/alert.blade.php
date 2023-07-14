@@ -1,7 +1,7 @@
 <script>
     @if (Session::has('success'))
         Swal.fire(
-            'Success',
+            "{{ __('Success') }}",
             "{{ session('success') }}",
             'success'
         );
@@ -13,7 +13,7 @@
 
     @if (Session::has('error'))
         Swal.fire(
-            'Error',
+            "{{ __('Error') }}",
             "{{ session('error') }}",
             'error'
         );
@@ -24,8 +24,8 @@
 
     @if ($errors->any())
         Swal.fire(
-            'Form Validation Error',
-            "Please Check Your Input",
+            "{{ __('Form Validation Error') }}",
+            "{{ __("Please Check Your Input") }}",
             'error'
         );
     @endif
@@ -33,7 +33,7 @@
 
     @if (Session::has('info'))
         Swal.fire(
-            'Information',
+            "{{ __('Information') }}",
             "{{ session('info') }}",
             'info'
         );
@@ -45,7 +45,7 @@
 
     @if (Session::has('warning'))
         Swal.fire(
-            'Warning',
+            "{{ __('Warning') }}",
             "{{ session('warning') }}",
             'warning'
         );
@@ -56,7 +56,7 @@
 
     function confirmation(question, then) {
         Swal.fire(
-            'Confirmation',
+            "{{ __('Confirmation') }}",
             question,
             'question'
         ).then(then);
@@ -64,8 +64,8 @@
 
     function apiError() {
         Swal.fire(
-            'API Error',
-            "Please Try Again Later",
+            "{{ __('API Error') }}",
+            "{{ __("Please Try Again Later") }}",
             'error'
         );
     }

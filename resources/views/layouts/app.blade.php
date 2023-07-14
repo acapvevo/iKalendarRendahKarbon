@@ -38,6 +38,7 @@
 
     <!-- PAGE SPECIFIC CSS-->
     @yield('styles')
+    @stack('styles')
 </head>
 
 <body class="{{ isset($isRTL) && $isRTL ? 'layout-rtl' : '' }} nav-fixed">
@@ -206,10 +207,12 @@
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="{{ asset('js/showModalOnError.js') }}"></script>
     @livewireScripts
+    <x-livewire-alert::scripts />
     @include('components.alert')
 
     <!-- PAGE SPECIFIC JS-->
     @yield('scripts')
+    @stack('scripts')
 </body>
 
 </html>

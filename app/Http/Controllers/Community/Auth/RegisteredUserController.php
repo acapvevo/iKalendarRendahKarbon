@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Community\Auth;
 
 use App\Models\Address;
 use App\Models\Community;
+use App\Models\Occupation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\URL;
@@ -43,6 +44,7 @@ class RegisteredUserController extends Controller
             'profile.name' => 'required|string|max:255',
             'profile.identification_number' => 'required|string|regex:/^\d{6}-\d{2}-\d{4}$/|unique:App\Models\Community,identification_number',
             'profile.phone_number' => 'required|string',
+            'address.category' => 'required|string|exists:address_category,code',
             'address.line_1' => 'required|string|max:255',
             'address.line_2' => 'required|string|max:255',
             'address.line_3' => 'sometimes|string|max:255',
@@ -50,7 +52,9 @@ class RegisteredUserController extends Controller
             'address.postcode' => 'required|string|max:255',
             'address.state' => 'required|string|in:JOHOR',
             'address.country' => 'required|string|in:MALAYSIA',
-            'g-recaptcha-response' => 'recaptcha'
+            'occupation.place' => 'nullable|string|max:255',
+            'occupation.position' => 'required_with:occupation.place|nullable|string|max:255',
+            'occupation.sector' => 'required_with:occupation.place|nullable|string|exists:occupation_sector_type,code',
         ]);
 
         Auth::guard('community')->login($community = Community::create([
@@ -62,8 +66,17 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->account['password']),
         ]));
 
+
+        Occupation::create([
+            'community_id' => $community->id,
+            'place' => $request->occupation['place'],
+            'position' => $request->occupation['position'],
+            'sector' => $request->occupation['sector'],
+        ]);
+
         Address::create([
             'community_id' => $community->id,
+            'category' => $request->address['category'],
             'line_1' => $request->address['line_1'],
             'line_2' => $request->address['line_2'],
             'line_3' => $request->address['line_3'],

@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Address extends Model
 {
@@ -16,6 +17,7 @@ class Address extends Model
      */
     protected $fillable = [
         'community_id',
+        'category',
         'line_1',
         'line_2',
         'line_3',
@@ -25,12 +27,16 @@ class Address extends Model
         'country',
     ];
 
-
     /**
      * Get the Community that owns the Address.
      */
     public function community()
     {
         return $this->belongsTo(Community::class);
+    }
+
+    public function getCategory()
+    {
+        return DB::table('address_category')->where('code', $this->category)->first();
     }
 }
