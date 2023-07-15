@@ -2,20 +2,47 @@
 
 namespace [namespace];
 
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class [class] extends Component
 {
+    use LivewireAlert;
+
+    public function listener()
+    {
+        return [
+
+        ];
+    }
+
     protected function rules()
     {
-        return [];
+        return [
+
+        ];
     }
 
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
     }
-    
+
+    public function mount()
+    {
+
+    }
+
+    public function open($id)
+    {
+
+    }
+
+    public function close()
+    {
+
+    }
+
     public function render()
     {
         return <<<'blade'

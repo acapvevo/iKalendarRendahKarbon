@@ -130,4 +130,8 @@
         <div class="nav-link-icon"><i data-feather="activity"></i></div>
         {{ __('Dashboard') }}
     </a>
+    <a class="nav-link" href="{{ route('community.contest.competition.list') }}">
+        <div class="nav-link-icon"><i class="fa-solid fa-trophy"></i></div>
+        {{ __('Competition Submission') }}
+    </a>
 @endsection

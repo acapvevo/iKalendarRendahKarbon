@@ -177,5 +177,13 @@
     "Water": "Air",
     "Electric": "Elektrik",
     "Recycle": "Kitar Semula",
-    "Used Oil": "Minyak Terpakai"
+    "Used Oil": "Minyak Terpakai",
+    "Competition Submission": "Penyertaan Pertandingan",
+    "Not Submitted": "Pengisian belum mula",
+    "Partially Submitted": "Sebahagian pengisian telah diisi",
+    "Fully Submitted": "Pengisian sudah lengkap",
+    "View Submission": "Lihat Penyertaan",
+    "Submission Statistic": "Statistik Penyertaan",
+    "Total Carbon Emission": "Jumlah Pelepasan Karbon",
+    "Submission Details": "Butiran Penyertaan"
 }

@@ -24,8 +24,7 @@ class Competition extends Model
      *
      * @var array
      */
-    protected $casts = [
-    ];
+    protected $casts = [];
 
     /**
      * Get the Months associated with the Competition.
@@ -53,7 +52,7 @@ class Competition extends Model
 
     public function generateMonth()
     {
-        for ($i=1; $i<=12 ; $i++) {
+        for ($i = 1; $i <= 12; $i++) {
             Month::create([
                 'competition_id' => $this->id,
                 'num' => $i,
@@ -61,8 +60,20 @@ class Competition extends Model
         }
     }
 
-    public function deleteMonth()
+    public function checkSubmissionStatus($user_id)
     {
-        $this->months->delete();
+        $submission = $this->getSubmissionByUserID($user_id);
+
+        if ($submission) {
+            return $submission->checkBillsSubmit();
+        } else {
+            return __('Not Submitted');
+        }
+    }
+
+    public function getSubmissionByUserID($user_id)
+    {
+        return $this->submissions->where('user_id', $user_id)->first();
+
     }
 }

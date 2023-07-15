@@ -17,6 +17,7 @@ class Submission extends Model
     protected $fillable = [
         'community_id',
         'competition_id',
+        'total_carbon_emission',
     ];
 
     /**
@@ -24,8 +25,7 @@ class Submission extends Model
      *
      * @var array
      */
-    protected $casts = [
-    ];
+    protected $casts = [];
 
     /**
      * Get the Community that owns the Submission.
@@ -33,6 +33,14 @@ class Submission extends Model
     public function community()
     {
         return $this->belongsTo(Community::class);
+    }
+
+    /**
+     * Get the Competition that owns the Submission.
+     */
+    public function competition()
+    {
+        return $this->belongsTo(Competition::class);
     }
 
     /**
@@ -49,5 +57,31 @@ class Submission extends Model
     public function answers()
     {
         return $this->hasMany(Answer::class);
+    }
+
+    public function checkBillsSubmit()
+    {
+        foreach ($this->bills as $index => $bill) {
+            if (!$bill->isDoneSubmit()) {
+                if ($index == 0)
+                    return __('Not Submitted');
+                else
+                    return __('Partial Submitted');
+            }
+
+            return __('Fully Submitted');
+        }
+    }
+
+    public function calculateTotalCarbonEmission()
+    {
+        $this->totalCarbonEmission = 0;
+
+        foreach ($this->bills as $bill) {
+            $bill->calculateTotalCarbonEmission();
+            $this->total_carbon_emission += $bill->total_carbon_emission;
+        }
+
+        $this->save();
     }
 }
