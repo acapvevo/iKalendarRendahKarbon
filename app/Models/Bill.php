@@ -70,19 +70,19 @@ class Bill extends Model
     /**
      * Get the UsedOil associated with the Bill.
      */
-    public function usedOil()
+    public function used_oil()
     {
         return $this->hasOne(UsedOil::class);
     }
 
     public function isDoneSubmit()
     {
-        return $this->electric->carbon_emission && $this->water->carbon_emission && $this->recycle->carbon_emission && $this->usedOil->carbon_emission;
+        return $this->electric->carbon_emission && $this->water->carbon_emission && $this->recycle->carbon_emission && $this->used_oil->carbon_emission;
     }
 
     public function calculateTotalCarbonEmission()
     {
-        $this->total_carbon_emission = $this->electric->carbon_emission + $this->water->carbon_emission + $this->recycle->carbon_emission + $this->usedOil->carbon_emission;
+        $this->total_carbon_emission = $this->electric->carbon_emission + $this->water->carbon_emission + $this->recycle->carbon_emission + $this->used_oil->carbon_emission;
         $this->save();
     }
 }

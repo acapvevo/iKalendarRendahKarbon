@@ -18,6 +18,8 @@ class UsedOil extends Model
         'bill_id',
         'weight',
         'value',
+        'carbon_emission',
+        'evidence',
     ];
 
     /**
@@ -29,10 +31,15 @@ class UsedOil extends Model
     ];
 
     /**
-     * Get the Bill that owns the Water.
+     * Get the Bill that owns the UsedOil.
      */
     public function bill()
     {
         return $this->belongsTo(Bill::class);
+    }
+
+    public function calculateCarbonEmission()
+    {
+        $this->carbon_emission = round($this->weight * 3.200, 2);
     }
 }

@@ -1,15 +1,16 @@
+/* remove arrow for number input */
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
 }
 
+/* add red start for required input */
 input[required] {
     background-image: radial-gradient(#F00 15%, transparent 16%), radial-gradient(#F00 15%, transparent 16%);
     background-size: 1em 1em;
@@ -17,8 +18,26 @@ input[required] {
     background-repeat: no-repeat;
 }
 
+/* custom css for intl-tel input */
 .iti {
     width: 100%;
     display: block !important;
 }
 
+/* custom file input */
+.custom-file-button input[type=file] {
+    margin-left: -2px !important;
+  }
+
+  .custom-file-button input[type=file]::-webkit-file-upload-button {
+    display: none;
+  }
+
+  .custom-file-button input[type=file]::file-selector-button {
+    display: none;
+  }
+
+  .custom-file-button:hover label {
+    background-color: #dde0e3;
+    cursor: pointer;
+  }

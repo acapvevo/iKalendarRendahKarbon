@@ -18,16 +18,12 @@ class Competition extends Component
 
     public function listener()
     {
-        return [
-
-        ];
+        return [];
     }
 
     protected function rules()
     {
-        return [
-
-        ];
+        return [];
     }
 
     public function updated($propertyName)
@@ -47,7 +43,7 @@ class Competition extends Component
         $this->competition = CompetitionModel::find($id);
         $this->submission = $this->competition->getSubmissionByUserID(Auth::user()->id);
 
-        if($this->submission){
+        if ($this->submission) {
             $this->submission->calculateTotalCarbonEmission();
         }
     }

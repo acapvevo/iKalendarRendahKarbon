@@ -75,7 +75,7 @@ class Submission extends Model
 
     public function calculateTotalCarbonEmission()
     {
-        $this->totalCarbonEmission = 0;
+        $this->total_carbon_emission = 0;
 
         foreach ($this->bills as $bill) {
             $bill->calculateTotalCarbonEmission();
@@ -83,5 +83,19 @@ class Submission extends Model
         }
 
         $this->save();
+    }
+
+    public function getTotalCarbonEmissionByMonthID($month_id)
+    {
+        $bill = $this->getBillByMonthID($month_id);
+
+        return $bill->total_carbon_emission ?? 0;
+    }
+
+    public function getBillByMonthID($month_id)
+    {
+        return $this->bills->where('month_id', $month_id)->first() ?? new Bill([
+            'month_id' => $month_id
+        ]);
     }
 }

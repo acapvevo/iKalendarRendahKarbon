@@ -9,4 +9,5 @@ return [
     'question_update'   => 'Question: ":text" has successfully updated',
     'question_delete'   => 'The chosen Question has successfully deleted',
     'question_delete_confirmation'   => 'Are you sure to delete Question ":text"? ',
+    'submission_update'   => 'Submission :month has been successfully updated',
 ];

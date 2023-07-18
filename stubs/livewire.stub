@@ -9,7 +9,7 @@ class [class] extends Component
 {
     use LivewireAlert;
 
-    public function listener()
+    protected function listener()
     {
         return [
 
@@ -40,7 +40,7 @@ class [class] extends Component
 
     public function close()
     {
-        
+
     }
 
     public function render()

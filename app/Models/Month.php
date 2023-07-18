@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class Month extends Model
 {
@@ -41,5 +43,15 @@ class Month extends Model
     public function bills()
     {
         return $this->hasMany(Bill::class);
+    }
+
+    public function getName()
+    {
+        return Carbon::create(0, $this->num)->locale(LaravelLocalization::getCurrentLocale())->translatedFormat('F');
+    }
+
+    public function getUploadName()
+    {
+        return Carbon::create(0, $this->num)->format('F');
     }
 }

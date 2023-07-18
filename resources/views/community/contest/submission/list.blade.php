@@ -15,7 +15,7 @@
                     </div>
                     <div class="col-12 col-xl-auto mt-4">{{ __('List of Competition') }}</div>
                 </div>
-                <nav class="pt-3 rounded" aria-label="breadcrumb">
+                <div class="pt-3 rounded" aria-label="breadcrumb">
                     <ol class="breadcrumb rounded mb-0">
                         <li class="breadcrumb-item"><a href="#">{{ __('Competition Submission') }}</a></li>
                         <li class="breadcrumb-item"><a
@@ -23,7 +23,7 @@
                         </li>
                         <li class="breadcrumb-item active">{{ __('Submission Details') }}</li>
                     </ol>
-                </nav>
+                </div>
             </div>
         </div>
     </header>
