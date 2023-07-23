@@ -18,8 +18,8 @@ class Electric extends Model
         'bill_id',
         'usage',
         'charge',
-        'prorated_factor',
         'carbon_emission',
+        'evidence',
     ];
 
     /**
@@ -36,5 +36,10 @@ class Electric extends Model
     public function bill()
     {
         return $this->belongsTo(Bill::class);
+    }
+
+    public function calculateCarbonEmission()
+    {
+        $this->carbon_emission = round($this->usage * 0.584, 2);
     }
 }

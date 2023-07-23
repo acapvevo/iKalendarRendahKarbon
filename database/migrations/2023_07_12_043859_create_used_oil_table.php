@@ -19,8 +19,11 @@ class CreateUsedOilTable extends Migration
             $table->unsignedBigInteger('bill_id');
             $table->foreign('bill_id')->references('id')->on('bills')->onDelete('cascade');
 
-            $table->decimal('weight', 8, 4);
-            $table->decimal('value', 8, 4);
+            $table->float('weight');
+            $table->float('value');
+            $table->float('carbon_emission');
+
+            $table->string('evidence')->nullable();
 
             $table->timestamps();
         });

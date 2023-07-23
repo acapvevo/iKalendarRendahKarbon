@@ -2,8 +2,10 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -37,5 +39,28 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, $e)
+    {
+        if ($e instanceof ModelNotFoundException) {
+            $e = new NotFoundHttpException($e->getMessage(), $e);
+        }
+
+        if ($e instanceof \Illuminate\Session\TokenMismatchException) {
+            $route = '/';
+
+            if ($request->is('super_admin*')) {
+                $route = route('super_admin.login');
+            } else if ($request->is('admin*')) {
+                $route = route('admin.login');
+            } else if ($request->is('community*')) {
+                $route = route('community.login');
+            }
+
+            return redirect($route)->with('error', __('auth.tokenCSRF'));
+        }
+
+        return parent::render($request, $e);
     }
 }

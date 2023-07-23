@@ -18,6 +18,8 @@ class Recycle extends Model
         'bill_id',
         'weight',
         'value',
+        'carbon_emission',
+        'evidence',
     ];
 
     /**
@@ -29,10 +31,15 @@ class Recycle extends Model
     ];
 
     /**
-     * Get the Bill that owns the Water.
+     * Get the Bill that owns the Recycle.
      */
     public function bill()
     {
         return $this->belongsTo(Bill::class);
+    }
+
+    public function calculateCarbonEmission()
+    {
+        $this->carbon_emission = round($this->weight * 2.860, 2);
     }
 }

@@ -7,13 +7,14 @@ use App\Http\Controllers\Community\User\ProfileController;
 use App\Http\Controllers\Community\User\SettingController;
 use App\Http\Controllers\Community\Auth\NewPasswordController;
 use App\Http\Controllers\Community\Auth\VerifyEmailController;
+use App\Http\Controllers\Community\Contest\SubmissionController;
 use App\Http\Controllers\Community\Auth\RegisteredUserController;
+use App\Http\Controllers\Community\Contest\CompetitionController;
 use App\Http\Controllers\Community\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Community\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Community\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Community\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Community\Auth\EmailVerificationNotificationController;
-
 
 Route::prefix('community')->name('community.')->group(function () {
 
@@ -84,6 +85,21 @@ Route::prefix('community')->name('community.')->group(function () {
             //Profile Picture
             Route::prefix('picture')->name('picture.')->group(function () {
                 Route::get('', [PictureController::class, 'show'])->name('show');
+            });
+        });
+
+        // Contest Management routes
+        Route::prefix('contest')->name('contest.')->group(function () {
+
+            //Competition
+            Route::prefix('competition')->name('competition.')->group(function () {
+                Route::get('', [CompetitionController::class, 'list'])->name('list');
+            });
+
+            //Submission
+            Route::prefix('submission')->name('submission.')->group(function () {
+                Route::match(['get', 'post'], '', [SubmissionController::class, 'list'])->name('list');
+                Route::match(['get', 'post'], '/download', [SubmissionController::class, 'download'])->name('download');
             });
         });
     });

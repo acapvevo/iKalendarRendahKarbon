@@ -9,4 +9,6 @@ return [
     'question_update'   => 'Soalan: ":text" BERJAYA dikemaskini',
     'question_delete'   => 'Soalan yang dipilih BERJAYA dipadam',
     'question_delete_confirmation'   => 'Adakah anda pasti untuk memadam Soalan ":text"? ',
+    'record_update'   => 'Rekod bagi Bulan :month BERJAYA dikemaskini',
+    'answer_update'   => 'Jawapan bagi Soalan :question BERJAYA dikemaskini',
 ];

@@ -22,6 +22,8 @@ class CreateSubmissionsTable extends Migration
             $table->unsignedBigInteger('competition_id');
             $table->foreign('competition_id')->references('id')->on('competitions')->onDelete('cascade');
 
+            $table->double('total_carbon_emission')->default(0);
+
             $table->timestamps();
         });
     }

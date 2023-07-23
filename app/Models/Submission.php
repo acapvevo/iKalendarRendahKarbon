@@ -17,6 +17,7 @@ class Submission extends Model
     protected $fillable = [
         'community_id',
         'competition_id',
+        'total_carbon_emission',
     ];
 
     /**
@@ -24,8 +25,7 @@ class Submission extends Model
      *
      * @var array
      */
-    protected $casts = [
-    ];
+    protected $casts = [];
 
     /**
      * Get the Community that owns the Submission.
@@ -33,6 +33,14 @@ class Submission extends Model
     public function community()
     {
         return $this->belongsTo(Community::class);
+    }
+
+    /**
+     * Get the Competition that owns the Submission.
+     */
+    public function competition()
+    {
+        return $this->belongsTo(Competition::class);
     }
 
     /**
@@ -49,5 +57,50 @@ class Submission extends Model
     public function answers()
     {
         return $this->hasMany(Answer::class);
+    }
+
+    public function checkBillsSubmit()
+    {
+        if ($this->bills->isEmpty())
+            return __('Not Submitted');
+        else if ($this->bills->count() == 12)
+            return __('Fully Submitted');
+        else
+            return __('Partial Submitted');
+    }
+
+    public function calculateTotalCarbonEmission()
+    {
+        $this->total_carbon_emission = 0;
+
+        foreach ($this->bills as $bill) {
+            $bill->calculateTotalCarbonEmission();
+            $this->total_carbon_emission += $bill->total_carbon_emission;
+        }
+
+        $this->save();
+    }
+
+    public function getTotalCarbonEmissionByMonthID($month_id)
+    {
+        $bill = $this->getBillByMonthID($month_id);
+
+        return $bill->total_carbon_emission ?? 0;
+    }
+
+    public function getBillByMonthID($month_id)
+    {
+        return $this->bills->where('month_id', $month_id)->first() ?? new Bill([
+            'month_id' => $month_id,
+            'submission_id' => $this->id,
+        ]);
+    }
+
+    public function getAnswerByQuestionID($question_id)
+    {
+        return $this->answers->where('question_id', $question_id)->first() ?? new Answer([
+            'question_id' => $question_id,
+            'submission_id' => $this->id,
+        ]);
     }
 }

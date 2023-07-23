@@ -7,32 +7,46 @@
         <ul class="nav nav-pills nav-justified" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="account-tab" data-bs-toggle="tab" data-bs-target="#account-tab-pane"
-                    type="button" role="tab" aria-controls="account-tab-pane" wire:ignore
-                    aria-selected="true">{{ __('Account') }}
+                    type="button" role="tab" aria-controls="account-tab-pane" wire:ignore.self
+                    aria-selected="true">
+                    <div>
+                        {{ __('Account') }}
+                        {!! $errors->has('user.username') || $errors->has('user.email') || $errors->has('password')
+                            ? '<span class="badge text-bg-danger">!</span>'
+                            : '' !!}
+                    </div>
                 </button>
-                {!! $errors->has('user.username') || $errors->has('user.email') || $errors->has('password')
-                    ? '<span class="badge text-bg-danger">!</span>'
-                    : '' !!}
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
-                    type="button" role="tab" aria-controls="profile-tab-pane" wire:ignore
-                    aria-selected="false">{{ __('Profile') }}</button>
-                {!! $errors->has('user.name') || $errors->has('user.identification_number') || $errors->has('user.phone_number')
-                    ? '<span class="badge text-bg-danger">!</span>'
-                    : '' !!}
+                    type="button" role="tab" aria-controls="profile-tab-pane" wire:ignore.self
+                    aria-selected="false">
+                    <div>
+                        {{ __('Profile') }}
+                        {!! $errors->has('user.name') || $errors->has('user.identification_number') || $errors->has('user.phone_number')
+                            ? '<span class="badge text-bg-danger">!</span>'
+                            : '' !!}</div>
+                </button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="occupation-tab" data-bs-toggle="tab" data-bs-target="#occupation-tab-pane"
-                    type="button" role="tab" aria-controls="occupation-tab-pane" wire:ignore
-                    aria-selected="false">{{ __('Occupation') }}</button>
-                {!! $errors->has('occupation.*') ? '<span class="badge text-bg-danger">!</span>' : '' !!}
+                    type="button" role="tab" aria-controls="occupation-tab-pane" wire:ignore.self
+                    aria-selected="false">
+                    <div>
+                        {{ __('Occupation') }}
+                        {!! $errors->has('occupation.*') ? '<span class="badge text-bg-danger">!</span>' : '' !!}
+                    </div>
+                </button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="address-tab" data-bs-toggle="tab" data-bs-target="#address-tab-pane"
-                    type="button" role="tab" aria-controls="address-tab-pane" wire:ignore
-                    aria-selected="false">{{ __('Address') }}</button>
-                {!! $errors->has('address.*') ? '<span class="badge text-bg-danger">!</span>' : '' !!}
+                    type="button" role="tab" aria-controls="address-tab-pane" wire:ignore.self
+                    aria-selected="false">
+                    <div>
+                        {{ __('Address') }}
+                        {!! $errors->has('address.*') ? '<span class="badge text-bg-danger">!</span>' : '' !!}
+                    </div>
+                </button>
             </li>
         </ul>
         <div class="tab-content pt-3" id="myTabContent">

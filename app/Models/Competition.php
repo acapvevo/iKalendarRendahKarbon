@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Competition extends Model
 {
@@ -24,8 +25,7 @@ class Competition extends Model
      *
      * @var array
      */
-    protected $casts = [
-    ];
+    protected $casts = [];
 
     /**
      * Get the Months associated with the Competition.
@@ -53,7 +53,7 @@ class Competition extends Model
 
     public function generateMonth()
     {
-        for ($i=1; $i<=12 ; $i++) {
+        for ($i = 1; $i <= 12; $i++) {
             Month::create([
                 'competition_id' => $this->id,
                 'num' => $i,
@@ -61,8 +61,31 @@ class Competition extends Model
         }
     }
 
-    public function deleteMonth()
+    public function checkSubmissionStatus()
     {
-        $this->months->delete();
+        $community_id = Auth::user()->id;
+        $submission = $this->getSubmissionByCommunityID($community_id);
+
+        if ($submission) {
+            return $submission->checkBillsSubmit();
+        } else {
+            return __('Not Submitted');
+        }
+    }
+
+    public function getSubmissionByCommunityID($community_id)
+    {
+        return $this->submissions->where('community_id', $community_id)->first();
+
+    }
+
+    public function getQuestionCategories()
+    {
+        return $this->questions->pluck('category')->unique()->values();
+    }
+
+    public function getQuestionByCategory($questionCategory)
+    {
+        return $this->questions->where('category', $questionCategory)->values();
     }
 }

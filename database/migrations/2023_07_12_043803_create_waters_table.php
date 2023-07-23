@@ -19,10 +19,11 @@ class CreateWatersTable extends Migration
             $table->unsignedBigInteger('bill_id');
             $table->foreign('bill_id')->references('id')->on('bills')->onDelete('cascade');
 
-            $table->decimal('usage', 8, 4);
-            $table->decimal('charge', 8, 4);
-            $table->decimal('prorated_factor', 8, 4);
-            $table->decimal('carbon_emission', 8, 2);
+            $table->float('usage');
+            $table->float('charge');
+            $table->float('carbon_emission');
+
+            $table->string('evidence')->nullable();
 
             $table->timestamps();
         });
