@@ -68,3 +68,4 @@
         targetAnchor.classList.add('active');
     });
 });
+

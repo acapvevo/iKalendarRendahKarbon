@@ -180,17 +180,28 @@
 
     <!-- SWEET ALERT 2 JS-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.10/dist/sweetalert2.all.min.js"></script>
-    
+
     @livewireScripts
 
     <!-- ALPINE JS-->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    <!-- APP JS-->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/scripts.js') }}"></script>
     <x-livewire-alert::scripts />
     @include('components.alert')
+
+
+    <!-- Datatables Global Setting-->
+    <script>
+        $.extend(true, $.fn.dataTable.defaults, {
+            "order": [],
+            language: {
+                url: '{{ asset("js/datatables/lang/" . LaravelLocalization::getCurrentLocale() . ".json") }}'
+            },
+        });
+        $.fn.dataTable.ext.errMode = 'none';
+    </script>
 
     <!-- PAGE SPECIFIC JS-->
     @yield('scripts')
