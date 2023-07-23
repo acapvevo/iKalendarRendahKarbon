@@ -8,6 +8,7 @@ return [
     'question_create'   => 'Question: ":text" has successfully created',
     'question_update'   => 'Question: ":text" has successfully updated',
     'question_delete'   => 'The chosen Question has successfully deleted',
-    'question_delete_confirmation'   => 'Are you sure to delete Question ":text"? ',
-    'submission_update'   => 'Submission :month has been successfully updated',
+    'question_delete_confirmation'   => 'Are you sure to delete Question ":text?"? ',
+    'record_update'   => 'Record for :month has been successfully updated',
+    'answer_update'   => 'Answer for ":text?" has been successfully updated',
 ];

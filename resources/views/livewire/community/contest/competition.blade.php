@@ -15,7 +15,7 @@
                 @foreach ($competitions as $competition)
                     <tr>
                         <td>{{ $competition->name }}</td>
-                        <td>{{ $competition->checkSubmissionStatus(Auth::user()->id) }}</td>
+                        <td>{{ $competition->checkSubmissionStatus() }}</td>
                         <td>
                             <div class="btn-toolbar justify-content-center" role="toolbar"
                                 aria-label="Toolbar with button groups">
@@ -73,7 +73,7 @@
                                 <th>{{ __('Total Carbon Emission') }}</th>
                                 <td>
                                     @if ($submission)
-                                    {{ $submission->totalCarbonEmission }} KgCO<sub>2</sub>
+                                    {{ $submission->total_carbon_emission }} KgCO<sub>2</sub>
                                     @else
                                     0 KgCO<sub>2</sub>
                                     @endif

@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             OccupationSectorTypeSeeder::class,
             UserSeeder::class,
             QuestionCategorySeeder::class,
+            TranslationSeeder::class,
         ]);
     }
 }

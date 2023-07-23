@@ -41,7 +41,7 @@ class Competition extends Component
     public function open($id)
     {
         $this->competition = CompetitionModel::find($id);
-        $this->submission = $this->competition->getSubmissionByUserID(Auth::user()->id);
+        $this->submission = $this->competition->getSubmissionByCommunityID(Auth::user()->id);
 
         if ($this->submission) {
             $this->submission->calculateTotalCarbonEmission();
@@ -52,6 +52,8 @@ class Competition extends Component
     {
         $this->competition = new CompetitionModel;
         $this->submission = new Submission;
+
+        $this->resetErrorBag();
     }
 
     public function render()

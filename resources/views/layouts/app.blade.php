@@ -22,15 +22,6 @@
     <!-- SWEET ALERT 2 CSS-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.10/dist/sweetalert2.min.css">
 
-    <!-- EASYMDE CSS-->
-    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
-
-    <!-- FLATPICKR CSS-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
-    <!-- LITEPICKER CSS-->
-    <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
-
     <!-- APP CSS-->
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
@@ -174,9 +165,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>
 
-    <!-- CHART JS-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.umd.min.js"></script>
-
     <!-- JSZIP JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
 
@@ -192,21 +180,15 @@
 
     <!-- SWEET ALERT 2 JS-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.10/dist/sweetalert2.all.min.js"></script>
+    
+    @livewireScripts
 
-    <!-- EASYMDE JS-->
-    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
-
-    <!-- LITEPICKER JS-->
-    <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
-
-    <!-- FLATPICKR JS-->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- ALPINE JS-->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <!-- APP JS-->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/scripts.js') }}"></script>
-    <script src="{{ asset('js/showModalOnError.js') }}"></script>
-    @livewireScripts
     <x-livewire-alert::scripts />
     @include('components.alert')
 

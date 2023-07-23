@@ -225,36 +225,48 @@
                             <a class="nav-item nav-link active" id="wizard1-tab" href="#wizard1"
                                 data-bs-toggle="tab" role="tab" aria-controls="wizard1" aria-selected="true"
                                 wire:click.prevent="setTab(1)" wire:ignore.self>
-                                <div class="wizard-step-icon">1</div>
+                                {!! $errors->has('electric.*') || $errors->has('electric_evidence')
+                                    ? '<div class="wizard-step-icon text-bg-danger">!</div>'
+                                    : '<div class="wizard-step-icon">1</div>' !!}
                                 <div class="wizard-step-text">
-                                    <div class="wizard-step-text-name">{{ __('Electric') }}</div>
+                                    <div class="wizard-step-text-name">{{ __('Electric') }}
+                                    </div>
                                 </div>
                             </a>
                             <!-- Wizard navigation item 2-->
                             <a class="nav-item nav-link" id="wizard2-tab" href="#wizard2" data-bs-toggle="tab"
                                 role="tab" aria-controls="wizard2" aria-selected="true"
                                 wire:click.prevent="setTab(2)" wire:ignore.self 2>
-                                <div class="wizard-step-icon">2</div>
+                                {!! $errors->has('water.*') || $errors->has('water_evidence')
+                                    ? '<div class="wizard-step-icon text-bg-danger">!</div>'
+                                    : '<div class="wizard-step-icon">2</div>' !!}
                                 <div class="wizard-step-text">
-                                    <div class="wizard-step-text-name">{{ __('Water') }}</div>
+                                    <div class="wizard-step-text-name">{{ __('Water') }}
+                                    </div>
                                 </div>
                             </a>
                             <!-- Wizard navigation item 3-->
                             <a class="nav-item nav-link" id="wizard3-tab" href="#wizard3" data-bs-toggle="tab"
                                 role="tab" aria-controls="wizard3" aria-selected="true"
                                 wire:click.prevent="setTab(3)" wire:ignore.self>
-                                <div class="wizard-step-icon">3</div>
+                                {!! $errors->has('recycle.*') || $errors->has('recycle_evidence')
+                                    ? '<div class="wizard-step-icon text-bg-danger">!</div>'
+                                    : '<div class="wizard-step-icon">3</div>' !!}
                                 <div class="wizard-step-text">
-                                    <div class="wizard-step-text-name">{{ __('Recycle') }}</div>
+                                    <div class="wizard-step-text-name">{{ __('Recycle') }}
+                                    </div>
                                 </div>
                             </a>
                             <!-- Wizard navigation item 4-->
                             <a class="nav-item nav-link" id="wizard4-tab" href="#wizard4" data-bs-toggle="tab"
                                 role="tab" aria-controls="wizard4" aria-selected="true"
                                 wire:click.prevent="setTab(4)" wire:ignore.self>
-                                <div class="wizard-step-icon">4</div>
+                                {!! $errors->has('used_oil.*') || $errors->has('used_oil_evidence')
+                                    ? '<div class="wizard-step-icon text-bg-danger">!</div>'
+                                    : '<div class="wizard-step-icon">4</div>' !!}
                                 <div class="wizard-step-text">
-                                    <div class="wizard-step-text-name">{{ __('Used Oil') }}</div>
+                                    <div class="wizard-step-text-name">{{ __('Used Oil') }}
+                                    </div>
                                 </div>
                             </a>
                             <!-- Wizard navigation item 5-->

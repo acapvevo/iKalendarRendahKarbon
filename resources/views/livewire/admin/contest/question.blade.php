@@ -1,3 +1,9 @@
+@php
+    $locale = null;
+    if (LaravelLocalization::getCurrentLocale() == 'ms') {
+        $locale = 'en';
+    }
+@endphp
 <div>
     <div class="pt-3 pb-3 d-flex justify-content-end align-items-middle">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createQuestionModal"
@@ -18,8 +24,9 @@
             <tbody>
                 @foreach ($questions as $question)
                     <tr>
-                        <td>{{ $question->text }}?</td>
-                        <td>{{ $question->example }}</td>
+                        <td>{{ $question->getValue('text') }}? <br> ({{ $question->getCurrentTranslation('text', $locale) }}?)</td>
+                        <td>{{ $question->getValue('example') }} <br> ({{ $question->getCurrentTranslation('example', $locale) }}?)
+                        </td>
                         <td>{{ __($question->getCategory()->name) }}</td>
                         <td>
                             <div class="btn-toolbar justify-content-center" role="toolbar"
@@ -64,13 +71,13 @@
                     <form id="createQuestionForm">
 
                         <div class="mb-3">
-                            <label for="text" class="form-label">{{ __('Question') }}
+                            <label for="text_malay" class="form-label">{{ __('Question') }} ({{ __('Malay') }})
                                 <small class="text-muted">{{ __("(No need to put '?' symbol)") }}</small></label>
                             <input type="text"
-                                class="form-control {{ $errors->has('question.text') ? 'is-invalid' : '' }}"
-                                id="text" wire:model.lazy="question.text"
-                                placeholder="{{ __('Enter The Question') }}" required>
-                            @error('question.text')
+                                class="form-control {{ $errors->has('text_malay') ? 'is-invalid' : '' }}"
+                                id="text_malay" wire:model.lazy="text_malay"
+                                placeholder="{{ __('Enter The Question in Malay') }}" required>
+                            @error('text_malay')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -78,12 +85,42 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="example" class="form-label">{{ __('Example Answer') }}</label>
+                            <label for="text_english" class="form-label">{{ __('Question') }} ({{ __('English') }})
+                                <small class="text-muted">{{ __("(No need to put '?' symbol)") }}</small></label>
                             <input type="text"
-                                class="form-control {{ $errors->has('question.example') ? 'is-invalid' : '' }}"
-                                id="example" wire:model.lazy="question.example"
-                                placeholder="{{ __('Enter Question Example Answer') }}" required>
-                            @error('question.example')
+                                class="form-control {{ $errors->has('text_english') ? 'is-invalid' : '' }}"
+                                id="text_english" wire:model.lazy="text_english"
+                                placeholder="{{ __('Enter The Question in English') }}" required>
+                            @error('text_english')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="example_malay" class="form-label">{{ __('Example Answer') }}
+                                ({{ __('Malay') }})</label>
+                            <input type="text"
+                                class="form-control {{ $errors->has('example_malay') ? 'is-invalid' : '' }}"
+                                id="example_malay" wire:model.lazy="example_malay"
+                                placeholder="{{ __('Enter The Example Answer for this Question in Malay') }}" required>
+                            @error('example_malay')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="example_english" class="form-label">{{ __('Example Answer') }}
+                                ({{ __('English') }})</label>
+                            <input type="text"
+                                class="form-control {{ $errors->has('example_english') ? 'is-invalid' : '' }}"
+                                id="example_english" wire:model.lazy="example_english"
+                                placeholder="{{ __('Enter The Example Answer for this Question in English') }}"
+                                required>
+                            @error('example_english')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -131,16 +168,18 @@
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <tr>
-                                <th>{{ __('Text') }}</th>
-                                <td>{{ $question->text }}?</td>
+                                <th>{{ __('Question') }}</th>
+                                <td style="width: 40%">{{ $question->getValue('text') }}?</td>
+                                <td style="width: 40%">{{ $question->getCurrentTranslation('text', $locale) }}?</td>
                             </tr>
                             <tr>
                                 <th>{{ __('Example Answer') }}</th>
-                                <td>{{ $question->example }}</td>
+                                <td>{{ $question->getValue('example') }}</td>
+                                <td>{{ $question->getCurrentTranslation('example', $locale) }}</td>
                             </tr>
                             <tr>
                                 <th>{{ __('Category') }}</th>
-                                <td>{{ __($question->getCategory()->name ?? '') }}</td>
+                                <td colspan="2" class="text-center">{{ __($question->getCategory()->name ?? '') }}</td>
                             </tr>
                         </table>
                     </div>
@@ -167,13 +206,13 @@
                     <form id="updateQuestionForm">
 
                         <div class="mb-3">
-                            <label for="text" class="form-label">{{ __('Question') }}
+                            <label for="text_malay" class="form-label">{{ __('Question') }} ({{ __('Malay') }})
                                 <small class="text-muted">{{ __("(No need to put '?' symbol)") }}</small></label>
                             <input type="text"
-                                class="form-control {{ $errors->has('question.text') ? 'is-invalid' : '' }}"
-                                id="text" wire:model.lazy="question.text"
-                                placeholder="{{ __('Enter The Question') }}" required>
-                            @error('question.text')
+                                class="form-control {{ $errors->has('text_malay') ? 'is-invalid' : '' }}"
+                                id="text_malay" wire:model.lazy="text_malay"
+                                placeholder="{{ __('Enter The Question in Malay') }}" required>
+                            @error('text_malay')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -181,12 +220,45 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="example" class="form-label">{{ __('Example Answer') }}</label>
+                            <label for="text_english" class="form-label">{{ __('Question') }} ({{ __('English') }})
+                                <small class="text-muted">{{ __("(No need to put '?' symbol)") }}</small></label>
                             <input type="text"
-                                class="form-control {{ $errors->has('question.example') ? 'is-invalid' : '' }}"
-                                id="example" wire:model.lazy="question.example"
-                                placeholder="{{ __('Enter Question Example Answer') }}" required>
-                            @error('question.example')
+                                class="form-control {{ $errors->has('text_english') ? 'is-invalid' : '' }}"
+                                id="text_english" wire:model.lazy="text_english"
+                                placeholder="{{ __('Enter The Question in English') }}" required>
+                            @error('text_english')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="example_malay" class="form-label">{{ __('Example Answer') }}
+                                ({{ __('Malay') }})
+                                <small class="text-muted">{{ __("(No need to put '?' symbol)") }}</small></label>
+                            <input type="text"
+                                class="form-control {{ $errors->has('example_malay') ? 'is-invalid' : '' }}"
+                                id="example_malay" wire:model.lazy="example_malay"
+                                placeholder="{{ __('Enter The Example Answer for this Question in Malay') }}"
+                                required>
+                            @error('example_malay')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="example_english" class="form-label">{{ __('Example Answer') }}
+                                ({{ __('English') }})
+                                <small class="text-muted">{{ __("(No need to put '?' symbol)") }}</small></label>
+                            <input type="text"
+                                class="form-control {{ $errors->has('example_english') ? 'is-invalid' : '' }}"
+                                id="example_english" wire:model.lazy="example_english"
+                                placeholder="{{ __('Enter The Example Answer for this Question in English') }}"
+                                required>
+                            @error('example_english')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>

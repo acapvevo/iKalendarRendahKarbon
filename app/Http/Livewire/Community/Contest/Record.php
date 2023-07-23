@@ -9,12 +9,12 @@ use App\Models\Recycle;
 use App\Models\UsedOil;
 use Livewire\Component;
 use App\Models\Electric;
+use App\Models\Submission;
 use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
-use App\Models\Submission as SubmissionModel;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
-class Submission extends Component
+class Record extends Component
 {
     use LivewireAlert, WithFileUploads;
 
@@ -23,7 +23,7 @@ class Submission extends Component
     public $submission_id;
     public $month_id;
 
-    public SubmissionModel $submission;
+    public Submission $submission;
     public Month $month;
     public Bill $bill;
 
@@ -138,7 +138,7 @@ class Submission extends Component
 
     public function getSubmissionProperty()
     {
-        return $this->submission_id ? SubmissionModel::find($this->submission_id) : new SubmissionModel([
+        return $this->submission_id ? Submission::find($this->submission_id) : new Submission([
             'competition_id' => $this->competition_id,
             'community_id' => $this->community_id,
         ]);
@@ -147,6 +147,34 @@ class Submission extends Component
     public function getBillProperty()
     {
         return $this->submission->getBillByMonthID($this->month_id);
+    }
+
+    public function getElectricProperty()
+    {
+        return $this->bill->electric ?? new Electric([
+            'bill_id' => $this->bill->id
+        ]);
+    }
+
+    public function getWaterProperty()
+    {
+        return $this->bill->water ?? new Water([
+            'bill_id' => $this->bill->id
+        ]);
+    }
+
+    public function getRecycleProperty()
+    {
+        return $this->bill->recycle ?? new Recycle([
+            'bill_id' => $this->bill->id
+        ]);
+    }
+
+    public function getUsedOilProperty()
+    {
+        return $this->bill->used_oil ?? new UsedOil([
+            'bill_id' => $this->bill->id
+        ]);
     }
 
     public function getMonthProperty()
@@ -161,10 +189,10 @@ class Submission extends Component
         $this->month = $this->getMonthProperty();
 
         $this->fill([
-            'electric' => $this->bill->electric ?? new Electric,
-            'water' => $this->bill->water ?? new Water,
-            'recycle' => $this->bill->recycle ?? new Recycle,
-            'used_oil' => $this->bill->used_oil ?? new UsedOil,
+            'electric' => $this->getElectricProperty(),
+            'water' => $this->getWaterProperty(),
+            'recycle' => $this->getRecycleProperty(),
+            'used_oil' => $this->getUsedOilProperty(),
         ]);
 
         $this->reset([
@@ -182,9 +210,7 @@ class Submission extends Component
     public function close()
     {
         $this->fill([
-            'bill' => new Bill([
-                'submission_id' => $this->submission->id
-            ]),
+            'bill' => new Bill,
             'month' => new Month,
             'electric' => new Electric,
             'water' => new Water,
@@ -201,6 +227,8 @@ class Submission extends Component
         ]);
 
         $this->emit('changeTab', $this->tab_state);
+
+        $this->resetErrorBag();
     }
 
     public function nextTab()
@@ -238,13 +266,14 @@ class Submission extends Component
         if (!$this->submission->id)
             $this->submission->save();
 
-        $this->bill->submission_id = $this->submission->id;
-        $this->bill->month_id = $this->month_id;
+        if (!$this->bill->submission_id || !$this->bill->month_id){
+            $this->bill->submission_id = $this->submission->id;
+            $this->bill->month_id = $this->month_id;
+        }
         if (!$this->bill->id)
             $this->bill->save();
 
         foreach ($this->fileInputPlaceholder as $type => $placeholderText) {
-
             if (!$this->{$type}->bill_id)
                 $this->{$type}->bill_id = $this->bill->id;
 
@@ -261,7 +290,7 @@ class Submission extends Component
 
         $this->submission->calculateTotalCarbonEmission();
 
-        redirect(route('community.contest.submission.list', ['competition_id' => $this->competition_id]))->with('success', __('alerts.submission_update', ['month' => $this->month->getName()]));
+        redirect(route('community.contest.submission.list', ['competition_id' => $this->competition_id]))->with('success', __('alerts.record_update', ['month' => $this->month->getName()]));
     }
 
     public function render()
@@ -269,6 +298,6 @@ class Submission extends Component
         $this->submission = $this->getSubmissionProperty();
         $this->changePlaceholder();
 
-        return view('livewire.community.contest.submission');
+        return view('livewire.community.contest.record');
     }
 }

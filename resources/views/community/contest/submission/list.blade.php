@@ -34,7 +34,38 @@
         <div class="card">
             <div class="card-header text-center">{{ __('Submission Details') }}</div>
             <div class="card-body">
-                @livewire('community.contest.submission', ['submission' => $submission])
+                <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="pills-record-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-record" type="button" role="tab" aria-controls="pills-record"
+                            aria-selected="true">{{ __('Record') }}</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-answer-tab" data-bs-toggle="pill" data-bs-target="#pills-answer"
+                            type="button" role="tab" aria-controls="pills-answer"
+                            aria-selected="false">{{ __('Bonus Questions') }}</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-record" role="tabpanel"
+                        aria-labelledby="pills-record-tab" tabindex="0">
+
+                        @livewire('community.contest.record', ['submission' => $submission])
+
+                    </div>
+                    <div class="tab-pane fade" id="pills-answer" role="tabpanel" aria-labelledby="pills-answer-tab"
+                        tabindex="0">
+
+                        @if ($submission->checkBillsSubmit() === __('Fully Submitted'))
+                            @livewire('community.contest.answer', ['submission' => $submission])
+                        @else
+                        <div class="d-flex justify-content-center align-items-center" style="height: 500px">
+                            <h2>{{ __('Please submit the record for each month before answer the Bonus Question') }}</h2>
+                        </div>
+                        @endif
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -61,16 +61,12 @@ class Submission extends Model
 
     public function checkBillsSubmit()
     {
-        foreach ($this->bills as $index => $bill) {
-            if (!$bill->isDoneSubmit()) {
-                if ($index == 0)
-                    return __('Not Submitted');
-                else
-                    return __('Partial Submitted');
-            }
-
+        if ($this->bills->isEmpty())
+            return __('Not Submitted');
+        else if ($this->bills->count() == 12)
             return __('Fully Submitted');
-        }
+        else
+            return __('Partial Submitted');
     }
 
     public function calculateTotalCarbonEmission()
@@ -95,7 +91,16 @@ class Submission extends Model
     public function getBillByMonthID($month_id)
     {
         return $this->bills->where('month_id', $month_id)->first() ?? new Bill([
-            'month_id' => $month_id
+            'month_id' => $month_id,
+            'submission_id' => $this->id,
+        ]);
+    }
+
+    public function getAnswerByQuestionID($question_id)
+    {
+        return $this->answers->where('question_id', $question_id)->first() ?? new Answer([
+            'question_id' => $question_id,
+            'submission_id' => $this->id,
         ]);
     }
 }
