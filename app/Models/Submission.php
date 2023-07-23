@@ -66,7 +66,7 @@ class Submission extends Model
         else if ($this->bills->count() == 12)
             return __('Fully Submitted');
         else
-            return __('Partial Submitted');
+            return __('Partially Submitted');
     }
 
     public function calculateTotalCarbonEmission()
