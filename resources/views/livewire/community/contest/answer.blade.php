@@ -63,7 +63,7 @@
                                     @endswitch
                                 </h5>
 
-                                <div class="table-responsive">
+                                <div class="table-responsive" wire:ignore>
                                     <table class="table table-bordered">
                                         <thead class="table-primary">
                                             <tr>
@@ -88,8 +88,7 @@
                                                                 <button type="button" class="btn btn-primary btn-sm"
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#viewAnswerModal"
-                                                                    wire:click.prevent='open({{ $questionObj->id }})'
-                                                                    wire:ignore>
+                                                                    wire:click.prevent='open({{ $questionObj->id }})'>
                                                                     <i data-bs-toggle="tooltip"
                                                                         data-bs-title="{{ __('View Answer for this Question') }}"
                                                                         data-feather="eye"></i>
@@ -97,8 +96,7 @@
                                                                 <button type="button" class="btn btn-primary btn-sm"
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#updateAnswerModal"
-                                                                    wire:click.prevent='open({{ $questionObj->id }})'
-                                                                    wire:ignore>
+                                                                    wire:click.prevent='open({{ $questionObj->id }})'>
                                                                     <i data-bs-toggle="tooltip"
                                                                         data-bs-title="{{ __('Edit Answer for this Question') }}"
                                                                         data-feather="edit-2"></i>

@@ -38,8 +38,8 @@
                                             data-feather="edit-2"></i>
                                     </button>
                                     <button type="button" class="btn btn-primary btn-sm"
-                                        wire:click.prevent='askDelete({{ $competition->id }})'><i data-bs-toggle="tooltip"
-                                            data-bs-title="{{ __('Delete Competition') }}"
+                                        wire:click.prevent='askDelete({{ $competition->id }})'><i
+                                            data-bs-toggle="tooltip" data-bs-title="{{ __('Delete Competition') }}"
                                             data-feather="trash-2"></i></button>
                                 </div>
                                 <div class="ps-3 btn-group" role="group" aria-label="Question">
@@ -104,8 +104,14 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                         wire:click.prevent="close()">{{ __('Close') }}</button>
-                    <button type="button" class="btn btn-primary"
-                        wire:click.prevent="create()">{{ __('Save') }}</button>
+                    <button class="btn btn-primary" type="button" wire:loading.attr="disabled"
+                        wire:click.prevent="create()">
+                        <span wire:loading.remove>{{ __('Save') }}</span>
+                        <div wire:loading wire:target="create">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            {{ __('Saving...') }}
+                        </div>
+                    </button>
                 </div>
             </div>
         </div>
@@ -187,8 +193,14 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                         wire:click.prevent="close()">{{ __('Close') }}</button>
-                    <button type="button" class="btn btn-primary"
-                        wire:click.prevent="update()">{{ __('Update') }}</button>
+                    <button class="btn btn-primary" type="button" wire:loading.attr="disabled"
+                        wire:click.prevent="update()">
+                        <span wire:loading.remove>{{ __('Update') }}</span>
+                        <div wire:loading wire:target="update">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            {{ __('Updating...') }}
+                        </div>
+                    </button>
                 </div>
             </div>
         </div>

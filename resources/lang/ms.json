@@ -195,8 +195,8 @@
     "Insert your Recycle total weight and sell value": "Masukkan jumlah berat dan nilai jualan Kitar Semula anda",
     "Insert your Used Oil total weight and sell value": "Masukkan jumlah berat dan nilai jualan Minyak Terpakai anda",
     "Month": "Bulan",
-    "View Submission for": "Lihat Pengisian untuk bulan",
-    "Edit Submission for": "Kemaskini Pengisian untuk bulan",
+    "View Submission for": "Lihat Penyertaan untuk bulan",
+    "Edit Submission for": "Kemaskini Penyertaan untuk bulan",
     "Usage": "Pengunaan",
     "Bill Charge": "Bayaran Bil",
     "Evidence": "Bukti",
@@ -238,5 +238,10 @@
     "Insert your Answer for this Question" : "Sila masukkan Jawapan anda untuk Soalan ini",
     "View Answer" : "Lihat Jawpan",
     "Update Answer" : "Kemaskini Jawpan",
-    "Please submit the record for each month before answer the Bonus Question" : "Sila masukkan rekod bagi setiap bulan di tab Rekod sebelum menjawab Soalan Bonus"
+    "Please submit the record for each month before answer the Bonus Question" : "Sila masukkan rekod bagi setiap bulan di tab Rekod sebelum menjawab Soalan Bonus",
+    "Saving..." : "Menyimpan",
+    "Updating..." : "Mengemaskini",
+    "List of Submission" : "Senarai Penyertaan",
+    "List of Submission for" : "Senarai Penyertaan bagi",
+    "Competition Management" : "Pengurusan Pertandingan"
 }

@@ -27,7 +27,8 @@ class SubmissionController extends Controller
         ]);
 
         return view('community.contest.submission.list')->with([
-            'submission' => $submission
+            'submission' => $submission,
+            'attributes' => array_diff_key($request->all(), ["_token" => ''])
         ]);
     }
 
