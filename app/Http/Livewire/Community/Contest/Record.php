@@ -26,7 +26,6 @@ class Record extends Component
     public Submission $submission;
     public Month $month;
     public Bill $bill;
-
     public Electric $electric;
     public Water $water;
     public Recycle $recycle;

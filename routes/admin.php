@@ -106,6 +106,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::prefix('submission')->name('submission.')->group(function () {
                 Route::match(['get', 'post'], '', [SubmissionController::class, 'list'])->name('list');
                 Route::match(['get', 'post'], '/filter', [SubmissionController::class, 'filter'])->name('filter');
+                Route::match(['get', 'post'], '/view', [SubmissionController::class, 'view'])->name('view');
+                Route::match(['get', 'post'], '/download', [SubmissionController::class, 'download'])->name('download');
             });
         });
     });

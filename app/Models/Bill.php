@@ -85,4 +85,9 @@ class Bill extends Model
         $this->total_carbon_emission = $this->electric->carbon_emission + $this->water->carbon_emission + $this->recycle->carbon_emission + $this->used_oil->carbon_emission;
         $this->save();
     }
+
+    public function downloadEvidence($type)
+    {
+        return response()->file(storage_path('app/evidences/' . $this->submission->competition->year . '/' . $this->submission->community_id . '/' . $this->{$type}->evidence));
+    }
 }
