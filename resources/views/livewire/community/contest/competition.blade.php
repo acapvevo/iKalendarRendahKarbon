@@ -28,7 +28,7 @@
                                     </button>
                                 </div>
                                 <div class="ps-3 btn-group" role="group" aria-label="Question">
-                                    <form action="{{ route('community.contest.submission.list', ['competition_id' => $competition->id]) }}" method="post">
+                                    <form action="{{ route('community.contest.submission.list') }}" method="post">
                                         @csrf
 
                                         <button type="submit" data-bs-toggle="tooltip"

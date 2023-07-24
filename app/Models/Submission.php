@@ -103,4 +103,9 @@ class Submission extends Model
             'submission_id' => $this->id,
         ]);
     }
+
+    public function getTotalCarbonEmission()
+    {
+        return number_format($this->total_carbon_emission, 2) . ' kgCO<sub>2</sub>';
+    }
 }

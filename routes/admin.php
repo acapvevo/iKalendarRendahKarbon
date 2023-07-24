@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Admin\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Admin\Contest\CompetitionController;
 use App\Http\Controllers\Admin\Contest\QuestionController;
+use App\Http\Controllers\Admin\Contest\SubmissionController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
@@ -99,6 +100,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
             //Question
             Route::prefix('question')->name('question.')->group(function () {
                 Route::match(['get', 'post'], '', [QuestionController::class, 'list'])->name('list');
+            });
+
+            //Submission
+            Route::prefix('submission')->name('submission.')->group(function () {
+                Route::match(['get', 'post'], '', [SubmissionController::class, 'list'])->name('list');
+                Route::match(['get', 'post'], '/filter', [SubmissionController::class, 'filter'])->name('filter');
             });
         });
     });

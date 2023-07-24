@@ -52,9 +52,7 @@ class Competition extends Component
     public function create()
     {
         $this->validate([
-            'competition.year' => [
-                'unique:competitions,year'
-            ]
+            'competition.year' => 'unique:competitions,year'
         ]);
 
         $this->competition->save();
@@ -67,7 +65,7 @@ class Competition extends Component
     {
         $this->validate([
             'competition.year' => [
-                Rule::unique('competitions')->ignore($this->competition->id)
+                Rule::unique('competitions', 'year')->ignore($this->competition->id)
             ]
         ]);
 

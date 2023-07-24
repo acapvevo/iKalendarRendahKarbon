@@ -24,8 +24,11 @@
             <tbody>
                 @foreach ($questions as $question)
                     <tr>
-                        <td>{{ $question->getValue('text') }}? <br> ({{ $question->getCurrentTranslation('text', $locale) }}?)</td>
-                        <td>{{ $question->getValue('example') }} <br> ({{ $question->getCurrentTranslation('example', $locale) }}?)
+                        <td>{{ $question->getValue('text') }}? <br>
+                            ({{ $question->getCurrentTranslation('text', $locale) }}?)
+                        </td>
+                        <td>{{ $question->getValue('example') }} <br>
+                            ({{ $question->getCurrentTranslation('example', $locale) }}?)
                         </td>
                         <td>{{ __($question->getCategory()->name) }}</td>
                         <td>
@@ -132,7 +135,7 @@
                             <div id="category">
                                 @foreach (DB::table('question_category')->get() as $index => $category)
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio"
+                                        <input class="form-check-input {{$errors->has('question.category') ? 'is-invalid' : ''}}" type="radio"
                                             wire:model.lazy='question.category' id="category{{ $index }}"
                                             value="{{ $category->code }}">
                                         <label class="form-check-label"
@@ -140,6 +143,11 @@
                                     </div>
                                 @endforeach
                             </div>
+                            @error('question.category')
+                                <div class="invalid-feedback" style="display: block">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                     </form>
@@ -147,8 +155,14 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                         wire:click.prevent="close()">{{ __('Close') }}</button>
-                    <button type="button" class="btn btn-primary"
-                        wire:click.prevent="create()">{{ __('Save') }}</button>
+                    <button class="btn btn-primary" type="button" wire:loading.attr="disabled"
+                        wire:click.prevent="create()">
+                        <span wire:loading.remove>{{ __('Save') }}</span>
+                        <div wire:loading wire:target="create">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            {{ __('Saving...') }}
+                        </div>
+                    </button>
                 </div>
             </div>
         </div>
@@ -179,7 +193,8 @@
                             </tr>
                             <tr>
                                 <th>{{ __('Category') }}</th>
-                                <td colspan="2" class="text-center">{{ __($question->getCategory()->name ?? '') }}</td>
+                                <td colspan="2" class="text-center">{{ __($question->getCategory()->name ?? '') }}
+                                </td>
                             </tr>
                         </table>
                     </div>
@@ -270,7 +285,7 @@
                             <div id="category">
                                 @foreach (DB::table('question_category')->get() as $index => $category)
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio"
+                                        <input class="form-check-input {{$errors->has('question.category') ? 'is-invalid' : ''}}" type="radio"
                                             wire:model.lazy='question.category' id="category{{ $index }}"
                                             value="{{ $category->code }}">
                                         <label class="form-check-label"
@@ -278,6 +293,11 @@
                                     </div>
                                 @endforeach
                             </div>
+                            @error('question.category')
+                                <div class="invalid-feedback" style="display: block">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                     </form>
@@ -285,8 +305,14 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                         wire:click.prevent="close()">{{ __('Close') }}</button>
-                    <button type="button" class="btn btn-primary"
-                        wire:click.prevent="update()">{{ __('Update') }}</button>
+                    <button class="btn btn-primary" type="button" wire:loading.attr="disabled"
+                        wire:click.prevent="update()">
+                        <span wire:loading.remove>{{ __('Update') }}</span>
+                        <div wire:loading wire:target="update">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            {{ __('Updating...') }}
+                        </div>
+                    </button>
                 </div>
             </div>
         </div>
