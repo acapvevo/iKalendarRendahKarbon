@@ -41,6 +41,6 @@ class SubmissionController extends Controller
 
         $bill = $this->getBill($request->bill_id);
 
-        return response()->file(storage_path('app/evidences/' . $bill->submission->competition->year . '/' . $bill->submission->community_id . '/' . $bill->{$request->type}->evidence));
+        return $bill->downloadEvidence($request->type);
     }
 }

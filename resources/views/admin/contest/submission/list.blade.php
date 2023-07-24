@@ -36,14 +36,13 @@
             </div>
             <div class="card-body">
                 <div class="py-3 d-flex justify-content-end row">
-                    <form action="{{ route('admin.contest.submission.list') }}" method="post">
+                    <form action="{{ route('admin.contest.submission.list') }}" method="get">
                         <div class="input-group">
                             <select class="form-select {{ $errors->has('competition_id') ? 'is-invalid' : '' }}"
-                                aria-label="Default select example">
+                                name="competition_id">
                                 <option hidden>{{ __('Select Competition Year') }}</option>
                                 @foreach ($competitions as $competition)
-                                    <option value="{{ $competition->id }}"
-                                        {{ $competition->id === $currentCompetition->id ? 'selected' : '' }}>
+                                    <option value="{{ $competition->id }}">
                                         {{ $competition->year }}</option>
                                 @endforeach
                             </select>

@@ -9,6 +9,7 @@
                     <th>{{ __('Name') }}</th>
                     <th>{{ __('Postcode') }}</th>
                     <th>{{ __('Total Carbon Emission') }}</th>
+                    <th>{{ __('Status') }}</th>
                     <th>{{ __('Menu') }}</th>
                 </tr>
             </thead>
@@ -65,7 +66,7 @@
                     "url": "{{ route('admin.contest.submission.filter', ['competition_id' => $competition_id]) }}",
                 },
                 searchBuilder: {
-                    columns: [1, 2]
+                    columns: [1, 2, 3]
                 },
                 buttons: [
                     'searchBuilder',
@@ -76,8 +77,19 @@
                 ],
                 columnDefs: [{
                     className: "dt-center",
-                    targets: [0, 1, 2, 3]
+                    targets: [0, 1, 2, 3, 4]
+                }, {
+                    type: 'unknownType',
+                    targets: [3]
                 }],
+                columns: [{
+                        "width": "40%"
+                    },
+                    null,
+                    null,
+                    null,
+                    null
+                ],
                 "drawCallback": function(settings) {
                     activeFeatherIcon();
                     activeTooltips();
