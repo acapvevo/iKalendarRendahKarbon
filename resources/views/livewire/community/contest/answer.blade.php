@@ -188,8 +188,14 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                         wire:click.prevent="close()">{{ __('Close') }}</button>
-                    <button type="submit" class="btn btn-primary"
-                        wire:click.prevent="update()">{{ __('Save') }}</button>
+                    <button class="btn btn-primary" type="submit" wire:loading.attr="disabled"
+                        wire:click.prevent="update()">
+                        <span wire:loading.remove>{{ __('Save') }}</span>
+                        <div wire:loading wire:target="update">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            {{ __('Saving...') }}
+                        </div>
+                    </button>
                 </div>
             </div>
         </div>

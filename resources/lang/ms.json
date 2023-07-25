@@ -239,12 +239,13 @@
     "View Answer" : "Lihat Jawpan",
     "Update Answer" : "Kemaskini Jawpan",
     "Please submit the record for each month before answer the Bonus Question" : "Sila masukkan rekod bagi setiap bulan di tab Rekod sebelum menjawab Soalan Bonus",
-    "Saving..." : "Menyimpan",
-    "Updating..." : "Mengemaskini",
+    "Saving..." : "Sedang Menyimpan...",
+    "Updating..." : "Sedang Mengemaskini...",
     "Submission" : "Penyertaan",
     "List of Submission" : "Senarai Penyertaan",
     "List of Submission for" : "Senarai Penyertaan bagi",
     "Competition Management" : "Pengurusan Pertandingan",
     "Change Competition" : "Ubah Pertandingan",
-    "Select Competition Year" : "Sila pilih Tahun Pertandingan"
+    "Select Competition Year" : "Sila pilih Tahun Pertandingan",
+    "Creating Account..." : "Sedang Mencipta Akaun..."
 }

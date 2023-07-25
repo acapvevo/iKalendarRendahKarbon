@@ -349,7 +349,13 @@
 
         <!-- Form Group (create account submit)-->
         <div class="pt-3 pb-3 d-flex justify-content-center align-items-center">
-            <button class="btn btn-primary btn-block" type="submit">{{ __('Create Account') }}</button>
+            <button class="btn btn-primary btn-block" type="submit" wire:loading.attr="disabled">
+                <span wire:loading.remove>{{ __('Create Account') }}</span>
+                <div wire:loading wire:target="create">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    {{ __('Creating Account...') }}
+                </div>
+            </button>
         </div>
     </form>
 </div>
