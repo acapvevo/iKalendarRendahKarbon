@@ -692,8 +692,14 @@
                             wire:click.prevent="previousTab()">{!! __('pagination.previous') !!}</button>
                     @endif
                     @if ($tab_state === 5)
-                        <button type="submit" class="btn btn-primary"
-                            wire:click.prevent="update()">{{ __('Save') }}</button>
+                    <button class="btn btn-primary" type="submit" wire:loading.attr="disabled"
+                        wire:click.prevent="update()">
+                        <span wire:loading.remove>{{ __('Save') }}</span>
+                        <div wire:loading wire:target="update">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            {{ __('Saving...') }}
+                        </div>
+                    </button>
                     @else
                         <button type="button" class="btn btn-success" id="nextTab"
                             wire:click.prevent="nextTab()">{!! __('pagination.next') !!}</button>

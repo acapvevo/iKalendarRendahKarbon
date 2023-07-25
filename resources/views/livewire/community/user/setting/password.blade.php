@@ -23,7 +23,13 @@
             @enderror
         </div>
         <div class="mb-3">
-            <button class="btn btn-primary float-end" type="submit">{{ __('Update') }}</button>
+            <button class="btn btn-primary float-end" type="submit" wire:loading.attr="disabled">
+                <span wire:loading.remove>{{ __('Update') }}</span>
+                <div wire:loading wire:target="update">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    {{ __('Updating...') }}
+                </div>
+            </button>
         </div>
     </form>
 </div>
