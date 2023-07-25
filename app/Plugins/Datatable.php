@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Extra;
+namespace App\Plugins;
 
 use PDO;
 use PDOException;
@@ -56,7 +56,7 @@ class Datatable
                     //     $row[$column['dt']] = $column['formatter']($data->get($i)->{$columns[$j]['as']}, $data->get($i));
                     // }
 
-                    $row[$column['dt']] = $column['formatter']($data->get($i)->{$columns[$j]['as']}, $data->get($i));
+                    $row[$column['dt']] = $column['formatter']($data->get($i)->{$columns[$j]['as']} ?? '', $data->get($i));
                 } else {
                     // if (!empty($column['db'])) {
                     //     // $row[$column['dt']] = $data[$i][$columns[$j]['db']];
@@ -83,7 +83,7 @@ class Datatable
      *
      *  @param  array   $request    Data sent to server by DataTables
      *  @param  Builder $dbObj      Added LIKE Clause Builder Object
-     *  @return Builder             Added LIMIT Clause Builder Object
+     *  @return void
      */
     static function limit($request, $dbObj)
     {
@@ -93,8 +93,6 @@ class Datatable
             $dbObj = $dbObj->skip(intval($request['start']))->take(intval($request['length']));
             // $limit = "LIMIT " . intval($request['start']) . ", " . intval($request['length']);
         }
-
-        return $dbObj;
         // return $limit;
     }
 
@@ -107,7 +105,7 @@ class Datatable
      *  @param  array   $request    Data sent to server by DataTables
      *  @param  Builder $dbObj      Added LIMIT Clause Builder Object
      *  @param  array   $columns    Column information array
-     *  @return Builder             Added ORDER BY Clause Builder Object
+     *  @return void
      */
     static function order($request, $dbObj, $columns)
     {
@@ -143,9 +141,6 @@ class Datatable
                 // $order = 'ORDER BY ' . implode(', ', $orderBy);
             }
         }
-
-        return $dbObj;
-        // return $order;
     }
 
 
@@ -161,7 +156,7 @@ class Datatable
      *  @param  array   $request    Data sent to server by DataTables
      *  @param  Builder $dbObj      Default Builder Object
      *  @param  array   $columns    Column information array
-     *  @return Builder             Added LIKE Clause Builder Object
+     *  @return void
      */
     static function filter($request, $dbObj, $columns)
     {
@@ -209,7 +204,7 @@ class Datatable
                         $columnSearch[] = [
                             'inFilter' => isset($column['inFilter']) ? $column['inFilter'] : true,
                             'column' => $column['db'],
-                            'str' => $str
+                            'str' => isset($column['reader']) ? $column['reader']($str) : $str
                         ];
 
                         // $binding = self::bind($bindings, '%' . $str . '%', PDO::PARAM_STR);
@@ -252,15 +247,13 @@ class Datatable
         // if ($where !== '') {
         //     $where = 'WHERE ' . $where;
         // }
-
-        return $dbObj;
     }
 
     /**
      *  @param  array   $data       Search Builder data
      *  @param  Builder $dbObj      Default Builder Object
      *  @param  array   $columns    Column information array
-     *  @return Builder             Added Search Builder's Clause Builder Object
+     *  @return void
      */
     static function search_builder($data, $dbObj, $columns)
     {
@@ -290,11 +283,19 @@ class Datatable
                         $this->search_builder($q, $crit, $columns);
                     });
                 }
-            } else if (isset($crit['condition']) && (isset($crit['value1']) || $crit['condition'] === 'null' || $crit['condition'] === '!null')) {
+            } else if (isset($crit['condition']) && ((isset($crit['value1']) || isset($crit['value'][0])) || $crit['condition'] === 'null' || $crit['condition'] === '!null')) {
                 // Sometimes the structure of the object that is passed across is named in a strange way.
                 // This conditional assignment solves that issue
-                $val1 = isset($crit['value1']) ? $crit['value1'] : '';
-                $val2 = isset($crit['value2']) ? $crit['value2'] : '';
+                if(isset($crit['value1']) || isset($crit['value2'])){
+                    $val1 = $crit['value1'];
+                    $val2 = isset($crit['value2']) ? $crit['value2'] : '';
+                } else if(isset($crit['value'][0]) || isset($crit['value'][1])){
+                    $val1 = $crit['value'][0];
+                    $val2 = isset($crit['value'][1]) ? $crit['value'][1] : '';
+                } else {
+                    $val1 = '';
+                    $val2 = '';
+                }
 
                 if (strlen($val1) === 0 && $crit['condition'] !== 'null' && $crit['condition'] !== '!null') {
                     continue;
@@ -306,6 +307,16 @@ class Datatable
                 $column = collect($columns)->where('title', $crit['data'])->first();
                 $crit['data'] = $column['db'] ?? $crit['data'];
                 //Debugbar::info($crit['origData']);
+
+                // Format value based on column details given in $columns
+                if (isset($column['reader'])) {
+                    if ($val1) {
+                        $val1 = $column['reader']($val1);
+                    }
+                    if ($val2) {
+                        $val2 = $column['reader']($val2);
+                    }
+                }
 
                 // Switch on the condition that has been passed in
                 switch ($crit['condition']) {

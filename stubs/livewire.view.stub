@@ -1,3 +1,7 @@
+@push('styles')
+@endpush
 <div>
     {{-- [quote] --}}
 </div>
+@push('scripts')
+@endpush

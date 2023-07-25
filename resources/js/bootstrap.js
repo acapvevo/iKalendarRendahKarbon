@@ -27,6 +27,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     forceTLS: true
 // });
 
-let Country = require('country-state-city').Country;
-let State = require('country-state-city').State;
-let City = require('country-state-city').City;
+window.Country = require('country-state-city').Country;
+window.State = require('country-state-city').State;
+window.City = require('country-state-city').City;

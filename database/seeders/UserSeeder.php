@@ -6,6 +6,7 @@ use Faker\Generator;
 use App\Models\Admin;
 use App\Models\Address;
 use App\Models\Community;
+use App\Models\Occupation;
 use App\Models\SuperAdmin;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -47,8 +48,16 @@ class UserSeeder extends Seeder
             'password' => Hash::make('community'),
         ]);
 
+        Occupation::create([
+            'community_id' => $community->id,
+            'place' => $faker->company(),
+            'position' => $faker->jobTitle(),
+            'sector' => 'S',
+        ]);
+
         Address::create([
             'community_id' => $community->id,
+            'category' => 'A2',
             'line_1' => strtoupper($faker->buildingNumber()),
             'line_2' => strtoupper($faker->streetName()),
             'line_3' => strtoupper($faker->township()),

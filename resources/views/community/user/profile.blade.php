@@ -54,12 +54,33 @@
                                 <td>{{ $user->email }}</td>
                             </tr>
                             <tr>
+                                <th class="w-25">{{ __('Occupation Position') }}</th>
+                                <td>{{ $user->occupation->place ?? __('Unemployed') }}</td>
+                                <th class="w-25">{{ __('Occupation Place') }}</th>
+                                <td>{{ $user->occupation->position ?? '' }}</td>
+                            </tr>
+                            <tr>
+                                <th class="w-25">{{ __('Occupation Sector') }}</th>
+                                <td>{{ __($user->occupation->getSector()->name ?? '') }}</td>
+                                <th class="w-25">{{ __('Category') }}</th>
+                                <td>{{ __($user->address->getCategory()->name) }}</td>
+                            </tr>
+                            <tr>
                                 <th class="w-25">{{ __('Address') }}</th>
                                 <td colspan="3">{{ $user->address->line_1 }}, <br>
                                     {{ $user->address->line_2 }}, <br>
                                     {!! $user->address->line_3 ? $user->address->line_3 . ', <br>' : '' !!}
                                     {{ $user->address->postcode }} {{ $user->address->city }}, <br>
                                     {{ $user->address->state }}, {{ $user->address->country }}</td>
+                            </tr>
+                            <tr>
+                                <th class="w-25">{{ __('Account Status') }}</th>
+                                <td colspan="3">
+                                    {!! $user->isVerified
+                                        ? '<i class="fa-solid fa-check" style="color: #00bd0d;"></i>'
+                                        : '<i class="fa-solid fa-xmark" style="color: #ff0000;"></i>' !!}
+                                    {{ $user->isVerified ? __('Verified') : __('Not Verified') }}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -79,7 +100,7 @@
                     @livewire('community.user.profile', ['user' => $user])
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick='$("#updateUserForm").trigger("reset");'
+                    <button type="button" class="btn btn-secondary"
                         data-bs-dismiss="modal">{{ __('Close') }}</button>
                     <button type="submit" class="btn btn-primary" form="updateUserForm">{{ __('Save') }}</button>
                 </div>
@@ -88,63 +109,10 @@
     </div>
 @endsection
 
-@section('scripts')
-    <script src="{{ asset('js/mykad.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-
-    <script>
-        const identification_numberInput = document.getElementById('identification_number');
-        const invalidICDiv = document.getElementById('invalid-ic');
-
-        const phoneInputField = document.getElementById("phone_number");
-        const phoneInput = window.intlTelInput(phoneInputField, {
-            initialCountry: "my",
-            nationalMode: true,
-            onlyCountries: ["my"],
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-        });
-        const phoneError = document.querySelector("#alert-error-phoneNumber");
-
-        const registerButton = document.getElementById('register');
-
-        function process(event) {
-            event.preventDefault();
-
-            const phoneNumber = phoneInput.getNumber();
-
-            phoneError.style.display = "none";
-            invalidICDiv.style.display = "none";
-
-            phoneInputField.classList.remove("is-invalid");
-            identification_numberInput.classList.remove("is-invalid");
-
-            if (phoneNumber && !phoneInput.isValidNumber()) {
-                phoneError.style.display = "block";
-                phoneInputField.classList.add("is-invalid");
-            }
-            if (!mykad.isValid(identification_numberInput.value)) {
-                invalidICDiv.style.display = "block";
-                identification_numberInput.classList.add("is-invalid");
-            }
-
-            if (phoneNumber && phoneInput.isValidNumber() && mykad.isValid(identification_numberInput.value)) {
-                phoneInputField.value = phoneNumber;
-
-                document.getElementById("updateUserForm").submit();
-            }
-        }
-
-        $('#identification_number').mask('000000-00-0000', {
-            'translation': {
-                0: {
-                    pattern: /[0-9]/
-                }
-            }
-        });
-    </script>
+@push('scripts')
     @if ($errors->any())
         <script>
             showModalOnError('updateUserModal')
         </script>
     @endif
-@endsection
+@endpush

@@ -15,8 +15,11 @@ class CreateAddressesTable extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
+
             $table->unsignedBigInteger('community_id');
             $table->foreign('community_id')->references('id')->on('communities')->onDelete('cascade');
+
+            $table->char('category', 2);
 
             $table->string('line_1');
             $table->string('line_2');

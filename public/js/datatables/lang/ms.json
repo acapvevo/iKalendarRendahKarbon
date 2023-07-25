@@ -1,0 +1,124 @@
+{
+    "emptyTable": "Tiada data",
+    "info": "Paparan dari _START_ hingga _END_ dari _TOTAL_ rekod",
+    "infoEmpty": "Paparan 0 hingga 0 dari 0 rekod",
+    "infoFiltered": "(Ditapis dari jumlah _MAX_ rekod)",
+    "infoThousands": ",",
+    "lengthMenu": "Papar _MENU_ rekod",
+    "loadingRecords": "Diproses...",
+    "processing": "Sedang diproses...",
+    "search": "Carian:",
+    "searchBuilder": {
+        "add": "Tambah Kriteria",
+        "button": {
+            "0": "Carian Compleks",
+            "_": "Carian Compleks (%d)"
+        },
+        "condition": "Peraturan",
+        "conditions": {
+            "date": {
+                "after": "Selepas",
+                "before": "Sebelum",
+                "between": "Antara",
+                "empty": "Tiada Data",
+                "not": "Selain",
+                "notBetween": "Selain Antara",
+                "notEmpty": "Ada Data",
+                "equals": "Bersamaan"
+            },
+            "number": {
+                "between": "Antara",
+                "empty": "Tiada Data",
+                "equals": "Bersamaan",
+                "gt": "Lebih Daripada",
+                "gte": "Lebih Daripada dan Bersamaan",
+                "lt": "Kurang Daripada",
+                "lte": "Kurang Daripada dan Bersamaan",
+                "not": "Selain",
+                "notBetween": "Selain Antara",
+                "notEmpty": "Ada Data"
+            },
+            "string": {
+                "contains": "Mengandungi",
+                "empty": "Tiada Data",
+                "endsWith": "Berakhir Dengan",
+                "equals": "Bersamaan",
+                "not": "Selain",
+                "notEmpty": "Ada Data",
+                "startsWith": "Bermula Dengan",
+                "notContains": "Tidak Mengandungi",
+                "notStartsWith": "Tidak Bermula Dengan",
+                "notEndsWith": "Tidak Berakhir Dengan"
+            },
+            "array": {
+                "equals": "Bersamaman",
+                "empty": "Tiada Data",
+                "contains": "Mengandungi",
+                "not": "Selain",
+                "notEmpty": "Ada Data",
+                "without": "Tanpa"
+            }
+        },
+        "data": "Data",
+        "deleteTitle": "Padam Tajuk",
+        "leftTitle": "Gabung Kriteria",
+        "rightTitle": "Pisah Kriteria",
+        "title": {
+            "0": "Carian Compleks",
+            "_": "Carian Compleks (%d)"
+        },
+        "value": "Nilai",
+        "clearAll": "Padam Semua",
+        "logicAnd": "Dan",
+        "logicOr": "Atau"
+    },
+    "zeroRecords": "Tiada padanan rekod yang dijumpai.",
+    "paginate": {
+        "first": "Pertama",
+        "previous": "Sebelum",
+        "next": "Seterusnya",
+        "last": "Akhir"
+    },
+    "aria": {
+        "sortAscending": ": diaktifkan kepada susunan lajur menaik",
+        "sortDescending": ": diaktifkan kepada susunan lajur menurun"
+    },
+    "autoFill": {
+        "cancel": "batal",
+        "fill": "Isi semua sel dengan <i>%d</i>",
+        "fillHorizontal": "Isi sel secara mendatar",
+        "fillVertical": "Isi sel secara menegak"
+    },
+    "buttons": {
+        "collection": "Koleksi <span class=\"ui-button-icon-primary ui-icon ui-icon-triangle-1-s\"></span>",
+        "copy": "Salin",
+        "csv": "Export ke .csv",
+        "excel": "Export ke Excel",
+        "pdf": "Export ke PDF",
+        "print": "Cetak",
+        "colvis": "Kolum Pilihan",
+        "pageLength": {
+            "1": "Papar %d Rekod",
+            "_": "Papar %d Rekod",
+            "-1": "Papar Semua Rekod"
+        }
+    },
+    "thousands": ",",
+    "select": {
+        "cells": {
+            "1": "1 sel terpilih",
+            "_": "%d sel terpilih"
+        },
+        "columns": {
+            "1": "1 kolum terpilih",
+            "_": "%d kolum terpilih"
+        },
+        "rows": {
+            "1": "1 baris terpilih",
+            "_": "%d baris terpilih"
+        }
+    },
+    "editor": {
+        "close": "Tutup"
+    }
+}

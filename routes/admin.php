@@ -13,6 +13,9 @@ use App\Http\Controllers\Admin\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Admin\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Admin\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Admin\Contest\CompetitionController;
+use App\Http\Controllers\Admin\Contest\QuestionController;
+use App\Http\Controllers\Admin\Contest\SubmissionController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
@@ -83,6 +86,28 @@ Route::prefix('admin')->name('admin.')->group(function () {
             //Profile Picture
             Route::prefix('picture')->name('picture.')->group(function () {
                 Route::get('', [PictureController::class, 'show'])->name('show');
+            });
+        });
+
+        // Contest Management routes
+        Route::prefix('contest')->name('contest.')->group(function () {
+
+            //Competition
+            Route::prefix('competition')->name('competition.')->group(function () {
+                Route::get('', [CompetitionController::class, 'list'])->name('list');
+            });
+
+            //Question
+            Route::prefix('question')->name('question.')->group(function () {
+                Route::match(['get', 'post'], '', [QuestionController::class, 'list'])->name('list');
+            });
+
+            //Submission
+            Route::prefix('submission')->name('submission.')->group(function () {
+                Route::match(['get', 'post'], '', [SubmissionController::class, 'list'])->name('list');
+                Route::match(['get', 'post'], '/filter', [SubmissionController::class, 'filter'])->name('filter');
+                Route::match(['get', 'post'], '/view', [SubmissionController::class, 'view'])->name('view');
+                Route::match(['get', 'post'], '/download', [SubmissionController::class, 'download'])->name('download');
             });
         });
     });
