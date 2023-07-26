@@ -1,14 +1,34 @@
 @section('styles')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/css/intlTelInput.css">
+
+    <style>
+        /* .tab-content {
+                        display: flex;
+                    }
+
+                    .tab-content>.tab-pane {
+                        display: block;
+                        /* undo "display: none;" */
+        visibility: hidden;
+        margin-right: -100%;
+        width: 100%;
+        }
+
+        .tab-content>.active {
+            visibility: visible;
+        }
+
+        */
+    </style>
 @endsection
 
 <div>
     <form class="auth-form auth-signup-form" wire:submit.prevent="create" id="communityRegistrationForm">
         <ul class="nav nav-pills nav-justified" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="account-tab" data-bs-toggle="tab" data-bs-target="#account-tab-pane"
-                    type="button" role="tab" aria-controls="account-tab-pane" wire:ignore.self
-                    aria-selected="true">
+                <button class="nav-link active" id="wizard1-tab" data-bs-toggle="tab" data-bs-target="#wizard1-tab-pane"
+                    type="button" role="tab" aria-controls="wizard1-tab-pane" wire:ignore.self aria-selected="true"
+                    wire:click.prevent="setTab(1)">
                     <div>
                         {{ __('Account') }}
                         {!! $errors->has('user.username') || $errors->has('user.email') || $errors->has('password')
@@ -18,9 +38,9 @@
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
-                    type="button" role="tab" aria-controls="profile-tab-pane" wire:ignore.self
-                    aria-selected="false">
+                <button class="nav-link" id="wizard2-tab" data-bs-toggle="tab" data-bs-target="#wizard2-tab-pane"
+                    type="button" role="tab" aria-controls="wizard2-tab-pane" wire:ignore.self
+                    aria-selected="false" wire:click.prevent="setTab(2)">
                     <div>
                         {{ __('Profile') }}
                         {!! $errors->has('user.name') || $errors->has('user.identification_number') || $errors->has('user.phone_number')
@@ -29,9 +49,9 @@
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="occupation-tab" data-bs-toggle="tab" data-bs-target="#occupation-tab-pane"
-                    type="button" role="tab" aria-controls="occupation-tab-pane" wire:ignore.self
-                    aria-selected="false">
+                <button class="nav-link" id="wizard3-tab" data-bs-toggle="tab" data-bs-target="#wizard3-tab-pane"
+                    type="button" role="tab" aria-controls="wizard3-tab-pane" wire:ignore.self
+                    aria-selected="false" wire:click.prevent="setTab(3)">
                     <div>
                         {{ __('Occupation') }}
                         {!! $errors->has('occupation.*') ? '<span class="badge text-bg-danger">!</span>' : '' !!}
@@ -39,18 +59,27 @@
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="address-tab" data-bs-toggle="tab" data-bs-target="#address-tab-pane"
-                    type="button" role="tab" aria-controls="address-tab-pane" wire:ignore.self
-                    aria-selected="false">
+                <button class="nav-link" id="wizard4-tab" data-bs-toggle="tab" data-bs-target="#wizard4-tab-pane"
+                    type="button" role="tab" aria-controls="wizard4-tab-pane" wire:ignore.self
+                    aria-selected="false" wire:click.prevent="setTab(4)">
                     <div>
                         {{ __('Address') }}
                         {!! $errors->has('address.*') ? '<span class="badge text-bg-danger">!</span>' : '' !!}
                     </div>
                 </button>
             </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="wizard5-tab" data-bs-toggle="tab" data-bs-target="#wizard5-tab-pane"
+                    type="button" role="tab" aria-controls="wizard5-tab-pane" wire:ignore.self
+                    aria-selected="false" wire:click.prevent="setTab(5)">
+                    <div>
+                        {{ __('Confirmation') }}
+                    </div>
+                </button>
+            </li>
         </ul>
         <div class="tab-content pt-3" id="myTabContent">
-            <div class="tab-pane fade show active" id="account-tab-pane" role="tabpanel" aria-labelledby="account-tab"
+            <div class="tab-pane fade show active" id="wizard1-tab-pane" role="tabpanel" aria-labelledby="wizard1-tab"
                 tabindex="0" wire:ignore.self>
 
                 <div class="mb-3">
@@ -104,7 +133,7 @@
                 </div>
 
             </div>
-            <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
+            <div class="tab-pane fade" id="wizard2-tab-pane" role="tabpanel" aria-labelledby="wizard2-tab"
                 tabindex="0" wire:ignore.self>
 
                 <div class="mb-3">
@@ -156,7 +185,7 @@
                 </div>
 
             </div>
-            <div class="tab-pane fade" id="occupation-tab-pane" role="tabpanel" aria-labelledby="occupation-tab"
+            <div class="tab-pane fade" id="wizard3-tab-pane" role="tabpanel" aria-labelledby="wizard3-tab"
                 tabindex="0" wire:ignore.self>
 
                 <div class="pb-3">
@@ -164,11 +193,12 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="occupation.place" class="form-label">{{ __('Occupation Place') }}:</label>
+                    <label for="occupation.place" class="form-label">{{ __('Place') }}:</label>
                     <input type="text"
                         class="form-control {{ $errors->has('occupation.place') ? 'is-invalid' : '' }}"
                         placeholder="{{ __('Enter Your Occuaption Place') }}" id="occupation.place"
-                        aria-label="place" aria-describedby="place" wire:model.lazy="occupation.place">
+                        aria-label="place" aria-describedby="place" oninput="this.value = this.value.toUpperCase()"
+                        wire:model.lazy="occupation.place">
                     @error('occupation.place')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -177,11 +207,12 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="occupation.position" class="form-label">{{ __('Occupation Position') }}:</label>
+                    <label for="occupation.position" class="form-label">{{ __('Position') }}:</label>
                     <input type="text"
                         class="form-control {{ $errors->has('occupation.position') ? 'is-invalid' : '' }}"
                         placeholder="{{ __('Enter Your Occuaption Position') }}" id="occupation.position"
-                        aria-label="position" aria-describedby="position" wire:model.lazy="occupation.position">
+                        aria-label="position" aria-describedby="position"
+                        oninput="this.value = this.value.toUpperCase()" wire:model.lazy="occupation.position">
                     @error('occupation.position')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -190,13 +221,13 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="occupation.sector" class="form-label">{{ __('Occupation Sector') }}:</label>
+                    <label for="occupation.sector" class="form-label">{{ __('Sector') }}:</label>
                     <select class="form-select {{ $errors->has('occupation.sector') ? 'is-invalid' : '' }}"
                         id="occupation.sector" aria-label="Default select example" wire:model="occupation.sector">
                         <option value="" selected>{{ __('Choose Your Occuaption Sector') }}</option>
                         @foreach (DB::table('occupation_sector_type')->get() as $sector)
                             <option value="{{ $sector->code }}" wire:key="sector-{{ $sector->code }}">
-                                {{ __($sector->name) }}
+                                {{ strtoupper(__($sector->name)) }}
                             </option>
                         @endforeach
                     </select>
@@ -207,7 +238,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="tab-pane fade" id="address-tab-pane" role="tabpanel" aria-labelledby="address-tab"
+            <div class="tab-pane fade" id="wizard4-tab-pane" role="tabpanel" aria-labelledby="wizard4-tab"
                 tabindex="0" wire:ignore.self>
 
                 <div class="mb-3">
@@ -218,7 +249,7 @@
                         <option selected value="">{{ __('Choose Address Category') }}</option>
                         @foreach (DB::table('address_category')->get() as $category)
                             <option value="{{ $category->code }}" wire:key="category-{{ $category->code }}">
-                                {{ __($category->name) }}
+                                {{ strtoupper(__($category->name)) }}
                             </option>
                         @endforeach
                     </select>
@@ -330,32 +361,145 @@
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="tab-pane fade" id="wizard5-tab-pane" role="tabpanel" aria-labelledby="wizard5-tab"
+                tabindex="0" wire:ignore.self>
 
-        <div class="pt-3 d-flex justify-content-center align-items-center">
-            <div wire:ignore>
-                {!! htmlScriptTagJsApi() !!}
-                {!! htmlFormSnippet([
-                    'callback' => 'onCallback',
-                ]) !!}
-            </div>
-            @error('captcha')
-                <br>
-                <div class="invalid-feedback" style="display: block">
-                    {{ $message }}
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th colspan="4" class="text-center">{{ __('Account') }}</th>
+                        </tr>
+                        <tr>
+                            <th class="w-25">{{ __('Username') }}</th>
+                            <td colspan="3">{{ $user->username ?? '' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="w-25">{{ __('Email Address') }}</th>
+                            <td colspan="3">{{ $user->email ?? '' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="w-25">{{ __('Password') }}</th>
+                            <td colspan="3">
+                                <div class="row row-cols-lg-auto g-2 align-items-center">
+
+                                    <div class="col-12">
+                                        <input type="password" readonly class="form-control-plaintext"
+                                            id="password_preview" value="{{ $password ?? '' }}">
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="button" class="btn btn-outline-secondary btn-sm float-end"
+                                            id="password_preview_btn" wire:click.prevent="toogleVisibility"><i
+                                                class="fa-regular fa-eye"></i></button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="4" class="text-center">{{ __('Profile') }}</th>
+                        </tr>
+                        <tr>
+                            <th class="w-25">{{ __('Name') }}</th>
+                            <td colspan="3">{{ $user->name ?? '' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="w-25">{{ __('Identification Card Number') }}</th>
+                            <td colspan="3">{{ $user->identification_number ?? '' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="w-25">{{ __('Phone Number') }}</th>
+                            <td colspan="3">{{ $user->phone_number ? '+6' . $user->phone_number : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th colspan="4" class="text-center">{{ __('Occupation') }}</th>
+                        </tr>
+                        <tr>
+                            <th class="w-25">{{ __('Place') }}</th>
+                            <td colspan="3">{{ $occupation->place ?? '' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="w-25">{{ __('Position') }}</th>
+                            <td colspan="3">{{ $occupation->position ?? '' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="w-25">{{ __('Sector') }}</th>
+                            <td colspan="3">
+                                {{ $occupation->sector ? strtoupper(__($occupation->getSector()->name)) : '' }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="4" class="text-center">{{ __('Address') }}</th>
+                        </tr>
+                        <tr>
+                            <th class="w-25">{{ __('Category') }}</th>
+                            <td colspan="3">
+                                {{ $address->category ? strtoupper(__($address->getCategory()->name)) : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="w-25">{{ __('Address Line 1') }}</th>
+                            <td colspan="3">{{ $address->line_1 ?? '' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="w-25">{{ __('Address Line 2') }}</th>
+                            <td colspan="3">{{ $address->line_2 ?? '' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="w-25">{{ __('Address Line 3') }}</th>
+                            <td colspan="3">{{ $address->line_3 ?? '' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="w-25">{{ __('City') }}</th>
+                            <td>{{ $address->city ?? '' }}</td>
+                            <th class="w-25">{{ __('Postcode') }}</th>
+                            <td>{{ $address->postcode ?? '' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="w-25">{{ __('State') }}</th>
+                            <td>{{ $address->state }}</td>
+                            <th class="w-25">{{ __('Country') }}</th>
+                            <td>{{ $address->country }}</td>
+                        </tr>
+                    </table>
                 </div>
-            @enderror
+
+                <div class="mb-3 d-flex justify-content-center align-items-center">
+                    <div wire:ignore>
+                        {!! htmlScriptTagJsApi() !!}
+                        {!! htmlFormSnippet([
+                            'callback' => 'onCallback',
+                        ]) !!}
+                    </div>
+                    @error('captcha')
+                        <br>
+                        <div class="invalid-feedback" style="display: block">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+            </div>
         </div>
 
         <!-- Form Group (create account submit)-->
         <div class="pt-3 pb-3 d-flex justify-content-center align-items-center">
-            <button class="btn btn-primary btn-block" type="submit" wire:loading.attr="disabled">
-                <span wire:loading.remove>{{ __('Create Account') }}</span>
-                <div wire:loading wire:target="create">
-                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                    {{ __('Creating Account...') }}
-                </div>
-            </button>
+            @if ($tab_state != 1)
+                <button class="btn btn-danger btn-block" type="button" wire:click.prevent="previousTab">
+                    {!! __('pagination.previous') !!}
+                </button>
+            @endif
+            <div class="mx-3">
+                @if ($tab_state == 5)
+                    <button class="btn btn-primary btn-block" type="submit" wire:loading.attr="disabled">
+                        <span wire:loading.remove>{{ __('Create Account') }}</span>
+                        <div wire:loading wire:target="create">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            {{ __('Creating Account...') }}
+                        </div>
+                    </button>
+                @else
+                    <button class="btn btn-success btn-block" type="button" wire:click.prevent="nextTab">
+                        {!! __('pagination.next') !!}
+                    </button>
+                @endif
+            </div>
         </div>
     </form>
 </div>
@@ -387,5 +531,24 @@
         var onCallback = function() {
             @this.set('captcha', grecaptcha.getResponse());
         }
+
+        Livewire.on('changeTab', tab_state => {
+            const wizardTab = document.getElementById('wizard' + tab_state + '-tab');
+            bootstrap.Tab.getOrCreateInstance(wizardTab).show();
+        })
+
+        Livewire.on('tooglePasswordVisibility', isVisible => {
+            const password_preview = document.getElementById('password_preview');
+            const password_preview_btn = document.getElementById('password_preview_btn');
+
+            if (isVisible) {
+                password_preview.type = 'text';
+                password_preview_btn.innerHtml = '<i class="fa-regular fa-eye-slash"></i>';
+
+            } else {
+                password_preview.type = 'password';
+                password_preview_btn.innerHtml = '<i class="fa-regular fa-eye"></i>';
+            }
+        })
     </script>
 @endpush
