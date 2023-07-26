@@ -19,9 +19,13 @@ class Register extends Component
     public Community $user;
     public Address $address;
     public Occupation $occupation;
+
     public $captcha;
     public $password;
     public $password_confirmation;
+
+    public $tab_state = 1;
+    public $isVisible = false;
 
     protected $rules = [
         'user.username' => 'required|string|max:255|unique:communities,username',
@@ -56,6 +60,30 @@ class Register extends Component
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
+    }
+
+    public function nextTab()
+    {
+        $this->tab_state++;
+
+        $this->emit('changeTab', $this->tab_state);
+    }
+
+    public function previousTab()
+    {
+        $this->tab_state--;
+
+        $this->emit('changeTab', $this->tab_state);
+    }
+
+    public function setTab($tab_state)
+    {
+        $this->tab_state = $tab_state;
+    }
+
+    public function toogleVisibility()
+    {
+        $this->emit('tooglePasswordVisibility', $this->isVisible = !$this->isVisible);
     }
 
     public function create()

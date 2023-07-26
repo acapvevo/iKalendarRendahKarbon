@@ -54,16 +54,24 @@
                                 <td>{{ $user->email }}</td>
                             </tr>
                             <tr>
-                                <th class="w-25">{{ __('Occupation Position') }}</th>
-                                <td>{{ $user->occupation->place ?? __('Unemployed') }}</td>
-                                <th class="w-25">{{ __('Occupation Place') }}</th>
-                                <td>{{ $user->occupation->position ?? '' }}</td>
+                                <th colspan="4" class="text-center">{{ __('Occupation') }}</th>
                             </tr>
                             <tr>
-                                <th class="w-25">{{ __('Occupation Sector') }}</th>
-                                <td>{{ __($user->occupation->getSector()->name ?? '') }}</td>
+                                <th class="w-25">{{ __('Place') }}</th>
+                                <td colspan="3">{{ $user->occupation->position ?? __('Unemployed') }}</td>
+                            </tr>
+                            <tr>
+                                <th class="w-25">{{ __('Position') }}</th>
+                                <td>{{ $user->occupation->place ?? '' }}</td>
+                                <th class="w-25">{{ __('Sector') }}</th>
+                                <td>{{ strtoupper(__($user->occupation->getSector()->name ?? '')) }}</td>
+                            </tr>
+                            <tr>
+                                <th colspan="4" class="text-center">{{ __('Address') }}</th>
+                            </tr>
+                            <tr>
                                 <th class="w-25">{{ __('Category') }}</th>
-                                <td>{{ __($user->address->getCategory()->name) }}</td>
+                                <td colspan="3">{{ strtoupper(__($user->address->getCategory()->name)) }}</td>
                             </tr>
                             <tr>
                                 <th class="w-25">{{ __('Address') }}</th>
@@ -100,8 +108,7 @@
                     @livewire('community.user.profile', ['user' => $user])
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary"
-                        data-bs-dismiss="modal">{{ __('Close') }}</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Close') }}</button>
                     <button type="submit" class="btn btn-primary" form="updateUserForm">{{ __('Save') }}</button>
                 </div>
             </div>
