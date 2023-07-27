@@ -15,8 +15,8 @@
                     </div>
                     <div class="col-12 col-xl-auto mt-4">{{ __('List of Submission') }}</div>
                 </div>
-                <nav class="pt-3 rounded" aria-label="breadcrumb">
-                    <ol class="breadcrumb rounded mb-0">
+                <nav class="mt-4 rounded" aria-label="breadcrumb">
+                    <ol class="breadcrumb px-3 py-2 rounded mb-0">
                         <li class="breadcrumb-item"><a href="#">{{ __('Competition Management') }}</a></li>
                         <li class="breadcrumb-item"><a
                                 href="{{ route('admin.contest.competition.list') }}">{{ $currentCompetition->year }}</a>
