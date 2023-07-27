@@ -18733,16 +18733,16 @@ body {
 }
 
 .page-header.page-header-dark {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 1);
 }
 .page-header.page-header-dark .page-header-title {
   color: #fff;
 }
 .page-header.page-header-dark .page-header-title .page-header-icon {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 1);
 }
 .page-header.page-header-dark .page-header-subtitle {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 1);
 }
 .page-header.page-header-dark .breadcrumb {
   background-color: rgba(0, 0, 0, 0.15);
@@ -18750,10 +18750,10 @@ body {
 }
 .page-header.page-header-dark .breadcrumb .breadcrumb-item,
 .page-header.page-header-dark .breadcrumb .breadcrumb-item + .breadcrumb-item::before {
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 1);
 }
 .page-header.page-header-dark .breadcrumb .breadcrumb-item a {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.8);
 }
 .page-header.page-header-dark .page-header-search .input-group-joined:focus-within {
   box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.5);

@@ -73,7 +73,8 @@
                 <label for="occupation.place" class="form-label">{{ __('Occupation Place') }}:</label>
                 <input type="text" class="form-control {{ $errors->has('occupation.place') ? 'is-invalid' : '' }}"
                     placeholder="{{ __('Enter Your Occuaption Place') }}" id="occupation.place"
-                    wire:model.lazy="occupation.place" aria-label="place" aria-describedby="place">
+                    oninput="this.value = this.value.toUpperCase()" wire:model.lazy="occupation.place"
+                    aria-label="place" aria-describedby="place">
                 @error('occupation.place')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -86,7 +87,8 @@
                 <input type="text"
                     class="form-control {{ $errors->has('occupation.position') ? 'is-invalid' : '' }}"
                     placeholder="{{ __('Enter Your Occuaption Position') }}" id="occupation.position"
-                    wire:model.lazy="occupation.position" aria-label="position" aria-describedby="position">
+                    oninput="this.value = this.value.toUpperCase()" wire:model.lazy="occupation.position"
+                    aria-label="position" aria-describedby="position">
                 @error('occupation.position')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -101,7 +103,7 @@
                     <option value="" selected>{{ __('Choose Your Occuaption Sector') }}</option>
                     @foreach (DB::table('occupation_sector_type')->get() as $sector)
                         <option value="{{ $sector->code }}" wire:key="sector-{{ $sector->code }}">
-                            {{ __($sector->name) }}
+                            {{ strtoupper(__($sector->name)) }}
                         </option>
                     @endforeach
                 </select>
@@ -126,7 +128,7 @@
                     <option selected value="">{{ __('Choose Address Category') }}</option>
                     @foreach (DB::table('address_category')->get() as $category)
                         <option value="{{ $category->code }}" wire:key="category-{{ $category->code }}">
-                            {{ __($category->name) }}
+                            {{ strtoupper(__($category->name)) }}
                         </option>
                     @endforeach
                 </select>
@@ -191,8 +193,8 @@
                 <div class="col-12 col-lg-6">
                     <label for="address.city" class="form-label">{{ __('City') }}</label>
                     <input type="text" class="form-control {{ $errors->has('address.city') ? 'is-invalid' : '' }}"
-                        id="address.city" wire:model.lazy="address.city"
-                        placeholder="{{ __('Enter Your City') }}" required>
+                        id="address.city" wire:model.lazy="address.city" placeholder="{{ __('Enter Your City') }}"
+                        required>
                     @error('address.city')
                         <div class="invalid-feedback">
                             {{ $message }}
