@@ -246,7 +246,7 @@
             utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js",
         });
 
-        $('#user.identification_number').mask('000000-00-0000', {
+        $('#identification_number').mask('999999-99-9999', {
             'translation': {
                 0: {
                     pattern: /[0-9]/
