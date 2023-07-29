@@ -30,7 +30,7 @@
                         <td>{{ $questionObj->getValue('example') }} <br>
                             ({{ $questionObj->getCurrentTranslation('example', $locale) }})
                         </td>
-                        <td>{{ __($questionObj->getCategory()->name) }}</td>
+                        <td>{{ __($questionObj->getCategory()->description) }}</td>
                         <td>
                             <div class="btn-toolbar justify-content-center" role="toolbar"
                                 aria-label="Toolbar with button groups">
@@ -133,13 +133,13 @@
                         <div class="mb-3">
                             <label for="category" class="form-label">{{ __('Category') }}</label>
                             <div id="category">
-                                @foreach (DB::table('question_category')->get() as $index => $category)
+                                @foreach (DB::table('submission_category')->get() as $index => $category)
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input {{$errors->has('question.category') ? 'is-invalid' : ''}}" type="radio"
                                             wire:model.lazy='question.category' id="category{{ $index }}"
                                             value="{{ $category->code }}">
                                         <label class="form-check-label"
-                                            for="category{{ $index }}">{{ __($category->name) }}</label>
+                                            for="category{{ $index }}">{{ __($category->description) }}</label>
                                     </div>
                                 @endforeach
                             </div>
@@ -283,13 +283,13 @@
                         <div class="mb-3">
                             <label for="category" class="form-label">{{ __('Category') }}</label>
                             <div id="category">
-                                @foreach (DB::table('question_category')->get() as $index => $category)
+                                @foreach (DB::table('submission_category')->get() as $index => $category)
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input {{$errors->has('question.category') ? 'is-invalid' : ''}}" type="radio"
                                             wire:model.lazy='question.category' id="category{{ $index }}"
                                             value="{{ $category->code }}">
                                         <label class="form-check-label"
-                                            for="category{{ $index }}">{{ __($category->name) }}</label>
+                                            for="category{{ $index }}">{{ __($category->description) }}</label>
                                     </div>
                                 @endforeach
                             </div>

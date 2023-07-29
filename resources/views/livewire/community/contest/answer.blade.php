@@ -4,117 +4,69 @@
 @endpush
 
 <div>
-    <!-- Wizard card example with navigation-->
-    <div class="card">
-        <div class="card-header border-bottom">
-            <!-- Wizard navigation-->
-            <div class="nav nav-pills nav-justified flex-column flex-xl-row nav-wizard" id="cardTab" role="tablist">
-                @foreach ($questionCategoryList as $index => $questionCategory)
-                    @php
-                        $category = DB::table('question_category')
-                            ->where('code', $questionCategory)
-                            ->first()->name;
-                    @endphp
+    <h5 class="mb-4">
+        @switch($category)
+            @case('electric')
+            @case('water')
+                {{ __('Answer the questions on how you able to save your ' . ($category === 'electric' ? 'Electric' : 'Water') . ' Consumption') }}
+            @break
 
-                    <!-- Wizard navigation item {{ $index }}-->
-                    <a class="nav-item nav-link {{ $index == 0 ? 'active' : '' }}" id="answer{{ $index }}-tab"
-                        href="#answer{{ $index }}" data-bs-toggle="tab" role="tab"
-                        aria-controls="answer{{ $index }}" aria-selected="true" wire:ignore.self>
-                        <div class="wizard-step-icon">{{ $index + 1 }}</div>
-                        <div class="wizard-step-text">
-                            <div class="wizard-step-text-name">
-                                {{ __($category) }}
-                            </div>
-                        </div>
-                    </a>
-                @endforeach
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="tab-content" id="cardTabContent">
-                @foreach ($questionCategoryList as $index => $questionCategory)
-                    @php
-                        $category = DB::table('question_category')
-                            ->where('code', $questionCategory)
-                            ->first()->name;
-                    @endphp
+            @case('recycle')
+            @case('used_oil')
+                {{ __('Answer the questions on how you able to increase your ' . ($category === 'recycle' ? 'Recycle' : 'Used Oil') . ' Collection') }}
+            @break
 
-                    <!-- Wizard tab pane item {{ $index }}-->
-                    <div class="tab-pane py-5 py-xl-10 fade  {{ $index == 0 ? 'show active' : '' }}"
-                        id="answer{{ $index }}" role="tabpanel" aria-labelledby="answer{{ $index }}-tab"
-                        wire:ignore.self>
-                        <div class="row justify-content-center">
-                            <div class="col-xxl-11 col-xl-11">
-                                <h3 class="text-primary">{{ __('Step') }} {{ $index + 1 }}</h3>
-                                <h5 class="card-title mb-4">
-                                    @switch($category)
-                                        @case('Electric')
-                                        @case('Water')
-                                            {{ __('Answer the questions on how you able to save your ' . $category . ' Consumption') }}
-                                        @break
+            @default
+                {{ '' }}
+        @endswitch
+    </h5>
 
-                                        @case('Used Oil')
-                                        @case('Recycle')
-                                            {{ __('Answer the questions on how you able to increase your ' . $category . ' Collection') }}
-                                        @break
-
-                                        @default
-                                            {{ '' }}
-                                    @endswitch
-                                </h5>
-
-                                <div class="table-responsive" wire:ignore>
-                                    <table class="table table-bordered">
-                                        <thead class="table-primary">
-                                            <tr>
-                                                <th>No.</th>
-                                                <th>{{ __('Question') }}</th>
-                                                <th>{{ __('Answer') }}</th>
-                                                <th>{{ __('Menu') }}</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($submission->competition->getQuestionByCategory($questionCategory) as $indexQ => $questionObj)
-                                                <tr>
-                                                    <td>{{ $indexQ + 1 }}</td>
-                                                    <td>{{ $questionObj->getValue('text') }}</td>
-                                                    <td>{{ $questionObj->getAnswerBySubmissionID($submission_id) ? $questionObj->getAnswerBySubmissionID($submission_id)->text : __('No Answer Given') }}
-                                                    </td>
-                                                    <td>
-                                                        <div class="btn-toolbar justify-content-center" role="toolbar"
-                                                            aria-label="Toolbar with button groups">
-                                                            <div class="btn-group" role="group"
-                                                                aria-label="Action Button">
-                                                                <button type="button" class="btn btn-primary btn-sm"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#viewAnswerModal"
-                                                                    wire:click.prevent='open({{ $questionObj->id }})'>
-                                                                    <i data-bs-toggle="tooltip"
-                                                                        data-bs-title="{{ __('View Answer for this Question') }}"
-                                                                        data-feather="eye"></i>
-                                                                </button>
-                                                                <button type="button" class="btn btn-primary btn-sm"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#updateAnswerModal"
-                                                                    wire:click.prevent='open({{ $questionObj->id }})'>
-                                                                    <i data-bs-toggle="tooltip"
-                                                                        data-bs-title="{{ __('Edit Answer for this Question') }}"
-                                                                        data-feather="edit-2"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+    <div class="table-responsive" wire:ignore>
+        <table class="table table-bordered">
+            <thead class="table-primary">
+                <tr>
+                    <th>No.</th>
+                    <th>{{ __('Question') }}</th>
+                    <th>{{ __('Answer') }}</th>
+                    <th>{{ __('Menu') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($questions as $indexQ => $questionObj)
+                    <tr>
+                        <td>{{ $indexQ + 1 }}</td>
+                        <td>{{ $questionObj->getValue('text') }}</td>
+                        <td>{{ $questionObj->getAnswerBySubmissionID($submission_id) ? $questionObj->getAnswerBySubmissionID($submission_id)->text : __('No Answer Given') }}
+                        </td>
+                        <td>
+                            <div class="btn-toolbar justify-content-center" role="toolbar"
+                                aria-label="Toolbar with button groups">
+                                <div class="btn-group" role="group" aria-label="Action Button">
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#viewAnswerModal"
+                                        wire:click.prevent='open({{ $questionObj->id }})'>
+                                        <i data-bs-toggle="tooltip"
+                                            data-bs-title="{{ __('View Answer for this Question') }}"
+                                            data-feather="eye"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#updateAnswerModal"
+                                        wire:click.prevent='open({{ $questionObj->id }})'>
+                                        <i data-bs-toggle="tooltip"
+                                            data-bs-title="{{ __('Edit Answer for this Question') }}"
+                                            data-feather="edit-2"></i>
+                                    </button>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <th colspan="4" class="text-center">{{__("No Bonus Question for this Category")}}</th>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
 
     <!-- View Answer Modal -->

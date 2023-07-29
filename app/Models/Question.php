@@ -49,7 +49,7 @@ class Question extends Model
 
     public function getCategory()
     {
-        return DB::table('question_category')->where('code', $this->category)->first();
+        return DB::table('submission_category')->where('code', $this->category)->first();
     }
 
     public function getValue($attribute)

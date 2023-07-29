@@ -84,7 +84,7 @@ class Competition extends Model
         return $this->questions->pluck('category')->unique()->values();
     }
 
-    public function getQuestionByCategory($questionCategory)
+    public function getQuestionsByCategory($questionCategory)
     {
         return $this->questions->where('category', $questionCategory)->values();
     }
