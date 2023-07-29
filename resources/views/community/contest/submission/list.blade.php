@@ -13,13 +13,16 @@
                             {{ __('Competition Management') }}
                         </h1>
                     </div>
-                    <div class="col-12 col-xl-auto mt-4">{{ __('Submission Details') }}</div>
+                    <div class="col-12 col-xl-auto mt-4">{{ __($categoryName) }}</div>
                 </div>
                 <nav class="mt-4 rounded" aria-label="breadcrumb">
                     <ol class="breadcrumb px-3 py-2 rounded mb-0">
                         <li class="breadcrumb-item"><a href="#">{{ __('Competition Management') }}</a></li>
                         <li class="breadcrumb-item"><a
-                                href="{{ route('community.contest.submission.list') }}">{{ $submission->competition->year }}</a>
+                                href="{{ route('community.contest.competition.list') }}">{{ $submission->competition->year }}</a>
+                        </li>
+                        <li class="breadcrumb-item"><a
+                                href="{{ route('community.contest.submission.category', ['competition_id' => $submission->competition->id]) }}">{{ $categoryName }}</a>
                         </li>
                         <li class="breadcrumb-item active">{{ __('Submission Details') }}</li>
                     </ol>
@@ -33,7 +36,7 @@
     <div class="container-xl px-4 mt-n10">
         <div class="card">
             <div class="card-header text-center">
-                {{ __('Submission Details for') }}<br>{{ $submission->competition->name }}
+                {{ __('Submission Details for') }}<br>{{ $submission->competition->name }}<br>({{ __($categoryName) }})
             </div>
             <div class="card-body">
                 <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
@@ -52,14 +55,14 @@
                     <div class="tab-pane fade show active" id="pills-record" role="tabpanel"
                         aria-labelledby="pills-record-tab" tabindex="0">
 
-                        @livewire('community.contest.record', ['submission' => $submission])
+                        @livewire('community.contest.record', ['submission' => $submission, 'category' => $category])
 
                     </div>
                     <div class="tab-pane fade" id="pills-answer" role="tabpanel" aria-labelledby="pills-answer-tab"
                         tabindex="0">
 
                         @if ($submission->checkBillsSubmit() === __('Fully Submitted'))
-                            @livewire('community.contest.answer', ['submission' => $submission])
+                            @livewire('community.contest.answer', ['submission' => $submission, 'category' => $category])
                         @else
                             <div class="d-flex justify-content-center align-items-center" style="height: 500px">
                                 <h2>{{ __('Please submit the record for each month before answer the Bonus Question') }}

@@ -17,8 +17,8 @@ class DatabaseSeeder extends Seeder
             AddressCategorySeeder::class,
             OccupationSectorTypeSeeder::class,
             UserSeeder::class,
-            QuestionCategorySeeder::class,
             TranslationSeeder::class,
+            SubmissionCategorySeeder::class
         ]);
     }
 }

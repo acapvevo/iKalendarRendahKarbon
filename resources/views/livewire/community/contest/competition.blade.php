@@ -28,7 +28,7 @@
                                     </button>
                                 </div>
                                 <div class="ps-3 btn-group" role="group" aria-label="Question">
-                                    <form action="{{ route('community.contest.submission.list') }}" method="post">
+                                    <form action="{{ route('community.contest.submission.category') }}" method="post">
                                         @csrf
 
                                         <button type="submit" data-bs-toggle="tooltip"
@@ -73,9 +73,9 @@
                                 <th>{{ __('Total Carbon Emission') }}</th>
                                 <td>
                                     @if ($submission)
-                                    {{ $submission->total_carbon_emission }} KgCO<sub>2</sub>
+                                        {{ $submission->total_carbon_emission }} KgCO<sub>2</sub>
                                     @else
-                                    0 KgCO<sub>2</sub>
+                                        0 KgCO<sub>2</sub>
                                     @endif
                                 </td>
                             </tr>
