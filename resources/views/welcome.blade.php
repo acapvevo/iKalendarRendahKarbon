@@ -185,7 +185,7 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end animated--fade-in-up"
                                         aria-labelledby="navbarDropdownDocs">
-                                        <a class="dropdown-item py-3" href="{{ route('admin.login') }}" target="_blank">
+                                        <a class="dropdown-item py-3" href="{{ route('admin.login') }}">
                                             <div class="icon-stack bg-primary-soft text-primary me-4"><i
                                                     data-feather="edit"></i></div>
                                             <div>
@@ -193,8 +193,7 @@
                                             </div>
                                         </a>
                                         <div class="dropdown-divider m-0"></div>
-                                        <a class="dropdown-item py-3" href="{{ route('community.login') }}"
-                                            target="_blank">
+                                        <a class="dropdown-item py-3" href="{{ route('community.login') }}">
                                             <div class="icon-stack bg-primary-soft text-primary me-4"><i
                                                     data-feather="user"></i></div>
                                             <div>

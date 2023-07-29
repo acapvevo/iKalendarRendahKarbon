@@ -106,7 +106,7 @@ class Question extends Component
     public function update()
     {
         $this->validate();
-        
+
         // delete old translation
         $this->question->deleteTranslation();
         $this->manager->exportTranslations('_json', true);
@@ -162,7 +162,7 @@ class Question extends Component
     public function delete($response)
     {
         $question = QuestionModel::find($response['data']['inputAttributes']['id']);
-        
+
         $question->deleteTranslation();
 
         $question->delete();

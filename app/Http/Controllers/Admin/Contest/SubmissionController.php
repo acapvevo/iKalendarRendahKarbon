@@ -38,10 +38,6 @@ class SubmissionController extends Controller
             'competition_id' => 'required|integer|exists:competitions,id'
         ]);
 
-        // Array of database columns which should be read and sent back to DataTables.
-        // The `db` parameter represents the column name in the database, while the `dt`
-        // parameter represents the DataTables column identifier. In this case simple
-        // indexes
         $columns = array(
             array('db' => 'communities.name', 'dt' => 0, 'as' => 'name', 'inFilter' => false),
             array('db' => 'addresses.postcode', 'dt' => 1, 'as' => 'postcode', 'title' => __('Postcode')),
@@ -130,7 +126,6 @@ class SubmissionController extends Controller
                 'submissions.id',
                 'submissions.total_carbon_emission',
             ]);
-
 
         return response()->json(Datatable::simple($request->all(), $dbObj, $columns));
     }

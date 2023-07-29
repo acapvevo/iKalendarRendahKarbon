@@ -20,6 +20,7 @@
         "livewire/livewire": "^2.12",
         "mcamara/laravel-localization": "^1.8",
         "owen-it/laravel-auditing": "^13.5",
+        "predis/predis": "^1.0",
         "propaganistas/laravel-phone": "^4.4"
     },
     "require-dev": {

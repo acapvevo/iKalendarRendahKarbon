@@ -12,7 +12,6 @@ return [
     */
     'route'          => [
         'prefix' => 'translations',
-        'as' => 'translations',
         'middleware' =>  [
             'web',
             'auth',

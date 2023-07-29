@@ -16,29 +16,29 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($competitions as $competition)
+                @foreach ($competitions as $competitionObj)
                     <tr>
-                        <td>{{ $competition->name }}</td>
-                        <td>{{ $competition->year }}</td>
-                        <td>{{ $competition->questions->count() }}</td>
+                        <td>{{ $competitionObj->name }}</td>
+                        <td>{{ $competitionObj->year }}</td>
+                        <td>{{ $competitionObj->questions->count() }}</td>
                         <td>
                             <div class="btn-toolbar justify-content-center" role="toolbar"
                                 aria-label="Toolbar with button groups">
                                 <div class="btn-group" role="group" aria-label="Action Button">
                                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#viewCompetitionModal"
-                                        wire:click.prevent='open({{ $competition->id }})'>
+                                        wire:click.prevent='open({{ $competitionObj->id }})'>
                                         <i data-bs-toggle="tooltip" data-bs-title="{{ __('View Competition') }}"
                                             data-feather="eye"></i>
                                     </button>
                                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#updateCompetitionModal"
-                                        wire:click.prevent='open({{ $competition->id }})'>
+                                        wire:click.prevent='open({{ $competitionObj->id }})'>
                                         <i data-bs-toggle="tooltip" data-bs-title="{{ __('Update Competition') }}"
                                             data-feather="edit-2"></i>
                                     </button>
                                     <button type="button" class="btn btn-primary btn-sm"
-                                        wire:click.prevent='askDelete({{ $competition->id }})'><i
+                                        wire:click.prevent='askDelete({{ $competitionObj->id }})'><i
                                             data-bs-toggle="tooltip" data-bs-title="{{ __('Delete Competition') }}"
                                             data-feather="trash-2"></i></button>
                                 </div>
@@ -48,7 +48,7 @@
 
                                         <button type="submit" data-bs-toggle="tooltip"
                                             data-bs-title="{{ __('View Questions') }}" class="btn btn-primary btn-sm"
-                                            value="{{ $competition->id }}" name="competition_id"><i
+                                            value="{{ $competitionObj->id }}" name="competition_id"><i
                                                 class="fa-solid fa-clipboard-question"></i></button>
                                     </form>
                                 </div>
