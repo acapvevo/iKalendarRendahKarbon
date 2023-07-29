@@ -130,6 +130,19 @@
         <div class="nav-link-icon"><i data-feather="activity"></i></div>
         {{ __('Dashboard') }}
     </a>
+    <!-- Sidenav Accordion (Participant Management)-->
+    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseParticipant"
+        aria-expanded="false" aria-controls="collapseParticipant">
+        <div class="nav-link-icon"><i data-feather="users"></i></div>
+        {{__('Participant Management')}}
+        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+    </a>
+    <div class="collapse" id="collapseParticipant" data-bs-parent="#participant">
+        <nav class="sidenav-menu-nested nav accordion" id="participant">
+            <!-- Sidenav Link (Community)-->
+            <a class="nav-link" href="{{ route('admin.participant.community.list') }}">{{__("Community")}}</a>
+        </nav>
+    </div>
     <!-- Sidenav Accordion (Contest Management)-->
     <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseContest"
         aria-expanded="false" aria-controls="collapseContest">
@@ -138,12 +151,10 @@
         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
     </a>
     <div class="collapse" id="collapseContest" data-bs-parent="#competitions">
-        <!-- Sidenav Link (Competition)-->
-        <nav class="sidenav-menu-nested nav accordion" id="competitionsPages">
+        <nav class="sidenav-menu-nested nav accordion" id="competitions">
+            <!-- Sidenav Link (Competition)-->
             <a class="nav-link" href="{{ route('admin.contest.competition.list') }}">{{__("Competition")}}</a>
-        </nav>
-        <!-- Sidenav Link (Submission)-->
-        <nav class="sidenav-menu-nested nav accordion" id="submissionPages">
+            <!-- Sidenav Link (Submission)-->
             <a class="nav-link" href="{{ route('admin.contest.submission.list') }}">{{__("Submission")}}</a>
         </nav>
     </div>

@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Admin\Contest\CompetitionController;
 use App\Http\Controllers\Admin\Contest\QuestionController;
 use App\Http\Controllers\Admin\Contest\SubmissionController;
+use App\Http\Controllers\Admin\Participant\CommunityController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
@@ -86,6 +87,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
             //Profile Picture
             Route::prefix('picture')->name('picture.')->group(function () {
                 Route::get('', [PictureController::class, 'show'])->name('show');
+            });
+        });
+
+        // Participant Management routes
+        Route::prefix('participant')->name('participant.')->group(function () {
+
+            //Community
+            Route::prefix('community')->name('community.')->group(function () {
+                Route::get('', [CommunityController::class, 'list'])->name('list');
+                Route::match(['get', 'post'], '/filter', [CommunityController::class, 'filter'])->name('filter');
             });
         });
 

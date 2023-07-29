@@ -19,13 +19,13 @@ class CreateAddressesTable extends Migration
             $table->unsignedBigInteger('community_id');
             $table->foreign('community_id')->references('id')->on('communities')->onDelete('cascade');
 
-            $table->char('category', 2);
+            $table->char('category', 2)->nullable();
 
-            $table->string('line_1');
-            $table->string('line_2');
+            $table->string('line_1')->nullable();
+            $table->string('line_2')->nullable();
             $table->string('line_3')->nullable();
-            $table->string('postcode');
-            $table->string('city');
+            $table->string('postcode')->nullable();
+            $table->string('city')->nullable();
             $table->string('state');
             $table->string('country');
 

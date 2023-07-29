@@ -125,11 +125,19 @@ class Datatable
                     $dir = $request['order'][$i]['dir'] === 'asc' ?
                         'ASC' :
                         'DESC';
-
-                    $orderBy[] = [
-                        'column' => $column['db'],
-                        'dir' => $dir,
-                    ];
+                    if (is_array($column['db'])) {
+                        foreach ($column['db'] as $columnDB) {
+                            $orderBy[] = [
+                                'column' => $columnDB,
+                                'dir' => $dir,
+                            ];
+                        }
+                    } else {
+                        $orderBy[] = [
+                            'column' => $column['db'],
+                            'dir' => $dir,
+                        ];
+                    }
                     // $orderBy[] = '`' . $column['db'] . '` ' . $dir;
                 }
             }
@@ -173,16 +181,24 @@ class Datatable
                 $column = $columns[$columnIdx];
 
                 if ($requestColumn['searchable'] == 'true') {
-                    if (!empty($column['db'])) {
+                    if (is_array($column['db'])) {
+                        foreach ($column['db'] as $columnDB) {
+                            $globalSearch[] = [
+                                'inFilter' => isset($column['inFilter']) ? $column['inFilter'] : true,
+                                'column' => $columnDB,
+                                'str' => isset($column['reader']) ? $column['reader']($str) : $str
+                            ];
+                        }
+                    } else {
                         $globalSearch[] = [
                             'inFilter' => isset($column['inFilter']) ? $column['inFilter'] : true,
                             'column' => $column['db'],
                             'str' => isset($column['reader']) ? $column['reader']($str) : $str
                         ];
-
-                        // $binding = self::bind($bindings, '%' . $str . '%', PDO::PARAM_STR);
-                        // $globalSearch[] = "`" . $column['db'] . "` LIKE " . $binding;
                     }
+
+                    // $binding = self::bind($bindings, '%' . $str . '%', PDO::PARAM_STR);
+                    // $globalSearch[] = "`" . $column['db'] . "` LIKE " . $binding;
                 }
             }
         }
@@ -200,16 +216,24 @@ class Datatable
                     $requestColumn['searchable'] == 'true' &&
                     $str != ''
                 ) {
-                    if (!empty($column['db'])) {
-                        $columnSearch[] = [
+                    if (is_array($column['db'])) {
+                        foreach ($column['db'] as $columnDB) {
+                            $globalSearch[] = [
+                                'inFilter' => isset($column['inFilter']) ? $column['inFilter'] : true,
+                                'column' => $columnDB,
+                                'str' => isset($column['reader']) ? $column['reader']($str) : $str
+                            ];
+                        }
+                    } else {
+                        $globalSearch[] = [
                             'inFilter' => isset($column['inFilter']) ? $column['inFilter'] : true,
                             'column' => $column['db'],
                             'str' => isset($column['reader']) ? $column['reader']($str) : $str
                         ];
-
-                        // $binding = self::bind($bindings, '%' . $str . '%', PDO::PARAM_STR);
-                        // $columnSearch[] = "`" . $column['db'] . "` LIKE " . $binding;
                     }
+
+                    // $binding = self::bind($bindings, '%' . $str . '%', PDO::PARAM_STR);
+                    // $columnSearch[] = "`" . $column['db'] . "` LIKE " . $binding;
                 }
             }
         }
@@ -286,10 +310,10 @@ class Datatable
             } else if (isset($crit['condition']) && ((isset($crit['value1']) || isset($crit['value'][0])) || $crit['condition'] === 'null' || $crit['condition'] === '!null')) {
                 // Sometimes the structure of the object that is passed across is named in a strange way.
                 // This conditional assignment solves that issue
-                if(isset($crit['value1']) || isset($crit['value2'])){
+                if (isset($crit['value1']) || isset($crit['value2'])) {
                     $val1 = $crit['value1'];
                     $val2 = isset($crit['value2']) ? $crit['value2'] : '';
-                } else if(isset($crit['value'][0]) || isset($crit['value'][1])){
+                } else if (isset($crit['value'][0]) || isset($crit['value'][1])) {
                     $val1 = $crit['value'][0];
                     $val2 = isset($crit['value'][1]) ? $crit['value'][1] : '';
                 } else {
@@ -318,144 +342,157 @@ class Datatable
                     }
                 }
 
-                // Switch on the condition that has been passed in
-                switch ($crit['condition']) {
-                    case '=':
-                        // Check if this is the first, or if it is and logic
-                        if ($data['logic'] === 'AND' || $first) {
-                            // Call the where function for this condition
-                            $dbObj = $dbObj->where($crit['data'], '=', $val1);
-                            // Set first to false so that in future only the logic is checked
-                            $first = false;
-                        } else {
-                            // Call the orWhere function - has to be or logic in this block
-                            $dbObj->orWhere($crit['data'], '=', $val1);
-                        }
-                        break;
-                    case '!=':
-                        if ($data['logic'] === 'AND' || $first) {
-                            $dbObj->where($crit['data'], '!=', $val1);
-                            $first = false;
-                        } else {
-                            $dbObj->orWhere($crit['data'], '!=', $val1);
-                        }
-                        break;
-                    case 'contains':
-                        if ($data['logic'] === 'AND' || $first) {
-                            $dbObj->where($crit['data'], 'LIKE', '%' . $val1 . '%');
-                            $first = false;
-                        } else {
-                            $dbObj->orWhere($crit['data'], 'LIKE', '%' . $val1 . '%');
-                        }
-                        break;
-                    case 'starts':
-                        if ($data['logic'] === 'AND' || $first) {
-                            $dbObj->where($crit['data'], 'LIKE', $val1 . '%');
-                            $first = false;
-                        } else {
-                            $dbObj->orWhere($crit['data'], 'LIKE', $val1 . '%');
-                        }
-                        break;
-                    case 'ends':
-                        if ($data['logic'] === 'AND' || $first) {
-                            $dbObj->where($crit['data'], 'LIKE', '%' . $val1);
-                            $first = false;
-                        } else {
-                            $dbObj->orWhere($crit['data'], 'LIKE', '%' . $val1);
-                        }
-                        break;
-                    case '<':
-                        if ($data['logic'] === 'AND' || $first) {
-                            $dbObj->where($crit['data'], '<', $val1);
-                            $first = false;
-                        } else {
-                            $dbObj->orWhere($crit['data'], '<', $val1);
-                        }
-                        break;
-                    case '<=':
-                        if ($data['logic'] === 'AND' || $first) {
-                            $dbObj->where($crit['data'], '<=', $val1);
-                            $first = false;
-                        } else {
-                            $dbObj->orWhere($crit['data'], '<=', $val1);
-                        }
-                        break;
-                    case '>=':
-                        if ($data['logic'] === 'AND' || $first) {
-                            $dbObj->where($crit['data'], '>=', $val1);
-                            $first = false;
-                        } else {
-                            $dbObj->orWhere($crit['data'], '>=', $val1);
-                        }
-                        break;
-                    case '>':
-                        if ($data['logic'] === 'AND' || $first) {
-                            $dbObj->where($crit['data'], '>', $val1);
-                            $first = false;
-                        } else {
-                            $dbObj->orWhere($crit['data'], '>', $val1);
-                        }
-                        break;
-                    case 'between':
-                        if ($data['logic'] === 'AND' || $first) {
-                            $dbObj->where(function ($q) use ($crit, $val1, $val2) {
-                                $q->where($crit['data'], '>=', is_numeric($val1) ? intval($val1) : $val1)->where($crit['data'], '<=', is_numeric($val2) ? intval($val2) : $val2);
-                            });
-                            $first = false;
-                        } else {
-                            $dbObj->orWhere($crit['data'], '>=', is_numeric($val1) ? intval($val1) : $val1)->where($crit['data'], '<=', is_numeric($val2) ? intval($val2) : $val2);
-                        }
-                        break;
-                    case '!between':
-                        if ($data['logic'] === 'AND' || $first) {
-                            $dbObj->where(function ($q) use ($crit, $val1, $val2) {
-                                $q->where($crit['data'], '<', is_numeric($val1) ? intval($val1) : $val1)->orWhere($crit['data'], '<', is_numeric($val2) ? intval($val2) : $val2, '>');
-                            });
-                            $first = false;
-                        } else {
-                            $dbObj->orWhere($crit['data'], '<', is_numeric($val1) ? intval($val1) : $val1)->orWhere($crit['data'], '<', is_numeric($val2) ? intval($val2) : $val2, '>');
-                        }
-                        break;
-                    case 'null':
-                        if ($data['logic'] === 'AND' || $first) {
-                            $dbObj->where(function ($q) use ($crit) {
-                                $q->where($crit['data'], "=", null);
-                                if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
-                                    $q->orWhere($crit['data'], "=", "");
-                                }
-                            });
-                            $first = false;
-                        } else {
-                            $dbObj->orWhere(function ($q) use ($crit) {
-                                $q->where($crit['data'], "=", null);
-                                if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
-                                    $q->orWhere($crit['data'], "=", "");
-                                }
-                            });
-                        }
-                        break;
-                    case '!null':
-                        if ($data['logic'] === 'AND' || $first) {
-                            $dbObj->where(function ($q) use ($crit) {
-                                $q->where($crit['data'], "!=", null);
-                                if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
-                                    $q->where($crit['data'], "!=", "");
-                                }
-                            });
-                            $first = false;
-                        } else {
-                            $dbObj->orWhere(function ($q) use ($crit) {
-                                $q->where($crit['data'], "!=", null);
-                                if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
-                                    $q->where($crit['data'], "!=", "");
-                                }
-                            });
-                        }
-                        break;
-                    default:
-                        break;
+                if (is_array($crit['data'])) {
+                    $array_critData = $crit['data'];
+                    foreach ($array_critData as $critData){
+                        $crit['data'] = $critData;
+                        self::conditionSelector($crit, $data, $first, $dbObj, $val1, $val2);
+                    }
+                } else {
+                    self::conditionSelector($crit, $data, $first, $dbObj, $val1, $val2);
                 }
             }
+        }
+    }
+
+    static function conditionSelector($crit, $data, $first, $dbObj, $val1, $val2)
+    {
+        // Switch on the condition that has been passed in
+        switch ($crit['condition']) {
+            case '=':
+                // Check if this is the first, or if it is and logic
+                if ($data['logic'] === 'AND' || $first) {
+                    // Call the where function for this condition
+                    $dbObj = $dbObj->where($crit['data'], '=', $val1);
+                    // Set first to false so that in future only the logic is checked
+                    $first = false;
+                } else {
+                    // Call the orWhere function - has to be or logic in this block
+                    $dbObj->orWhere($crit['data'], '=', $val1);
+                }
+                break;
+            case '!=':
+                if ($data['logic'] === 'AND' || $first) {
+                    $dbObj->where($crit['data'], '!=', $val1);
+                    $first = false;
+                } else {
+                    $dbObj->orWhere($crit['data'], '!=', $val1);
+                }
+                break;
+            case 'contains':
+                if ($data['logic'] === 'AND' || $first) {
+                    $dbObj->where($crit['data'], 'LIKE', '%' . $val1 . '%');
+                    $first = false;
+                } else {
+                    $dbObj->orWhere($crit['data'], 'LIKE', '%' . $val1 . '%');
+                }
+                break;
+            case 'starts':
+                if ($data['logic'] === 'AND' || $first) {
+                    $dbObj->where($crit['data'], 'LIKE', $val1 . '%');
+                    $first = false;
+                } else {
+                    $dbObj->orWhere($crit['data'], 'LIKE', $val1 . '%');
+                }
+                break;
+            case 'ends':
+                if ($data['logic'] === 'AND' || $first) {
+                    $dbObj->where($crit['data'], 'LIKE', '%' . $val1);
+                    $first = false;
+                } else {
+                    $dbObj->orWhere($crit['data'], 'LIKE', '%' . $val1);
+                }
+                break;
+            case '<':
+                if ($data['logic'] === 'AND' || $first) {
+                    $dbObj->where($crit['data'], '<', $val1);
+                    $first = false;
+                } else {
+                    $dbObj->orWhere($crit['data'], '<', $val1);
+                }
+                break;
+            case '<=':
+                if ($data['logic'] === 'AND' || $first) {
+                    $dbObj->where($crit['data'], '<=', $val1);
+                    $first = false;
+                } else {
+                    $dbObj->orWhere($crit['data'], '<=', $val1);
+                }
+                break;
+            case '>=':
+                if ($data['logic'] === 'AND' || $first) {
+                    $dbObj->where($crit['data'], '>=', $val1);
+                    $first = false;
+                } else {
+                    $dbObj->orWhere($crit['data'], '>=', $val1);
+                }
+                break;
+            case '>':
+                if ($data['logic'] === 'AND' || $first) {
+                    $dbObj->where($crit['data'], '>', $val1);
+                    $first = false;
+                } else {
+                    $dbObj->orWhere($crit['data'], '>', $val1);
+                }
+                break;
+            case 'between':
+                if ($data['logic'] === 'AND' || $first) {
+                    $dbObj->where(function ($q) use ($crit, $val1, $val2) {
+                        $q->where($crit['data'], '>=', is_numeric($val1) ? intval($val1) : $val1)->where($crit['data'], '<=', is_numeric($val2) ? intval($val2) : $val2);
+                    });
+                    $first = false;
+                } else {
+                    $dbObj->orWhere($crit['data'], '>=', is_numeric($val1) ? intval($val1) : $val1)->where($crit['data'], '<=', is_numeric($val2) ? intval($val2) : $val2);
+                }
+                break;
+            case '!between':
+                if ($data['logic'] === 'AND' || $first) {
+                    $dbObj->where(function ($q) use ($crit, $val1, $val2) {
+                        $q->where($crit['data'], '<', is_numeric($val1) ? intval($val1) : $val1)->orWhere($crit['data'], '<', is_numeric($val2) ? intval($val2) : $val2, '>');
+                    });
+                    $first = false;
+                } else {
+                    $dbObj->orWhere($crit['data'], '<', is_numeric($val1) ? intval($val1) : $val1)->orWhere($crit['data'], '<', is_numeric($val2) ? intval($val2) : $val2, '>');
+                }
+                break;
+            case 'null':
+                if ($data['logic'] === 'AND' || $first) {
+                    $dbObj->where(function ($q) use ($crit) {
+                        $q->where($crit['data'], "=", null);
+                        if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
+                            $q->orWhere($crit['data'], "=", "");
+                        }
+                    });
+                    $first = false;
+                } else {
+                    $dbObj->orWhere(function ($q) use ($crit) {
+                        $q->where($crit['data'], "=", null);
+                        if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
+                            $q->orWhere($crit['data'], "=", "");
+                        }
+                    });
+                }
+                break;
+            case '!null':
+                if ($data['logic'] === 'AND' || $first) {
+                    $dbObj->where(function ($q) use ($crit) {
+                        $q->where($crit['data'], "!=", null);
+                        if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
+                            $q->where($crit['data'], "!=", "");
+                        }
+                    });
+                    $first = false;
+                } else {
+                    $dbObj->orWhere(function ($q) use ($crit) {
+                        $q->where($crit['data'], "!=", null);
+                        if (strpos($crit['type'], 'date') === false && strpos($crit['type'], 'moment') === false && strpos($crit['type'], 'luxon') === false) {
+                            $q->where($crit['data'], "!=", "");
+                        }
+                    });
+                }
+                break;
+            default:
+                break;
         }
     }
 

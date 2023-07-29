@@ -71,7 +71,7 @@
                             </tr>
                             <tr>
                                 <th class="w-25">{{ __('Category') }}</th>
-                                <td colspan="3">{{ strtoupper(__($user->address->getCategory()->name)) }}</td>
+                                <td colspan="3">{{ strtoupper(__($user->address->getCategory()->name ?? '')) }}</td>
                             </tr>
                             <tr>
                                 <th class="w-25">{{ __('Address') }}</th>

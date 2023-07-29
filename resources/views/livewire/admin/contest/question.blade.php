@@ -22,33 +22,33 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($questions as $question)
+                @foreach ($questions as $questionObj)
                     <tr>
-                        <td>{{ $question->getValue('text') }}? <br>
-                            ({{ $question->getCurrentTranslation('text', $locale) }}?)
+                        <td>{{ $questionObj->getValue('text') }}? <br>
+                            ({{ $questionObj->getCurrentTranslation('text', $locale) }}?)
                         </td>
-                        <td>{{ $question->getValue('example') }} <br>
-                            ({{ $question->getCurrentTranslation('example', $locale) }}?)
+                        <td>{{ $questionObj->getValue('example') }} <br>
+                            ({{ $questionObj->getCurrentTranslation('example', $locale) }})
                         </td>
-                        <td>{{ __($question->getCategory()->name) }}</td>
+                        <td>{{ __($questionObj->getCategory()->name) }}</td>
                         <td>
                             <div class="btn-toolbar justify-content-center" role="toolbar"
                                 aria-label="Toolbar with button groups">
                                 <div class="btn-group" role="group" aria-label="Action Button">
                                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#viewQuestionModal"
-                                        wire:click.prevent='open({{ $question->id }})'>
+                                        wire:click.prevent='open({{ $questionObj->id }})'>
                                         <i data-bs-toggle="tooltip" data-bs-title="{{ __('View Question') }}"
                                             data-feather="eye"></i>
                                     </button>
                                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#updateQuestionModal"
-                                        wire:click.prevent='open({{ $question->id }})'>
+                                        wire:click.prevent='open({{ $questionObj->id }})'>
                                         <i data-bs-toggle="tooltip" data-bs-title="{{ __('Update Question') }}"
                                             data-feather="edit-2"></i>
                                     </button>
                                     <button type="button" class="btn btn-primary btn-sm"
-                                        wire:click.prevent='askDelete({{ $question->id }})'><i data-bs-toggle="tooltip"
+                                        wire:click.prevent='askDelete({{ $questionObj->id }})'><i data-bs-toggle="tooltip"
                                             data-bs-title="{{ __('Delete Question') }}"
                                             data-feather="trash-2"></i></button>
                                 </div>

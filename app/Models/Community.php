@@ -25,6 +25,7 @@ class Community extends Authenticatable
         'email',
         'password',
         'timezone',
+        'isVerified',
     ];
 
     /**

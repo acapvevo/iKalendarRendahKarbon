@@ -9,7 +9,7 @@ class [class] extends Component
 {
     use LivewireAlert;
 
-    protected function listener()
+    protected function getListeners()
     {
         return [
 
