@@ -98,6 +98,7 @@ Route::prefix('community')->name('community.')->group(function () {
 
             //Submission
             Route::prefix('submission')->name('submission.')->group(function () {
+                Route::match(['get', 'post'], '/category', [SubmissionController::class, 'category'])->name('category');
                 Route::match(['get', 'post'], '', [SubmissionController::class, 'list'])->name('list');
                 Route::match(['get', 'post'], '/download', [SubmissionController::class, 'download'])->name('download');
             });

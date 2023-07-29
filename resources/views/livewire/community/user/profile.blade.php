@@ -11,7 +11,7 @@
                 <div class="col-lg-6 col-12">
                     <label for="name" class="form-label">{{ __('Name') }}</label>
                     <input type="text" class="form-control {{ $errors->has('user.name') ? 'is-invalid' : '' }}"
-                        id="name" wire:model.lazy="user.name" placeholder="{{ __('Enter Your Name') }}" required
+                        id="name" wire:model.lazy="user.name" placeholder="{{ __('Enter Your Name') }}"
                         oninput="this.value = this.value.toUpperCase()">
                     @error('user.name')
                         <div class="invalid-feedback">
@@ -24,7 +24,7 @@
                     <input type="text"
                         class="form-control {{ $errors->has('user.identification_number') ? 'is-invalid' : '' }}"
                         id="identification_number" wire:model.lazy="user.identification_number"
-                        placeholder="{{ __('Enter Your Identification Card Number') }}" required>
+                        placeholder="{{ __('Enter Your Identification Card Number') }}">
                     @error('user.identification_number')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -51,7 +51,7 @@
                         <input type="text"
                             class="form-control {{ $errors->has('user.phone_number') ? 'is-invalid' : '' }}"
                             id="phone_number" wire:model.lazy="user.phone_number"
-                            placeholder="{{ __('Enter Your Phone Number') }}" required>
+                            placeholder="{{ __('Enter Your Phone Number') }}">
                     </div>
                     @error('user.phone_number')
                         <div class="invalid-feedback">
@@ -124,7 +124,7 @@
             <div class="mb-3">
                 <label for="address.category" class="form-label">{{ __('Category') }}:</label>
                 <select class="form-select {{ $errors->has('address.category') ? 'is-invalid' : '' }}"
-                    id="address.category" aria-label="Default select example" wire:model="address.category" required>
+                    id="address.category" aria-label="Default select example" wire:model="address.category">
                     <option selected value="">{{ __('Choose Address Category') }}</option>
                     @foreach (DB::table('address_category')->get() as $category)
                         <option value="{{ $category->code }}" wire:key="category-{{ $category->code }}">
@@ -144,7 +144,7 @@
                     <label for="address.line_1" class="form-label">{{ __('Address Line 1') }}</label>
                     <input type="text" class="form-control {{ $errors->has('address.line_1') ? 'is-invalid' : '' }}"
                         id="address.line_1" wire:model.lazy="address.line_1"
-                        placeholder="{{ __('Enter Your Address Line 1') }}" required>
+                        placeholder="{{ __('Enter Your Address Line 1') }}">
                     @error('address.line_1')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -156,7 +156,7 @@
                     <input type="text"
                         class="form-control {{ $errors->has('address.line_2') ? 'is-invalid' : '' }}"
                         id="address.line_2" wire:model.lazy="address.line_2"
-                        placeholder="{{ __('Enter Your Address Line 2') }}" required>
+                        placeholder="{{ __('Enter Your Address Line 2') }}">
                     @error('address.line_2')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -183,7 +183,7 @@
                     <input type="text"
                         class="form-control {{ $errors->has('address.postcode') ? 'is-invalid' : '' }}"
                         id="address.postcode" wire:model.lazy="address.postcode"
-                        placeholder="{{ __('Enter Your Postcode') }}" required>
+                        placeholder="{{ __('Enter Your Postcode') }}">
                     @error('address.postcode')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -194,7 +194,7 @@
                     <label for="address.city" class="form-label">{{ __('City') }}</label>
                     <input type="text" class="form-control {{ $errors->has('address.city') ? 'is-invalid' : '' }}"
                         id="address.city" wire:model.lazy="address.city" placeholder="{{ __('Enter Your City') }}"
-                        required>
+                       >
                     @error('address.city')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -209,7 +209,7 @@
                     <input type="text"
                         class="form-control {{ $errors->has('address.state') ? 'is-invalid' : '' }}"
                         id="address.state" wire:model.lazy="address.state"
-                        placeholder="{{ __('Enter Your State') }}" readonly required>
+                        placeholder="{{ __('Enter Your State') }}" readonly>
                     @error('address.state')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -221,7 +221,7 @@
                     <input type="text"
                         class="form-control {{ $errors->has('address.country') ? 'is-invalid' : '' }}"
                         id="address.country" wire:model.lazy="address.country"
-                        placeholder="{{ __('Enter Your Country') }}" readonly required>
+                        placeholder="{{ __('Enter Your Country') }}" readonly>
                     @error('address.country')
                         <div class="invalid-feedback">
                             {{ $message }}

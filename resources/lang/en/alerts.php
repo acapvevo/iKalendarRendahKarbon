@@ -9,7 +9,7 @@ return [
     'question_update'   => 'Question: ":text" has successfully updated',
     'question_delete'   => 'The chosen Question has successfully deleted',
     'question_delete_confirmation'   => 'Are you sure to delete Question ":text?"? ',
-    'record_update'   => 'Record for :month has been successfully updated',
+    'record_update'   => ':type Record for :month has been successfully updated',
     'answer_update'   => 'Answer for ":text?" has been successfully updated',
     'community_create'   => 'Profile for Community ":name" has been successfully created',
     'community_update'   => 'Profile for Community ":name" has been successfully updated',

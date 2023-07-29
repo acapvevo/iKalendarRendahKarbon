@@ -235,8 +235,8 @@
     "Answer": "Jawapan",
     "Your Answer": "Jawapan Anda",
     "Insert your Answer for this Question": "Sila masukkan Jawapan anda untuk Soalan ini",
-    "View Answer": "Lihat Jawpan",
-    "Update Answer": "Kemaskini Jawpan",
+    "View Answer": "Lihat Jawapan",
+    "Update Answer": "Kemaskini Jawapan",
     "Please submit the record for each month before answer the Bonus Question": "Sila masukkan rekod bagi setiap bulan di tab Rekod sebelum menjawab Soalan Bonus",
     "Saving...": "Sedang Menyimpan...",
     "Updating...": "Sedang Mengemaskini...",
@@ -253,7 +253,7 @@
     "Participant Management": "Pengurusan Peserta",
     "Community": "Komuniti",
     "Register Community": "Daftar Komuniti",
-    "Name/Username": "Nama/Kata Pengguna",
+    "Name\/Username": "Nama\/Kata Pengguna",
     "Enter Community Username": "Sila Masukkan Kata Pengguna Komuniti",
     "Enter Community Email Address": "Sila Masukkan Alamat Emel Komuniti",
     "View Community": "Lihat Maklumat Komuniti",
@@ -271,5 +271,8 @@
     "Enter Community Postcode": "Sila Masukkan Poskod Komuniti",
     "Enter Community City": "Sila Masukkan Bandar Komuniti",
     "Enter Community State": "Sila Masukkan Negeri Komuniti",
-    "Enter Community Country": "Sila Masukkan Negara Komuniti"
+    "Enter Community Country": "Sila Masukkan Negara Komuniti",
+    "Submission Category": "Kategori Penyertaan",
+    "Choose Category of Submission for": "Sila Pilih Kategori Penyertaan bagi",
+    "No Bonus Question for this Category": "Tiada Soalan Bonus bagi Kategori ini"
 }

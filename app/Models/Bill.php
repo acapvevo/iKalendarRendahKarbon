@@ -82,7 +82,7 @@ class Bill extends Model
 
     public function calculateTotalCarbonEmission()
     {
-        $this->total_carbon_emission = $this->electric->carbon_emission + $this->water->carbon_emission + $this->recycle->carbon_emission + $this->used_oil->carbon_emission;
+        $this->total_carbon_emission = ($this->electric->carbon_emission ?? 0) + ($this->water->carbon_emission ?? 0) + ($this->recycle->carbon_emission ?? 0) + ($this->used_oil->carbon_emission ?? 0);
         $this->save();
     }
 
