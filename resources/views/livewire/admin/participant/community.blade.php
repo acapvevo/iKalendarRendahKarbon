@@ -13,7 +13,7 @@
             <thead class="table-primary">
                 <tr>
                     <th>{{ __('Name/Username') }}</th>
-                    <th>{{ __('Postcode') }}</th>
+                    <th>{{ __('Email Address') }}</th>
                     <th>{{ __('Status') }}</th>
                     <th>{{ __('Menu') }}</th>
                 </tr>
@@ -68,7 +68,7 @@
                     <button class="btn btn-primary" type="button" wire:loading.attr="disabled"
                         wire:click.prevent="create()">
                         <span wire:loading.remove>{{ __('Save') }}</span>
-                        <div wire:loading wire:target="update">
+                        <div wire:loading wire:target="create">
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                             {{ __('Saving...') }}
                         </div>

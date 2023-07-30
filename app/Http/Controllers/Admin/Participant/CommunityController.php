@@ -30,7 +30,7 @@ class CommunityController extends Controller
                     }
                 }
             ),
-            array('db' => 'addresses.postcode', 'dt' => 1, 'as' => 'postcode', 'title' => __('Postcode')),
+            array('db' => 'communities.email', 'dt' => 1, 'as' => 'email', 'title' => __('Email Address')),
             array(
                 'db' => 'communities.isVerified',
                 'dt' => 2,
@@ -91,13 +91,12 @@ class CommunityController extends Controller
         );
 
         $dbObj = DB::table('communities')
-            ->join('addresses', 'addresses.community_id', '=', 'communities.id')
             ->select([
                 'communities.id',
                 'communities.name',
                 'communities.username',
+                'communities.email',
                 'communities.isVerified',
-                'addresses.postcode',
             ]);
 
         return response()->json(Datatable::simple($request->all(), $dbObj, $columns));
