@@ -19,7 +19,9 @@ class CreateCommunitiesTable extends Migration
             $table->string('name')->nullable();
             $table->string('identification_number')->unique()->nullable();
             $table->string('phone_number')->unique()->nullable();
+
             $table->string('image')->nullable();
+            $table->string('identification_card_image')->nullable();
 
             $table->string('username')->unique();
             $table->string('email')->unique();

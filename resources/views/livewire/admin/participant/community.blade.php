@@ -434,6 +434,74 @@
         </div>
     </div>
 
+    <!-- Verify Community Modal -->
+    <div class="modal fade" id="verifyCommunityModal" tabindex="-1" aria-labelledby="verifyCommunityModalLabel"
+        aria-hidden="true" wire:ignore.self>
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="verifyCommunityModalLabel">{{ __('Verify Community') }}</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        wire:click.prevent="close()"></button>
+                </div>
+                <div class="modal-body">
+                    @if ($community)
+                        <form action="{{ route('admin.participant.community.ic') }}" method="post"
+                            target="_blank">
+                            @csrf
+
+                            <button type="submit" class="btn btn-link" name="community_id" style="padding-left: 0%"
+                                value="{{ $community->id ?? '' }}">{{ __('View Identification Card') }}</button>
+                        </form>
+                    @endif
+
+                    <form>
+
+                        <div class="mb-3">
+                            <label for="decision" class="form-label">{{ __('Decision') }}</label>
+                            <div id="decision">
+                                <div class="form-check form-check-inline" wire:key="div_decision_true">
+                                    <input
+                                        class="form-check-input {{ $errors->has('decision') ? 'is-invalid' : '' }}"
+                                        type="radio" id="decision_true" value="1" wire:model.lazy='decision'
+                                        wire:key="input_decision_true">
+                                    <label class="form-check-label" for="decision_true"
+                                        wire:key="label_decision_true">{{ __('Verify') }}</label>
+                                </div>
+                                <div class="form-check form-check-inline" wire:key="div_decision_false">
+                                    <input
+                                        class="form-check-input {{ $errors->has('decision') ? 'is-invalid' : '' }}"
+                                        type="radio" id="decision_false" value="0" wire:model.lazy='decision'
+                                        wire:key="input_decision_false">
+                                    <label class="form-check-label" for="decision_false"
+                                        wire:key="label_decision_false">{{ __('Not Verify') }}</label>
+                                </div>
+                            </div>
+                            @error('decision')
+                                <div class="invalid-feedback" style="display: block">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        wire:click.prevent="close()">{{ __('Close') }}</button>
+                    <button class="btn btn-primary" type="button" wire:loading.attr="disabled"
+                        wire:click.prevent="verify()">
+                        <span wire:loading.remove>{{ __('Update') }}</span>
+                        <div wire:loading>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            {{ __('Updating...') }}
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 @push('scripts')

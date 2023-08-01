@@ -98,6 +98,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::prefix('community')->name('community.')->group(function () {
                 Route::get('', [CommunityController::class, 'list'])->name('list');
                 Route::match(['get', 'post'], '/filter', [CommunityController::class, 'filter'])->name('filter');
+                Route::post('/ic', [CommunityController::class, 'ic'])->name('ic');
             });
         });
 

@@ -76,6 +76,7 @@ Route::prefix('community')->name('community.')->group(function () {
             //Profile
             Route::prefix('profile')->name('profile.')->group(function () {
                 Route::get('', [ProfileController::class, 'view'])->name('view');
+                Route::post('/ic', [ProfileController::class, 'ic'])->name('ic');
             });
 
             //Setting

@@ -432,10 +432,6 @@
             Livewire.emit('closeModal')
         })
 
-        $('.evidenceInput').change(function(e) {
-            Livewire.emit('changePlaceholder')
-        });
-
         Livewire.on('changeTab', tab_state => {
             const wizardTab = document.getElementById('wizard' + tab_state + '-tab');
             bootstrap.Tab.getOrCreateInstance(wizardTab).show();

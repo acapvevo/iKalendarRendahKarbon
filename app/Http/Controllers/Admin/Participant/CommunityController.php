@@ -64,6 +64,16 @@ class CommunityController extends Controller
                 'formatter' => function ($d, $row) {
                     $viewCommunityTitle = __('View Community');
                     $editCommunityTitle = __('Edit Community');
+                    $verifyCommunityTitle = __('Verify Community');
+
+                    $verifyCommunityButton = (!$row->isVerified && $row->identification_card) ? <<< EOT
+                    <button type="button" class="btn btn-primary btn-sm openModal" data-bs-toggle="modal"
+                        data-bs-target="#verifyCommunityModal"
+                        id="$row->id">
+                        <i data-bs-toggle="tooltip" data-bs-title="$verifyCommunityTitle"
+                            data-feather="user-check"></i>
+                    </button>
+                    EOT : '';
 
                     return <<< EOT
                     <div class="btn-toolbar justify-content-center" role="toolbar"
@@ -81,6 +91,7 @@ class CommunityController extends Controller
                                 <i data-bs-toggle="tooltip" data-bs-title="$editCommunityTitle"
                                     data-feather="edit-2"></i>
                             </button>
+                            $verifyCommunityButton
                         </div>
                     </div>
                     EOT;
@@ -97,8 +108,20 @@ class CommunityController extends Controller
                 'communities.username',
                 'communities.email',
                 'communities.isVerified',
+                'communities.identification_card',
             ]);
 
         return response()->json(Datatable::simple($request->all(), $dbObj, $columns));
+    }
+
+    public function ic(Request $request)
+    {
+        $request->validate([
+            'community_id' => 'required|numeric|exists:communities,id'
+        ]);
+
+        $user = Community::find($request->community_id);
+
+        return $user->viewIdentificationCard();
     }
 }

@@ -61,4 +61,9 @@ class Newsletter extends Model
     {
         return Storage::response('newsletter/' . $this->thumbnail);
     }
+
+    public function sendNewsToSubscriber()
+    {
+        
+    }
 }

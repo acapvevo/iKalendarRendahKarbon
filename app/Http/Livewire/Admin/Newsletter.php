@@ -100,6 +100,8 @@ class Newsletter extends Component
         $this->newsletter->admin_id = request()->user('admin')->id;
         $this->newsletter->save();
 
+        $this->newsletter->sendNewsToSubscriber();
+
         return redirect(route('admin.newsletter.list'))->with('success', __("alerts.newsletter_create", ['title' => $this->newsletter->title]));
     }
 

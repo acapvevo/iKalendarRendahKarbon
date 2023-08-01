@@ -34,6 +34,12 @@
         <div class="card">
             <div class="card-body">
                 <div class="pt-3 pb-3 d-grid gap-2 d-md-flex justify-content-md-end">
+                    @if (!$user->isVerified && !$user->identification_card)
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#verifyAccountModal">
+                            {{ __('Verify Account') }}
+                        </button>
+                    @endif
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateUserModal">
                         {{ __('Update') }}
                     </button>
@@ -84,14 +90,46 @@
                             <tr>
                                 <th class="w-25">{{ __('Account Status') }}</th>
                                 <td colspan="3">
-                                    {!! $user->isVerified
-                                        ? '<i class="fa-solid fa-check" style="color: #00bd0d;"></i>'
-                                        : '<i class="fa-solid fa-xmark" style="color: #ff0000;"></i>' !!}
-                                    {{ $user->isVerified ? __('Verified') : __('Not Verified') }}
+                                    @if (!$user->isVerified && !$user->identification_card)
+                                        <i class="fa-solid fa-xmark" style="color: #ff0000;"></i> {{ __('Not Verified') }}
+                                    @elseif (!$user->isVerified && $user->identification_card)
+                                        <i class="fa-solid fa-arrows-spin fa-spin" style="color: #1100ff;"></i>
+                                        {{ __('Verification in Process') }}
+                                    @else
+                                        <i class="fa-solid fa-check" style="color: #00bd0d;"></i> {{ __('Verified') }}
+                                    @endif
+                                    @if ($user->identification_card)
+                                        <form action="{{route('community.user.profile.ic')}}" method="post" target="_blank">
+                                            @csrf
+
+                                            <button class="btn btn-link" type="submit" value="{{ $user->id }}"
+                                                name="community_id">{{ __('View Identification Card') }}</button>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="verifyAccountModal" tabindex="-1" aria-labelledby="verifyAccountModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="verifyAccountModalLabel">{{ __('Verify Account') }}</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @livewire('community.user.verification', ['user' => $user])
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Close') }}</button>
+                    <button type="submit" class="btn btn-primary"
+                        form="verifyAccountForm">{{ __('Get Verification') }}</button>
                 </div>
             </div>
         </div>

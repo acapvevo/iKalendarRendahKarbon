@@ -20,6 +20,8 @@ class Community extends Component
 
     public $community_id;
 
+    public $decision;
+
     protected function getListeners()
     {
         return [
@@ -55,7 +57,8 @@ class Community extends Component
             'address.country' => 'nullable|string|in:MALAYSIA',
             'occupation.place' => 'required_with:occupation.position,occupation.sector|nullable|string|max:255',
             'occupation.position' => 'required_with:occupation.place,occupation.sector|nullable|string|max:255',
-            'occupation.sector' => 'required_with:occupation.place,occupation.position|nullable|string|exists:occupation_sector_type,code'
+            'occupation.sector' => 'required_with:occupation.place,occupation.position|nullable|string|exists:occupation_sector_type,code',
+            'decision' => 'required|boolean'
         ];
     }
 
@@ -174,6 +177,23 @@ class Community extends Component
         $this->occupation->save();
 
         redirect(route('admin.participant.community.list'))->with('success', __('alerts.community_update', ['name' => $this->community->name ?? $this->community->username]));
+    }
+
+    public function verify()
+    {
+        $this->validate([
+            'decision' => 'required|boolean'
+        ]);
+
+        if($this->decision){
+            $this->community->isVerified = true;
+        } else {
+            $this->community->deleteIdentificationCard();
+        }
+
+        $this->community->save();
+
+        redirect(route('admin.participant.community.list'))->with('success', __('alerts.verification_complete', ['name' => $this->community->name ?? $this->community->username]));
     }
 
     public function render()

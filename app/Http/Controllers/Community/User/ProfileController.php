@@ -15,4 +15,15 @@ class ProfileController extends Controller
 
         return view('community.user.profile')->with('user', $user);
     }
+
+    public function ic(Request $request)
+    {
+        $request->validate([
+            'community_id' => 'required|numeric|exists:communities,id'
+        ]);
+
+        $user = Community::find($request->community_id);
+
+        return $user->viewIdentificationCard();
+    }
 }

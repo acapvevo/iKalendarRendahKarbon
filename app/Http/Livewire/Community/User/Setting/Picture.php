@@ -24,7 +24,7 @@ class Picture extends Component
     protected function rules()
     {
         return [
-            'image' => 'required|image|mimes:png,jpg,jpeg|max:2048'
+            'image' => 'required|image|max:2048'
         ];
     }
 
