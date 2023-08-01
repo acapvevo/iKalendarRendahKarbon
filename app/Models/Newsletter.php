@@ -34,6 +34,14 @@ class Newsletter extends Model
      */
     protected $casts = [];
 
+    /**
+     * Get the Admin that owns the Month.
+     */
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class);
+    }
+
     public function getCategory()
     {
         return DB::table('newsletter_category')->where('code', $this->category)->first();

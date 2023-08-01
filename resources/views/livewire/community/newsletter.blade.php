@@ -1,9 +1,9 @@
 <div>
     <div class="py-3 d-flex justify-content-end">
         <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" role="switch" id="subscribe">
-            <label class="form-check-label" for="subscribe"
-                {{ $community->isSubscribed ? 'checked' : '' }}>{{ __('Subscribe to our Newsletter') }}</label>
+            <input class="form-check-input" type="checkbox" role="switch" id="subscribe"
+                {{ $community->isSubscribed ? 'checked' : '' }}>
+            <label class="form-check-label" for="subscribe">{{ __('Subscribe to our Newsletter') }}</label>
         </div>
     </div>
     <div class="table-responsive" wire:ignore>
@@ -51,30 +51,21 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <tr>
-                                <th>{{ __('Post Date') }}</th>
-                                <td>{{ $newsletter ? $newsletter->getCreatedAt() : '' }}</td>
-                            </tr>
-                            <tr>
-                                <th>{{ __('Title') }}</th>
-                                <td>{{ $newsletter->title ?? '' }}</td>
-                            </tr>
-                            <tr>
-                                <th>{{ __('Category') }}</th>
-                                <td>{{ $newsletter ? __($newsletter->getCategory()->description ?? '') : '' }}</td>
-                            </tr>
-                            <tr>
-                                <th colspan="2" class="h3 text-center">{{ __('Content') }}</th>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    {!! $newsletter->content ?? '' !!}
-                                </td>
-                            </tr>
-                        </table>
+
+                    <div class="card">
+                        <img src="{{ route('community.newsletter.thumbnail', ['newsletter_id' => $newsletter->id]) }}"
+                            class="card-img-top" alt="Thumbnail for {{ $newsletter->title ?? '' }}">
+                        <div class="card-body">
+                            <h3 class="card-title">{{ $newsletter->title ?? '' }}</h3>
+                            <small>{{ $newsletter ? __($newsletter->getCategory()->description ?? '') : '' }} /
+                                {{ __('By ') . strtoupper($newsletter->admin->name ?? '') }} /
+                                {{ $newsletter->location ?? '' }} /
+                                {{ $newsletter ? $newsletter->getCreatedAt() : '' }}</small>
+
+                            <p class="card-text py-3">{!! $newsletter->content ?? '' !!}</p>
+                        </div>
                     </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary"

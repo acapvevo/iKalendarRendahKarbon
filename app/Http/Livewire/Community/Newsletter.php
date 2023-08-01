@@ -45,7 +45,7 @@ class Newsletter extends Component
         if ($this->community->isSubscribed)
             $message = __('You have successfully subscribed to our Newsletter');
         else
-            $message = __('You have successfully unsubcribe to our Newsletter');
+            $message = __('You have successfully unsubscribed to our Newsletter');
 
         $this->alert('success', $message, [
             'showConfirmButton' => true,

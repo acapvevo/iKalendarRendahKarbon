@@ -108,6 +108,7 @@ Route::prefix('community')->name('community.')->group(function () {
         // Newsletter Management routes
         Route::prefix('newsletter')->name('newsletter.')->group(function () {
             Route::get('', [NewsletterController::class, 'list'])->name('list');
+            Route::get('/thumbnail', [NewsletterController::class, 'thumbnail'])->name('thumbnail');
         });
     });
 });
