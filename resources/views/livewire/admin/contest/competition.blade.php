@@ -6,7 +6,7 @@
         </button>
     </div>
     <div class="table-responsive" wire:ignore>
-        <table class="table table-bordered" id="competitionTable">
+        <table class="table table-bordered" id="competitionTable" style="width:100%">
             <thead class="table-primary">
                 <tr>
                     <th>{{ __('Competition') }}</th>

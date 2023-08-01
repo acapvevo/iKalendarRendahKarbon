@@ -3,7 +3,7 @@
 
 <div>
     <div class="table-resposive" wire:ignore>
-        <table class="table table-bordered" id="tableSubmission">
+        <table class="table table-bordered" id="tableSubmission" style="width:100%">
             <thead class="table-primary">
                 <tr>
                     <th>{{ __('Name') }}</th>

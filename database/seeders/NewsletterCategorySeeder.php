@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Barryvdh\TranslationManager\Manager;
 use Barryvdh\TranslationManager\Models\Translation;
 
-class OccupationSectorTypeSeeder extends Seeder
+class NewsletterCategorySeeder extends Seeder
 {
     private $translation_manager;
 
@@ -23,33 +23,35 @@ class OccupationSectorTypeSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('occupation_sector_type')->insertTs([
+        DB::table('newsletter_category')->insertTs([
             'code' => 'A',
-            'name'=> 'Public'
+            'name' => 'adapt',
+            'description' => 'Adaptation'
         ]);
 
         $translation = Translation::firstOrNew([
             'locale' => 'ms',
             'group' => '_json',
-            'key' => 'Public',
+            'key' => 'Adaptation',
         ]);
 
-        $translation->value = 'Awam';
+        $translation->value = 'Adaptasi';
         $translation->status = Translation::STATUS_CHANGED;
         $translation->save();
 
-        DB::table('occupation_sector_type')->insertTs([
-            'code' => 'S',
-            'name'=> 'Private'
+        DB::table('newsletter_category')->insertTs([
+            'code' => 'M',
+            'name' => 'mitigate',
+            'description' => 'Mitigation'
         ]);
 
         $translation = Translation::firstOrNew([
             'locale' => 'ms',
             'group' => '_json',
-            'key' => 'Private',
+            'key' => 'Mitigation',
         ]);
 
-        $translation->value = 'Swasta';
+        $translation->value = 'Mitigasi';
         $translation->status = Translation::STATUS_CHANGED;
         $translation->save();
 

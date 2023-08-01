@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             OccupationSectorTypeSeeder::class,
             UserSeeder::class,
             TranslationSeeder::class,
-            SubmissionCategorySeeder::class
+            SubmissionCategorySeeder::class,
+            NewsletterCategorySeeder::class
         ]);
     }
 }

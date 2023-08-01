@@ -9,7 +9,7 @@
         </button>
     </div>
     <div class="table-resposive" wire:ignore>
-        <table class="table table-bordered" id="tableCommunity">
+        <table class="table table-bordered" id="tableCommunity" style="width:100%">
             <thead class="table-primary">
                 <tr>
                     <th>{{ __('Name/Username') }}</th>
@@ -38,8 +38,9 @@
                             <label for="community.username" class="form-label">{{ __('Username') }}:</label>
                             <input type="text"
                                 class="form-control {{ $errors->has('community.username') ? 'is-invalid' : '' }}"
-                                placeholder="{{ __('Enter Community Username') }}" id="community.username" aria-label="username"
-                                aria-describedby="username" wire:model.lazy="community.username" required>
+                                placeholder="{{ __('Enter Community Username') }}" id="community.username"
+                                aria-label="username" aria-describedby="username" wire:model.lazy="community.username"
+                                required>
                             @error('community.username')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -51,8 +52,8 @@
                             <label for="community.email" class="form-label">{{ __('Email Address') }}:</label>
                             <input type="email"
                                 class="form-control {{ $errors->has('community.email') ? 'is-invalid' : '' }}"
-                                placeholder="{{ __('Enter Community Email Address') }}" id="community.email" aria-label="email"
-                                aria-describedby="email" wire:model.lazy="community.email" required>
+                                placeholder="{{ __('Enter Community Email Address') }}" id="community.email"
+                                aria-label="email" aria-describedby="email" wire:model.lazy="community.email" required>
                             @error('community.email')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -260,8 +261,8 @@
                                     class="form-label">{{ __('Occupation Position') }}:</label>
                                 <input type="text"
                                     class="form-control {{ $errors->has('occupation.position') ? 'is-invalid' : '' }}"
-                                    placeholder="{{ __('Enter Community Occuaption Position') }}" id="occupation.position"
-                                    oninput="this.value = this.value.toUpperCase()"
+                                    placeholder="{{ __('Enter Community Occuaption Position') }}"
+                                    id="occupation.position" oninput="this.value = this.value.toUpperCase()"
                                     wire:model.lazy="occupation.position" aria-label="position"
                                     aria-describedby="position">
                                 @error('occupation.position')
@@ -278,7 +279,8 @@
                                     class="form-select {{ $errors->has('occupation.sector') ? 'is-invalid' : '' }}"
                                     id="occupation.sector" wire:model="occupation.sector"
                                     aria-label="Default select example">
-                                    <option value="" selected>{{ __('Choose Community Occuaption Sector') }}</option>
+                                    <option value="" selected>{{ __('Choose Community Occuaption Sector') }}
+                                    </option>
                                     @foreach (DB::table('occupation_sector_type')->get() as $sector)
                                         <option value="{{ $sector->code }}" wire:key="sector-{{ $sector->code }}">
                                             {{ strtoupper(__($sector->name)) }}
@@ -304,7 +306,8 @@
                                 <select class="form-select {{ $errors->has('address.category') ? 'is-invalid' : '' }}"
                                     id="address.category" aria-label="Default select example"
                                     wire:model="address.category">
-                                    <option selected value="">{{ __('Choose Community Address Category') }}</option>
+                                    <option selected value="">{{ __('Choose Community Address Category') }}
+                                    </option>
                                     @foreach (DB::table('address_category')->get() as $category)
                                         <option value="{{ $category->code }}"
                                             wire:key="category-{{ $category->code }}">
@@ -345,8 +348,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-12 col-lg-4">
-                                    <label for="address.line_3"
-                                        class="form-label">{{ __('Address Line 3') }}</label>
+                                    <label for="address.line_3" class="form-label">{{ __('Address Line 3') }}</label>
                                     <input type="text"
                                         class="form-control {{ $errors->has('address.line_3') ? 'is-invalid' : '' }}"
                                         id="address.line_3" wire:model.lazy="address.line_3"

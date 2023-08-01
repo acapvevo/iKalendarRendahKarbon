@@ -21,6 +21,6 @@ class TranslationSeeder extends Seeder
      */
     public function run()
     {
-        $this->manager->importTranslations();
+        $this->manager->importTranslations(true);
     }
 }

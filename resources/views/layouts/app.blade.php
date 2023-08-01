@@ -16,8 +16,8 @@
 
     <!-- DATATABLE CSS-->
     <link
-        href="https://cdn.datatables.net/v/bs5/dt-1.13.4/b-2.3.6/b-html5-2.3.6/fh-3.3.2/r-2.4.1/sb-1.4.2/datatables.min.css"
-        rel="stylesheet" />
+        href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.5/b-2.4.1/b-html5-2.4.1/fc-4.3.0/fh-3.4.0/sb-1.5.0/datatables.min.css"
+        rel="stylesheet">
 
     <!-- SWEET ALERT 2 CSS-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.10/dist/sweetalert2.min.css">
@@ -165,16 +165,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>
 
-    <!-- JSZIP JS-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-
-    <!-- PDFMAKE JS-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-
     <!-- DATATABLE JS-->
     <script
-        src="https://cdn.datatables.net/v/bs5/dt-1.13.4/b-2.3.6/b-html5-2.3.6/fh-3.3.2/r-2.4.1/sb-1.4.2/datatables.min.js">
+        src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.5/b-2.4.1/b-html5-2.4.1/fc-4.3.0/fh-3.4.0/sb-1.5.0/datatables.min.js">
     </script>
     <script src="https://cdn.datatables.net/plug-ins/1.13.4/sorting/natural.js"></script>
 
@@ -197,8 +190,14 @@
         $.extend(true, $.fn.dataTable.defaults, {
             "order": [],
             language: {
-                url: '{{ asset("js/datatables/lang/" . LaravelLocalization::getCurrentLocale() . ".json") }}'
+                url: '{{ asset('js/datatables/lang/' . LaravelLocalization::getCurrentLocale() . '.json') }}'
             },
+            columnDefs: [{
+                targets: '_all',
+                className: 'dt-center'
+            }],
+            scrollX: true,
+            fixedHeader: true
         });
         $.fn.dataTable.ext.errMode = 'none';
     </script>

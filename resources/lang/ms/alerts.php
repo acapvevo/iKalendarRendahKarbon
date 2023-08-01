@@ -13,4 +13,6 @@ return [
     'answer_update'   => 'Jawapan bagi Soalan :question BERJAYA dikemaskini',
     'community_create'   => 'Profil bagi Komuniti ":name" BERJAYA disimpan',
     'community_update'   => 'Profil bagi Komuniti ":name" BERJAYA dikemaskini',
+    'newsletter_create'   => 'Newsletter: ":title" has been successfully created',
+    'newsletter_update'   => 'Newsletter: ":title" has been successfully updated',
 ];
