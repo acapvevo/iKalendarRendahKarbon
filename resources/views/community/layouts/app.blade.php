@@ -134,4 +134,8 @@
         <div class="nav-link-icon"><i class="fa-solid fa-trophy"></i></div>
         {{ __('Competition Submission') }}
     </a>
+    <a class="nav-link" href="{{ route('community.newsletter.list') }}">
+        <div class="nav-link-icon"><i class="fa-regular fa-newspaper"></i></div>
+        {{ __('Newsletter') }}
+    </a>
 @endsection

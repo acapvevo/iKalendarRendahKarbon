@@ -20,10 +20,10 @@ class CreateNewslettersTable extends Migration
             $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade');
 
             $table->char('category');
-            $table->string('title');
+            $table->string('title')->unique();
             $table->string('location');
             $table->string('thumbnail');
-            $table->text('content');
+            $table->mediumText('content');
 
             $table->timestamps();
         });

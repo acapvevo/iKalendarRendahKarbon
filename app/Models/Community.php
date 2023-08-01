@@ -26,6 +26,7 @@ class Community extends Authenticatable
         'password',
         'timezone',
         'isVerified',
+        'isSubscribed',
     ];
 
     /**
@@ -61,5 +62,11 @@ class Community extends Authenticatable
     public function occupation()
     {
         return $this->hasOne(Occupation::class);
+    }
+
+    public function toggleSubscription()
+    {
+        $this->isSubscribed = !$this->isSubscribed;
+        $this->save();
     }
 }

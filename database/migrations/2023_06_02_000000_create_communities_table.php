@@ -26,6 +26,7 @@ class CreateCommunitiesTable extends Migration
             $table->string('password');
 
             $table->boolean('isVerified')->default(false);
+            $table->boolean('isSubscribed')->default(false);
 
             $table->timestamp('email_verified_at')->nullable();
 

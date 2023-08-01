@@ -38,7 +38,12 @@ class Newsletter extends Component
                 'image',
                 'max:2048'
             ],
-            'newsletter.title' => 'required|string|max:255',
+            'newsletter.title' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('newsletters', 'title')->ignore($this->newsletter_id)
+            ],
             'newsletter.location' => 'required|string|max:255',
             'newsletter.content' => 'required|string',
             'newsletter.category' => 'required|string|exists:newsletter_category,code'
