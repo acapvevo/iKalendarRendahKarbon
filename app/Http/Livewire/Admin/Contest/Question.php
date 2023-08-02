@@ -4,15 +4,16 @@ namespace App\Http\Livewire\Admin\Contest;
 
 use Livewire\Component;
 use App\Models\Competition;
-use Illuminate\Validation\Rule;
+use App\Traits\Livewire\CheckGuard;
 use Barryvdh\TranslationManager\Manager;
 use App\Models\Question as QuestionModel;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use Barryvdh\TranslationManager\Models\Translation;
 
 class Question extends Component
 {
-    use LivewireAlert;
+    use LivewireAlert, CheckGuard;
+
+    protected $guard = 'admin';
 
     private $manager;
 

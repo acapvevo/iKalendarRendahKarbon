@@ -4,10 +4,15 @@ namespace App\Http\Livewire\Community\User\Setting;
 
 use Livewire\Component;
 use App\Models\Community;
+use App\Traits\Livewire\CheckGuard;
 use Illuminate\Support\Facades\Hash;
 
 class Password extends Component
 {
+    use CheckGuard;
+
+    protected $guard = 'community';
+
     public $password;
     public $password_confirmation;
 

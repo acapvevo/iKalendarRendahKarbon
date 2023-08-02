@@ -12,11 +12,14 @@ use App\Models\Electric;
 use App\Models\Submission;
 use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
+use App\Traits\Livewire\CheckGuard;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Record extends Component
 {
-    use LivewireAlert, WithFileUploads;
+    use LivewireAlert, WithFileUploads, CheckGuard;
+
+    protected $guard = 'community';
     protected $rules;
 
     public $community_id;

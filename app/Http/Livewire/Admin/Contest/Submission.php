@@ -4,18 +4,21 @@ namespace App\Http\Livewire\Admin\Contest;
 
 use Livewire\Component;
 use App\Models\Competition;
+use App\Traits\Livewire\CheckGuard;
 use App\Models\Submission as SubmissionModel;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Submission extends Component
 {
-    use LivewireAlert;
+    use LivewireAlert, CheckGuard;
+
+    protected $guard = 'admin';
 
     public $competition_id;
     public $submission_id;
 
     public SubmissionModel $submission;
- 
+
     protected $listeners = ['openModal' => 'open'];
 
     public function mount($competition_id)

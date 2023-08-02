@@ -5,12 +5,15 @@ namespace App\Http\Livewire\Community\User\Setting;
 use Livewire\Component;
 use App\Models\Community;
 use Livewire\WithFileUploads;
+use App\Traits\Livewire\CheckGuard;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
 class Picture extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, CheckGuard;
+
+    protected $guard = 'community';
 
     public $image;
     public Community $user;

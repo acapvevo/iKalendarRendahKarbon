@@ -5,9 +5,14 @@ namespace App\Http\Livewire\Admin\User;
 use App\Models\Admin;
 use Livewire\Component;
 use Illuminate\Validation\Rule;
+use App\Traits\Livewire\CheckGuard;
 
 class Profile extends Component
 {
+    use CheckGuard;
+
+    protected $guard = 'admin';
+
     public Admin $user;
 
     protected function rules()
@@ -36,7 +41,7 @@ class Profile extends Component
 
         redirect(route('admin.user.profile.view'))->with('success', 'Your Profile has been updated successfully');
     }
-    
+
     public function render()
     {
         return view('livewire.admin.user.profile');

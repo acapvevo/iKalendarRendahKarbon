@@ -7,9 +7,14 @@ use Livewire\Component;
 use App\Models\Community;
 use App\Models\Occupation;
 use Illuminate\Validation\Rule;
+use App\Traits\Livewire\CheckGuard;
 
 class Profile extends Component
 {
+    use CheckGuard;
+
+    protected $guard = 'community';
+
     public Community $user;
     public Address $address;
     public Occupation $occupation;

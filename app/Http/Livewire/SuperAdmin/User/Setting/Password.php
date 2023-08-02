@@ -2,12 +2,17 @@
 
 namespace App\Http\Livewire\SuperAdmin\User\Setting;
 
-use App\Models\SuperAdmin;
 use Livewire\Component;
+use App\Models\SuperAdmin;
+use App\Traits\Livewire\CheckGuard;
 use Illuminate\Support\Facades\Hash;
 
 class Password extends Component
 {
+    use CheckGuard;
+
+    protected $guard = 'super_admin';
+
     public $password;
     public $password_confirmation;
 

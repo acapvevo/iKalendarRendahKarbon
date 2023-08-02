@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Admin;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
+use App\Traits\Livewire\CheckGuard;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
@@ -13,7 +14,9 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Newsletter extends Component
 {
-    use LivewireAlert, WithFileUploads;
+    use LivewireAlert, WithFileUploads, CheckGuard;
+
+    protected $guard = 'admin';
 
     public $newsletters;
     public NewsletterModel $newsletter;

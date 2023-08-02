@@ -6,13 +6,16 @@ use App\Models\Address;
 use Livewire\Component;
 use App\Models\Occupation;
 use Illuminate\Validation\Rule;
+use App\Traits\Livewire\CheckGuard;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Community as CommunityModel;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Community extends Component
 {
-    use LivewireAlert;
+    use LivewireAlert, CheckGuard;
+
+    protected $guard = 'admin';
 
     public CommunityModel $community;
     public Address $address;

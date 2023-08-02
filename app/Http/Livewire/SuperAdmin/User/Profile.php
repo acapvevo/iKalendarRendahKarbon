@@ -5,9 +5,14 @@ namespace App\Http\Livewire\SuperAdmin\User;
 use Livewire\Component;
 use App\Models\SuperAdmin;
 use Illuminate\Validation\Rule;
+use App\Traits\Livewire\CheckGuard;
 
 class Profile extends Component
 {
+    use CheckGuard;
+
+    protected $guard = 'super_admin';
+
     public SuperAdmin $user;
 
     protected function rules()

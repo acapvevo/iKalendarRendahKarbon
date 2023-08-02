@@ -2,14 +2,17 @@
 
 namespace App\Http\Livewire\Community;
 
-use App\Models\Community;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
-use App\Models\Newsletter as NewsletterModel;
 use Livewire\Component;
+use App\Models\Community;
+use App\Traits\Livewire\CheckGuard;
+use App\Models\Newsletter as NewsletterModel;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Newsletter extends Component
 {
-    use LivewireAlert;
+    use LivewireAlert, CheckGuard;
+
+    protected $guard = 'community';
 
     public $newsletters;
     public NewsletterModel $newsletter;

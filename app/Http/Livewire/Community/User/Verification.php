@@ -2,14 +2,17 @@
 
 namespace App\Http\Livewire\Community\User;
 
-use App\Models\Community;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
+use App\Models\Community;
 use Livewire\WithFileUploads;
+use App\Traits\Livewire\CheckGuard;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Verification extends Component
 {
-    use LivewireAlert, WithFileUploads;
+    use LivewireAlert, WithFileUploads, CheckGuard;
+
+    protected $guard = 'community';
 
     public Community $user;
 

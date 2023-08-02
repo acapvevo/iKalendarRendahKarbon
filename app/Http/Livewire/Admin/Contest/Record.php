@@ -10,11 +10,14 @@ use App\Models\UsedOil;
 use Livewire\Component;
 use App\Models\Electric;
 use App\Models\Submission;
+use App\Traits\Livewire\CheckGuard;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Record extends Component
 {
-    use LivewireAlert;
+    use LivewireAlert, CheckGuard;
+
+    protected $guard = 'admin';
 
     public $submission_id;
     public $bill_id;

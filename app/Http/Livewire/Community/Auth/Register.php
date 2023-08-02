@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\Community;
 use App\Models\Occupation;
 use Illuminate\Support\Carbon;
+use App\Traits\Livewire\CheckGuard;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -16,6 +17,10 @@ use Illuminate\Auth\Notifications\VerifyEmail;
 
 class Register extends Component
 {
+    use CheckGuard;
+
+    protected $guard = 'community';
+
     public Community $user;
 
     public $captcha;

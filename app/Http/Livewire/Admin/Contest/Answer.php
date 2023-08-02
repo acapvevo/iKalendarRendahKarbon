@@ -4,11 +4,14 @@ namespace App\Http\Livewire\Admin\Contest;
 
 use Livewire\Component;
 use App\Models\Submission;
+use App\Traits\Livewire\CheckGuard;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Answer extends Component
 {
-    use LivewireAlert;
+    use LivewireAlert, CheckGuard;
+
+    protected $guard = 'admin';
 
     public $submission_id;
 
