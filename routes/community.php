@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Community\DashboardController;
+use App\Http\Controllers\Community\NewsletterController;
 use App\Http\Controllers\Community\User\PictureController;
 use App\Http\Controllers\Community\User\ProfileController;
 use App\Http\Controllers\Community\User\SettingController;
@@ -75,6 +76,7 @@ Route::prefix('community')->name('community.')->group(function () {
             //Profile
             Route::prefix('profile')->name('profile.')->group(function () {
                 Route::get('', [ProfileController::class, 'view'])->name('view');
+                Route::post('/ic', [ProfileController::class, 'ic'])->name('ic');
             });
 
             //Setting
@@ -102,6 +104,12 @@ Route::prefix('community')->name('community.')->group(function () {
                 Route::match(['get', 'post'], '', [SubmissionController::class, 'list'])->name('list');
                 Route::match(['get', 'post'], '/download', [SubmissionController::class, 'download'])->name('download');
             });
+        });
+
+        // Newsletter Management routes
+        Route::prefix('newsletter')->name('newsletter.')->group(function () {
+            Route::get('', [NewsletterController::class, 'list'])->name('list');
+            Route::get('/thumbnail', [NewsletterController::class, 'thumbnail'])->name('thumbnail');
         });
     });
 });

@@ -82,7 +82,8 @@
                                             @endswitch
                                         </td>
                                         <th style="width: 20%">{{ __('Bill Charge') }}</th>
-                                        <td class="text-center">RM {{ number_format((float) ${$category}->charge ?? 0, 2) }}</td>
+                                        <td class="text-center">RM {{ number_format((float) ${$category}->charge ?? 0, 2) }}
+                                        </td>
                                     </tr>
                                 @break
 
@@ -90,9 +91,11 @@
                                 @case('used_oil')
                                     <tr>
                                         <th style="width: 20%">{{ __('Total Weight') }}</th>
-                                        <td class="text-center">{{ number_format((float) ${$category}->weight ?? 0, 2) }} kg</td>
+                                        <td class="text-center">{{ number_format((float) ${$category}->weight ?? 0, 2) }} kg
+                                        </td>
                                         <th style="width: 20%">{{ __('Total Sell Value') }}</th>
-                                        <td class="text-center">RM {{ number_format((float) ${$category}->value ?? 0, 2) }}</td>
+                                        <td class="text-center">RM {{ number_format((float) ${$category}->value ?? 0, 2) }}
+                                        </td>
                                     </tr>
                                 @break
 
@@ -299,11 +302,10 @@
                                                     role="button">{{ __('Browse') }}</label>
                                                 <label for="evidence"
                                                     class="form-control {{ $errors->has('evidence') ? 'is-invalid' : '' }}"
-                                                    id="eviden-electric-label" role="button"
-                                                    evidence='Electric'>{{ $evidence_label }}</label>
+                                                    id="eviden-label" role="button">{{ $evidence_label }}</label>
                                                 <input type="file" required
                                                     class="evidenceInput d-none form-control" id="evidence"
-                                                    name='electric' wire:model="evidence">
+                                                    wire:model="evidence">
                                                 @error('evidence')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -365,7 +367,8 @@
                                                         <tr>
                                                             <th style="width: 20%">{{ __('Total Weight') }}</th>
                                                             <td class="text-center">
-                                                                {{ number_format((float) ${$category}->weight ?? 0, 2) }} kg</td>
+                                                                {{ number_format((float) ${$category}->weight ?? 0, 2) }} kg
+                                                            </td>
                                                             <th style="width: 20%">{{ __('Total Sell Value') }}</th>
                                                             <td class="text-center">RM
                                                                 {{ number_format((float) ${$category}->value ?? 0, 2) }}</td>
@@ -428,10 +431,6 @@
         editSubmisssionModalEl.addEventListener('hidden.bs.modal', event => {
             Livewire.emit('closeModal')
         })
-
-        $('.evidenceInput').change(function(e) {
-            Livewire.emit('changePlaceholder')
-        });
 
         Livewire.on('changeTab', tab_state => {
             const wizardTab = document.getElementById('wizard' + tab_state + '-tab');

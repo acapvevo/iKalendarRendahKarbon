@@ -13,4 +13,8 @@ return [
     'answer_update'   => 'Jawapan bagi Soalan :question BERJAYA dikemaskini',
     'community_create'   => 'Profil bagi Komuniti ":name" BERJAYA disimpan',
     'community_update'   => 'Profil bagi Komuniti ":name" BERJAYA dikemaskini',
+    'newsletter_create'   => 'Newsletter: ":title" has been successfully created',
+    'newsletter_update'   => 'Newsletter: ":title" has been successfully updated',
+    'verification_processed'   => 'Pengesahan anda sedang diproses. Kami akan menghantar e-mel kepada anda apabila Pengesahan telah berjaya diselesaikan.',
+    'verification_complete'   => 'Pengesahan Akaun untuk ":name" telah berjaya diselesaikan',
 ];

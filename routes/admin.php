@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Admin\Contest\CompetitionController;
 use App\Http\Controllers\Admin\Contest\QuestionController;
 use App\Http\Controllers\Admin\Contest\SubmissionController;
+use App\Http\Controllers\Admin\NewsletterController;
 use App\Http\Controllers\Admin\Participant\CommunityController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -97,6 +98,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::prefix('community')->name('community.')->group(function () {
                 Route::get('', [CommunityController::class, 'list'])->name('list');
                 Route::match(['get', 'post'], '/filter', [CommunityController::class, 'filter'])->name('filter');
+                Route::post('/ic', [CommunityController::class, 'ic'])->name('ic');
             });
         });
 
@@ -120,6 +122,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::match(['get', 'post'], '/view', [SubmissionController::class, 'view'])->name('view');
                 Route::match(['get', 'post'], '/download', [SubmissionController::class, 'download'])->name('download');
             });
+        });
+
+        // Newsletter Management routes
+        Route::prefix('newsletter')->name('newsletter.')->group(function () {
+            Route::get('', [NewsletterController::class, 'list'])->name('list');
+            Route::get('/thumbnail', [NewsletterController::class, 'thumbnail'])->name('thumbnail');
         });
     });
 });

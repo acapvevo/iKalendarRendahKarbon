@@ -5,12 +5,15 @@ namespace App\Http\Livewire\SuperAdmin\User\Setting;
 use Livewire\Component;
 use App\Models\SuperAdmin;
 use Livewire\WithFileUploads;
+use App\Traits\Livewire\CheckGuard;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
 class Picture extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, CheckGuard;
+
+    protected $guard = 'super_admin';
 
     public $image;
     public SuperAdmin $user;

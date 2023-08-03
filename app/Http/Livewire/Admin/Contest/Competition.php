@@ -4,12 +4,15 @@ namespace App\Http\Livewire\Admin\Contest;
 
 use Livewire\Component;
 use Illuminate\Validation\Rule;
+use App\Traits\Livewire\CheckGuard;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Models\Competition as CompetitionModel;
 
 class Competition extends Component
 {
-    use LivewireAlert;
+    use LivewireAlert, CheckGuard;
+
+    protected $guard = 'admin';
 
     public $competitions;
     public CompetitionModel $competition;

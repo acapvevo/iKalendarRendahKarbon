@@ -5,12 +5,15 @@ namespace App\Http\Livewire\Admin\User\Setting;
 use App\Models\Admin;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use App\Traits\Livewire\CheckGuard;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
 class Picture extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, CheckGuard;
+
+    protected $guard = 'admin';
 
     public $image;
     public Admin $user;

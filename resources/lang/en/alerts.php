@@ -13,4 +13,8 @@ return [
     'answer_update'   => 'Answer for ":text?" has been successfully updated',
     'community_create'   => 'Profile for Community ":name" has been successfully created',
     'community_update'   => 'Profile for Community ":name" has been successfully updated',
+    'newsletter_create'   => 'Newsletter: ":title" has been successfully created',
+    'newsletter_update'   => 'Newsletter: ":title" has been successfully updated',
+    'verification_processed'   => 'Your Verification is currently being processed. We will email to you when the Verification has been successfully completed.',
+    'verification_complete'   => 'Account Verification for ":name" has been successfully completed',
 ];

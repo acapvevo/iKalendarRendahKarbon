@@ -4,27 +4,20 @@ namespace App\Http\Livewire\Community\Contest;
 
 use Livewire\Component;
 use App\Models\Submission;
+use App\Traits\Livewire\CheckGuard;
 use Illuminate\Support\Facades\Auth;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Models\Competition as CompetitionModel;
 
 class Competition extends Component
 {
-    use LivewireAlert;
+    use LivewireAlert, CheckGuard;
+
+    protected $guard = 'community';
 
     public $competitions;
     public CompetitionModel $competition;
     public $submission;
-
-    public function listener()
-    {
-        return [];
-    }
-
-    protected function rules()
-    {
-        return [];
-    }
 
     public function updated($propertyName)
     {

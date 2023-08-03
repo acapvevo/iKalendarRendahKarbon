@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class Community extends Authenticatable
 {
@@ -26,6 +27,8 @@ class Community extends Authenticatable
         'password',
         'timezone',
         'isVerified',
+        'isSubscribed',
+        'identification_card',
     ];
 
     /**
@@ -61,5 +64,22 @@ class Community extends Authenticatable
     public function occupation()
     {
         return $this->hasOne(Occupation::class);
+    }
+
+    public function toggleSubscription()
+    {
+        $this->isSubscribed = !$this->isSubscribed;
+        $this->save();
+    }
+
+    public function viewIdentificationCard()
+    {
+        return response()->file(storage_path('app/identification_card/community/' . $this->identification_card));
+    }
+
+    public function deleteIdentificationCard()
+    {
+        Storage::delete('identification_card/community/' . $this->identification_card);
+        $this->identification_card = null;
     }
 }

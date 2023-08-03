@@ -4,10 +4,15 @@ namespace App\Http\Livewire\Admin\User\Setting;
 
 use App\Models\Admin;
 use Livewire\Component;
+use App\Traits\Livewire\CheckGuard;
 use Illuminate\Support\Facades\Hash;
 
 class Password extends Component
 {
+    use CheckGuard;
+
+    protected $guard = 'admin';
+
     public $password;
     public $password_confirmation;
 

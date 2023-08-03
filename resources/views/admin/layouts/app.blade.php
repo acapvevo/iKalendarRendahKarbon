@@ -158,4 +158,9 @@
             <a class="nav-link" href="{{ route('admin.contest.submission.list') }}">{{__("Submission")}}</a>
         </nav>
     </div>
+    <!-- Sidenav Link (Newsletter Management)-->
+    <a class="nav-link" href="{{ route('admin.newsletter.list') }}">
+        <div class="nav-link-icon"><i class="fa-regular fa-newspaper"></i></div>
+        {{ __('Newsletter Management') }}
+    </a>
 @endsection

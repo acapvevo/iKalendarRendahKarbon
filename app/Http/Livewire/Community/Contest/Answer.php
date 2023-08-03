@@ -6,12 +6,15 @@ use Livewire\Component;
 use App\Models\Question;
 use App\Models\Submission;
 use Illuminate\Support\Facades\DB;
+use App\Traits\Livewire\CheckGuard;
 use App\Models\Answer as AnswerModel;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Answer extends Component
 {
-    use LivewireAlert;
+    use LivewireAlert, CheckGuard;
+
+    protected $guard = 'community';
 
     public $community_id;
     public $competition_id;
@@ -28,13 +31,6 @@ class Answer extends Component
 
     public $tab_state = 0;
     public $questionCategoryList;
-
-    protected function listener()
-    {
-        return [
-            'changeTabAnswer' =>  'changeTab'
-        ];
-    }
 
     protected function rules()
     {
