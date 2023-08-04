@@ -81,11 +81,9 @@
                             </tr>
                             <tr>
                                 <th class="w-25">{{ __('Address') }}</th>
-                                <td colspan="3">{{ $user->address->line_1 }}, <br>
-                                    {{ $user->address->line_2 }}, <br>
-                                    {!! $user->address->line_3 ? $user->address->line_3 . ', <br>' : '' !!}
-                                    {{ $user->address->postcode }} {{ $user->address->city }}, <br>
-                                    {{ $user->address->state }}, {{ $user->address->country }}</td>
+                                <td colspan="3">
+                                    {!! $user->address->getFullAddressInMultipleLine() !!}
+                                </td>
                             </tr>
                             <tr>
                                 <th class="w-25">{{ __('Account Status') }}</th>
@@ -99,7 +97,8 @@
                                         <i class="fa-solid fa-check" style="color: #00bd0d;"></i> {{ __('Verified') }}
                                     @endif
                                     @if ($user->identification_card)
-                                        <form action="{{route('community.user.profile.ic')}}" method="post" target="_blank">
+                                        <form action="{{ route('community.user.profile.ic') }}" method="post"
+                                            target="_blank">
                                             @csrf
 
                                             <button class="btn btn-link" type="submit" value="{{ $user->id }}"

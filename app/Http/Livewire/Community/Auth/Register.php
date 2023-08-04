@@ -6,6 +6,7 @@ use App\Models\Address;
 use Livewire\Component;
 use App\Models\Community;
 use App\Models\Occupation;
+use App\Traits\CommunityTrait;
 use Illuminate\Support\Carbon;
 use App\Traits\Livewire\CheckGuard;
 use Illuminate\Support\Facades\URL;
@@ -17,9 +18,7 @@ use Illuminate\Auth\Notifications\VerifyEmail;
 
 class Register extends Component
 {
-    use CheckGuard;
-
-    protected $guard = 'community';
+    use CommunityTrait;
 
     public Community $user;
 
@@ -79,34 +78,16 @@ class Register extends Component
             'password' => 'required|string|confirmed|min:8',
         ]);
 
-        Auth::guard('community')->login($community = Community::create([
+        $community = $this->createCommunity([
             'username' => $this->user->username,
             'email' => $this->user->email,
             'password' => Hash::make($this->user->password),
-        ]));
-
-        Occupation::create([
-            'community_id' => $community->id,
-        ]);
-
-        Address::create([
-            'community_id' => $community->id,
+        ], [
             'state' => 'JOHOR',
             'country' => 'MALAYSIA',
-        ]);
+        ], []);
 
-        VerifyEmail::createUrlUsing(function ($notifiable) {
-            return URL::temporarySignedRoute(
-                'community.verification.verify',
-                Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
-                [
-                    'id' => $notifiable->getKey(),
-                    'hash' => sha1($notifiable->getEmailForVerification()),
-                ]
-            );
-        });
-
-        event(new Registered($community));
+        Auth::guard('community')->login($community);
 
         return redirect(route('community.dashboard'));
     }

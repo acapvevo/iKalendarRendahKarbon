@@ -7,7 +7,9 @@ use Livewire\Component;
 
 class [class] extends Component
 {
-    use LivewireAlert;
+    use LivewireAlert, CheckGuard;
+
+    protected $guard = '';
 
     protected function getListeners()
     {

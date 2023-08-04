@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\Community;
 
 use App\Models\Newsletter;
+use App\Traits\NewsletterTrait;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class NewsletterController extends Controller
 {
+    use NewsletterTrait;
+
     public function list()
     {
-        $newsletters = Newsletter::all()->sortByDesc('created_at');
+        $newsletters = $this->getNewsletters();
 
         return view('community.newsletter.list')->with([
             'newsletters' => $newsletters
@@ -23,7 +26,7 @@ class NewsletterController extends Controller
             'newsletter_id' => 'required|numeric|exists:newsletters,id'
         ]);
 
-        $newsletter = Newsletter::find($request->newsletter_id);
+        $newsletter = $this->getNewsletter($request->newsletter_id);
 
         return $newsletter->previewThumbnail();
     }

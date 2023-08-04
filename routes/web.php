@@ -18,6 +18,6 @@ Route::get('/', function () {
 })->name('welcome');
 
 require __DIR__.'/template.php';
-require __DIR__.'/super_admin.php';
-require __DIR__.'/admin.php';
-require __DIR__.'/community.php';
+require __DIR__.'/web/super_admin.php';
+require __DIR__.'/web/admin.php';
+require __DIR__.'/web/community.php';

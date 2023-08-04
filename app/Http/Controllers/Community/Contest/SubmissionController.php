@@ -2,44 +2,52 @@
 
 namespace App\Http\Controllers\Community\Contest;
 
+use App\Traits\BillTrait;
 use App\Models\Submission;
 use Illuminate\Http\Request;
+use App\Traits\SubmissionTrait;
 use App\Traits\CompetitionTrait;
 use App\Http\Controllers\Controller;
-use App\Traits\BillTrait;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class SubmissionController extends Controller
 {
-    use CompetitionTrait, BillTrait;
+    use CompetitionTrait, BillTrait, SubmissionTrait;
 
     public function category(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'competition_id' => 'required|integer|exists:competitions,id'
         ]);
+
+        if ($validator->fails()) {
+            return redirect(route('community.contest.competition.list'))
+                    ->withErrors($validator);
+        }
 
         $competition = $this->getCompetition($request->competition_id);
 
         return view('community.contest.submission.category')->with([
             'competition' => $competition,
-            'attributes' => array_diff_key($request->all(), ["_token" => ''])
         ]);
     }
 
     public function list(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'competition_id' => 'required|integer|exists:competitions,id',
             'category' => 'required|string|exists:submission_category,name'
         ]);
 
+        if ($validator->fails()) {
+            return redirect(route('community.contest.competition.list'))
+                    ->withErrors($validator);
+        }
+
         $community = Auth::user();
 
-        $submission = Submission::where('competition_id', $request->competition_id)->where('community_id', $community->id)->first() ?? new Submission([
-            'competition_id' => (int)$request->competition_id,
-            'community_id' => $community->id
-        ]);
+        $submission = $this->getSubmissionByCompetitionIDAndCommunityID((int)$request->competition_id, $community->id);
 
         switch ($request->category) {
             case 'electric':
@@ -67,7 +75,6 @@ class SubmissionController extends Controller
             'submission' => $submission,
             'category' => $request->category,
             'categoryName' => $categoryName,
-            'attributes' => array_diff_key($request->all(), ["_token" => ''])
         ]);
     }
 

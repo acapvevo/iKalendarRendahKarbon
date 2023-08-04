@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\Contest\QuestionController;
 use App\Http\Controllers\Admin\Contest\SubmissionController;
 use App\Http\Controllers\Admin\NewsletterController;
 use App\Http\Controllers\Admin\Participant\CommunityController;
+use App\Http\Controllers\Admin\ZoneController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
@@ -122,6 +123,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::match(['get', 'post'], '/view', [SubmissionController::class, 'view'])->name('view');
                 Route::match(['get', 'post'], '/download', [SubmissionController::class, 'download'])->name('download');
             });
+        });
+
+        // Zone Management routes
+        Route::prefix('zone')->name('zone.')->group(function () {
+            Route::get('', [ZoneController::class, 'list'])->name('list');
         });
 
         // Newsletter Management routes

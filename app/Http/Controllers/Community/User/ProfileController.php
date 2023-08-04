@@ -3,15 +3,18 @@
 namespace App\Http\Controllers\Community\User;
 
 use App\Models\Community;
+use App\Traits\CommunityTrait;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
+    use CommunityTrait;
+
     public function view()
     {
-        $user = Community::find(Auth::guard('community')->user()->id);
+        $user = $this->getCommunity(Auth::guard('community')->user()->id);
 
         return view('community.user.profile')->with('user', $user);
     }
@@ -22,7 +25,7 @@ class ProfileController extends Controller
             'community_id' => 'required|numeric|exists:communities,id'
         ]);
 
-        $user = Community::find($request->community_id);
+        $user = $this->getCommunity($request->community_id);
 
         return $user->viewIdentificationCard();
     }

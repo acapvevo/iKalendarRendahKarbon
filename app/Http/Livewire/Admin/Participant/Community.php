@@ -9,11 +9,12 @@ use Illuminate\Validation\Rule;
 use App\Traits\Livewire\CheckGuard;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Community as CommunityModel;
+use App\Traits\CommunityTrait;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Community extends Component
 {
-    use LivewireAlert, CheckGuard;
+    use LivewireAlert, CheckGuard, CommunityTrait;
 
     protected $guard = 'admin';
 
@@ -129,18 +130,14 @@ class Community extends Component
             'community.email' => 'required|string|email|max:255|unique:communities,email',
         ]);
 
-        $this->community->password = Hash::make($this->community->username);
-        $this->community->save();
-
-        $this->community_id = $this->community->id;
-
-        $this->fill([
-            'address' => $this->getAddressProperty(),
-            'occupation' => $this->getOccupationProperty(),
-        ]);
-
-        $this->address->save();
-        $this->occupation->save();
+        $this->community = $this->createCommunity([
+            'username' => $this->community->username,
+            'email' => $this->community->email,
+            'password' => Hash::make($this->community->username),
+        ], [
+            'state' => 'JOHOR',
+            'country' => 'MALAYSIA',
+        ], []);
 
         redirect(route('admin.participant.community.list'))->with('success', __('alerts.community_create', ['name' => $this->community->username]));
     }
