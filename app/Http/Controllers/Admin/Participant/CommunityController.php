@@ -4,12 +4,15 @@ namespace App\Http\Controllers\Admin\Participant;
 
 use App\Models\Community;
 use App\Plugins\Datatable;
+use App\Traits\CommunityTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class CommunityController extends Controller
 {
+    use CommunityTrait;
+
     public function list()
     {
         return view('admin.participant.community.list');
@@ -120,7 +123,7 @@ class CommunityController extends Controller
             'community_id' => 'required|numeric|exists:communities,id'
         ]);
 
-        $user = Community::find($request->community_id);
+        $user = $this->getCommunity($request->community_id);
 
         return $user->viewIdentificationCard();
     }

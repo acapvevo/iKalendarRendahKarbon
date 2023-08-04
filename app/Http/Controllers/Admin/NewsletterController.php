@@ -4,13 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Newsletter;
+use App\Traits\NewsletterTrait;
 use Illuminate\Http\Request;
 
 class NewsletterController extends Controller
 {
+    use NewsletterTrait;
+
     public function list()
     {
-        $newsletters = Newsletter::all()->sortByDesc('created_at');
+        $newsletters = $this->getNewsletters();
 
         return view('admin.newsletter.list')->with([
             'newsletters' => $newsletters
@@ -23,7 +26,7 @@ class NewsletterController extends Controller
             'newsletter_id' => 'required|numeric|exists:newsletters,id'
         ]);
 
-        $newsletter = Newsletter::find($request->newsletter_id);
+        $newsletter = $this->getNewsletter($request->newsletter_id);
 
         return $newsletter->previewThumbnail();
     }

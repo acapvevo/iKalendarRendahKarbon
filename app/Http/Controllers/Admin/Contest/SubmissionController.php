@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers\Admin\Contest;
 
+use App\Traits\BillTrait;
+use App\Models\Submission;
 use App\Plugins\Datatable;
 use Illuminate\Http\Request;
+use App\Traits\SubmissionTrait;
 use App\Traits\CompetitionTrait;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Submission;
-use App\Traits\BillTrait;
+use Illuminate\Support\Facades\Validator;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class SubmissionController extends Controller
 {
-    use CompetitionTrait, BillTrait;
+    use CompetitionTrait, BillTrait, SubmissionTrait;
 
     public function list(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'competition_id' => 'sometimes|numeric|exists:competitions,id'
         ]);
@@ -28,7 +29,6 @@ class SubmissionController extends Controller
         return view('admin.contest.submission.list')->with([
             'competitions' => $competitions,
             'currentCompetition' => $competition,
-            'attributes' => array_diff_key($request->all(), ["_token" => ''])
         ]);
     }
 
@@ -132,15 +132,19 @@ class SubmissionController extends Controller
 
     public function view(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'id' => 'required|numeric|exists:submissions,id'
         ]);
 
-        $submission = Submission::find($request->id);
+        if ($validator->fails()) {
+            return redirect(route('admin.contest.submission.list'))
+                    ->withErrors($validator);
+        }
+
+        $submission = $this->getSubmission($request->id);
 
         return view('admin.contest.submission.view')->with([
             'submission' => $submission,
-            'attributes' => array_diff_key($request->all(), ["_token" => ''])
         ]);
     }
 
