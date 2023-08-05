@@ -2,46 +2,42 @@
 
 namespace App\Http\Controllers\Community\Contest;
 
+use App\Traits\BillTrait;
 use App\Models\Submission;
 use Illuminate\Http\Request;
+use App\Traits\SubmissionTrait;
 use App\Traits\CompetitionTrait;
 use App\Http\Controllers\Controller;
-use App\Traits\BillTrait;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\Universal\Submission\DownloadEvidenceRequest;
+use App\Http\Requests\Community\Contest\Submission\ChooseCategoryRequest;
+use App\Http\Requests\Community\Contest\Submission\SelectCompetitionRequest;
 
 class SubmissionController extends Controller
 {
-    use CompetitionTrait, BillTrait;
+    use CompetitionTrait, BillTrait, SubmissionTrait;
 
-    public function category(Request $request)
+    public function category(SelectCompetitionRequest $request)
     {
-        $request->validate([
-            'competition_id' => 'required|integer|exists:competitions,id'
-        ]);
+        $validated = $request->validated();
 
-        $competition = $this->getCompetition($request->competition_id);
+        $competition = $this->getCompetition($validated['competition_id']);
 
         return view('community.contest.submission.category')->with([
             'competition' => $competition,
-            'attributes' => array_diff_key($request->all(), ["_token" => ''])
         ]);
     }
 
-    public function list(Request $request)
+    public function list(ChooseCategoryRequest $request)
     {
-        $request->validate([
-            'competition_id' => 'required|integer|exists:competitions,id',
-            'category' => 'required|string|exists:submission_category,name'
-        ]);
+        $validated = $request->validated();
 
         $community = Auth::user();
 
-        $submission = Submission::where('competition_id', $request->competition_id)->where('community_id', $community->id)->first() ?? new Submission([
-            'competition_id' => (int)$request->competition_id,
-            'community_id' => $community->id
-        ]);
+        $submission = $this->getSubmissionByCompetitionIDAndCommunityID($validated['competition_id'], $community->id);
 
-        switch ($request->category) {
+        switch ($validated['category']) {
             case 'electric':
                 $categoryName = __('Electric');
                 break;
@@ -67,19 +63,15 @@ class SubmissionController extends Controller
             'submission' => $submission,
             'category' => $request->category,
             'categoryName' => $categoryName,
-            'attributes' => array_diff_key($request->all(), ["_token" => ''])
         ]);
     }
 
-    public function download(Request $request)
+    public function download(DownloadEvidenceRequest $request)
     {
-        $request->validate([
-            'type' => 'required|in:electric,water,recycle,used_oil',
-            'bill_id' => 'required|numeric|exists:bills,id',
-        ]);
+        $validated = $request->validated();
 
-        $bill = $this->getBill($request->bill_id);
+        $bill = $this->getBill($validated['bill_id']);
 
-        return $bill->downloadEvidence($request->type);
+        return $bill->downloadEvidence($validated['type']);
     }
 }

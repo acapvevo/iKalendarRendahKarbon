@@ -57,136 +57,65 @@
                             <tr>
                                 <th colspan="4" class="h3 text-center">{{ __('Submission Details') }}</th>
                             </tr>
-                            <tr>
-                                <th colspan="4" class="h3 text-center">{{ __('Electric') }}</th>
-                            </tr>
-                            <tr>
-                                <th style="width: 20%">{{ __('Usage') }}</th>
-                                <td class="text-center">{{ number_format((float) $electric->usage ?? 0, 2) }} kWh</td>
-                                <th style="width: 20%">{{ __('Bill Charge') }}</th>
-                                <td class="text-center">RM {{ number_format((float) $electric->charge ?? 0, 2) }}</td>
-                            </tr>
-                            <tr>
-                                <th colspan="1">{{ __('Evidence') }}</th>
-                                <td colspan="3" class="text-center">
-                                    @if ($electric->evidence ?? null)
-                                        <form action="{{ route('admin.contest.submission.download') }}"
-                                            method="post" target="_blank">
-                                            @csrf
 
-                                            <input type="hidden" name="bill_id" value="{{ $bill->id }}">
-                                            <button type="submit" class="btn btn-link" name="type"
-                                                value="electric">{{ $electric->evidence }}</button>
-                                        </form>
-                                    @else
-                                        {{ __('No Evidence') }}
-                                    @endif
-                                </td>
-                            </tr>
-                            <tr>
-                                <th colspan="1">{{ __('Carbon Emission') }}</th>
-                                <td colspan="3" class="text-center">
-                                    {{ number_format((float) $electric->carbon_emission ?? 0, 2) }}
-                                    kgCO<sub>2</sub></td>
-                            </tr>
-                            <tr>
-                                <th colspan="4" class="h3 text-center">{{ __('Water') }}</th>
-                            </tr>
-                            <tr>
-                                <th style="width: 20%">{{ __('Usage') }}</th>
-                                <td class="text-center">{{ number_format((float) $water->usage ?? 0, 2) }}
-                                    m<sup>3</sup>
-                                </td>
-                                <th style="width: 20%">{{ __('Bill Charge') }}</th>
-                                <td class="text-center">RM {{ number_format((float) $water->charge ?? 0, 2) }}</td>
-                            </tr>
-                            <tr>
-                                <th colspan="1">{{ __('Evidence') }}</th>
-                                <td colspan="3" class="text-center">
-                                    @if ($water->evidence ?? null)
-                                        <form action="{{ route('admin.contest.submission.download') }}"
-                                            method="post" target="_blank">
-                                            @csrf
+                            @foreach ($submission_categories as $category)
+                                <tr>
+                                    <th colspan="4" class="h3 text-center">{{ __($category->description) }}</th>
+                                </tr>
+                                @switch($category->name)
+                                    @case('electric')
+                                    @case('water')
+                                        <tr>
+                                            <th style="width: 20%">{{ __('Usage') }}</th>
+                                            <td class="text-center">
+                                                {{ number_format((float) ${$category->name}->usage ?? 0, 2) }}
+                                                {!! $category->symbol !!}
+                                            </td>
+                                            <th style="width: 20%">{{ __('Bill Charge') }}</th>
+                                            <td class="text-center">RM
+                                                {{ number_format((float) ${$category->name}->charge ?? 0, 2) }}
+                                            </td>
+                                        </tr>
+                                    @break
 
-                                            <input type="hidden" name="bill_id" value="{{ $bill->id }}">
-                                            <button type="submit" class="btn btn-link" name="type"
-                                                value="water">{{ $water->evidence }}</button>
-                                        </form>
-                                    @else
-                                        {{ __('No Evidence') }}
-                                    @endif
-                                </td>
-                            </tr>
-                            <tr>
-                                <th colspan="1">{{ __('Carbon Emission') }}</th>
-                                <td colspan="3" class="text-center">
-                                    {{ number_format((float) $water->carbon_emission ?? 0, 2) }}
-                                    kgCO<sub>2</sub></td>
-                            </tr>
-                            <tr>
-                                <th colspan="4" class="h3 text-center">{{ __('Recycle') }}</th>
-                            </tr>
-                            <tr>
-                                <th style="width: 20%">{{ __('Total Weight') }}</th>
-                                <td class="text-center">{{ number_format((float) $recycle->weight ?? 0, 2) }} kg</td>
-                                <th style="width: 20%">{{ __('Total Sell Value') }}</th>
-                                <td class="text-center">RM {{ number_format((float) $recycle->value ?? 0, 2) }}</td>
-                            </tr>
-                            <tr>
-                                <th colspan="1">{{ __('Evidence') }}</th>
-                                <td colspan="3" class="text-center">
-                                    @if ($recycle->evidence ?? null)
-                                        <form action="{{ route('admin.contest.submission.download') }}"
-                                            method="post" target="_blank">
-                                            @csrf
+                                    @case('recycle')
+                                    @case('used_oil')
+                                        <tr>
+                                            <th style="width: 20%">{{ __('Total Weight') }}</th>
+                                            <td class="text-center">{{ number_format((float) ${$category->name}->weight ?? 0, 2) }} {!! $category->symbol !!}
+                                            </td>
+                                            <th style="width: 20%">{{ __('Total Sell Value') }}</th>
+                                            <td class="text-center">RM {{ number_format((float) ${$category->name}->value ?? 0, 2) }}
+                                            </td>
+                                        </tr>
+                                    @break
 
-                                            <input type="hidden" name="bill_id" value="{{ $bill->id }}">
-                                            <button type="submit" class="btn btn-link" name="type"
-                                                value="recycle">{{ $recycle->evidence }}</button>
-                                        </form>
-                                    @else
-                                        {{ __('No Evidence') }}
-                                    @endif
-                                </td>
-                            </tr>
-                            <tr>
-                                <th colspan="1">{{ __('Carbon Emission') }}</th>
-                                <td colspan="3" class="text-center">
-                                    {{ number_format((float) $recycle->carbon_emission ?? 0, 2) }}
-                                    kgCO<sub>2</sub></td>
-                            </tr>
-                            <tr>
-                                <th colspan="4" class="h3 text-center">{{ __('Used Oil') }}</th>
-                            </tr>
-                            <tr>
-                                <th style="width: 20%">{{ __('Total Weight') }}</th>
-                                <td class="text-center">{{ number_format((float) $used_oil->weight ?? 0, 2) }} kg</td>
-                                <th style="width: 20%">{{ __('Total Sell Value') }}</th>
-                                <td class="text-center">RM {{ number_format((float) $used_oil->value ?? 0, 2) }}</td>
-                            </tr>
-                            <tr>
-                                <th colspan="1">{{ __('Evidence') }}</th>
-                                <td colspan="3" class="text-center">
-                                    @if ($used_oil->evidence ?? null)
-                                        <form action="{{ route('admin.contest.submission.download') }}"
-                                            method="post" target="_blank">
-                                            @csrf
+                                    @default
+                                @endswitch
+                                <tr>
+                                    <th colspan="1">{{ __('Evidence') }}</th>
+                                    <td colspan="3" class="text-center">
+                                        @if ($electric->evidence ?? null)
+                                            <form action="{{ route('admin.contest.submission.download') }}"
+                                                method="post" target="_blank">
+                                                @csrf
 
-                                            <input type="hidden" name="bill_id" value="{{ $bill->id }}">
-                                            <button type="submit" class="btn btn-link" name="type"
-                                                value="used_oil">{{ $used_oil->evidence }}</button>
-                                        </form>
-                                    @else
-                                        {{ __('No Evidence') }}
-                                    @endif
-                                </td>
-                            </tr>
-                            <tr>
-                                <th colspan="1">{{ __('Carbon Emission') }}</th>
-                                <td colspan="3" class="text-center">
-                                    {{ number_format($used_oil->carbon_emission ?? 0, 2) }}
-                                    kgCO<sub>2</sub></td>
-                            </tr>
+                                                <input type="hidden" name="bill_id" value="{{ $bill->id }}">
+                                                <button type="submit" class="btn btn-link" name="category"
+                                                    value="{{ $category->name }}">{{ ${$category->name}->evidence }}</button>
+                                            </form>
+                                        @else
+                                            {{ __('No Evidence') }}
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th colspan="1">{{ __('Carbon Emission') }}</th>
+                                    <td colspan="3" class="text-center">
+                                        {{ number_format((float) ${$category->name}->carbon_emission ?? 0, 2) }}
+                                        kgCO<sub>2</sub></td>
+                                </tr>
+                            @endforeach
                         </table>
                     </div>
                 </div>
@@ -201,6 +130,5 @@
 </div>
 
 @push('scripts')
-    <script>
-    </script>
+    <script></script>
 @endpush

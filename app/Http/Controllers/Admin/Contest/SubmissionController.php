@@ -2,33 +2,36 @@
 
 namespace App\Http\Controllers\Admin\Contest;
 
+use App\Traits\BillTrait;
+use App\Models\Submission;
 use App\Plugins\Datatable;
 use Illuminate\Http\Request;
+use App\Traits\SubmissionTrait;
 use App\Traits\CompetitionTrait;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Submission;
-use App\Traits\BillTrait;
-use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use App\Http\Requests\Universal\Submission\DownloadEvidenceRequest;
+use App\Http\Requests\Admin\Contest\Submission\ViewSubmissionRequest;
+use App\Http\Requests\Admin\Contest\Submission\SelectCompetitionRequest;
 
 class SubmissionController extends Controller
 {
-    use CompetitionTrait, BillTrait;
+    use CompetitionTrait, BillTrait, SubmissionTrait;
 
-    public function list(Request $request)
+    public function list(SelectCompetitionRequest $request)
     {
-        // dd($request->all());
-        $request->validate([
-            'competition_id' => 'sometimes|numeric|exists:competitions,id'
-        ]);
+        $validated = $request->validated();
 
         $competitions = $this->getCompetitions();
-        $competition = $this->getCompetition($request->competition_id) ?? $competitions->get(0);
+
+        if (isset($validated['competition_id']))
+            $competition = $this->getCompetition($validated['competition_id']);
+        else
+            $competition = $competitions->get(0);
 
         return view('admin.contest.submission.list')->with([
             'competitions' => $competitions,
             'currentCompetition' => $competition,
-            'attributes' => array_diff_key($request->all(), ["_token" => ''])
         ]);
     }
 
@@ -130,29 +133,23 @@ class SubmissionController extends Controller
         return response()->json(Datatable::simple($request->all(), $dbObj, $columns));
     }
 
-    public function view(Request $request)
+    public function view(ViewSubmissionRequest $request)
     {
-        $request->validate([
-            'id' => 'required|numeric|exists:submissions,id'
-        ]);
+        $validated = $request->validated();
 
-        $submission = Submission::find($request->id);
+        $submission = $this->getSubmission($validated['id']);
 
         return view('admin.contest.submission.view')->with([
             'submission' => $submission,
-            'attributes' => array_diff_key($request->all(), ["_token" => ''])
         ]);
     }
 
-    public function download(Request $request)
+    public function download(DownloadEvidenceRequest $request)
     {
-        $request->validate([
-            'type' => 'required|string|in:electric,water,recycle,used_oil',
-            'bill_id' => 'required|numeric|exists:bills,id',
-        ]);
+        $validated = $request->validated();
 
-        $bill = $this->getBill($request->bill_id);
+        $bill = $this->getBill($validated['bill_id']);
 
-        return $bill->downloadEvidence($request->type);
+        return $bill->downloadEvidence($validated['category']);
     }
 }

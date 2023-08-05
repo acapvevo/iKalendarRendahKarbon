@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Community;
 
 use App\Http\Controllers\Controller;
+use Geocoder\Laravel\Facades\Geocoder;
 
 class DashboardController extends Controller
 {
@@ -15,7 +16,8 @@ class DashboardController extends Controller
     }
 
 
-    public function index(){
+    public function index()
+    {
         return view('community.dashboard');
     }
 }

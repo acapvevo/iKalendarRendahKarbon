@@ -19,6 +19,7 @@ class CreateSubmissionCategoryTable extends Migration
             $table->char('code', 2);
             $table->string('name');
             $table->string('description');
+            $table->string('symbol');
 
             $table->timestamps();
         });

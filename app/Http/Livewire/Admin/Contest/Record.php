@@ -11,11 +11,12 @@ use Livewire\Component;
 use App\Models\Electric;
 use App\Models\Submission;
 use App\Traits\Livewire\CheckGuard;
+use App\Traits\SubmissionTrait;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Record extends Component
 {
-    use LivewireAlert, CheckGuard;
+    use LivewireAlert, CheckGuard, SubmissionTrait;
 
     protected $guard = 'admin';
 
@@ -31,10 +32,11 @@ class Record extends Component
     public Recycle $recycle;
     public UsedOil $used_oil;
 
+    public $submission_categories;
+
     public function mount($submission)
     {
         $this->submission_id = $submission->id;
-        $this->submission = $this->getSubmissionProperty();
 
         $this->fill([
             'bill' => new Bill,
@@ -86,7 +88,7 @@ class Record extends Component
 
     public function getSubmissionProperty()
     {
-        return Submission::find($this->submission_id);
+        return $this->getSubmission($this->submission_id);
     }
 
     public function open($month_id)
@@ -118,6 +120,7 @@ class Record extends Component
     public function render()
     {
         $this->submission = $this->getSubmissionProperty();
+        $this->submission_categories = $this->getSubmissionCategories();
 
         return view('livewire.admin.contest.record');
     }

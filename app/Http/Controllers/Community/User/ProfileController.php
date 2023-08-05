@@ -2,27 +2,29 @@
 
 namespace App\Http\Controllers\Community\User;
 
+use App\Http\Requests\Universal\Participant\Community\ViewIdentificationCardRequest;
 use App\Models\Community;
+use App\Traits\CommunityTrait;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
+    use CommunityTrait;
+
     public function view()
     {
-        $user = Community::find(Auth::guard('community')->user()->id);
+        $user = $this->getCommunity(Auth::guard('community')->user()->id);
 
         return view('community.user.profile')->with('user', $user);
     }
 
-    public function ic(Request $request)
+    public function ic(ViewIdentificationCardRequest $request)
     {
-        $request->validate([
-            'community_id' => 'required|numeric|exists:communities,id'
-        ]);
+        $validated = $request->validated();
 
-        $user = Community::find($request->community_id);
+        $user = $this->getCommunity($validated['community_id']);
 
         return $user->viewIdentificationCard();
     }

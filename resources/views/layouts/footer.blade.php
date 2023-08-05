@@ -16,7 +16,7 @@
                                 if (isset($attributes) && !strpos(LaravelLocalization::getLocalizedURL($localeCode, null, [], true), '?')) {
                                     $url = LaravelLocalization::getLocalizedURL($localeCode, null, [], true) . '?';
                                     foreach ($attributes as $key => $value) {
-                                        $url = $url . $key . '=' . $value;
+                                        $url = $url . $key . '=' . $value . '&';
                                     }
                                 } else {
                                     $url = LaravelLocalization::getLocalizedURL($localeCode, null, [], true);
