@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Admin\Participant;
 
 use App\Models\Community;
 use App\Plugins\Datatable;
-use App\Traits\CommunityTrait;
 use Illuminate\Http\Request;
+use App\Traits\CommunityTrait;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Universal\Participant\Community\ViewIdentificationCardRequest;
 
 class CommunityController extends Controller
 {
@@ -117,14 +118,12 @@ class CommunityController extends Controller
         return response()->json(Datatable::simple($request->all(), $dbObj, $columns));
     }
 
-    public function ic(Request $request)
+    public function ic(ViewIdentificationCardRequest $request)
     {
-        $request->validate([
-            'community_id' => 'required|numeric|exists:communities,id'
-        ]);
+        $validated = $request->validated();
 
-        $user = $this->getCommunity($request->community_id);
+        $community = $this->getCommunity($validated['community_id']);
 
-        return $user->viewIdentificationCard();
+        return $community->viewIdentificationCard();
     }
 }

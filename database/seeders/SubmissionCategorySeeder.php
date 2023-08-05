@@ -26,7 +26,8 @@ class SubmissionCategorySeeder extends Seeder
         DB::table('submission_category')->insertTs([
             'code' => 'E',
             'name' => 'electric',
-            'description' => 'Electric'
+            'description' => 'Electric',
+            'symbol' => 'kWh',
         ]);
 
         $translation = Translation::firstOrNew([
@@ -42,7 +43,8 @@ class SubmissionCategorySeeder extends Seeder
         DB::table('submission_category')->insertTs([
             'code' => 'W',
             'name' => 'water',
-            'description' => 'Water'
+            'description' => 'Water',
+            'symbol' => 'm<sup>3</sup>',
         ]);
 
         $translation = Translation::firstOrNew([
@@ -58,7 +60,8 @@ class SubmissionCategorySeeder extends Seeder
         DB::table('submission_category')->insertTs([
             'code' => 'R',
             'name' => 'recycle',
-            'description' => 'Recycle'
+            'description' => 'Recycle',
+            'symbol' => 'kg',
         ]);
 
         $translation = Translation::firstOrNew([
@@ -74,7 +77,8 @@ class SubmissionCategorySeeder extends Seeder
         DB::table('submission_category')->insertTs([
             'code' => 'UO',
             'name' => 'used_oil',
-            'description' => 'Used Oil'
+            'description' => 'Used Oil',
+            'symbol' => 'kg',
         ]);
 
         $translation = Translation::firstOrNew([

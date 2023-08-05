@@ -33,7 +33,9 @@
             </div>
             <div class="card-body">
                 <div class="py-3 d-flex justify-content-end row">
-                    <form action="{{ route('admin.contest.submission.list') }}" method="get">
+                    <form action="{{ route('admin.contest.submission.list') }}" method="post">
+                        @csrf
+
                         <div class="input-group">
                             <select class="form-select {{ $errors->has('competition_id') ? 'is-invalid' : '' }}"
                                 name="competition_id">

@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\Submission;
+use Illuminate\Support\Facades\DB;
 
 trait SubmissionTrait
 {
@@ -17,5 +18,10 @@ trait SubmissionTrait
             'competition_id' => $competition_id,
             'community_id' => $community_id
         ]);
+    }
+
+    public function getSubmissionCategories()
+    {
+        return DB::table('submission_category')->get();
     }
 }
