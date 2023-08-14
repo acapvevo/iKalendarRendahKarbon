@@ -3,6 +3,7 @@
 namespace [namespace];
 
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use App\Traits\Livewire\CheckGuard;
 use Livewire\Component;
 
 class [class] extends Component

@@ -10,9 +10,9 @@ use App\Traits\SubmissionTrait;
 use App\Traits\CompetitionTrait;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Contest\SelectCompetitionRequest;
 use App\Http\Requests\Universal\Submission\DownloadEvidenceRequest;
 use App\Http\Requests\Admin\Contest\Submission\ViewSubmissionRequest;
-use App\Http\Requests\Admin\Contest\Submission\SelectCompetitionRequest;
 
 class SubmissionController extends Controller
 {

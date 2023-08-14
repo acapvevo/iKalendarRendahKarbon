@@ -92,6 +92,10 @@ return [
             'driver' => 'octane',
         ],
 
+        "geocode" => [
+            'driver' => 'redis',
+            'connection' => 'geocode_cache',
+        ],
     ],
 
     /*

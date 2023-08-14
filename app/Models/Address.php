@@ -26,6 +26,7 @@ class Address extends Model
         'postcode',
         'state',
         'country',
+        'zone_id',
     ];
 
     /**
@@ -34,6 +35,14 @@ class Address extends Model
     public function community()
     {
         return $this->belongsTo(Community::class);
+    }
+
+    /**
+     * Get the Zone that owns the Address.
+     */
+    public function zone()
+    {
+        return $this->belongsTo(Zone::class);
     }
 
     public function getCategory()

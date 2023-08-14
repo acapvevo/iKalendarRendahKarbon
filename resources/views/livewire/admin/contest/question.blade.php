@@ -12,7 +12,7 @@
         </button>
     </div>
     <div class="table-responsive" wire:ignore>
-        <table class="table table-bordered" id="questionTable">
+        <table class="table table-bordered" id="questionTable" style="width: 100%">
             <thead class="table-primary">
                 <tr>
                     <th>{{ __('Question') }}</th>
@@ -48,9 +48,10 @@
                                             data-feather="edit-2"></i>
                                     </button>
                                     <button type="button" class="btn btn-primary btn-sm"
-                                        wire:click.prevent='askDelete({{ $questionObj->id }})'><i data-bs-toggle="tooltip"
-                                            data-bs-title="{{ __('Delete Question') }}"
-                                            data-feather="trash-2"></i></button>
+                                        wire:click.prevent='askDelete({{ $questionObj->id }})'><i
+                                            data-bs-toggle="tooltip" data-bs-title="{{ __('Delete Question') }}"
+                                            data-feather="trash-2"></i>
+                                    </button>
                                 </div>
                             </div>
                         </td>
@@ -135,9 +136,10 @@
                             <div id="category">
                                 @foreach (DB::table('submission_category')->get() as $index => $category)
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input {{$errors->has('question.category') ? 'is-invalid' : ''}}" type="radio"
-                                            wire:model.lazy='question.category' id="category{{ $index }}"
-                                            value="{{ $category->code }}">
+                                        <input
+                                            class="form-check-input {{ $errors->has('question.category') ? 'is-invalid' : '' }}"
+                                            type="radio" wire:model.lazy='question.category'
+                                            id="category{{ $index }}" value="{{ $category->code }}">
                                         <label class="form-check-label"
                                             for="category{{ $index }}">{{ __($category->description) }}</label>
                                     </div>
@@ -193,7 +195,8 @@
                             </tr>
                             <tr>
                                 <th>{{ __('Category') }}</th>
-                                <td colspan="2" class="text-center">{{ __($question->getCategory()->name ?? '') }}
+                                <td colspan="2" class="text-center">
+                                    {{ __($question->getCategory()->description ?? '') }}
                                 </td>
                             </tr>
                         </table>
@@ -285,9 +288,10 @@
                             <div id="category">
                                 @foreach (DB::table('submission_category')->get() as $index => $category)
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input {{$errors->has('question.category') ? 'is-invalid' : ''}}" type="radio"
-                                            wire:model.lazy='question.category' id="category{{ $index }}"
-                                            value="{{ $category->code }}">
+                                        <input
+                                            class="form-check-input {{ $errors->has('question.category') ? 'is-invalid' : '' }}"
+                                            type="radio" wire:model.lazy='question.category'
+                                            id="category{{ $index }}" value="{{ $category->code }}">
                                         <label class="form-check-label"
                                             for="category{{ $index }}">{{ __($category->description) }}</label>
                                     </div>

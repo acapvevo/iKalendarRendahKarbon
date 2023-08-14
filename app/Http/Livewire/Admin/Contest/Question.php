@@ -41,7 +41,7 @@ class Question extends Component
             'example_malay' => 'required|string|max:2048',
             'text_english' => 'required|string|max:2048',
             'example_english' => 'required|string|max:2048',
-            'question.category' => 'required|string|exists:question_category,code',
+            'question.category' => 'required|string|exists:submission_category,code',
         ];
     }
 

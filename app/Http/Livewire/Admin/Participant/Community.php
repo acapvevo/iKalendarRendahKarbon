@@ -5,16 +5,17 @@ namespace App\Http\Livewire\Admin\Participant;
 use App\Models\Address;
 use Livewire\Component;
 use App\Models\Occupation;
+use Livewire\WithFileUploads;
+use App\Traits\CommunityTrait;
 use Illuminate\Validation\Rule;
 use App\Traits\Livewire\CheckGuard;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Community as CommunityModel;
-use App\Traits\CommunityTrait;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Community extends Component
 {
-    use LivewireAlert, CheckGuard, CommunityTrait;
+    use LivewireAlert, WithFileUploads, CheckGuard, CommunityTrait;
 
     protected $guard = 'admin';
 
@@ -22,9 +23,13 @@ class Community extends Component
     public Address $address;
     public Occupation $occupation;
 
+    public $community_batch_registration_file;
+    public $input_file_label;
+
     public $community_id;
 
     public $decision;
+
 
     protected function getListeners()
     {
@@ -62,7 +67,8 @@ class Community extends Component
             'occupation.place' => 'required_with:occupation.position,occupation.sector|nullable|string|max:255',
             'occupation.position' => 'required_with:occupation.place,occupation.sector|nullable|string|max:255',
             'occupation.sector' => 'required_with:occupation.place,occupation.position|nullable|string|exists:occupation_sector_type,code',
-            'decision' => 'required|boolean'
+            'decision' => 'required|boolean',
+            'community_batch_registration_file' => 'required|file|mimes:csv,xls,xlsx|max:2048'
         ];
     }
 
@@ -77,6 +83,7 @@ class Community extends Component
             'community' => new CommunityModel,
             'address' => new Address,
             'occupation' => new Occupation,
+            'input_file_label' => __('Upload File for Batch Community Registration'),
         ]);
     }
 
@@ -118,9 +125,18 @@ class Community extends Component
             'community' => new CommunityModel,
             'address' => new Address,
             'occupation' => new Occupation,
+            'input_file_label' => __("Upload File for Batch Community Registration"),
         ]);
 
+        $this->reset('community_batch_registration_file');
+
         $this->resetErrorBag();
+    }
+
+    public function changePlaceholder()
+    {
+        $file = $this->community_batch_registration_file;
+        $this->input_file_label = $file ? $file->getClientOriginalName()  : __("Upload File for Batch Community Registration");
     }
 
     public function create()
@@ -139,7 +155,18 @@ class Community extends Component
             'country' => 'MALAYSIA',
         ], []);
 
-        redirect(route('admin.participant.community.list'))->with('success', __('alerts.community_create', ['name' => $this->community->username]));
+        return redirect(route('admin.participant.community.list'))->with('success', __('alerts.community_create', ['name' => $this->community->username]));
+    }
+
+    public function batchCreate()
+    {
+        $this->validate([
+            'community_batch_registration_file' => 'required|file|mimes:csv,xls,xlsx|max:2048'
+        ]);
+
+        $this->batchCreateCommunity($this->community_batch_registration_file);
+
+        return redirect(route('admin.participant.community.list'))->with('success', __('alerts.community_batch_create'));
     }
 
     public function update()
@@ -176,7 +203,7 @@ class Community extends Component
         $this->address->save();
         $this->occupation->save();
 
-        redirect(route('admin.participant.community.list'))->with('success', __('alerts.community_update', ['name' => $this->community->name ?? $this->community->username]));
+        return redirect(route('admin.participant.community.list'))->with('success', __('alerts.community_update', ['name' => $this->community->name ?? $this->community->username]));
     }
 
     public function verify()
@@ -185,7 +212,7 @@ class Community extends Component
             'decision' => 'required|boolean'
         ]);
 
-        if($this->decision){
+        if ($this->decision) {
             $this->community->isVerified = true;
         } else {
             $this->community->deleteIdentificationCard();
@@ -193,11 +220,13 @@ class Community extends Component
 
         $this->community->save();
 
-        redirect(route('admin.participant.community.list'))->with('success', __('alerts.verification_complete', ['name' => $this->community->name ?? $this->community->username]));
+        return redirect(route('admin.participant.community.list'))->with('success', __('alerts.verification_complete', ['name' => $this->community->name ?? $this->community->username]));
     }
 
     public function render()
     {
+        $this->changePlaceholder();
+
         return view('livewire.admin.participant.community');
     }
 }
