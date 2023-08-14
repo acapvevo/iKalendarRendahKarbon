@@ -19,6 +19,9 @@ class CreateAddressesTable extends Migration
             $table->unsignedBigInteger('community_id');
             $table->foreign('community_id')->references('id')->on('communities')->onDelete('cascade');
 
+            $table->unsignedBigInteger('zone_id')->nullable();
+            $table->foreign('zone_id')->references('id')->on('zones')->onDelete('cascade');
+
             $table->char('category', 2)->nullable();
 
             $table->string('line_1')->nullable();

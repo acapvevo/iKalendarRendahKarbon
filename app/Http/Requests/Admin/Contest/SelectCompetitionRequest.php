@@ -1,19 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Admin\Contest\Submission;
+namespace App\Http\Requests\Admin\Contest;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SelectCompetitionRequest extends FormRequest
 {
-    /**
-     * The route that users should be redirected to if validation fails.
-     *
-     * @var string
-     */
-    protected $redirectRoute = 'admin.contest.submission.list';
-
     /**
      * Determine if the user is authorized to make this request.
      *

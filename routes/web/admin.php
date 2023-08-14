@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Admin\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Admin\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Admin\Contest\AnalysisController;
 use App\Http\Controllers\Admin\Contest\CompetitionController;
 use App\Http\Controllers\Admin\Contest\QuestionController;
 use App\Http\Controllers\Admin\Contest\SubmissionController;
@@ -122,6 +123,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::match(['get', 'post'], '/filter', [SubmissionController::class, 'filter'])->name('filter');
                 Route::match(['get', 'post'], '/view', [SubmissionController::class, 'view'])->name('view');
                 Route::match(['get', 'post'], '/download', [SubmissionController::class, 'download'])->name('download');
+            });
+
+            //Analysis
+            Route::prefix('analysis')->name('analysis.')->group(function () {
+                Route::match(['get', 'post'], '/view', [AnalysisController::class, 'view'])->name('view');
             });
         });
 

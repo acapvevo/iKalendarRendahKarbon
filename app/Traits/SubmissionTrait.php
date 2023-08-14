@@ -24,4 +24,11 @@ trait SubmissionTrait
     {
         return DB::table('submission_category')->get();
     }
+
+    public function initCalculationBySubmissionCategory()
+    {
+        return $this->getSubmissionCategories()->mapWithKeys(function ($category) {
+            return [$category->name => 0];
+        });
+    }
 }

@@ -108,4 +108,11 @@ class Submission extends Model
     {
         return number_format($this->total_carbon_emission, 2) . ' kgCO<sub>2</sub>';
     }
+
+    public function checkSubmissionByCategory($category)
+    {
+        return $this->bills->contains(function ($bill) use ($category) {
+            return isset($bill->{$category});
+        });
+    }
 }

@@ -7,6 +7,11 @@
             wire:click.prevent='open'>
             {{ __('Register Community') }}
         </button>
+        &nbsp;
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#batchCreateCommunityModal"
+            wire:click.prevent='open'>
+            {{ __('Batch Register Community') }}
+        </button>
     </div>
     <div class="table-resposive" wire:ignore>
         <table class="table table-bordered" id="tableCommunity" style="width:100%">
@@ -79,6 +84,59 @@
         </div>
     </div>
 
+    <!-- Batch Create Community Modal -->
+    <div class="modal fade" id="batchCreateCommunityModal" tabindex="-1"
+        aria-labelledby="batchCreateCommunityModalLabel" aria-hidden="true" wire:ignore.self>
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="batchCreateCommunityModalLabel">
+                        {{ __('Batch Register Community') }}</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        wire:click.prevent="close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <form>
+
+                        <div class="mb-3">
+                            <label for="input_file_label"
+                                class="form-label">{{ __('Community Registration File') }}</label>
+                            <div class="input-group custom-file-button" id="input_file_label">
+                                <label class="input-group-text" for="community_batch_registration_file"
+                                    role="button">{{ __('Browse') }}</label>
+                                <label for="community_batch_registration_file"
+                                    class="form-control {{ $errors->has('community_batch_registration_file') ? 'is-invalid' : '' }}"
+                                    id="eviden-label" role="button">{{ $input_file_label }}</label>
+                                <input type="file" required class="d-none form-control"
+                                    id="community_batch_registration_file"
+                                    wire:model="community_batch_registration_file">
+                                @error('community_batch_registration_file')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        wire:click.prevent="close">{{ __('Close') }}</button>
+                    <button class="btn btn-primary" type="button" wire:loading.attr="disabled"
+                        wire:click.prevent="batchCreate">
+                        <span wire:loading.remove>{{ __('Save') }}</span>
+                        <div wire:loading>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            {{ __('Saving...') }}
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- View Community Modal -->
     <div class="modal fade" id="viewCommunityModal" tabindex="-1" aria-labelledby="viewCommunityModalLabel"
         aria-hidden="true" wire:ignore.self>
@@ -128,19 +186,35 @@
                                 </tr>
                                 <tr>
                                     <th class="w-25">{{ __('Address') }}</th>
-                                    <td colspan="3">{{ $address->line_1 }}, <br>
-                                        {{ $address->line_2 }}, <br>
-                                        {!! $address->line_3 ? $address->line_3 . ', <br>' : '' !!}
-                                        {{ $address->postcode }} {{ $address->city }}, <br>
-                                        {{ $address->state }}, {{ $address->country }}</td>
+                                    <td colspan="3">
+                                        {!! $address ? $address->getFullAddressInMultipleLine() : '' !!}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th class="w-25">{{ __('Account Status') }}</th>
                                     <td colspan="3">
-                                        {!! $community->isVerified
-                                            ? '<i class="fa-solid fa-check" style="color: #00bd0d;"></i>'
-                                            : '<i class="fa-solid fa-xmark" style="color: #ff0000;"></i>' !!}
-                                        {{ $community->isVerified ? __('Verified') : __('Not Verified') }}
+                                        @if ($community)
+                                            @if (!$community->isVerified && !$community->identification_card)
+                                                <i class="fa-solid fa-xmark" style="color: #ff0000;"></i>
+                                                {{ __('Not Verified') }}
+                                            @elseif (!$community->isVerified && $community->identification_card)
+                                                <i class="fa-solid fa-arrows-spin fa-spin"
+                                                    style="color: #1100ff;"></i>
+                                                {{ __('Verification in Process') }}
+                                            @else
+                                                <i class="fa-solid fa-check" style="color: #00bd0d;"></i>
+                                                {{ __('Verified') }}
+                                            @endif
+                                            @if ($community->identification_card)
+                                                <form action="{{ route('admin.user.profile.ic') }}" method="post"
+                                                    target="_blank">
+                                                    @csrf
+
+                                                    <button class="btn btn-link" type="submit" value="{{ $user->id }}"
+                                                        name="community_id">{{ __('View Identification Card') }}</button>
+                                                </form>
+                                            @endif
+                                        @endif
                                     </td>
                                 </tr>
                             </tbody>
@@ -348,7 +422,8 @@
                                     @enderror
                                 </div>
                                 <div class="col-12 col-lg-4">
-                                    <label for="address.line_3" class="form-label">{{ __('Address Line 3') }}</label>
+                                    <label for="address.line_3"
+                                        class="form-label">{{ __('Address Line 3') }}</label>
                                     <input type="text"
                                         class="form-control {{ $errors->has('address.line_3') ? 'is-invalid' : '' }}"
                                         id="address.line_3" wire:model.lazy="address.line_3"

@@ -134,30 +134,38 @@
     <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseParticipant"
         aria-expanded="false" aria-controls="collapseParticipant">
         <div class="nav-link-icon"><i data-feather="users"></i></div>
-        {{__('Participant Management')}}
+        {{ __('Participant Management') }}
         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
     </a>
     <div class="collapse" id="collapseParticipant" data-bs-parent="#participant">
         <nav class="sidenav-menu-nested nav accordion" id="participant">
             <!-- Sidenav Link (Community)-->
-            <a class="nav-link" href="{{ route('admin.participant.community.list') }}">{{__("Community")}}</a>
+            <a class="nav-link" href="{{ route('admin.participant.community.list') }}">{{ __('Community') }}</a>
         </nav>
     </div>
     <!-- Sidenav Accordion (Contest Management)-->
     <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseContest"
         aria-expanded="false" aria-controls="collapseContest">
         <div class="nav-link-icon"><i data-feather="award"></i></div>
-        {{__('Contest Management')}}
+        {{ __('Contest Management') }}
         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
     </a>
     <div class="collapse" id="collapseContest" data-bs-parent="#competitions">
         <nav class="sidenav-menu-nested nav accordion" id="competitions">
             <!-- Sidenav Link (Competition)-->
-            <a class="nav-link" href="{{ route('admin.contest.competition.list') }}">{{__("Competition")}}</a>
+            <a class="nav-link" href="{{ route('admin.contest.competition.list') }}">{{ __('Competition') }}</a>
             <!-- Sidenav Link (Submission)-->
-            <a class="nav-link" href="{{ route('admin.contest.submission.list') }}">{{__("Submission")}}</a>
+            <a class="nav-link" href="{{ route('admin.contest.submission.list') }}">{{ __('Submission') }}</a>
+            <!-- Sidenav Link (Analysis)-->
+            <a class="nav-link disabled" aria-disabled="true" tabindex="-1" href="{{ route('admin.contest.analysis.view') }}">{{ __('Analysis') }} &nbsp; <span
+                    class="badge bg-danger">{{ __('In Construction') }}</span></a>
         </nav>
     </div>
+    <!-- Sidenav Link (Zone Management)-->
+    <a class="nav-link" href="{{ route('admin.zone.list') }}">
+        <div class="nav-link-icon"><i class="fa-solid fa-map-location-dot"></i></i></div>
+        {{ __('Zone Management') }}
+    </a>
     <!-- Sidenav Link (Newsletter Management)-->
     <a class="nav-link" href="{{ route('admin.newsletter.list') }}">
         <div class="nav-link-icon"><i class="fa-regular fa-newspaper"></i></div>
