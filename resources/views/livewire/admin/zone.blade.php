@@ -308,5 +308,10 @@
         viewZoneModalEl.addEventListener('hide.bs.modal', event => {
             Livewire.emit('closeModal');
         })
+
+        const updateZoneModalEl = document.getElementById('updateZoneModal')
+        updateZoneModalEl.addEventListener('hide.bs.modal', event => {
+            Livewire.emit('closeModal');
+        })
     </script>
 @endpush
