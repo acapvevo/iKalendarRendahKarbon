@@ -57,6 +57,7 @@ return [
     'ipv4'                 => ':attribute mesti alamat IPv4 yang sah.',
     'ipv6'                 => ':attribute mesti alamat IPv6 yang sah',
     'json'                 => ':attribute mesti JSON yang sah.',
+    'location_coordinates' => ':attribute mestilah set koordinat latitud dan longitud yang sah, dengan had 8 digit selepas titik perpuluhan',
     'lt'                   => [
         'array'   => ':attribute mesti mengandungi kurang daripada :value perkara.',
         'file'    => ':attribute mesti kurang daripada :value kilobait.',
