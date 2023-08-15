@@ -77,7 +77,10 @@
                             </tr>
                             <tr>
                                 <th class="w-25">{{ __('Category') }}</th>
-                                <td colspan="3">{{ strtoupper(__($user->address->getCategory()->name ?? '')) }}</td>
+                                <td>{{ strtoupper(__($user->address->getCategory()->name ?? '')) }}</td>
+                                <th class="w-25">{{ __('Zone') }}</th>
+                                <td>{{ strtoupper($user->address->zone ? $user->address->zone->getFormalName() : '') }}
+                                </td>
                             </tr>
                             <tr>
                                 <th class="w-25">{{ __('Address') }}</th>

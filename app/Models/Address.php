@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Traits\ZoneTrait;
+use App\Plugins\PointLocation;
 use Illuminate\Support\Facades\DB;
 use Geocoder\Laravel\Facades\Geocoder;
 use Illuminate\Database\Eloquent\Model;
@@ -9,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Address extends Model
 {
-    use HasFactory;
+    use HasFactory, ZoneTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -95,5 +97,31 @@ class Address extends Model
             return [$longitude, $latitude];
         } else
             return [0, 0];
+    }
+
+    public function setZone()
+    {
+        [$longitude, $latitude] = $this->findLongitudeLatitude();
+
+        $pointLocation = new PointLocation();
+        $isZoneSet = false;
+
+        foreach ($this->getZones() as $zone) {
+            $polygon = $zone->getPolygonArray();
+
+            $result = $pointLocation->pointInPolygon($longitude . ' ' . $latitude, $polygon, false);
+
+            switch ($result) {
+                case 'inside':
+                case 'boundary':
+                    $this->zone_id = $zone->id;
+
+                    $isZoneSet = true;
+                    break;
+            }
+
+            if ($isZoneSet)
+                break;
+        }
     }
 }

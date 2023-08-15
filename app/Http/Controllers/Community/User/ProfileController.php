@@ -16,7 +16,7 @@ class ProfileController extends Controller
     public function view()
     {
         $user = $this->getCommunity(Auth::guard('community')->user()->id);
-
+        
         return view('community.user.profile')->with('user', $user);
     }
 

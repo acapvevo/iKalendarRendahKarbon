@@ -65,4 +65,16 @@ class Zone extends Model
             return [$coordinate['lat'], $coordinate['lng']];
         });
     }
+
+    public function getPolygonArray()
+    {
+        return $this->coordinates->map(function ($coordinate) {
+            return $coordinate['lng'] . ' ' . $coordinate['lat'];
+        });
+    }
+
+    public function getFormalName()
+    {
+        return __("Zone") . ' ' . $this->number . ": " . $this->name;
+    }
 }
