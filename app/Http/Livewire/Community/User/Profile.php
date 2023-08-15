@@ -67,6 +67,7 @@ class Profile extends Component
         $this->validate();
 
         $this->user->save();
+        $this->address->setZone();
         $this->address->save();
         $this->occupation->save();
 

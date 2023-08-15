@@ -144,7 +144,8 @@
                     <label for="address.line_1" class="form-label">{{ __('Address Line 1') }}</label>
                     <input type="text" class="form-control {{ $errors->has('address.line_1') ? 'is-invalid' : '' }}"
                         id="address.line_1" wire:model.lazy="address.line_1"
-                        placeholder="{{ __('Enter Your Address Line 1') }}">
+                        placeholder="{{ __('Enter Your Address Line 1') }}"
+                        oninput="this.value = this.value.toUpperCase()">
                     @error('address.line_1')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -156,7 +157,8 @@
                     <input type="text"
                         class="form-control {{ $errors->has('address.line_2') ? 'is-invalid' : '' }}"
                         id="address.line_2" wire:model.lazy="address.line_2"
-                        placeholder="{{ __('Enter Your Address Line 2') }}">
+                        placeholder="{{ __('Enter Your Address Line 2') }}"
+                        oninput="this.value = this.value.toUpperCase()">
                     @error('address.line_2')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -168,7 +170,8 @@
                     <input type="text"
                         class="form-control {{ $errors->has('address.line_3') ? 'is-invalid' : '' }}"
                         id="address.line_3" wire:model.lazy="address.line_3"
-                        placeholder="{{ __('Enter Your Address Line 3') }}">
+                        placeholder="{{ __('Enter Your Address Line 3') }}"
+                        oninput="this.value = this.value.toUpperCase()">
                     @error('address.line_3')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -194,7 +197,7 @@
                     <label for="address.city" class="form-label">{{ __('City') }}</label>
                     <input type="text" class="form-control {{ $errors->has('address.city') ? 'is-invalid' : '' }}"
                         id="address.city" wire:model.lazy="address.city" placeholder="{{ __('Enter Your City') }}"
-                       >
+                        oninput="this.value = this.value.toUpperCase()">
                     @error('address.city')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -209,6 +212,7 @@
                     <input type="text"
                         class="form-control {{ $errors->has('address.state') ? 'is-invalid' : '' }}"
                         id="address.state" wire:model.lazy="address.state"
+                        oninput="this.value = this.value.toUpperCase()"
                         placeholder="{{ __('Enter Your State') }}" readonly>
                     @error('address.state')
                         <div class="invalid-feedback">
@@ -221,6 +225,7 @@
                     <input type="text"
                         class="form-control {{ $errors->has('address.country') ? 'is-invalid' : '' }}"
                         id="address.country" wire:model.lazy="address.country"
+                        oninput="this.value = this.value.toUpperCase()"
                         placeholder="{{ __('Enter Your Country') }}" readonly>
                     @error('address.country')
                         <div class="invalid-feedback">

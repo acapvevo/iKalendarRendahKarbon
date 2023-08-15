@@ -305,12 +305,12 @@
         });
 
         const viewZoneModalEl = document.getElementById('viewZoneModal')
-        viewZoneModalEl.addEventListener('hide.bs.modal', event => {
+        viewZoneModalEl.addEventListener('hidden.bs.modal', event => {
             Livewire.emit('closeModal');
         })
 
         const updateZoneModalEl = document.getElementById('updateZoneModal')
-        updateZoneModalEl.addEventListener('hide.bs.modal', event => {
+        updateZoneModalEl.addEventListener('hidden.bs.modal', event => {
             Livewire.emit('closeModal');
         })
     </script>
