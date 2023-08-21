@@ -156,9 +156,19 @@
             <a class="nav-link" href="{{ route('admin.contest.competition.list') }}">{{ __('Competition') }}</a>
             <!-- Sidenav Link (Submission)-->
             <a class="nav-link" href="{{ route('admin.contest.submission.list') }}">{{ __('Submission') }}</a>
-            <!-- Sidenav Link (Analysis)-->
-            <a class="nav-link disabled" aria-disabled="true" tabindex="-1" href="{{ route('admin.contest.analysis.view') }}">{{ __('Analysis') }} &nbsp; <span
-                    class="badge bg-danger">{{ __('In Construction') }}</span></a>
+        </nav>
+    </div>
+    <!-- Sidenav Accordion (Analysis Management)-->
+    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseAnalysis"
+        aria-expanded="false" aria-controls="collapseAnalysis">
+        <div class="nav-link-icon"><i data-feather="bar-chart-2"></i></div>
+        {{ __('Analysis Management') }}
+        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+    </a>
+    <div class="collapse" id="collapseAnalysis" data-bs-parent="#analysis">
+        <nav class="sidenav-menu-nested nav accordion" id="analysis">
+            <!-- Sidenav Link (Competition Analysis)-->
+            <a class="nav-link" href="{{ route('admin.analysis.competition.view') }}">{{ __('Competition') }}</a>
         </nav>
     </div>
     <!-- Sidenav Link (Zone Management)-->

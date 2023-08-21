@@ -1,25 +1,26 @@
 <?php
 
+use App\Http\Controllers\Admin\Analysis\CompetitionController as AnalysisCompetitionController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\ZoneController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\NewsletterController;
 use App\Http\Controllers\Admin\User\PictureController;
 use App\Http\Controllers\Admin\User\ProfileController;
 use App\Http\Controllers\Admin\User\SettingController;
 use App\Http\Controllers\Admin\Auth\NewPasswordController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
+use App\Http\Controllers\Admin\Contest\AnalysisController;
+use App\Http\Controllers\Admin\Contest\QuestionController;
+use App\Http\Controllers\Admin\Contest\SubmissionController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
+use App\Http\Controllers\Admin\Contest\CompetitionController;
+use App\Http\Controllers\Admin\Participant\CommunityController;
 use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Admin\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Admin\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Admin\Contest\AnalysisController;
-use App\Http\Controllers\Admin\Contest\CompetitionController;
-use App\Http\Controllers\Admin\Contest\QuestionController;
-use App\Http\Controllers\Admin\Contest\SubmissionController;
-use App\Http\Controllers\Admin\NewsletterController;
-use App\Http\Controllers\Admin\Participant\CommunityController;
-use App\Http\Controllers\Admin\ZoneController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
@@ -124,10 +125,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::match(['get', 'post'], '/view', [SubmissionController::class, 'view'])->name('view');
                 Route::match(['get', 'post'], '/download', [SubmissionController::class, 'download'])->name('download');
             });
+        });
 
-            //Analysis
-            Route::prefix('analysis')->name('analysis.')->group(function () {
-                Route::match(['get', 'post'], '/view', [AnalysisController::class, 'view'])->name('view');
+        //Analysis
+        Route::prefix('analysis')->name('analysis.')->group(function () {
+            Route::prefix('competition')->name('competition.')->group(function () {
+                Route::match(['get', 'post'], '', [AnalysisCompetitionController::class, 'view'])->name('view');
             });
         });
 

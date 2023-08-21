@@ -28,6 +28,7 @@ class SubmissionCategorySeeder extends Seeder
             'name' => 'electric',
             'description' => 'Electric',
             'symbol' => 'kWh',
+            'icon' => 'material-symbols:electric-bolt',
         ]);
 
         $translation = Translation::firstOrNew([
@@ -45,6 +46,7 @@ class SubmissionCategorySeeder extends Seeder
             'name' => 'water',
             'description' => 'Water',
             'symbol' => 'm<sup>3</sup>',
+            'icon' => 'ion:water',
         ]);
 
         $translation = Translation::firstOrNew([
@@ -62,6 +64,7 @@ class SubmissionCategorySeeder extends Seeder
             'name' => 'recycle',
             'description' => 'Recycle',
             'symbol' => 'kg',
+            'icon' => 'mdi:recycle',
         ]);
 
         $translation = Translation::firstOrNew([
@@ -79,6 +82,7 @@ class SubmissionCategorySeeder extends Seeder
             'name' => 'used_oil',
             'description' => 'Used Oil',
             'symbol' => 'kg',
+            'icon' => 'material-symbols:oil-barrel',
         ]);
 
         $translation = Translation::firstOrNew([
