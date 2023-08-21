@@ -64,7 +64,7 @@ class Overall extends Component
 
     public function render()
     {
-        $this->submission_categories = $this->getSubmissionCategories();
+        $this->submission_categories = $this->getSubmissionCategories('competition');
 
         return view('livewire.admin.analysis.competition.overall');
     }

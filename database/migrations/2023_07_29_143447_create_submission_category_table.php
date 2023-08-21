@@ -21,6 +21,8 @@ class CreateSubmissionCategoryTable extends Migration
             $table->string('description');
             $table->string('symbol');
             $table->string('icon');
+            $table->boolean('forCompetition');
+            $table->boolean('forActivity');
 
             $table->timestamps();
         });

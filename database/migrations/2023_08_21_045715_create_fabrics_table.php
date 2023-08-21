@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateElectricsTable extends Migration
+class CreateFabricsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateElectricsTable extends Migration
      */
     public function up()
     {
-        Schema::create('electrics', function (Blueprint $table) {
+        Schema::create('fabrics', function (Blueprint $table) {
             $table->id();
 
             $table->unsignedBigInteger('parent_id');
             $table->string('parent_type');
 
-            $table->float('usage');
-            $table->float('charge');
+            $table->float('weight');
+            $table->float('value');
             $table->float('carbon_emission');
 
             $table->timestamps();
@@ -34,6 +34,6 @@ class CreateElectricsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('electrics');
+        Schema::dropIfExists('fabrics');
     }
 }

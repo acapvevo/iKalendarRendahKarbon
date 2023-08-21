@@ -131,7 +131,7 @@
     "Public": "Awam",
     "Category": "Kategori",
     "Choose Address Category": "Sila Pilih Kategori Bagi Alamat Anda",
-    "House (High Rise)": "Rumah (Bertingkat)",
+    "House (High Rise)": "Rumah (Atas Tanah)",
     "House (Landed)": "Rumah (Atas Tanah)",
     "Institution": "Institusi",
     "MBIP Staff\/Division": "Staf MBIP",
@@ -321,5 +321,7 @@
     "Longitude": "Longitud",
     "Remove": "Buang",
     "Add": "Tambah",
-    "In Construction": "Dalam Pembinaan"
+    "In Construction": "Dalam Pembinaan",
+    "Electronic": "Elektronik",
+    "Fabric": "Fabrik"
 }

@@ -15,11 +15,11 @@ class Water extends Model
      * @var array
      */
     protected $fillable = [
-        'bill_id',
+        'parent_id',
+        'parent_type',
         'usage',
         'charge',
         'carbon_emission',
-        'evidence',
     ];
 
     /**
@@ -31,11 +31,11 @@ class Water extends Model
     ];
 
     /**
-     * Get the Bill that owns the Water.
+     * Get the parent model (Bill or Activity).
      */
-    public function bill()
+    public function parent()
     {
-        return $this->belongsTo(Bill::class);
+        return $this->morphTo();
     }
 
     public function calculateCarbonEmission()

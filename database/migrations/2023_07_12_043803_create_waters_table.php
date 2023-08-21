@@ -16,14 +16,12 @@ class CreateWatersTable extends Migration
         Schema::create('waters', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('bill_id');
-            $table->foreign('bill_id')->references('id')->on('bills')->onDelete('cascade');
+            $table->unsignedBigInteger('parent_id');
+            $table->string('parent_type');
 
             $table->float('usage');
             $table->float('charge');
             $table->float('carbon_emission');
-
-            $table->string('evidence')->nullable();
 
             $table->timestamps();
         });

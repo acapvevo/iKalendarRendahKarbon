@@ -44,35 +44,35 @@ class Bill extends Model
     }
 
     /**
-     * Get the Electric associated with the Bill.
+     * Get all of the Bill's Electric.
      */
     public function electric()
     {
-        return $this->hasOne(Electric::class);
+        return $this->morphOne(Electric::class, 'parent');
     }
 
     /**
-     * Get the Water associated with the Bill.
+     * Get all of the Bill's Water.
      */
     public function water()
     {
-        return $this->hasOne(Water::class);
+        return $this->morphOne(Water::class, 'parent');
     }
 
     /**
-     * Get the Recycle associated with the Bill.
-     */
-    public function recycle()
-    {
-        return $this->hasOne(Recycle::class);
-    }
-
-    /**
-     * Get the UsedOil associated with the Bill.
+     * Get all of the Bill's Used Oil.
      */
     public function used_oil()
     {
-        return $this->hasOne(UsedOil::class);
+        return $this->morphOne(UsedOil::class, 'parent');
+    }
+
+    /**
+     * Get all of the Bill's Recycle.
+     */
+    public function recycle()
+    {
+        return $this->morphOne(Recycle::class, 'parent');
     }
 
     public function isDoneSubmit()

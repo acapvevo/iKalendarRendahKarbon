@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Electric extends Model
+class Electronic extends Model
 {
     use HasFactory;
 
@@ -17,8 +17,8 @@ class Electric extends Model
     protected $fillable = [
         'parent_id',
         'parent_type',
-        'usage',
-        'charge',
+        'weight',
+        'value',
         'carbon_emission',
     ];
 
@@ -37,8 +37,9 @@ class Electric extends Model
     {
         return $this->morphTo();
     }
+
     public function calculateCarbonEmission()
     {
-        $this->carbon_emission = round($this->usage * 0.584, 2);
+        $this->carbon_emission = round($this->weight * 0, 2);
     }
 }

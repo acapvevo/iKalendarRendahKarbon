@@ -38,8 +38,7 @@ $colNum = floor(12 / $submission_categories->count());
         <div class="accordion-item">
             <h2 class="accordion-header" id="panelsStayOpen-headingOne">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#carbon_emission_stats" aria-expanded="true"
-                    aria-controls="carbon_emission_stats">
+                    data-bs-target="#carbon_emission_stats" aria-expanded="true" aria-controls="carbon_emission_stats">
                     <strong>{{ __('Carbon Emission Stats') }}</strong>
                 </button>
             </h2>
@@ -80,7 +79,8 @@ $colNum = floor(12 / $submission_categories->count());
                                             <div class="text-lg fw-bold">{{ number_format($total_carbon_emission, 2) }}
                                                 kgCO<sub>2</sub></div>
                                         </div>
-                                        <iconify-icon icon="mdi:periodic-table-carbon-dioxide" height="60"></iconify-icon>
+                                        <iconify-icon icon="mdi:periodic-table-carbon-dioxide" height="60">
+                                        </iconify-icon>
                                     </div>
                                 </div>
                             </div>
@@ -90,13 +90,15 @@ $colNum = floor(12 / $submission_categories->count());
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="me-3">
-                                            <div class="text-white-75 small">{{ __('Average Carbon Emission by Month') }}
+                                            <div class="text-white-75 small">{{ __('Average Carbon Emission by Month')
+                                                }}
                                             </div>
                                             <div class="text-lg fw-bold">
                                                 {{ number_format($average_carbon_emission_by_month, 2) }}
                                                 kgCO<sub>2</sub></div>
                                         </div>
-                                        <iconify-icon icon="mdi:periodic-table-carbon-dioxide" height="60"></iconify-icon>
+                                        <iconify-icon icon="mdi:periodic-table-carbon-dioxide" height="60">
+                                        </iconify-icon>
                                     </div>
                                 </div>
                             </div>
@@ -112,7 +114,8 @@ $colNum = floor(12 / $submission_categories->count());
                                                 {{ number_format($average_carbon_emission_by_zone, 2) }}
                                                 kgCO<sub>2</sub></div>
                                         </div>
-                                        <iconify-icon icon="mdi:periodic-table-carbon-dioxide" height="60"></iconify-icon>
+                                        <iconify-icon icon="mdi:periodic-table-carbon-dioxide" height="60">
+                                        </iconify-icon>
                                     </div>
                                 </div>
                             </div>
@@ -121,6 +124,7 @@ $colNum = floor(12 / $submission_categories->count());
 
                     <div class="py-3 row">
                         @foreach ($submission_categories as $category)
+                        @if ($category->forCompetition)
                         <div class="col-lg-{{ $colNum }} mb-4">
                             <div class="card bg-secondary text-white h-100">
                                 <div class="card-body">
@@ -129,7 +133,8 @@ $colNum = floor(12 / $submission_categories->count());
                                             <div class="text-white-75 small">{{ __('Total Carbon Emission for') }} <br>
                                                 {{ __($category->description) }}</div>
                                             <div class="text-lg fw-bold">
-                                                {{ number_format($total_carbon_emission_by_category[$category->name], 2) }}
+                                                {{ number_format($total_carbon_emission_by_category[$category->name], 2)
+                                                }}
                                                 {!! $category->symbol !!}</div>
                                         </div>
                                         <iconify-icon icon="{{ $category->icon }}" height="60"></iconify-icon>
@@ -137,6 +142,7 @@ $colNum = floor(12 / $submission_categories->count());
                                 </div>
                             </div>
                         </div>
+                        @endif
                         @endforeach
                     </div>
                     @endif
@@ -146,8 +152,7 @@ $colNum = floor(12 / $submission_categories->count());
         <div class="accordion-item">
             <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
                 <button class="accordion-button text-center" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#submission_stats" aria-expanded="false"
-                    aria-controls="submission_stats">
+                    data-bs-target="#submission_stats" aria-expanded="false" aria-controls="submission_stats">
                     <strong>{{ __('Submission Stats') }}</strong>
                 </button>
             </h2>
@@ -199,7 +204,8 @@ $colNum = floor(12 / $submission_categories->count());
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="me-3">
-                                            <div class="text-white-75 small">{{ __('Average Submission by Month') }}</div>
+                                            <div class="text-white-75 small">{{ __('Average Submission by Month') }}
+                                            </div>
                                             <div class="text-lg fw-bold">
                                                 {{ number_format($average_submission_by_month, 2) }}
                                                 {{ __('Communities') }}</div>
@@ -214,7 +220,8 @@ $colNum = floor(12 / $submission_categories->count());
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="me-3">
-                                            <div class="text-white-75 small">{{ __('Average Submission by Zone') }}</div>
+                                            <div class="text-white-75 small">{{ __('Average Submission by Zone') }}
+                                            </div>
                                             <div class="text-lg fw-bold">
                                                 {{ number_format($average_submission_by_zone, 2) }}
                                                 {{ __('Communities') }}</div>
