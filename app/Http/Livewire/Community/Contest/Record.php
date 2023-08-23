@@ -10,14 +10,13 @@ use App\Models\UsedOil;
 use Livewire\Component;
 use App\Models\Electric;
 use App\Models\Submission;
-use Livewire\WithFileUploads;
-use Illuminate\Validation\Rule;
 use App\Traits\Livewire\CheckGuard;
+use App\Traits\SubmissionTrait;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Record extends Component
 {
-    use LivewireAlert, WithFileUploads, CheckGuard;
+    use LivewireAlert, CheckGuard, SubmissionTrait;
 
     protected $guard = 'community';
     protected $rules;
@@ -27,8 +26,12 @@ class Record extends Component
     public $submission_id;
     public $month_id;
 
-    public $category;
-    public $categoryName;
+    protected $category;
+    public $category_name;
+    public $category_description;
+    public $category_symbol;
+    public $category_code;
+    public $category_class;
 
     public Submission $submission;
     public Month $month;
@@ -38,101 +41,37 @@ class Record extends Component
     public Recycle $recycle;
     public UsedOil $used_oil;
 
-    public $evidence;
-    public $evidence_label;
-
     public $tab_state = 1;
-    public $fileInputPlaceholder;
 
     protected function getListeners()
     {
         return [
-            'changePlaceholder',
             'closeModal' => 'close',
         ];
     }
 
     public function rules()
     {
-        return [
-            'electric.usage' => 'required|numeric',
-            'electric.charge' => 'required|numeric',
-            'water.usage' => 'required|numeric',
-            'water.charge' => 'required|numeric',
-            'recycle.weight' => 'required|numeric',
-            'recycle.value' => 'required|numeric',
-            'used_oil.weight' => 'required|numeric',
-            'used_oil.value' => 'required|numeric',
-            'evidence' =>  [
-                'nullable',
-                'file',
-                'mimes:jpg,png,pdf',
-                'max:4096'
-            ],
-        ];
-    }
-
-    private function setRules()
-    {
-        switch ($this->category) {
+        switch ($this->category_name) {
             case 'electric':
-                $rules = [
-                    'electric.usage' => 'required|numeric',
-                    'electric.charge' => 'required|numeric',
-                ];
-                $requiredIf =
-                    Rule::requiredIf(function () {
-                        return !$this->electric->evidence;
-                    });
-                break;
-
             case 'water':
                 $rules = [
-                    'water.usage' => 'required|numeric',
-                    'water.charge' => 'required|numeric',
+                    $this->category_name . '.usage' => 'required|numeric',
+                    $this->category_name . '.charge' => 'required|numeric',
                 ];
-                $requiredIf =
-                    Rule::requiredIf(function () {
-                        return !$this->water->evidence;
-                    });
                 break;
 
             case 'recycle':
-                $rules = [
-                    'recycle.weight' => 'required|numeric',
-                    'recycle.value' => 'required|numeric',
-                ];
-                $requiredIf =
-                    Rule::requiredIf(function () {
-                        return !$this->recycle->evidence;
-                    });
-                break;
-
             case 'used_oil':
                 $rules = [
-                    'used_oil.weight' => 'required|numeric',
-                    'used_oil.value' => 'required|numeric',
+                    $this->category_name . '.weight' => 'required|numeric',
+                    $this->category_name . '.value' => 'required|numeric',
                 ];
-                $requiredIf =
-                    Rule::requiredIf(function () {
-                        return !$this->used_oil->evidence;
-                    });
                 break;
 
             default:
                 $rules = [];
-                $requiredIf = null;
         }
-
-        $rules = array_merge($rules, [
-            'evidence' =>  [
-                'nullable',
-                'file',
-                'mimes:jpg,png,pdf',
-                'max:4096',
-                $requiredIf
-            ],
-        ]);
 
         return $rules;
     }
@@ -140,7 +79,7 @@ class Record extends Component
     public function updated($propertyName)
     {
 
-        $this->validateOnly($propertyName, $this->setRules());
+        $this->validateOnly($propertyName);
     }
 
     public function mount($submission, $category)
@@ -152,39 +91,21 @@ class Record extends Component
         $this->submission = $this->getSubmissionProperty();
 
         $this->fill([
-            'category' => $category,
             'bill' => new Bill,
             'month' => new Month,
         ]);
 
-        switch ($category) {
-            case 'electric':
-                $this->electric = new Electric;
-                $this->categoryName = __('Electric');
-                $this->fileInputPlaceholder = __("Upload Your Electric Bill for") . ' ';
-                break;
+        $this->category = $this->getSubmissionCategory($category);
 
-            case 'water':
-                $this->water = new Water;
-                $this->categoryName = __('Water');
-                $this->fileInputPlaceholder = __("Upload Your Water Bill for") . ' ';
-                break;
+        $this->fill([
+            'category_name' => $this->category->name,
+            'category_description' => $this->category->description,
+            'category_symbol' => $this->category->symbol,
+            'category_code' => $this->category->code,
+            'category_class' => $this->category->class,
+        ]);
 
-            case 'recycle':
-                $this->recycle = new Recycle;
-                $this->categoryName = __('Recycle');
-                $this->fileInputPlaceholder = __("Upload Your Recycle Sell Receipt for") . ' ';
-                break;
-
-            case 'used_oil':
-                $this->used_oil = new UsedOil;
-                $this->categoryName = __('Used Oil');
-                $this->fileInputPlaceholder = __("Upload Your Used Oil Sell Receipt for") . ' ';
-                break;
-
-            default:
-                break;
-        }
+        $this->{$this->category_name} = resolve($this->category->class);
     }
 
     public function getSubmissionProperty()
@@ -238,29 +159,7 @@ class Record extends Component
         $this->month_id = $month_id;
         $this->bill = $this->getBillProperty();
         $this->month = $this->getMonthProperty();
-
-        switch ($this->category) {
-            case 'electric':
-                $this->electric = $this->getElectricProperty();
-                break;
-
-            case 'water':
-                $this->water = $this->getWaterProperty();
-                break;
-
-            case 'recycle':
-                $this->recycle = $this->getRecycleProperty();
-                break;
-
-            case 'used_oil':
-                $this->used_oil = $this->getUsedOilProperty();
-                break;
-
-            default:
-                break;
-        }
-
-        $this->evidence_label = $this->fileInputPlaceholder . $this->month->getName();
+        $this->{$this->category_name} = $this->{'get' . preg_replace('/\s+/', '', $this->category_description) . 'Property'}();
     }
 
     public function close()
@@ -269,30 +168,8 @@ class Record extends Component
             'bill' => new Bill,
             'month' => new Month,
             'tab_state' => 1,
+            $this->category_name => resolve($this->category_class)
         ]);
-
-        switch ($this->category) {
-            case 'electric':
-                $this->electric = new Electric;
-                break;
-
-            case 'water':
-                $this->water = new Water;
-                break;
-
-            case 'recycle':
-                $this->recycle = new Recycle;
-                break;
-
-            case 'used_oil':
-                $this->used_oil = new UsedOil;
-                break;
-
-            default:
-                break;
-        }
-
-        $this->reset('evidence');
 
         $this->emit('changeTab', $this->tab_state);
 
@@ -318,15 +195,9 @@ class Record extends Component
         $this->tab_state = $tab_state;
     }
 
-    public function changePlaceholder()
-    {
-        $file = $this->evidence;
-        $this->evidence_label = $file ? $file->getClientOriginalName()  : $this->fileInputPlaceholder . ($this->month ? $this->month->getName() : '');
-    }
-
     public function update()
     {
-        $this->validate($this->setRules());
+        $this->validate();
 
         $this->submission = $this->getSubmissionProperty();
         if (!$this->submission->id)
@@ -339,29 +210,16 @@ class Record extends Component
         if (!$this->bill->id)
             $this->bill->save();
 
-
-        if (!$this->{$this->category}->bill_id)
-            $this->{$this->category}->bill_id = $this->bill->id;
-
-        if ($this->evidence) {
-            $file = $this->evidence;
-            $this->{$this->category}->evidence = "evidence_{$this->category}_" . $this->{$this->category}->bill->month->getUploadName() . '.' . $file->getClientOriginalExtension();
-
-            $file->storeAs('evidences/' . $this->submission->competition->year . '/' . $this->community_id, $this->{$this->category}->evidence);
-        }
-
-        $this->{$this->category}->calculateCarbonEmission();
-        $this->{$this->category}->save();
-
+        $this->{$this->category_name}->calculateCarbonEmission();
+        $this->bill->{$this->category_name}()->save($this->{$this->category_name});
         $this->submission->calculateTotalCarbonEmission();
 
-        redirect(route('community.contest.submission.list', ['competition_id' => $this->competition_id, 'category' => $this->category]))->with('success', __('alerts.record_update', ['month' => $this->month->getName(), 'category' => $this->categoryName]));
+        redirect(route('community.contest.submission.list', ['competition_id' => $this->competition_id, 'category' => $this->category_code]))->with('success', __('alerts.record_update', ['month' => $this->month->getName(), 'category' => $this->category_name]));
     }
 
     public function render()
     {
         $this->submission = $this->getSubmissionProperty();
-        $this->changePlaceholder();
 
         return view('livewire.community.contest.record');
     }

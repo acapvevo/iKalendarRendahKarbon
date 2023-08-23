@@ -82,4 +82,9 @@ class Community extends Authenticatable
         Storage::delete('identification_card/community/' . $this->identification_card);
         $this->identification_card = null;
     }
+
+    public function getFolderName()
+    {
+        return preg_replace('/[^a-zA-Z0-9\-\._]/','', $this->name);
+    }
 }

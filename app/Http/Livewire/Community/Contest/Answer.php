@@ -8,11 +8,13 @@ use App\Models\Submission;
 use Illuminate\Support\Facades\DB;
 use App\Traits\Livewire\CheckGuard;
 use App\Models\Answer as AnswerModel;
+use App\Traits\QuestionTrait;
+use App\Traits\SubmissionTrait;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Answer extends Component
 {
-    use LivewireAlert, CheckGuard;
+    use LivewireAlert, CheckGuard, SubmissionTrait, QuestionTrait;
 
     protected $guard = 'community';
 
@@ -21,16 +23,14 @@ class Answer extends Component
     public $submission_id;
     public $question_id;
 
-    public $category;
-    public $categoryName;
+    public $category_name;
+    public $category_description;
+    public $category_code;
 
     public Submission $submission;
     public $questions;
     public Question $question;
     public AnswerModel $answer;
-
-    public $tab_state = 0;
-    public $questionCategoryList;
 
     protected function rules()
     {
@@ -51,48 +51,29 @@ class Answer extends Component
         $this->community_id = $submission->community_id;
 
         $this->fill([
-            'category' => $category,
             'submission' => $this->getSubmissionProperty(),
             'question' => new Question,
             'answer' => new AnswerModel,
         ]);
 
-        switch ($category) {
-            case 'electric':
-                $this->categoryName = __('Electric');
-                break;
+        $category_obj = $this->getSubmissionCategory($category);
 
-            case 'water':
-                $this->categoryName = __('Water');
-                break;
-
-            case 'recycle':
-                $this->categoryName = __('Recycle');
-                break;
-
-            case 'used_oil':
-                $this->categoryName = __('Used Oil');
-                break;
-
-            default:
-                break;
-        }
-
-        $categoryCode = DB::table('submission_category')->where('name', $this->category)->first()->code;
-        $this->questions = $submission->competition->getQuestionsByCategory($categoryCode);
+        $this->fill([
+            'category_name' => $category_obj->name,
+            'category_description' => $category_obj->description,
+            'category_code' => $category_obj->code,
+            'questions' => $submission->competition->getQuestionsByCategory($category_obj->code)
+        ]);
     }
 
     public function getSubmissionProperty()
     {
-        return $this->submission_id ? Submission::find($this->submission_id) : new Submission([
-            'competition_id' => $this->competition_id,
-            'community_id' => $this->community_id,
-        ]);
+        return $this->getSubmission($this->submission_id);
     }
 
     public function getQuestionProperty()
     {
-        return Question::find($this->question_id);
+        return $this->getQuestion($this->question_id);
     }
 
     public function getAnswerProperty()
@@ -130,7 +111,7 @@ class Answer extends Component
 
         $this->answer->save();
 
-        redirect(route('community.contest.submission.list', ['competition_id' => $this->competition_id]))->with('success', __('alerts.answer_update', ['question' => $this->question->getValue('text')]));
+        redirect(route('community.contest.submission.list', ['competition_id' => $this->competition_id, 'category' => $this->category_code]))->with('success', __('alerts.answer_update', ['question' => $this->question->getValue('text')]));
     }
 
     public function render()

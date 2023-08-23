@@ -2,30 +2,29 @@
 
 namespace App\Http\Controllers\Community\Contest;
 
-use App\Traits\BillTrait;
-use App\Models\Submission;
-use Illuminate\Http\Request;
 use App\Traits\SubmissionTrait;
 use App\Traits\CompetitionTrait;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Universal\Submission\DownloadEvidenceRequest;
 use App\Http\Requests\Community\Contest\Submission\ChooseCategoryRequest;
 use App\Http\Requests\Community\Contest\Submission\SelectCompetitionRequest;
+use App\Traits\EvidenceTrait;
 
 class SubmissionController extends Controller
 {
-    use CompetitionTrait, BillTrait, SubmissionTrait;
+    use CompetitionTrait, EvidenceTrait, SubmissionTrait;
 
     public function category(SelectCompetitionRequest $request)
     {
         $validated = $request->validated();
 
         $competition = $this->getCompetition($validated['competition_id']);
+        $submission_category = $this->getSubmissionCategories('competition');
 
         return view('community.contest.submission.category')->with([
             'competition' => $competition,
+            'submission_category' => $submission_category,
         ]);
     }
 
@@ -36,33 +35,12 @@ class SubmissionController extends Controller
         $community = Auth::user();
 
         $submission = $this->getSubmissionByCompetitionIDAndCommunityID($validated['competition_id'], $community->id);
-
-        switch ($validated['category']) {
-            case 'electric':
-                $categoryName = __('Electric');
-                break;
-
-            case 'water':
-                $categoryName = __('Water');
-                break;
-
-            case 'recycle':
-                $categoryName = __('Recycle');
-                break;
-
-            case 'used_oil':
-                $categoryName = __('Used Oil');
-                break;
-
-            default:
-                $categoryName = 'Default';
-                break;
-        }
+        $categoryDescription = $this->getSubmissionCategory($validated['category'])->description;
 
         return view('community.contest.submission.list')->with([
             'submission' => $submission,
-            'category' => $request->category,
-            'categoryName' => $categoryName,
+            'category' => $validated['category'],
+            'categoryDescription' => $categoryDescription,
         ]);
     }
 
@@ -70,8 +48,8 @@ class SubmissionController extends Controller
     {
         $validated = $request->validated();
 
-        $bill = $this->getBill($validated['bill_id']);
+        $evidence = $this->getEvidence($validated['evidence_id']);
 
-        return $bill->downloadEvidence($validated['type']);
+        return $evidence->downloadFile();
     }
 }

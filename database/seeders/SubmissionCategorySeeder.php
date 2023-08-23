@@ -26,6 +26,7 @@ class SubmissionCategorySeeder extends Seeder
         // Electric
         DB::table('submission_category')->insertTs([
             'code' => 'E',
+            'class' => 'App\Models\Electric',
             'name' => 'electric',
             'description' => 'Electric',
             'symbol' => 'kWh',
@@ -47,6 +48,7 @@ class SubmissionCategorySeeder extends Seeder
         // Water
         DB::table('submission_category')->insertTs([
             'code' => 'W',
+            'class' => 'App\Models\Water',
             'name' => 'water',
             'description' => 'Water',
             'symbol' => 'm<sup>3</sup>',
@@ -68,6 +70,7 @@ class SubmissionCategorySeeder extends Seeder
         // Recycle
         DB::table('submission_category')->insertTs([
             'code' => 'R',
+            'class' => 'App\Models\Recycle',
             'name' => 'recycle',
             'description' => 'Recycle',
             'symbol' => 'kg',
@@ -89,6 +92,7 @@ class SubmissionCategorySeeder extends Seeder
         // Used Oil
         DB::table('submission_category')->insertTs([
             'code' => 'UO',
+            'class' => 'App\Models\UsedOil',
             'name' => 'used_oil',
             'description' => 'Used Oil',
             'symbol' => 'kg',
@@ -110,6 +114,7 @@ class SubmissionCategorySeeder extends Seeder
         // Electronic
         DB::table('submission_category')->insertTs([
             'code' => 'ET',
+            'class' => 'App\Models\Electronic',
             'name' => 'electronic',
             'description' => 'Electronic',
             'symbol' => 'kg',
@@ -131,6 +136,7 @@ class SubmissionCategorySeeder extends Seeder
         // Fabric
         DB::table('submission_category')->insertTs([
             'code' => 'F',
+            'class' => 'App\Models\Fabric',
             'name' => 'fabric',
             'description' => 'Fabric',
             'symbol' => 'kg',
@@ -149,6 +155,6 @@ class SubmissionCategorySeeder extends Seeder
         $translation->status = Translation::STATUS_CHANGED;
         $translation->save();
 
-        $this->translation_manager->exportTranslations('_json', true);
+        // $this->translation_manager->exportTranslations('_json', true);
     }
 }

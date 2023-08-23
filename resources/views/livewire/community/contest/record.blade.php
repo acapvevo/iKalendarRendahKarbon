@@ -15,7 +15,7 @@
                 @foreach ($submission->competition->months as $monthObj)
                     <tr>
                         <td>{{ $monthObj->getName() }}</td>
-                        <td>{{ number_format($submission->getBillByMonthID($monthObj->id)->{$category}->carbon_emission ?? 0, 2) }}
+                        <td>{{ number_format($submission->getBillByMonthID($monthObj->id)->{$category_name}->carbon_emission ?? 0, 2) }}
                             kgCO<sub>2</sub></td>
                         <td>
                             <div class="btn-toolbar justify-content-center" role="toolbar"
@@ -63,26 +63,19 @@
                             </tr>
                             <tr>
                                 <th colspan="4" class="h3 text-center">{{ __('Submission Details') }}:
-                                    {{ __($categoryName) }}</th>
+                                    {{ __($category_description) }}</th>
                             </tr>
-                            @switch($category)
+                            @switch($category_name)
                                 @case('electric')
                                 @case('water')
                                     <tr>
-                                        <th style="width: 20%">{{ __('Usage') }}</th>
-                                        <td class="text-center">{{ number_format((float) ${$category}->usage ?? 0, 2) }}
-                                            @switch($category)
-                                                @case('electric')
-                                                    kWh
-                                                @break
-
-                                                @case('water')
-                                                    m<sup>3</sup>
-                                                @break
-                                            @endswitch
+                                        <th style="width: 20%">{{ __('Consumption') }}</th>
+                                        <td class="text-center">{{ number_format((float) ${$category_name}->usage ?? 0, 2) }}
+                                            {{ $category_symbol }}
                                         </td>
                                         <th style="width: 20%">{{ __('Bill Charge') }}</th>
-                                        <td class="text-center">RM {{ number_format((float) ${$category}->charge ?? 0, 2) }}
+                                        <td class="text-center">RM
+                                            {{ number_format((float) ${$category_name}->charge ?? 0, 2) }}
                                         </td>
                                     </tr>
                                 @break
@@ -91,10 +84,12 @@
                                 @case('used_oil')
                                     <tr>
                                         <th style="width: 20%">{{ __('Total Weight') }}</th>
-                                        <td class="text-center">{{ number_format((float) ${$category}->weight ?? 0, 2) }} kg
+                                        <td class="text-center">{{ number_format((float) ${$category_name}->weight ?? 0, 2) }}
+                                            kg
                                         </td>
                                         <th style="width: 20%">{{ __('Total Sell Value') }}</th>
-                                        <td class="text-center">RM {{ number_format((float) ${$category}->value ?? 0, 2) }}
+                                        <td class="text-center">RM
+                                            {{ number_format((float) ${$category_name}->value ?? 0, 2) }}
                                         </td>
                                     </tr>
                                 @break
@@ -102,26 +97,9 @@
                                 @default
                             @endswitch
                             <tr>
-                                <th colspan="1">{{ __('Evidence') }}</th>
-                                <td colspan="3" class="text-center">
-                                    @if (${$category}->evidence ?? null)
-                                        <form action="{{ route('community.contest.submission.download') }}"
-                                            method="post" target="_blank">
-                                            @csrf
-
-                                            <input type="hidden" name="bill_id" value="{{ $bill->id }}">
-                                            <button type="submit" class="btn btn-link" name="type"
-                                                value="{{ $category }}">{{ ${$category}->evidence }}</button>
-                                        </form>
-                                    @else
-                                        {{ __('No Evidence') }}
-                                    @endif
-                                </td>
-                            </tr>
-                            <tr>
                                 <th colspan="1">{{ __('Carbon Emission') }}</th>
                                 <td colspan="3" class="text-center">
-                                    {{ number_format((float) ${$category}->carbon_emission ?? 0, 2) }}
+                                    {{ number_format((float) ${$category_name}->carbon_emission ?? 0, 2) }}
                                     kgCO<sub>2</sub></td>
                             </tr>
                         </table>
@@ -155,11 +133,11 @@
                             <a class="nav-item nav-link active" id="wizard1-tab" href="#wizard1" data-bs-toggle="tab"
                                 role="tab" aria-controls="wizard1" aria-selected="true"
                                 wire:click.prevent="setTab(1)" wire:ignore.self>
-                                {!! $errors->has($category . '.*') || $errors->has('evidence')
+                                {!! $errors->has($category_name . '.*') || $errors->has('evidence')
                                     ? '<div class="wizard-step-icon text-bg-danger">!</div>'
                                     : '<div class="wizard-step-icon">1</div>' !!}
                                 <div class="wizard-step-text">
-                                    <div class="wizard-step-text-name">{{ __($categoryName) }}
+                                    <div class="wizard-step-text-name">{{ __($category_description) }}
                                     </div>
                                 </div>
                             </a>
@@ -185,37 +163,29 @@
                                     <div class="col-xxl-11 col-xl-11">
                                         <h3 class="text-primary">{{ __('Step') }} 1</h3>
 
-                                        @switch($category)
+                                        @switch($category_name)
                                             @case('electric')
                                             @case('water')
                                                 <h5 class="card-title mb-4">
-                                                    {{ __('Insert your ' . ($category === 'electric' ? 'Electric' : 'Water') . ' consumption and bill charge') }}
+                                                    {{ __('Insert your ' . $category_description . ' consumption and bill charge') }}
                                                 </h5>
 
                                                 <div class="mb-3 row">
                                                     <div class="col-xl-6">
-                                                        <label for="{{ $category }}.usage"
+                                                        <label for="{{ $category_name }}.usage"
                                                             class="form-label">{{ __('Consumption') }}</label>
                                                         <div class="input-group mb-3">
                                                             <input type="number" required
-                                                                class="form-control {{ $errors->has($category . '.usage') ? 'is-invalid' : '' }}"
-                                                                id="{{ $category }}.usage"
-                                                                aria-describedby="{{ $category }}.usage_desc"
-                                                                wire:model.lazy='{{ $category }}.usage'
-                                                                placeholder="{{ __('Enter your ' . ($category === 'electric' ? 'Electric' : 'Water') . ' Consumption for') }} {{ $month ? $month->getName() : '' }}">
+                                                                class="form-control {{ $errors->has($category_name . '.usage') ? 'is-invalid' : '' }}"
+                                                                id="{{ $category_name }}.usage"
+                                                                aria-describedby="{{ $category_name }}.usage_desc"
+                                                                wire:model.lazy='{{ $category_name }}.usage'
+                                                                placeholder="{{ __('Enter your ' . $category_description . ' Consumption for') }} {{ $month ? $month->getName() : '' }}">
                                                             <span class="input-group-text"
-                                                                id="{{ $category }}.usage_desc">
-                                                                @switch($category)
-                                                                    @case('electric')
-                                                                        kWh
-                                                                    @break
-
-                                                                    @case('water')
-                                                                        m<sup>3</sup>
-                                                                    @break
-                                                                @endswitch
+                                                                id="{{ $category_name }}.usage_desc">
+                                                                {{ $category_symbol }}
                                                             </span>
-                                                            @error($category . '.usage')
+                                                            @error($category_name . '.usage')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
                                                                 </div>
@@ -223,18 +193,18 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-xl-6">
-                                                        <label for="{{ $category }}.charge"
+                                                        <label for="{{ $category_name }}.charge"
                                                             class="form-label">{{ __('Bill Charge') }}</label>
                                                         <div class="input-group mb-3">
                                                             <span class="input-group-text"
-                                                                id="{{ $category }}.charge_desc">RM</span>
+                                                                id="{{ $category_name }}.charge_desc">RM</span>
                                                             <input type="number" required
-                                                                class="form-control {{ $errors->has($category . '.charge') ? 'is-invalid' : '' }}"
-                                                                id="{{ $category }}.charge"
-                                                                aria-describedby="{{ $category }}.charge_desc"
-                                                                wire:model.lazy='{{ $category }}.charge'
-                                                                placeholder="{{ __('Enter your ' . ($category === 'electric' ? 'Electric' : 'Water') . ' Bill Charge for') }} {{ $month ? $month->getName() : '' }}">
-                                                            @error($category . '.charge')
+                                                                class="form-control {{ $errors->has($category_name . '.charge') ? 'is-invalid' : '' }}"
+                                                                id="{{ $category_name }}.charge"
+                                                                aria-describedby="{{ $category_name }}.charge_desc"
+                                                                wire:model.lazy='{{ $category_name }}.charge'
+                                                                placeholder="{{ __('Enter your ' . $category_description . ' Bill Charge for') }} {{ $month ? $month->getName() : '' }}">
+                                                            @error($category_name . '.charge')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
                                                                 </div>
@@ -247,23 +217,23 @@
                                             @case('recycle')
                                             @case('used_oil')
                                                 <h5 class="card-title mb-4">
-                                                    {{ __('Insert your ' . ($category === 'recycle' ? 'Recycle' : 'Used Oil') . ' total weight and sell value') }}
+                                                    {{ __('Insert your ' . $category_description . ' total weight and sell value') }}
                                                 </h5>
 
                                                 <div class="mb-3 row">
                                                     <div class="col-xl-6">
-                                                        <label for="{{ $category }}.weight"
+                                                        <label for="{{ $category_name }}.weight"
                                                             class="form-label">{{ __('Total Weight') }}</label>
                                                         <div class="input-group mb-3">
                                                             <input type="number" required
-                                                                class="form-control {{ $errors->has($category . '.weight') ? 'is-invalid' : '' }}"
-                                                                id="{{ $category }}.weight"
-                                                                aria-describedby="{{ $category }}.weight_desc"
-                                                                wire:model.lazy='{{ $category }}.weight'
-                                                                placeholder="{{ __('Enter your ' . ($category === 'recycle' ? 'Recycle' : 'Used Oil') . ' total weight for') }} {{ $month ? $month->getName() : '' }}">
+                                                                class="form-control {{ $errors->has($category_name . '.weight') ? 'is-invalid' : '' }}"
+                                                                id="{{ $category_name }}.weight"
+                                                                aria-describedby="{{ $category_name }}.weight_desc"
+                                                                wire:model.lazy='{{ $category_name }}.weight'
+                                                                placeholder="{{ __('Enter your ' . $category_description . ' total weight for') }} {{ $month ? $month->getName() : '' }}">
                                                             <span class="input-group-text"
-                                                                id="{{ $category }}.weight_desc">kg</span>
-                                                            @error($category . '.weight')
+                                                                id="{{ $category_name }}.weight_desc">kg</span>
+                                                            @error($category_name . '.weight')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
                                                                 </div>
@@ -271,18 +241,18 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-xl-6">
-                                                        <label for="{{ $category }}.value"
+                                                        <label for="{{ $category_name }}.value"
                                                             class="form-label">{{ __('Total Sell Value') }}</label>
                                                         <div class="input-group mb-3">
                                                             <span class="input-group-text"
-                                                                id="{{ $category }}.value_desc">RM</span>
+                                                                id="{{ $category_name }}.value_desc">RM</span>
                                                             <input type="number" required
-                                                                class="form-control {{ $errors->has($category . '.value') ? 'is-invalid' : '' }}"
-                                                                id="{{ $category }}.value"
-                                                                aria-describedby="{{ $category }}.value_desc"
-                                                                wire:model.lazy='{{ $category }}.value'
-                                                                placeholder="{{ __('Enter your ' . ($category === 'recycle' ? 'Recycle' : 'Used Oil') . ' sell value for') }} {{ $month ? $month->getName() : '' }}">
-                                                            @error($category . '.value')
+                                                                class="form-control {{ $errors->has($category_name . '.value') ? 'is-invalid' : '' }}"
+                                                                id="{{ $category_name }}.value"
+                                                                aria-describedby="{{ $category_name }}.value_desc"
+                                                                wire:model.lazy='{{ $category_name }}.value'
+                                                                placeholder="{{ __('Enter your ' . $category_description . ' sell value for') }} {{ $month ? $month->getName() : '' }}">
+                                                            @error($category_name . '.value')
                                                                 <div class="invalid-feedback">
                                                                     {{ $message }}
                                                                 </div>
@@ -293,26 +263,6 @@
                                             @break
 
                                         @endswitch
-
-                                        <div class="mb-3">
-                                            <label for="evidence_label"
-                                                class="form-label">{{ __('Evidence') }}</label>
-                                            <div class="input-group custom-file-button" id="evidence_label">
-                                                <label class="input-group-text" for="evidence"
-                                                    role="button">{{ __('Browse') }}</label>
-                                                <label for="evidence"
-                                                    class="form-control {{ $errors->has('evidence') ? 'is-invalid' : '' }}"
-                                                    id="eviden-label" role="button">{{ $evidence_label }}</label>
-                                                <input type="file" required
-                                                    class="evidenceInput d-none form-control" id="evidence"
-                                                    wire:model="evidence">
-                                                @error('evidence')
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
-                                                    </div>
-                                                @enderror
-                                            </div>
-                                        </div>
 
                                     </div>
                                 </div>
@@ -337,28 +287,21 @@
                                                 <tr>
                                                     <th colspan="4" class="h3 text-center">
                                                         {{ __('Submission Details') }}:
-                                                        {{ __($categoryName) }}</th>
+                                                        {{ __($category_description) }}</th>
                                                 </tr>
-                                                @switch($category)
+                                                @switch($category_name)
                                                     @case('electric')
                                                     @case('water')
                                                         <tr>
-                                                            <th style="width: 20%">{{ __('Usage') }}</th>
+                                                            <th style="width: 20%">{{ __('Consumption') }}</th>
                                                             <td class="text-center">
-                                                                {{ number_format((float) ${$category}->usage ?? 0, 2) }}
-                                                                @switch($category)
-                                                                    @case('electric')
-                                                                        kWh
-                                                                    @break
-
-                                                                    @case('water')
-                                                                        m<sup>3</sup>
-                                                                    @break
-                                                                @endswitch
+                                                                {{ number_format((float) ${$category_name}->usage ?? 0, 2) }}
+                                                                {{ $category_symbol }}
                                                             </td>
                                                             <th style="width: 20%">{{ __('Bill Charge') }}</th>
                                                             <td class="text-center">RM
-                                                                {{ number_format((float) ${$category}->charge ?? 0, 2) }}</td>
+                                                                {{ number_format((float) ${$category_name}->charge ?? 0, 2) }}
+                                                            </td>
                                                         </tr>
                                                     @break
 
@@ -367,26 +310,18 @@
                                                         <tr>
                                                             <th style="width: 20%">{{ __('Total Weight') }}</th>
                                                             <td class="text-center">
-                                                                {{ number_format((float) ${$category}->weight ?? 0, 2) }} kg
+                                                                {{ number_format((float) ${$category_name}->weight ?? 0, 2) }}
+                                                                kg
                                                             </td>
                                                             <th style="width: 20%">{{ __('Total Sell Value') }}</th>
                                                             <td class="text-center">RM
-                                                                {{ number_format((float) ${$category}->value ?? 0, 2) }}</td>
+                                                                {{ number_format((float) ${$category_name}->value ?? 0, 2) }}
+                                                            </td>
                                                         </tr>
                                                     @break
 
                                                     @default
                                                 @endswitch
-                                                <tr>
-                                                    <th colspan="1">{{ __('Evidence') }}</th>
-                                                    <td colspan="3" class="text-center">
-                                                        @if ($evidence ?? null)
-                                                            {{ $evidence->getClientOriginalName() }}
-                                                        @else
-                                                            {{ __('No Evidence') }}
-                                                        @endif
-                                                    </td>
-                                                </tr>
                                             </table>
                                         </div>
 

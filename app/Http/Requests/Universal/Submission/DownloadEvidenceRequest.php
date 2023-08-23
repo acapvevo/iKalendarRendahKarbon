@@ -25,8 +25,7 @@ class DownloadEvidenceRequest extends FormRequest
     public function rules()
     {
         return [
-            'category' => 'required|string|exists:submission_category,name',
-            'bill_id' => 'required|numeric|exists:bills,id',
+            'evidence_id' => 'required|numeric|exists:evidence,id',
         ];
     }
 }

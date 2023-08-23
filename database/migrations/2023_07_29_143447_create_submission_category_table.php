@@ -17,6 +17,7 @@ class CreateSubmissionCategoryTable extends Migration
             $table->id();
 
             $table->char('code', 2);
+            $table->string('class');
             $table->string('name');
             $table->string('description');
             $table->string('symbol');

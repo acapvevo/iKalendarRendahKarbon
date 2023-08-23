@@ -52,9 +52,9 @@
 
                     <div class="container text-center">
                         <div class="row row-cols-1 row-cols-lg-2 g-3 g-lg-4">
-                            @foreach (DB::table('submission_category')->get() as $category)
+                            @foreach ($submission_category as $category)
                                 <div class="d-grid gap-2">
-                                    <button class="btn btn-primary btn-big" type="submit" value="{{ $category->name }}"
+                                    <button class="btn btn-primary btn-big" type="submit" value="{{ $category->code }}"
                                         name="category">{{ __($category->description) }}</button>
                                 </div>
                             @endforeach

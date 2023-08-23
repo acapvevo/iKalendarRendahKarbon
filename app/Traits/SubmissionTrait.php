@@ -34,6 +34,11 @@ trait SubmissionTrait
         }
     }
 
+    public function getSubmissionCategory($code)
+    {
+        return DB::table('submission_category')->where('code', $code)->first();
+    }
+
     public function initCalculationBySubmissionCategory()
     {
         return $this->getSubmissionCategories()->mapWithKeys(function ($category) {
