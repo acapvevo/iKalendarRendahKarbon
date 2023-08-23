@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin\Contest;
 
-use App\Traits\BillTrait;
 use App\Models\Submission;
 use App\Plugins\Datatable;
 use Illuminate\Http\Request;
@@ -13,10 +12,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Contest\SelectCompetitionRequest;
 use App\Http\Requests\Universal\Submission\DownloadEvidenceRequest;
 use App\Http\Requests\Admin\Contest\Submission\ViewSubmissionRequest;
+use App\Traits\EvidenceTrait;
+use App\Traits\ZoneTrait;
 
 class SubmissionController extends Controller
 {
-    use CompetitionTrait, BillTrait, SubmissionTrait;
+    use CompetitionTrait, EvidenceTrait, SubmissionTrait, ZoneTrait;
 
     public function list(SelectCompetitionRequest $request)
     {
@@ -42,8 +43,31 @@ class SubmissionController extends Controller
         ]);
 
         $columns = array(
-            array('db' => 'communities.name', 'dt' => 0, 'as' => 'name', 'inFilter' => false),
-            array('db' => 'addresses.postcode', 'dt' => 1, 'as' => 'postcode', 'title' => __('Postcode')),
+            array(
+                'db' => ['communities.name', 'communities.username'],
+                'dt' => 0,
+                'as' => 'name',
+                'formatter' => function ($d, $row) {
+                    if ($d) {
+                        return $d;
+                    } else {
+                        return $row->username;
+                    }
+                }
+            ),
+            array(
+                'db' => 'zones.number',
+                'dt' => 1,
+                'as' => 'number',
+                // 'formatter' => function ($d, $row) {
+                //     if ($d) {
+                //         return $this->getZone($d)->getFormalName();
+                //     } else {
+                //         return '1';
+                //     }
+                // },
+                'title' => __('Zone')
+            ),
             array(
                 'db' => 'submissions.total_carbon_emission',
                 'dt' => 2, 'as' => 'total_carbon_emission',
@@ -122,10 +146,12 @@ class SubmissionController extends Controller
         $dbObj = DB::table('submissions')
             ->join('communities', 'submissions.community_id', '=', 'communities.id')
             ->join('addresses', 'addresses.community_id', '=', 'communities.id')
+            ->leftJoin('zones', 'addresses.zone_id', '=', 'zones.id')
             ->where('submissions.id', '=', $request->competition_id)
             ->select([
                 'communities.name',
-                'addresses.postcode',
+                'communities.username',
+                'zones.number',
                 'submissions.id',
                 'submissions.total_carbon_emission',
             ]);
@@ -148,8 +174,8 @@ class SubmissionController extends Controller
     {
         $validated = $request->validated();
 
-        $bill = $this->getBill($validated['bill_id']);
+        $evidence = $this->getEvidence($validated['evidence_id']);
 
-        return $bill->downloadEvidence($validated['category']);
+        return $evidence->downloadFile();
     }
 }

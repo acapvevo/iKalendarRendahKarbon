@@ -120,10 +120,5 @@
         //         }]
         //     });
         // });
-
-        const updateEvidenceModalEl = document.getElementById('updateEvidenceModal')
-        updateEvidenceModalEl.addEventListener('hidden.bs.modal', event => {
-            Livewire.emit('closeModal')
-        })
     </script>
 @endpush

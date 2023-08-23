@@ -93,23 +93,6 @@
                                     @default
                                 @endswitch
                                 <tr>
-                                    <th colspan="1">{{ __('Evidence') }}</th>
-                                    <td colspan="3" class="text-center">
-                                        @if ($electric->evidence ?? null)
-                                            <form action="{{ route('admin.contest.submission.download') }}"
-                                                method="post" target="_blank">
-                                                @csrf
-
-                                                <input type="hidden" name="bill_id" value="{{ $bill->id }}">
-                                                <button type="submit" class="btn btn-link" name="category"
-                                                    value="{{ $category->name }}">{{ ${$category->name}->evidence }}</button>
-                                            </form>
-                                        @else
-                                            {{ __('No Evidence') }}
-                                        @endif
-                                    </td>
-                                </tr>
-                                <tr>
                                     <th colspan="1">{{ __('Carbon Emission') }}</th>
                                     <td colspan="3" class="text-center">
                                         {{ number_format((float) ${$category->name}->carbon_emission ?? 0, 2) }}

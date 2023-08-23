@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\SubmissionTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Evidence extends Model
 {
-    use HasFactory;
+    use HasFactory, SubmissionTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -51,5 +52,10 @@ class Evidence extends Model
     public function deleteFile()
     {
         Storage::delete('evidences/' . $this->submission->competition->year . '/' . $this->submission->community->getFolderName() . '/' . $this->file);
+    }
+
+    public function getCategory()
+    {
+        return $this->getSubmissionCategory($this->category);
     }
 }
