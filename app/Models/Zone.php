@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\SubmissionTrait;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Zone extends Model
 {
-    use HasFactory;
+    use HasFactory, SubmissionTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -76,5 +77,12 @@ class Zone extends Model
     public function getFormalName()
     {
         return __("Zone") . ' ' . $this->number . ": " . $this->name;
+    }
+
+    public function getSubmissions()
+    {
+        return $this->getAllSubmissions()->filter(function ($submission) {
+            return $submission->community->address->zone_id = $this->id;
+        });
     }
 }

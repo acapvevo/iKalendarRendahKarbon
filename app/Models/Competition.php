@@ -104,7 +104,7 @@ class Competition extends Model
     public function getCarbonEmissionStats()
     {
         $total_carbon_emission_by_month = collect();
-        $total_carbon_emission_by_category = $average_carbon_emission_every_category_by_month = $average_carbon_emission_every_category_by_zone = $this->initCalculationBySubmissionCategory();
+        $total_carbon_emission_every_category = $average_carbon_emission_every_category_by_month = $average_carbon_emission_every_category_by_zone = $this->initCalculationBySubmissionCategory();
         $total_carbon_emission = 0;
 
         foreach ($this->months as $month) {
@@ -113,13 +113,14 @@ class Competition extends Model
             $total_carbon_emission_by_month->push($currentTotalMonth);
             $total_carbon_emission += $currentTotalMonth;
 
-            foreach ($total_carbon_emission_by_category as $category => $value) {
+            foreach ($total_carbon_emission_every_category as $category => $value) {
                 foreach ($month->bills as $bill) {
-                    if ($bill->{$category})
-                        $total_carbon_emission_by_category[$category] += $bill->{$category}->carbon_emission;
+                    if ($bill->{$category}) {
+                        $total_carbon_emission_every_category[$category] += $bill->{$category}->carbon_emission;
+                    }
                 }
 
-                $average_carbon_emission_every_category_by_month[$category] = $total_carbon_emission_by_category[$category] / $this->months->count();
+                $average_carbon_emission_every_category_by_month[$category] = $total_carbon_emission_every_category[$category] / $this->months->count();
             }
         }
 
@@ -128,9 +129,20 @@ class Competition extends Model
 
         $total_carbon_emission_by_zone = $this->initCalculationByZone();
 
-        foreach($this->getZones() as $zone){
-            foreach ($total_carbon_emission_by_category as $category => $value) {
+        foreach ($this->getZones() as $zone) {
+            $bills = $zone->getSubmissions()->filter(function ($submission) {
+                return $submission->competition_id = $this->id;
+            });
 
+            foreach ($bills as $bill) {
+                $total_carbon_emission_by_zone[$zone->id] += $bill->total_carbon_emission;
+                foreach ($total_carbon_emission_every_category as $category => $value) {
+                    // if ($bill->{$category}) {
+                    //     $total_carbon_emission_by_zone[$zone->id] += $bill->{$category}->carbon_emission;
+                    // }
+
+                    // $average_carbon_emission_every_category_by_zone[$category] = $total_carbon_emission_by_zone[$zone->id] / $this->getZones()->count();
+                }
             }
         }
 
@@ -139,7 +151,7 @@ class Competition extends Model
             $total_carbon_emission_by_zone,
             $average_carbon_emission_by_month,
             $average_carbon_emission_by_zone,
-            $total_carbon_emission_by_category,
+            $total_carbon_emission_every_category,
             $total_carbon_emission,
             $average_carbon_emission_every_category_by_month,
             $average_carbon_emission_every_category_by_zone,
@@ -149,7 +161,7 @@ class Competition extends Model
     public function getSubmissionStats()
     {
         $total_submission = $this->submissions->count();
-        $total_submission_by_category = $average_submission_every_category_by_month = $average_submission_every_category_by_zone = $this->initCalculationBySubmissionCategory();
+        $total_submission_every_category = $average_submission_every_category_by_month = $average_submission_every_category_by_zone = $this->initCalculationBySubmissionCategory();
         $total_submission_by_month = collect();
         $total_submission_by_zone = $this->initCalculationByZone();
 
@@ -159,24 +171,43 @@ class Competition extends Model
             $total_submission_by_month->push($currentTotalMonth);
         }
 
-        foreach ($total_submission_by_category as $category => $value) {
+        foreach ($total_submission_every_category as $category => $value) {
             foreach ($this->submissions as $submission) {
                 if ($submission->checkSubmissionByCategory($category))
-                    $total_submission_by_category[$category] += 1;
+                    $total_submission_every_category[$category] += 1;
             }
 
-            $average_submission_every_category_by_month[$category] = $total_submission_by_category[$category] / $this->months->count();
+            $average_submission_every_category_by_month[$category] = $total_submission_every_category[$category] / $this->months->count();
         }
 
         $average_submission_by_month = $total_submission / $this->months->count();
         $average_submission_by_zone = $total_submission / $this->getZones()->count();
+
+        $total_submission_by_zone = $this->initCalculationByZone();
+
+        foreach ($this->getZones() as $zone) {
+            $bills = $zone->getSubmissions()->filter(function ($submission) {
+                return $submission->competition_id = $this->id;
+            });
+
+            foreach ($bills as $bill) {
+                $total_submission_by_zone[$zone->id] += 1;
+                foreach ($total_submission_every_category as $category => $value) {
+                    // if ($bill->{$category}) {
+                    //     $total_submission_by_zone[$zone->id] += $bill->{$category}->submission;
+                    // }
+
+                    // $average_submission_every_category_by_zone[$category] = $total_submission_by_zone[$zone->id] / $this->getZones()->count();
+                }
+            }
+        }
 
         return [
             $total_submission_by_month,
             $total_submission_by_zone,
             $average_submission_by_month,
             $average_submission_by_zone,
-            $total_submission_by_category,
+            $total_submission_every_category,
             $total_submission,
             $average_submission_every_category_by_month,
             $average_submission_every_category_by_zone,
