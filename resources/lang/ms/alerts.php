@@ -25,4 +25,8 @@ return [
     'evidence_create'   => 'Eviden ":title" bagi Kategori :category BERJAYA disimpan',
     'evidence_delete'   => 'Eviden yang dipilih BERJAYA dipadam',
     'evidence_delete_confirmation'   => 'Adakah anda pasti untuk memadam Eviden ":title" bagi Kategori :category?',
+    'activity_create'   => 'Aktiviti ":title" BERJAYA disimpan',
+    'activity_update'   => 'Aktiviti ":title" BERJAYA dikemaskini',
+    'activity_delete'   => 'Aktiviti yang dipilih BERJAYA dipadam',
+    'activity_delete_confirmation'   => 'Adakah anda pasti untuk memadam Aktiviti ":title"?',
 ];

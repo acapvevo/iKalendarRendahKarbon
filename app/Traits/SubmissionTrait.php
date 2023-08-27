@@ -20,23 +20,14 @@ trait SubmissionTrait
         ]);
     }
 
-    public function getSubmissionCategories($type = 'competition')
+    public function getSubmissionCategories()
     {
-        switch ($type) {
-            case 'competition':
-                return DB::table('submission_category')->where('forCompetition', true)->get();
-
-            case 'activity':
-                return DB::table('submission_category')->where('forActivity', true)->get();
-
-            case 'all':
-                return DB::table('submission_category')->get();
-        }
+        return DB::table('category')->where('forCompetition', true)->get();
     }
 
     public function getSubmissionCategory($code)
     {
-        return DB::table('submission_category')->where('code', $code)->first();
+        return DB::table('category')->where('code', $code)->first();
     }
 
     public function initCalculationBySubmissionCategory()

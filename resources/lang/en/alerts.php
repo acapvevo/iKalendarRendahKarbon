@@ -25,4 +25,8 @@ return [
     'evidence_create'   => 'Evidence ":title" for :category Category has been successfully created',
     'evidence_delete_confirmation'   => 'Are you sure to delete Evidence ":title" for :category Category?',
     'evidence_delete'   => 'The chosen Evidence has successfully deleted',
+    'activity_create'   => 'Activity: ":title" has been successfully created',
+    'activity_update'   => 'Activity: ":title" has been successfully updated',
+    'activity_delete_confirmation'   => 'Are you sure to delete Activity ":title"?',
+    'activity_delete'   => 'The chosen Activity has successfully deleted',
 ];

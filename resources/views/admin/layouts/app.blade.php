@@ -171,9 +171,14 @@
             <a class="nav-link" href="{{ route('admin.analysis.competition.view') }}">{{ __('Competition') }}</a>
         </nav>
     </div>
+    <!-- Sidenav Link (Activity Management)-->
+    <a class="nav-link" href="{{ route('admin.activity.list') }}">
+        <div class="nav-link-icon"><i class="fa-solid fa-people-carry-box"></i></div>
+        {{ __('Activity Management') }}
+    </a>
     <!-- Sidenav Link (Zone Management)-->
     <a class="nav-link" href="{{ route('admin.zone.list') }}">
-        <div class="nav-link-icon"><i class="fa-solid fa-map-location-dot"></i></i></div>
+        <div class="nav-link-icon"><i class="fa-solid fa-map-location-dot"></i></div>
         {{ __('Zone Management') }}
     </a>
     <!-- Sidenav Link (Newsletter Management)-->

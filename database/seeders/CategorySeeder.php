@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Barryvdh\TranslationManager\Manager;
 use Barryvdh\TranslationManager\Models\Translation;
 
-class SubmissionCategorySeeder extends Seeder
+class CategorySeeder extends Seeder
 {
     private $translation_manager;
 
@@ -24,7 +24,7 @@ class SubmissionCategorySeeder extends Seeder
     public function run()
     {
         // Electric
-        DB::table('submission_category')->insertTs([
+        DB::table('category')->insertTs([
             'code' => 'E',
             'class' => 'App\Models\Electric',
             'name' => 'electric',
@@ -46,7 +46,7 @@ class SubmissionCategorySeeder extends Seeder
         $translation->save();
 
         // Water
-        DB::table('submission_category')->insertTs([
+        DB::table('category')->insertTs([
             'code' => 'W',
             'class' => 'App\Models\Water',
             'name' => 'water',
@@ -68,7 +68,7 @@ class SubmissionCategorySeeder extends Seeder
         $translation->save();
 
         // Recycle
-        DB::table('submission_category')->insertTs([
+        DB::table('category')->insertTs([
             'code' => 'R',
             'class' => 'App\Models\Recycle',
             'name' => 'recycle',
@@ -90,7 +90,7 @@ class SubmissionCategorySeeder extends Seeder
         $translation->save();
 
         // Used Oil
-        DB::table('submission_category')->insertTs([
+        DB::table('category')->insertTs([
             'code' => 'UO',
             'class' => 'App\Models\UsedOil',
             'name' => 'used_oil',
@@ -112,7 +112,7 @@ class SubmissionCategorySeeder extends Seeder
         $translation->save();
 
         // Electronic
-        DB::table('submission_category')->insertTs([
+        DB::table('category')->insertTs([
             'code' => 'ET',
             'class' => 'App\Models\Electronic',
             'name' => 'electronic',
@@ -134,7 +134,7 @@ class SubmissionCategorySeeder extends Seeder
         $translation->save();
 
         // Fabric
-        DB::table('submission_category')->insertTs([
+        DB::table('category')->insertTs([
             'code' => 'F',
             'class' => 'App\Models\Fabric',
             'name' => 'fabric',

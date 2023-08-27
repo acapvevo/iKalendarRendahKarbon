@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ActivityController;
 use App\Http\Controllers\Admin\Analysis\CompetitionController as AnalysisCompetitionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ZoneController;
@@ -132,6 +133,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::prefix('competition')->name('competition.')->group(function () {
                 Route::match(['get', 'post'], '', [AnalysisCompetitionController::class, 'view'])->name('view');
             });
+        });
+
+        // Activity Management routes
+        Route::prefix('activity')->name('activity.')->group(function () {
+            Route::get('', [ActivityController::class, 'list'])->name('list');
         });
 
         // Zone Management routes

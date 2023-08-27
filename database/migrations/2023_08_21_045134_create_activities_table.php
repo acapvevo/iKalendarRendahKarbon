@@ -18,6 +18,7 @@ class CreateActivitiesTable extends Migration
 
             $table->date('date');
             $table->string('title');
+            $table->double('total_carbon_emission')->default(0);
 
             $table->timestamps();
         });

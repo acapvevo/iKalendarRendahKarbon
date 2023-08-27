@@ -90,7 +90,7 @@ class Monthly extends Component
 
     public function render()
     {
-        $this->submission_categories = $this->getSubmissionCategories('competition');
+        $this->submission_categories = $this->getSubmissionCategories();
 
         return view('livewire.admin.analysis.competition.monthly');
     }

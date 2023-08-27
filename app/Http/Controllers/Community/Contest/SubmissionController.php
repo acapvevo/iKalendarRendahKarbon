@@ -20,7 +20,7 @@ class SubmissionController extends Controller
         $validated = $request->validated();
 
         $competition = $this->getCompetition($validated['competition_id']);
-        $submission_category = $this->getSubmissionCategories('competition');
+        $submission_category = $this->getSubmissionCategories();
 
         return view('community.contest.submission.category')->with([
             'competition' => $competition,

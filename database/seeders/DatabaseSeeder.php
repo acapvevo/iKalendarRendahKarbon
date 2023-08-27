@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             AddressCategorySeeder::class,
             OccupationSectorTypeSeeder::class,
             UserSeeder::class,
-            SubmissionCategorySeeder::class,
+            CategorySeeder::class,
             NewsletterCategorySeeder::class
         ]);
     }
