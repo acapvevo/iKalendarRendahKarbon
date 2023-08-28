@@ -20,6 +20,6 @@ trait ZoneTrait
     {
         return $this->getZones()->mapWithKeys(function ($zone) {
             return [$zone['id'] => 0];
-        });
+        })->toArray();
     }
 }

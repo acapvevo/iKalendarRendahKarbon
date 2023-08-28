@@ -104,7 +104,7 @@ class Competition extends Model
     public function getCarbonEmissionStats()
     {
         $total_carbon_emission_by_month = collect();
-        $total_carbon_emission_every_category = $average_carbon_emission_every_category_by_month = $average_carbon_emission_every_category_by_zone = $this->initCalculationBySubmissionCategory();
+        $total_carbon_emission_every_category = $this->initCalculationBySubmissionCategory();
         $total_carbon_emission = 0;
 
         foreach ($this->months as $month) {
@@ -119,8 +119,6 @@ class Competition extends Model
                         $total_carbon_emission_every_category[$category] += $bill->{$category}->carbon_emission;
                     }
                 }
-
-                $average_carbon_emission_every_category_by_month[$category] = $total_carbon_emission_every_category[$category] / $this->months->count();
             }
         }
 
@@ -153,15 +151,13 @@ class Competition extends Model
             $average_carbon_emission_by_zone,
             $total_carbon_emission_every_category,
             $total_carbon_emission,
-            $average_carbon_emission_every_category_by_month,
-            $average_carbon_emission_every_category_by_zone,
         ];
     }
 
     public function getSubmissionStats()
     {
         $total_submission = $this->submissions->count();
-        $total_submission_every_category = $average_submission_every_category_by_month = $average_submission_every_category_by_zone = $this->initCalculationBySubmissionCategory();
+        $total_submission_every_category = $this->initCalculationBySubmissionCategory();
         $total_submission_by_month = collect();
         $total_submission_by_zone = $this->initCalculationByZone();
 
@@ -176,8 +172,6 @@ class Competition extends Model
                 if ($submission->checkSubmissionByCategory($category))
                     $total_submission_every_category[$category] += 1;
             }
-
-            $average_submission_every_category_by_month[$category] = $total_submission_every_category[$category] / $this->months->count();
         }
 
         $average_submission_by_month = $total_submission / $this->months->count();
@@ -189,17 +183,17 @@ class Competition extends Model
             $bills = $zone->getSubmissions()->filter(function ($submission) {
                 return $submission->competition_id = $this->id;
             });
+            $total_submission_by_zone[$zone->id] = $bills->count();
 
-            foreach ($bills as $bill) {
-                $total_submission_by_zone[$zone->id] += 1;
-                foreach ($total_submission_every_category as $category => $value) {
-                    // if ($bill->{$category}) {
-                    //     $total_submission_by_zone[$zone->id] += $bill->{$category}->submission;
-                    // }
+            // foreach ($bills as $bill) {
+            //     foreach ($total_submission_every_category as $category => $value) {
+            //         if ($bill->{$category}) {
+            //             $total_submission_by_zone[$zone->id] += $bill->{$category}->submission;
+            //         }
 
-                    // $average_submission_every_category_by_zone[$category] = $total_submission_by_zone[$zone->id] / $this->getZones()->count();
-                }
-            }
+            //         $average_submission_every_category_by_zone[$category] = $total_submission_by_zone[$zone->id] / $this->getZones()->count();
+            //     }
+            // }
         }
 
         return [
@@ -209,8 +203,6 @@ class Competition extends Model
             $average_submission_by_zone,
             $total_submission_every_category,
             $total_submission,
-            $average_submission_every_category_by_month,
-            $average_submission_every_category_by_zone,
         ];
     }
 }

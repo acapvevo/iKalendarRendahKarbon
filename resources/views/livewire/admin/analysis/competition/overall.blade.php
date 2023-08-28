@@ -1,6 +1,4 @@
 @push('styles')
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <style>
         #map_carbon_emission_overall {
             height: 500px;
@@ -13,9 +11,6 @@
 @endpush
 
 @php
-    [$total_carbon_emission_by_month, $total_carbon_emission_by_zone, $average_carbon_emission_by_month, $average_carbon_emission_by_zone, $total_carbon_emission_every_category, $total_carbon_emission] = $carbon_emission_stats;
-
-    [$total_submission_by_month, $total_submission_by_zone, $average_submission_by_month, $average_submission_by_zone, $total_submission_every_category, $total_submission] = $submission_stats;
     $colNum = floor(12 / $submission_categories->count());
 @endphp
 
@@ -38,6 +33,10 @@
                             <strong class="text-primary">{{ __('Collecting Analysis') }}...</strong>
                         </div>
                     @else
+                        @php
+                            [$total_carbon_emission_by_month, $total_carbon_emission_by_zone, $average_carbon_emission_by_month, $average_carbon_emission_by_zone, $total_carbon_emission_every_category, $total_carbon_emission] = $carbon_emission_stats;
+                        @endphp
+
                         <div class="py-3">
                             <h5 class="text-center">{{ __('Total Carbon Emission By Month') }}</h5>
                             <div class="row">
@@ -156,6 +155,10 @@
                             <strong class="text-primary">{{ __('Collecting Analysis') }}...</strong>
                         </div>
                     @else
+                        @php
+                            [$total_submission_by_month, $total_submission_by_zone, $average_submission_by_month, $average_submission_by_zone, $total_submission_every_category, $total_submission] = $submission_stats;
+                        @endphp
+
                         <div class="py-3">
                             <h5 class="text-center">{{ __('Total Submission By Month') }}</h5>
                             <div class="row">
@@ -233,7 +236,8 @@
                                                 <div class="me-3">
                                                     <div class="text-white-75 small">{{ __('Total Submission for') }}
                                                         <br>
-                                                        {{ __($category->description) }}</div>
+                                                        {{ __($category->description) }}
+                                                    </div>
                                                     <div class="text-lg fw-bold">
                                                         {{ $total_submission_every_category[$category->name] }}
                                                         {{ __('Communities') }}</div>
@@ -256,47 +260,36 @@
 </div>
 
 @push('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.3/chart.umd.js"
-        integrity="sha512-wv0y1q2yUeK6D55tLrploHgbqz7ZuGB89rWPqmy6qOR9TmmzYO69YZYbGIYDmqmKG0GwOHQXlKwPyOnJ95intA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="{{ asset('js/chart.js/colors.js') }}"></script>
-    <script src="{{ asset('js/chart.js/fonts.js') }}"></script>
-    <script src="{{ asset('js/chart.js/legends.js') }}"></script>
-    <script src="{{ asset('js/chart.js/tooltips.js') }}"></script>
-
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-
     <script>
-        const overallTab = document.getElementById('pills-overall');
-
         document.addEventListener('DOMContentLoaded', function() {
             @this.getAnalysis()
         });
 
         window.addEventListener('initChartAndMap', event => {
 
-            generateChartByMonth(event.detail.months, "total_carbon_emission_by_month_bar_chart",
+            generateChartByMonthOverall(event.detail.months, "total_carbon_emission_by_month_bar_chart",
                 '{{ __('Total Carbon Emission') }}',
                 event.detail.total_carbon_emission_by_month,
                 'tooltips_total_carbon_emission_by_month_bar_chart', 'kgCO<sub>2</sub>',
                 'legends_total_carbon_emission_by_month_bar_chart', '{{ __('Month') }}',
                 '{{ __('Total Carbon Emission') }}');
 
-            generateChartByMonth(event.detail.months, "total_submission_by_month_bar_chart",
+            generateChartByMonthOverall(event.detail.months, "total_submission_by_month_bar_chart",
                 '{{ __('Total Submission') }}',
                 event.detail.total_submission_by_month,
                 'tooltips_total_submission_by_month_bar_chart', 'Communities',
                 'legends_total_submission_by_month_bar_chart', '{{ __('Month') }}',
                 '{{ __('Total Submission') }}');
 
-            initMap('map_carbon_emission_overall', event.detail.zones, event.detail.total_carbon_emission_by_zone);
+            initMapOverall('map_carbon_emission_overall', event.detail.zones, event.detail
+                .total_carbon_emission_by_zone, 'kgCO<sub>2</sub>');
 
-            initMap('map_submission_overall', event.detail.zones, event.detail.total_submission_by_zone);
+            initMapOverall('map_submission_overall', event.detail.zones, event.detail.total_submission_by_zone,
+                @js(__('Communities')));
 
         })
 
-        function generateChartByMonth(months, canvasID, label, dataByMonth, tooltipsID, symbol, legendsID, xTitle, yTitle) {
+        function generateChartByMonthOverall(months, canvasID, label, dataByMonth, tooltipsID, symbol, legendsID, xTitle, yTitle) {
             const canvas_element = document.getElementById(canvasID);
 
             const labels = months;
@@ -357,24 +350,15 @@
             new Chart(canvas_element, config);
         }
 
-        function initMap(elementID, zones, data) {
-            let map = L.map(elementID).setView([1.460, 103.614], 12);
-
-            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+        function initMapOverall(elementID, zones, data, symbol) {
+            let overallMap = initLeaflet(elementID);
 
             for (let zone of zones) {
-                let polygon = L.polygon([zone['coordinates']]).addTo(map);
-                polygon.bindPopup(zone['name'] + ' ' + data[zone['id']]);
+                let polygon = setZone([zone['coordinates']], overallMap);
+                setPopupData(polygon, @js(__('Zone') . ' ') + zone['number'], zone['name'], data[zone['id']] + ' ' + symbol);
             }
 
-            let observer_map = new MutationObserver(function() {
-                if (overallTab.style.display != 'none') {
-                    map.invalidateSize();
-                }
-            });
-            observer_map.observe(overallTab, {
-                attributes: true
-            });
+            setObserver('pills-overall', overallMap)
         }
     </script>
 @endpush
