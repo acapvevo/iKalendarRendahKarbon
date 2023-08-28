@@ -67,30 +67,19 @@
 @push('scripts')
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script>
-        const map = L.map('map').setView([1.460, 103.614], 12);
+    <script src="{{ asset('js/leaflet/helpers.js') }}"></script>
 
-        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-            attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
-        }).addTo(map);
+    <script>
+        const map = initLeaflet('map');
 
         @foreach ($zones as $zone)
-            L.polygon(@js($zone->getCoordinateLeaflet()), {
-                color: '#' + (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0')
-            }).addTo(map).bindTooltip(@js(__('Zone') . ' ' . $zone->number . ': ' . $zone->name), {
+            let polygon = setZone(@js($zone->getCoordinateLeaflet()), map);
+            polygon.bindTooltip(@js(__('Zone') . ' ' . $zone->number . ': ' . $zone->name), {
                 permanent: true,
                 direction: "center"
             });
         @endforeach
 
-        const mapTab = document.getElementById('nav-map');
-        const observerMap = new MutationObserver(function() {
-            if (mapTab.style.display != 'none') {
-                map.invalidateSize();
-            }
-        });
-        observerMap.observe(mapTab, {
-            attributes: true
-        });
+        setObserver('nav-map', map);
     </script>
 @endpush

@@ -5,15 +5,15 @@
 
 <div>
     <h5 class="mb-4">
-        @switch($category)
+        @switch($category_name)
             @case('electric')
             @case('water')
-                {{ __('Answer the questions on how you able to save your ' . ($category === 'electric' ? 'Electric' : 'Water') . ' Consumption') }}
+                {{ __('Answer the questions on how you able to save your ' . $category_description . ' Consumption') }}
             @break
 
             @case('recycle')
             @case('used_oil')
-                {{ __('Answer the questions on how you able to increase your ' . ($category === 'recycle' ? 'Recycle' : 'Used Oil') . ' Collection') }}
+                {{ __('Answer the questions on how you able to increase your ' . $category_description . ' Collection') }}
             @break
 
             @default

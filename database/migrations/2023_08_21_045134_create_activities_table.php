@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubmissionCategoryTable extends Migration
+class CreateActivitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateSubmissionCategoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('submission_category', function (Blueprint $table) {
+        Schema::create('activities', function (Blueprint $table) {
             $table->id();
 
-            $table->char('code', 2);
-            $table->string('name');
-            $table->string('description');
-            $table->string('symbol');
+            $table->date('date');
+            $table->string('title');
+            $table->double('total_carbon_emission')->default(0);
 
             $table->timestamps();
         });
@@ -32,6 +31,6 @@ class CreateSubmissionCategoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('submission_category');
+        Schema::dropIfExists('activities');
     }
 }

@@ -16,14 +16,12 @@ class CreateRecyclesTable extends Migration
         Schema::create('recycles', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('bill_id');
-            $table->foreign('bill_id')->references('id')->on('bills')->onDelete('cascade');
+            $table->unsignedBigInteger('parent_id');
+            $table->string('parent_type');
 
             $table->float('weight');
             $table->float('value');
             $table->float('carbon_emission');
-
-            $table->string('evidence')->nullable();
 
             $table->timestamps();
         });

@@ -15,11 +15,11 @@ class Electric extends Model
      * @var array
      */
     protected $fillable = [
-        'bill_id',
+        'parent_id',
+        'parent_type',
         'usage',
         'charge',
         'carbon_emission',
-        'evidence',
     ];
 
     /**
@@ -31,13 +31,12 @@ class Electric extends Model
     ];
 
     /**
-     * Get the Bill that owns the Electric.
+     * Get the parent model (Bill or Activity).
      */
-    public function bill()
+    public function parent()
     {
-        return $this->belongsTo(Bill::class);
+        return $this->morphTo();
     }
-
     public function calculateCarbonEmission()
     {
         $this->carbon_emission = round($this->usage * 0.584, 2);

@@ -2,6 +2,11 @@
 
 @section('title', __('Competition Analysis'))
 
+@section('styles')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+@endsection
+
 @section('header')
     <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
         <div class="container-xl px-4">
@@ -9,15 +14,15 @@
                 <div class="row align-items-center justify-content-between">
                     <div class="col-auto mt-4">
                         <h1 class="page-header-title">
-                            <div class="page-header-icon"><i class="fa-solid fa-file-pen"></i></div>
-                            {{ __('Contest Management') }}
+                            <div class="page-header-icon"><i data-feather="bar-chart-2"></i></div>
+                            {{ __('Analysis Management') }}
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mt-4">{{ __('Competition Analysis') }}</div>
                 </div>
                 <nav class="mt-4 rounded" aria-label="breadcrumb">
                     <ol class="breadcrumb px-3 py-2 rounded mb-0">
-                        <li class="breadcrumb-item"><a href="#">{{ __('Contest Management') }}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('Analysis Management') }}</a></li>
                         <li class="breadcrumb-item active">{{ __('Competition Analysis') }}</li>
                     </ol>
                 </nav>
@@ -33,7 +38,7 @@
             </div>
             <div class="card-body">
                 <div class="py-3 d-flex justify-content-end row">
-                    <form action="{{ route('admin.contest.analysis.view') }}" method="post">
+                    <form action="{{ route('admin.analysis.competition.view') }}" method="post">
                         @csrf
 
                         <div class="input-group">
@@ -70,19 +75,33 @@
                 <div class="tab-content py-3" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-overall" role="tabpanel"
                         aria-labelledby="pills-overall-tab" tabindex="0">
-                        @livewire('admin.contest.analysis.overall', ['competition' => $currentCompetition])
+                        @livewire('admin.analysis.competition.overall', ['competition' => $currentCompetition])
                     </div>
                     <div class="tab-pane fade" id="pills-monthly" role="tabpanel" aria-labelledby="pills-monthly-tab"
                         tabindex="0">
-                        @livewire('admin.contest.analysis.monthly', ['competition' => $currentCompetition])
+                        @livewire('admin.analysis.competition.monthly', ['competition' => $currentCompetition])
                     </div>
                     <div class="tab-pane fade" id="pills-zones" role="tabpanel" aria-labelledby="pills-zones-tab"
                         tabindex="0">
-                        @livewire('admin.contest.analysis.zones', ['competition' => $currentCompetition])
+                        @livewire('admin.analysis.competition.zones', ['competition' => $currentCompetition])
                     </div>
                 </div>
 
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.3/chart.umd.js"
+        integrity="sha512-wv0y1q2yUeK6D55tLrploHgbqz7ZuGB89rWPqmy6qOR9TmmzYO69YZYbGIYDmqmKG0GwOHQXlKwPyOnJ95intA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{ asset('js/chart.js/colors.js') }}"></script>
+    <script src="{{ asset('js/chart.js/fonts.js') }}"></script>
+    <script src="{{ asset('js/chart.js/legends.js') }}"></script>
+    <script src="{{ asset('js/chart.js/tooltips.js') }}"></script>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="{{ asset('js/leaflet/helpers.js') }}"></script>
 @endsection

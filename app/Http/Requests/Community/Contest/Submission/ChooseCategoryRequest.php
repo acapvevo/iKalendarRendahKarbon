@@ -33,7 +33,7 @@ class ChooseCategoryRequest extends FormRequest
     {
         return [
             'competition_id' => 'required|integer|exists:competitions,id',
-            'category' => 'required|string|exists:submission_category,name'
+            'category' => 'required|string|exists:category,code'
         ];
     }
 }

@@ -7,7 +7,7 @@
             <thead class="table-primary">
                 <tr>
                     <th>{{ __('Name') }}</th>
-                    <th>{{ __('Postcode') }}</th>
+                    <th>{{ __('Zone') }}</th>
                     <th>{{ __('Total Carbon Emission') }}</th>
                     <th>{{ __('Status') }}</th>
                     <th>{{ __('Menu') }}</th>
@@ -34,8 +34,8 @@
                                 <td>{{ $submission->community->name ?? '' }}</td>
                             </tr>
                             <tr>
-                                <th>{{ __('Postcode') }}</th>
-                                <td>{{ $submission->community->address->postcode ?? '' }}</td>
+                                <th>{{ __('Zone') }}</th>
+                                <td>{{ ($submission && $submission->community && $submission->community->address->zone) ? $submission->community->address->zone->getFormalName() : '' }}</td>
                             </tr>
                             <tr>
                                 <th>{{ __('Total Carbon Emission') }}</th>
@@ -66,7 +66,7 @@
                     "url": "{{ route('admin.contest.submission.filter', ['competition_id' => $competition_id]) }}",
                 },
                 searchBuilder: {
-                    columns: [1, 2, 3]
+                    columns: [0, 1, 2, 3]
                 },
                 buttons: [
                     'searchBuilder',

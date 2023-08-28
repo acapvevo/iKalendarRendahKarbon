@@ -44,6 +44,14 @@ class Submission extends Model
     }
 
     /**
+     * Get the Evidences associated with the Submission.
+     */
+    public function evidences()
+    {
+        return $this->hasMany(Evidence::class);
+    }
+
+    /**
      * Get the Bills associated with the Submission.
      */
     public function bills()

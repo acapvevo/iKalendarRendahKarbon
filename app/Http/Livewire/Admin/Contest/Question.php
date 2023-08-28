@@ -7,11 +7,12 @@ use App\Models\Competition;
 use App\Traits\Livewire\CheckGuard;
 use Barryvdh\TranslationManager\Manager;
 use App\Models\Question as QuestionModel;
+use App\Traits\QuestionTrait;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Question extends Component
 {
-    use LivewireAlert, CheckGuard;
+    use LivewireAlert, CheckGuard, QuestionTrait;
 
     protected $guard = 'admin';
 
@@ -41,7 +42,7 @@ class Question extends Component
             'example_malay' => 'required|string|max:2048',
             'text_english' => 'required|string|max:2048',
             'example_english' => 'required|string|max:2048',
-            'question.category' => 'required|string|exists:submission_category,code',
+            'question.category' => 'required|string|exists:category,code',
         ];
     }
 
@@ -89,6 +90,22 @@ class Question extends Component
         }
     }
 
+    public function close()
+    {
+        $this->question = new QuestionModel([
+            'competition_id' => $this->competition->id
+        ]);
+
+        $this->reset([
+            'text_english',
+            'example_english',
+            'text_malay',
+            'example_malay',
+        ]);
+
+        $this->resetErrorBag();
+    }
+
     public function create()
     {
         $this->validate();
@@ -123,25 +140,9 @@ class Question extends Component
         redirect(route('admin.contest.question.list', ['competition_id' => $this->competition->id]))->with('success', __("alerts.question_update", ['text' => $this->question->text]));
     }
 
-    public function close()
-    {
-        $this->question = new QuestionModel([
-            'competition_id' => $this->competition->id
-        ]);
-
-        $this->reset([
-            'text_english',
-            'example_english',
-            'text_malay',
-            'example_malay',
-        ]);
-
-        $this->resetErrorBag();
-    }
-
     public function askDelete($id)
     {
-        $question = QuestionModel::find($id);
+        $question = $this->getQuestion($id);
 
         $this->alert('warning', __('Warning'), [
             'inputAttributes' => [
@@ -162,7 +163,7 @@ class Question extends Component
 
     public function delete($response)
     {
-        $question = QuestionModel::find($response['data']['inputAttributes']['id']);
+        $question = $this->getQuestion($response['data']['inputAttributes']['id']);
 
         $question->deleteTranslation();
 

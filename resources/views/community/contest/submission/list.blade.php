@@ -13,7 +13,7 @@
                             {{ __('Competition Management') }}
                         </h1>
                     </div>
-                    <div class="col-12 col-xl-auto mt-4">{{ __($categoryName) }}</div>
+                    <div class="col-12 col-xl-auto mt-4">{{ __($categoryDescription) }}</div>
                 </div>
                 <nav class="mt-4 rounded" aria-label="breadcrumb">
                     <ol class="breadcrumb px-3 py-2 rounded mb-0">
@@ -22,7 +22,7 @@
                                 href="{{ route('community.contest.competition.list') }}">{{ $submission->competition->year }}</a>
                         </li>
                         <li class="breadcrumb-item"><a
-                                href="{{ route('community.contest.submission.category', ['competition_id' => $submission->competition->id]) }}">{{ $categoryName }}</a>
+                                href="{{ route('community.contest.submission.category', ['competition_id' => $submission->competition->id]) }}">{{ __($categoryDescription) }}</a>
                         </li>
                         <li class="breadcrumb-item active">{{ __('Submission Details') }}</li>
                     </ol>
@@ -36,7 +36,7 @@
     <div class="container-xl px-4 mt-n10">
         <div class="card">
             <div class="card-header text-center">
-                {{ __('Submission Details for') }}<br>{{ $submission->competition->name }}<br>({{ __($categoryName) }})
+                {{ __('Submission Details for') }}<br>{{ $submission->competition->name }}<br>({{ __($categoryDescription) }})
             </div>
             <div class="card-body">
                 <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
@@ -46,16 +46,27 @@
                             aria-selected="true">{{ __('Record') }}</button>
                     </li>
                     <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-evidence-tab" data-bs-toggle="pill" data-bs-target="#pills-evidence"
+                            type="button" role="tab" aria-controls="pills-evidence"
+                            aria-selected="false">{{ __('Evidence') }}</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
                         <button class="nav-link" id="pills-answer-tab" data-bs-toggle="pill" data-bs-target="#pills-answer"
                             type="button" role="tab" aria-controls="pills-answer"
                             aria-selected="false">{{ __('Bonus Questions') }}</button>
                     </li>
                 </ul>
-                <div class="tab-content" id="pills-tabContent">
+                <div class="tab-content py-3" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-record" role="tabpanel"
                         aria-labelledby="pills-record-tab" tabindex="0">
 
                         @livewire('community.contest.record', ['submission' => $submission, 'category' => $category])
+
+                    </div>
+                    <div class="tab-pane fade" id="pills-evidence" role="tabpanel" aria-labelledby="pills-evidence-tab"
+                        tabindex="0">
+
+                        @livewire('community.contest.evidence', ['submission' => $submission, 'category' => $category])
 
                     </div>
                     <div class="tab-pane fade" id="pills-answer" role="tabpanel" aria-labelledby="pills-answer-tab"

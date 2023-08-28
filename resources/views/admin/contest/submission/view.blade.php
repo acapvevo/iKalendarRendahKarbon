@@ -41,6 +41,11 @@
                             aria-selected="true">{{ __('Record') }}</button>
                     </li>
                     <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-evidence-tab" data-bs-toggle="pill" data-bs-target="#pills-evidence"
+                            type="button" role="tab" aria-controls="pills-evidence"
+                            aria-selected="false">{{ __('Evidence') }}</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
                         <button class="nav-link" id="pills-answer-tab" data-bs-toggle="pill" data-bs-target="#pills-answer"
                             type="button" role="tab" aria-controls="pills-answer"
                             aria-selected="false">{{ __('Bonus Questions') }}</button>
@@ -51,6 +56,12 @@
                         aria-labelledby="pills-record-tab" tabindex="0">
 
                         @livewire('admin.contest.record', ['submission' => $submission])
+
+                    </div>
+                    <div class="tab-pane fade" id="pills-evidence" role="tabpanel" aria-labelledby="pills-evidence-tab"
+                        tabindex="0">
+
+                        @livewire('admin.contest.evidence', ['submission' => $submission])
 
                     </div>
                     <div class="tab-pane fade" id="pills-answer" role="tabpanel" aria-labelledby="pills-answer-tab"

@@ -12,6 +12,11 @@ trait SubmissionTrait
         return Submission::find($id);
     }
 
+    public function getAllSubmissions()
+    {
+        return Submission::all();
+    }
+
     public function getSubmissionByCompetitionIDAndCommunityID($competition_id, $community_id)
     {
         return Submission::firstOrNew([
@@ -20,15 +25,25 @@ trait SubmissionTrait
         ]);
     }
 
+    public function getSubmissionsByCompetitionID($competition_id)
+    {
+        return Submission::where('competition_id', $competition_id)->get();
+    }
+
     public function getSubmissionCategories()
     {
-        return DB::table('submission_category')->get();
+        return DB::table('category')->where('forCompetition', true)->get();
+    }
+
+    public function getSubmissionCategory($code)
+    {
+        return DB::table('category')->where('code', $code)->first();
     }
 
     public function initCalculationBySubmissionCategory()
     {
         return $this->getSubmissionCategories()->mapWithKeys(function ($category) {
             return [$category->name => 0];
-        });
+        })->toArray();
     }
 }

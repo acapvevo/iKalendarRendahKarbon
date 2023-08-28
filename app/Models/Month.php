@@ -85,22 +85,17 @@ class Month extends Model
         $total_carbon_emission_by_zone = $this->initCalculationByZone();
         $total_carbon_emission_by_category = $this->initCalculationBySubmissionCategory();
 
-        // foreach ($this->getZones() as $zone) {
-        //     foreach ($this->getBillsByZone($zone->id) as $bill) {
-        //         $total_carbon_emission_by_zone[$zone->id] += $bill->total_carbon_emission;
-        //     }
-
-        //     $average_carbon_emission_by_zone[$zone->id] = $total_carbon_emission_by_zone[$zone->id]/$this->competiton->months->count();
-        // }
-
-        $average_carbon_emission_by_zone = $total_carbon_emission / $this->getZones()->count();
-
-        foreach ($this->bills as $bill) {
-            foreach ($total_carbon_emission_by_category as $category => $value) {
-                if ($bill->{$category})
-                    $total_carbon_emission_by_category[$category] += $bill->{$category}->carbon_emission;
+        foreach ($this->getZones() as $zone) {
+            foreach ($this->getBillsByZone($zone->id) as $bill) {
+                $total_carbon_emission_by_zone[$zone->id] += $bill->total_carbon_emission;
+                foreach ($total_carbon_emission_by_category as $category => $value) {
+                    if ($bill->{$category})
+                        $total_carbon_emission_by_category[$category] += $bill->{$category}->carbon_emission;
+                }
             }
         }
+
+        $average_carbon_emission_by_zone = $total_carbon_emission / $this->getZones()->count();
 
         return [
             $total_carbon_emission_by_zone,
@@ -116,21 +111,19 @@ class Month extends Model
         $total_submission_by_zone = $this->initCalculationByZone();
         $total_submission_by_category = $this->initCalculationBySubmissionCategory();
 
-        // foreach ($this->getZones() as $zone) {
-        //     foreach ($this->getBillsByZone($zone->id) as $bill) {
-        //         $total_carbon_emission_by_zone[$zone->id] += $bill->total_carbon_emission;
-        //     }
-
-        //     $average_carbon_emission_by_zone[$zone->id] = $total_carbon_emission_by_zone[$zone->id]/$this->competiton->months->count();
-        // }
+        foreach ($this->getZones() as $zone) {
+            foreach ($this->getBillsByZone($zone->id) as $bill) {
+                $total_submission_by_zone[$zone->id] += 1;
+                foreach ($total_submission_by_category as $category => $value) {
+                    if ($bill->{$category})
+                        $total_submission_by_category[$category] += 1;
+                }
+            }
+        }
 
         $average_submission_by_zone = $total_submission / $this->getZones()->count();
 
         foreach ($this->bills as $bill) {
-            foreach ($total_submission_by_category as $category => $value) {
-                if ($bill->{$category})
-                    $total_submission_by_category[$category] += 1;
-            }
         }
 
         return [

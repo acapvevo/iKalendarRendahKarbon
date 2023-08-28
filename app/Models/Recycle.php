@@ -15,11 +15,11 @@ class Recycle extends Model
      * @var array
      */
     protected $fillable = [
-        'bill_id',
+        'parent_id',
+        'parent_type',
         'weight',
         'value',
         'carbon_emission',
-        'evidence',
     ];
 
     /**
@@ -31,11 +31,11 @@ class Recycle extends Model
     ];
 
     /**
-     * Get the Bill that owns the Recycle.
+     * Get the parent model (Bill or Activity).
      */
-    public function bill()
+    public function parent()
     {
-        return $this->belongsTo(Bill::class);
+        return $this->morphTo();
     }
 
     public function calculateCarbonEmission()

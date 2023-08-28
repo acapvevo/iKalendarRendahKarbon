@@ -70,7 +70,7 @@ class CommunityController extends Controller
                     $editCommunityTitle = __('Edit Community');
                     $verifyCommunityTitle = __('Verify Community');
 
-                    $verifyCommunityButton = (!$row->isVerified && $row->identification_card) ? <<< EOT
+                    $verifyCommunityButton = (!$row->isVerified && $row->identification_card_image) ? <<< EOT
                     <button type="button" class="btn btn-primary btn-sm openModal" data-bs-toggle="modal"
                         data-bs-target="#verifyCommunityModal"
                         id="$row->id">
@@ -112,7 +112,7 @@ class CommunityController extends Controller
                 'communities.username',
                 'communities.email',
                 'communities.isVerified',
-                'communities.identification_card',
+                'communities.identification_card_image',
             ]);
 
         return response()->json(Datatable::simple($request->all(), $dbObj, $columns));
