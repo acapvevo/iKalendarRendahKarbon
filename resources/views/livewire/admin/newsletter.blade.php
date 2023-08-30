@@ -146,7 +146,7 @@
                     <button class="btn btn-primary" type="button" wire:loading.attr="disabled"
                         wire:click.prevent="create">
                         <span wire:loading.remove>{{ __('Save') }}</span>
-                        <div wire:loading wire:target="create">
+                        <div wire:loading>
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                             {{ __('Saving...') }}
                         </div>
@@ -308,7 +308,7 @@
                     <button class="btn btn-primary" type="button" wire:loading.attr="disabled"
                         wire:click.prevent="update">
                         <span wire:loading.remove>{{ __('Update') }}</span>
-                        <div wire:loading wire:target="update">
+                        <div wire:loading>
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                             {{ __('Updating...') }}
                         </div>

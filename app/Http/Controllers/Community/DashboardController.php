@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Community;
 
 use App\Http\Controllers\Controller;
-use Geocoder\Laravel\Facades\Geocoder;
+use App\Http\Requests\Universal\Newsletter\ViewThumbnailRequest;
+use App\Traits\NewsletterTrait;
 
 class DashboardController extends Controller
 {
+    use NewsletterTrait;
+
     public function __construct()
     {
         /*

@@ -6,8 +6,20 @@ use App\Models\Month;
 
 trait MonthTrait
 {
+    use DateTimeTrait;
+
     public function getMonth($id)
     {
         return Month::find($id);
+    }
+
+    public function getCurrentMonthByCompetitionID($competition_id)
+    {
+        $currentMonth = $this->getCurrentMonth();
+
+        return Month::firstOrNew([
+            'num' => $currentMonth,
+            'competition_id' => $competition_id
+        ]);
     }
 }

@@ -29,4 +29,13 @@ class NewsletterController extends Controller
 
         return $newsletter->previewThumbnail();
     }
+
+    public function view($id)
+    {
+        $newsletter = $this->getNewsletter($id);
+
+        return view('community.newsletter.view')->with([
+            'newsletter' => $newsletter
+        ]);
+    }
 }
