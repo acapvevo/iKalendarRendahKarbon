@@ -70,8 +70,8 @@
     </div>
 
     <!-- View Answer Modal -->
-    <div class="modal fade" id="viewAnswerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="viewAnswerModalLabel" aria-hidden="true" wire:ignore.self>
+    <div class="modal fade" id="viewAnswerModal" tabindex="-1" aria-labelledby="viewAnswerModalLabel"
+        aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -101,8 +101,8 @@
     </div>
 
     <!-- Update Answer Modal -->
-    <div class="modal fade" id="updateAnswerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="updateAnswerModalLabel" aria-hidden="true" wire:ignore.self>
+    <div class="modal fade" id="updateAnswerModal" tabindex="-1" aria-labelledby="updateAnswerModalLabel"
+        aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
