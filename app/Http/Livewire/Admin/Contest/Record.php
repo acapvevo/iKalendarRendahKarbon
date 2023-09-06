@@ -34,13 +34,6 @@ class Record extends Component
 
     public $submission_categories;
 
-    protected function getListeners()
-    {
-        return [
-            'closeModal' => 'close'
-        ];
-    }
-
     public function mount($submission)
     {
         $this->submission_id = $submission->id;
