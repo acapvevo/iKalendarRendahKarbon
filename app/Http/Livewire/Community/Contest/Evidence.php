@@ -33,7 +33,6 @@ class Evidence extends Component
     protected function getListeners()
     {
         return [
-            'closeModal' => 'close',
             'delete',
         ];
     }
