@@ -41,7 +41,7 @@
                                     </button>
                                     <button type="button" class="btn btn-primary btn-sm"
                                         wire:click.prevent='askDelete({{ $activityObj->id }})'><i
-                                            data-bs-toggle="tooltip" data-bs-title="{{ __('Delete Zone') }}"
+                                            data-bs-toggle="tooltip" data-bs-title="{{ __('Delete Activity') }}"
                                             data-feather="trash-2"></i>
                                     </button>
                                 </div>

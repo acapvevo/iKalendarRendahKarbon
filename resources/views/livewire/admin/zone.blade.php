@@ -150,7 +150,7 @@
                 </div>
                 <div class="modal-body">
                     @if ($isLoading)
-                        <div class="d-flex align-items-center justify-content-center loading">
+                        <div class="d-flex align-items-center justify-content-center">
                             <span class="spinner-border text-primary" role="status">
                             </span> &nbsp;
                             <strong class="text-primary">{{ __('Collecting Zone Data') }}...</strong>
@@ -204,7 +204,7 @@
                 <div class="modal-body">
 
                     @if ($isLoading)
-                        <div class="d-flex align-items-center justify-content-center loading">
+                        <div class="d-flex align-items-center justify-content-center">
                             <span class="spinner-border text-primary" role="status">
                             </span> &nbsp;
                             <strong class="text-primary">{{ __('Collecting Zone Data') }}...</strong>

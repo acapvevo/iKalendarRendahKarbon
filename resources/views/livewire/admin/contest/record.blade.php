@@ -36,15 +36,14 @@
     </div>
 
     <!-- View Month Modal -->
-    <div class="modal fade" id="viewMonthModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="viewMonthModalLabel" aria-hidden="true" wire:ignore.self>
+    <div class="modal fade" id="viewMonthModal" tabindex="-1" aria-labelledby="viewMonthModalLabel" aria-hidden="true"
+        wire:ignore.self>
         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="viewMonthModalLabel">{{ __('View Submission for') }}
                         {{ $month ? $month->getName() : '' }}</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                        wire:click.prevent="close()"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="table-responsive">
@@ -82,10 +81,13 @@
                                     @case('used_oil')
                                         <tr>
                                             <th style="width: 20%">{{ __('Total Weight') }}</th>
-                                            <td class="text-center">{{ number_format((float) ${$category->name}->weight ?? 0, 2) }} {!! $category->symbol !!}
+                                            <td class="text-center">
+                                                {{ number_format((float) ${$category->name}->weight ?? 0, 2) }}
+                                                {!! $category->symbol !!}
                                             </td>
                                             <th style="width: 20%">{{ __('Total Sell Value') }}</th>
-                                            <td class="text-center">RM {{ number_format((float) ${$category->name}->value ?? 0, 2) }}
+                                            <td class="text-center">RM
+                                                {{ number_format((float) ${$category->name}->value ?? 0, 2) }}
                                             </td>
                                         </tr>
                                     @break
@@ -103,8 +105,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                        wire:click.prevent="close()">{{ __('Close') }}</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Close') }}</button>
                 </div>
             </div>
         </div>
@@ -113,5 +114,10 @@
 </div>
 
 @push('scripts')
-    <script></script>
+    <script>
+        const viewMonthModalEl = document.getElementById('viewMonthModal')
+        viewMonthModalEl.addEventListener('hidden.bs.modal', event => {
+            @this.emit('closeModal')
+        })
+    </script>
 @endpush
