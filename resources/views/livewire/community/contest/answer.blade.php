@@ -62,7 +62,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <th colspan="4" class="text-center">{{__("No Bonus Question for this Category")}}</th>
+                        <th colspan="4" class="text-center">{{ __('No Bonus Question for this Category') }}</th>
                     </tr>
                 @endforelse
             </tbody>
@@ -76,8 +76,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="viewAnswerModalLabel">{{ __('View Answer') }}</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                        wire:click.prevent="close()"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="table-responsive">
@@ -108,8 +107,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="updateAnswerModalLabel">{{ __('Update Answer') }}</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                        wire:click.prevent="close()"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="table-responsive">
@@ -172,6 +170,16 @@
         //         ['para', ['ul', 'ol', 'paragraph']],
         //     ]
         // });
+
+        const updateAnswerModalEl = document.getElementById('updateAnswerModal')
+        updateAnswerModalEl.addEventListener('hidden.bs.modal', event => {
+            @this.emit('closeModal')
+        })
+
+        const viewAnswerModalEl = document.getElementById('viewAnswerModal')
+        viewAnswerModalEl.addEventListener('hidden.bs.modal', event => {
+            @this.emit('closeModal')
+        })
 
         Livewire.on('changeTabAnswer', tab_state => {
             const answerTab = document.getElementById('answer' + tab_state + '-tab');

@@ -44,8 +44,8 @@
     </div>
 
     <!-- View Month Modal -->
-    <div class="modal fade" id="viewMonthModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="viewMonthModalLabel" aria-hidden="true" wire:ignore.self>
+    <div class="modal fade" id="viewMonthModal" tabindex="-1" aria-labelledby="viewMonthModalLabel" aria-hidden="true"
+        wire:ignore.self>
         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -114,8 +114,8 @@
     </div>
 
     <!-- Edit Submission Modal -->
-    <div class="modal fade" id="editSubmisssionModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="editSubmisssionModalLabel" aria-hidden="true" wire:ignore.self>
+    <div class="modal fade" id="editSubmisssionModal" tabindex="-1" aria-labelledby="editSubmisssionModalLabel"
+        aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -364,7 +364,11 @@
     <script>
         const editSubmisssionModalEl = document.getElementById('editSubmisssionModal')
         editSubmisssionModalEl.addEventListener('hidden.bs.modal', event => {
-            Livewire.emit('closeModal')
+            @this.emit('closeModal')
+        })
+        const viewMonthModalEl = document.getElementById('viewMonthModal')
+        viewMonthModalEl.addEventListener('hidden.bs.modal', event => {
+            @this.emit('closeModal')
         })
 
         Livewire.on('changeTab', tab_state => {

@@ -71,15 +71,16 @@
                     </div>
                     <div class="tab-pane fade" id="pills-answer" role="tabpanel" aria-labelledby="pills-answer-tab"
                         tabindex="0">
+                        @livewire('community.contest.answer', ['submission' => $submission, 'category' => $category])
 
-                        @if ($submission->checkBillsSubmit() === __('Fully Submitted'))
+                        {{-- @if ($submission->checkBillsSubmit() === __('Fully Submitted'))
                             @livewire('community.contest.answer', ['submission' => $submission, 'category' => $category])
                         @else
                             <div class="d-flex justify-content-center align-items-center" style="height: 500px">
                                 <h2>{{ __('Please submit the record for each month before answer the Bonus Question') }}
                                 </h2>
                             </div>
-                        @endif
+                        @endif --}}
 
                     </div>
                 </div>
