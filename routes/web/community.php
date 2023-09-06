@@ -65,10 +65,14 @@ Route::prefix('community')->name('community.')->group(function () {
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
             ->name('logout');
 
-        Route::get('/', [DashboardController::class, 'index']);
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-        Route::get('/dashboard', [DashboardController::class, 'index'])
-            ->name('dashboard');
+        // Dashboard routes
+        Route::prefix('dashboard')->name('dashboard.')->group(function () {
+
+            Route::get('', [DashboardController::class, 'index'])
+                ->name('view');
+        });
 
         // User Management routes
         Route::prefix('user')->name('user.')->group(function () {
@@ -110,6 +114,7 @@ Route::prefix('community')->name('community.')->group(function () {
         Route::prefix('newsletter')->name('newsletter.')->group(function () {
             Route::get('', [NewsletterController::class, 'list'])->name('list');
             Route::get('/thumbnail', [NewsletterController::class, 'thumbnail'])->name('thumbnail');
+            Route::get('/{id}', [NewsletterController::class, 'view'])->name('view');
         });
     });
 });

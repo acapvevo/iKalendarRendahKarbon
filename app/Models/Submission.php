@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\SubmissionTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Submission extends Model
 {
-    use HasFactory;
+    use HasFactory, SubmissionTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -122,5 +123,21 @@ class Submission extends Model
         return $this->bills->contains(function ($bill) use ($category) {
             return isset($bill->{$category});
         });
+    }
+
+    public function getCarbonEmissionStats()
+    {
+        $total_carbon_emission_by_category = $this->initCalculationBySubmissionCategory();
+
+        foreach($this->bills as $bill){
+            foreach($total_carbon_emission_by_category as $category => $value){
+                if($bill->{$category})
+                $total_carbon_emission_by_category[$category] += $bill->{$category}->carbon_emission;
+            }
+        }
+
+        return [
+            $total_carbon_emission_by_category
+        ];
     }
 }

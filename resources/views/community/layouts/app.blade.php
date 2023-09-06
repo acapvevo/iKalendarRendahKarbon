@@ -4,8 +4,6 @@
     $home = route('community.dashboard');
 @endphp
 
-@section('apps', 'iKalendar Karbon')
-
 @section('alerts')
     <!-- Example Alert 1-->
     <a class="dropdown-item dropdown-notifications-item" href="#!">

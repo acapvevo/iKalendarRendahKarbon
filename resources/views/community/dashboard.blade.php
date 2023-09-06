@@ -26,5 +26,6 @@
 
 @section('content')
     <div class="container-xl px-4 mt-n10">
+        @livewire('community.dashboard')
     </div>
 @endsection
