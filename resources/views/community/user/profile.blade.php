@@ -91,15 +91,15 @@
                             <tr>
                                 <th class="w-25">{{ __('Account Status') }}</th>
                                 <td colspan="3">
-                                    @if (!$user->isVerified && !$user->identification_card)
+                                    @if (!$user->isVerified && !$user->identification_card_image)
                                         <i class="fa-solid fa-xmark" style="color: #ff0000;"></i> {{ __('Not Verified') }}
-                                    @elseif (!$user->isVerified && $user->identification_card)
+                                    @elseif (!$user->isVerified && $user->identification_card_image)
                                         <i class="fa-solid fa-arrows-spin fa-spin" style="color: #1100ff;"></i>
                                         {{ __('Verification in Process') }}
                                     @else
                                         <i class="fa-solid fa-check" style="color: #00bd0d;"></i> {{ __('Verified') }}
                                     @endif
-                                    @if ($user->identification_card)
+                                    @if ($user->identification_card_image)
                                         <form action="{{ route('community.user.profile.ic') }}" method="post"
                                             target="_blank">
                                             @csrf
