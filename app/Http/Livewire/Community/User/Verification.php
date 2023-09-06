@@ -50,9 +50,9 @@ class Verification extends Component
         $this->validate();
 
         $file = $this->identification_card;
-        $this->user->identification_card = "identification_card_" . $this->user->id . '.' . $file->getClientOriginalExtension();
+        $this->user->identification_card_image = "identification_card_" . $this->user->id . '.' . $file->getClientOriginalExtension();
 
-        $file->storeAs('identification_card/community', $this->user->identification_card);
+        $file->storeAs('identification_card/community', $this->user->identification_card_image);
 
         $this->user->save();
 
