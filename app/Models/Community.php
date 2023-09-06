@@ -74,13 +74,13 @@ class Community extends Authenticatable
 
     public function viewIdentificationCard()
     {
-        return response()->file(storage_path('app/identification_card/community/' . $this->identification_card));
+        return Storage::response('identification_card/community', $this->identification_card_image);
     }
 
     public function deleteIdentificationCard()
     {
-        Storage::delete('identification_card/community/' . $this->identification_card);
-        $this->identification_card = null;
+        Storage::delete('identification_card/community' . $this->identification_card_image);
+        $this->identification_card_image = null;
     }
 
     public function getFolderName()
