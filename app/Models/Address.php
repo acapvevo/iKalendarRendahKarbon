@@ -108,20 +108,20 @@ class Address extends Model
 
         foreach ($this->getZones() as $zone) {
             $polygon = $zone->getPolygonArray();
-
             $result = $pointLocation->pointInPolygon($longitude . ' ' . $latitude, $polygon, false);
 
             switch ($result) {
                 case 'inside':
                 case 'boundary':
                     $this->zone_id = $zone->id;
-
                     $isZoneSet = true;
                     break;
             }
 
             if ($isZoneSet)
                 break;
+            else
+                $this->zone_id = null;
         }
     }
 }

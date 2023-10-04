@@ -15,10 +15,10 @@
         <table class="table table-bordered" id="questionTable" style="width: 100%">
             <thead class="table-primary">
                 <tr>
-                    <th>{{ __('Question') }}</th>
+                    <th style="width: 40%">{{ __('Question') }}</th>
                     <th>{{ __('Example Answer') }}</th>
-                    <th>{{ __('Category') }}</th>
-                    <th>{{ __('Menu') }}</th>
+                    <th style="width: 10%">{{ __('Category') }}</th>
+                    <th style="width: 10%">{{ __('Menu') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -134,7 +134,7 @@
                         <div class="mb-3">
                             <label for="category" class="form-label">{{ __('Category') }}</label>
                             <div id="category">
-                                @foreach (DB::table('submission_category')->get() as $index => $category)
+                                @foreach ($submission_categories as $index => $category)
                                     <div class="form-check form-check-inline">
                                         <input
                                             class="form-check-input {{ $errors->has('question.category') ? 'is-invalid' : '' }}"
@@ -286,7 +286,7 @@
                         <div class="mb-3">
                             <label for="category" class="form-label">{{ __('Category') }}</label>
                             <div id="category">
-                                @foreach (DB::table('submission_category')->get() as $index => $category)
+                                @foreach ($submission_categories as $index => $category)
                                     <div class="form-check form-check-inline">
                                         <input
                                             class="form-check-input {{ $errors->has('question.category') ? 'is-invalid' : '' }}"

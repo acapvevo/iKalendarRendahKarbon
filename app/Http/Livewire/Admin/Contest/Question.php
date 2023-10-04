@@ -8,6 +8,7 @@ use App\Traits\Livewire\CheckGuard;
 use Barryvdh\TranslationManager\Manager;
 use App\Models\Question as QuestionModel;
 use App\Traits\QuestionTrait;
+use App\Traits\SubmissionTrait;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Question extends Component
@@ -26,6 +27,8 @@ class Question extends Component
     public $example_malay;
     public $text_english;
     public $example_english;
+
+    public $submission_categories;
 
     public function getListeners()
     {
@@ -176,6 +179,8 @@ class Question extends Component
 
     public function render()
     {
+        $this->submission_categories = $this->getCategories();
+        
         return view('livewire.admin.contest.question');
     }
 }
