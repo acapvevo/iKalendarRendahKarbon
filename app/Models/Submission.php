@@ -68,6 +68,14 @@ class Submission extends Model
         return $this->hasMany(Answer::class);
     }
 
+    /**
+     * Get the Calculation associated with the Submission.
+     */
+    public function calculation()
+    {
+        return $this->morphOne(Calculation::class, 'parent');
+    }
+
     public function checkBillsSubmit()
     {
         if ($this->bills->isEmpty())
@@ -78,14 +86,19 @@ class Submission extends Model
             return __('Partially Submitted');
     }
 
-    public function calculateTotalCarbonEmission()
+    public function calculateStats()
     {
-        $this->total_carbon_emission = 0;
+        $total_carbon_emission = 0;
 
         foreach ($this->bills as $bill) {
             $bill->calculateTotalCarbonEmission();
-            $this->total_carbon_emission += $bill->total_carbon_emission;
+            $total_carbon_emission += $bill->calculation->total_carbon_emission;
         }
+    }
+
+    public function calculateTotalCarbonEmission()
+    {
+        $this->calculateStats();
 
         $this->save();
     }
@@ -129,10 +142,10 @@ class Submission extends Model
     {
         $total_carbon_emission_by_category = $this->initCalculationBySubmissionCategory();
 
-        foreach($this->bills as $bill){
-            foreach($total_carbon_emission_by_category as $category => $value){
-                if($bill->{$category})
-                $total_carbon_emission_by_category[$category] += $bill->{$category}->carbon_emission;
+        foreach ($this->bills as $bill) {
+            foreach ($total_carbon_emission_by_category as $category => $value) {
+                if ($bill->{$category})
+                    $total_carbon_emission_by_category[$category] += $bill->{$category}->carbon_emission;
             }
         }
 

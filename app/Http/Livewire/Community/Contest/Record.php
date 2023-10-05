@@ -110,10 +110,7 @@ class Record extends Component
 
     public function getSubmissionProperty()
     {
-        return $this->submission_id ? Submission::find($this->submission_id) : new Submission([
-            'competition_id' => $this->competition_id,
-            'community_id' => $this->community_id,
-        ]);
+        return $this->getSubmissionByCompetitionIDAndCommunityID($this->competition_id, $this->community_id);
     }
 
     public function getBillProperty()
@@ -126,40 +123,45 @@ class Record extends Component
         return $this->bill->month;
     }
 
-    public function getElectricProperty()
+    public function getCategoryProperty()
     {
-        return $this->bill->electric ?? new Electric([
-            'bill_id' => $this->bill->id
-        ]);
+        return $this->getSubmissionCategoryClass($this->category_code, $this->bill);
     }
 
-    public function getWaterProperty()
-    {
-        return $this->bill->water ?? new Water([
-            'bill_id' => $this->bill->id
-        ]);
-    }
+    // public function getElectricProperty()
+    // {
+    //     return $this->bill->electric ?? new Electric([
+    //         'bill_id' => $this->bill->id
+    //     ]);
+    // }
 
-    public function getRecycleProperty()
-    {
-        return $this->bill->recycle ?? new Recycle([
-            'bill_id' => $this->bill->id
-        ]);
-    }
+    // public function getWaterProperty()
+    // {
+    //     return $this->bill->water ?? new Water([
+    //         'bill_id' => $this->bill->id
+    //     ]);
+    // }
 
-    public function getUsedOilProperty()
-    {
-        return $this->bill->used_oil ?? new UsedOil([
-            'bill_id' => $this->bill->id
-        ]);
-    }
+    // public function getRecycleProperty()
+    // {
+    //     return $this->bill->recycle ?? new Recycle([
+    //         'bill_id' => $this->bill->id
+    //     ]);
+    // }
+
+    // public function getUsedOilProperty()
+    // {
+    //     return $this->bill->used_oil ?? new UsedOil([
+    //         'bill_id' => $this->bill->id
+    //     ]);
+    // }
 
     public function open($month_id)
     {
         $this->month_id = $month_id;
         $this->bill = $this->getBillProperty();
         $this->month = $this->getMonthProperty();
-        $this->{$this->category_name} = $this->{'get' . preg_replace('/\s+/', '', $this->category_description) . 'Property'}();
+        $this->{$this->category_name} = $this->getCategoryProperty();
     }
 
     public function close()
