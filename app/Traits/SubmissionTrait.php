@@ -9,7 +9,10 @@ trait SubmissionTrait
 {
     public function getSubmission($id)
     {
-        return Submission::find($id);
+        if ($id)
+            return Submission::find($id);
+        else
+            return new Submission;
     }
 
     public function getAllSubmissions()

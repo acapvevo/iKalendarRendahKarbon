@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\SubmissionTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Barryvdh\TranslationManager\Models\Translation;
@@ -10,7 +11,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class Question extends Model
 {
-    use HasFactory;
+    use HasFactory, SubmissionTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -49,7 +50,7 @@ class Question extends Model
 
     public function getCategory()
     {
-        return DB::table('submission_category')->where('code', $this->category)->first();
+        return $this->getSubmissionCategory($this->category);
     }
 
     public function getValue($attribute)

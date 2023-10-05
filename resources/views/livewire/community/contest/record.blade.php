@@ -71,7 +71,7 @@
                                     <tr>
                                         <th style="width: 20%">{{ __('Consumption') }}</th>
                                         <td class="text-center">{{ number_format((float) ${$category_name}->usage ?? 0, 2) }}
-                                            {{ $category_symbol }}
+                                            {!! $category_symbol !!}
                                         </td>
                                         <th style="width: 20%">{{ __('Bill Charge') }}</th>
                                         <td class="text-center">RM
@@ -183,7 +183,7 @@
                                                                 placeholder="{{ __('Enter your ' . $category_description . ' Consumption for') }} {{ $month ? $month->getName() : '' }}">
                                                             <span class="input-group-text"
                                                                 id="{{ $category_name }}.usage_desc">
-                                                                {{ $category_symbol }}
+                                                                {!! $category_symbol !!}
                                                             </span>
                                                             @error($category_name . '.usage')
                                                                 <div class="invalid-feedback">
@@ -296,7 +296,7 @@
                                                             <th style="width: 20%">{{ __('Consumption') }}</th>
                                                             <td class="text-center">
                                                                 {{ number_format((float) ${$category_name}->usage ?? 0, 2) }}
-                                                                {{ $category_symbol }}
+                                                                {!! $category_symbol !!}
                                                             </td>
                                                             <th style="width: 20%">{{ __('Bill Charge') }}</th>
                                                             <td class="text-center">RM
