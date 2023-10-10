@@ -81,7 +81,7 @@ class Register extends Component
         $community = $this->createCommunity([
             'username' => $this->user->username,
             'email' => $this->user->email,
-            'password' => Hash::make($this->user->password),
+            'password' => Hash::make($this->password),
         ], [
             'state' => 'JOHOR',
             'country' => 'MALAYSIA',
