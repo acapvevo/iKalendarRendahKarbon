@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\CalculationTrait;
 use App\Traits\SubmissionTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Bill extends Model
 {
-    use HasFactory, SubmissionTrait;
+    use HasFactory, SubmissionTrait, CalculationTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -102,13 +103,15 @@ class Bill extends Model
             $total_value += $this->{$category->name}->value ?? 0;
         }
 
-        $this->total_carbon_emission = $total_carbon_emission;
-        $this->total_charge = $total_charge;
-        $this->total_usage = $total_usage;
-        $this->total_weight = $total_weight;
-        $this->total_value = $total_value;
+        $calculation = $this->getCalculationByClassAndID($this->id, Bill::class);
 
-        
+        $calculation->total_carbon_emission = $total_carbon_emission;
+        $calculation->total_charge = $total_charge;
+        $calculation->total_usage = $total_usage;
+        $calculation->total_weight = $total_weight;
+        $calculation->total_value = $total_value;
+
+        $calculation->save();
     }
 
     public function calculateTotalCarbonEmission()

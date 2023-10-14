@@ -47,10 +47,10 @@ trait SubmissionTrait
     {
         $category = $this->getSubmissionCategory($code);
 
-        if ($bill->{$category->name}->id)
+        if ($bill->{$category->name})
             return $bill->{$category->name};
         else
-            return resolve($category, [
+            return resolve($category->class, [
                 'bill_id' => $bill->id
             ]);
     }

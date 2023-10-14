@@ -22,7 +22,7 @@ class Calculation extends Model
         'average_carbon_emission',
         'total_carbon_reduction',
         'total_carbon_emission_each_type',
-        'carbon_reduction_each_type',
+        'total_carbon_reduction_each_type',
         'total_usage',
         'average_usage',
         'total_usage_reduction',
@@ -47,14 +47,14 @@ class Calculation extends Model
      * @var array
      */
     protected $casts = [
-        'total_carbon_emission_by_type' => AsCollection::class,
-        'carbon_reduction_by_type' => AsCollection::class,
-        'total_usage_by_type' => AsCollection::class,
-        'usage_reduction_by_type' => AsCollection::class,
-        'total_charge_by_type' => AsCollection::class,
-        'charge_reduction_by_type' => AsCollection::class,
-        'total_weight_by_type' => AsCollection::class,
-        'total_value_by_type' => AsCollection::class,
+        'total_carbon_emission_each_type' => AsCollection::class,
+        'total_carbon_reduction_each_type' => AsCollection::class,
+        'total_usage_each_type' => AsCollection::class,
+        'usage_reduction_each_type' => AsCollection::class,
+        'total_charge_each_type' => AsCollection::class,
+        'charge_reduction_each_type' => AsCollection::class,
+        'total_weight_each_type' => AsCollection::class,
+        'total_value_each_type' => AsCollection::class,
     ];
 
     /**

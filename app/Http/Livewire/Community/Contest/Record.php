@@ -183,10 +183,17 @@ class Record extends Component
             $this->bill->save();
 
         $this->{$this->category_name}->calculateCarbonEmission();
-        $this->bill->{$this->category_name}()->save($this->{$this->category_name});
-        $this->submission->calculateTotalCarbonEmission();
+        $this->{$this->category_name}->parent_id = $this->bill->id;
+        $this->{$this->category_name}->parent_type = Bill::class;
+        $this->{$this->category_name}->save();
 
-        redirect(route('community.contest.submission.list', ['competition_id' => $this->competition_id, 'category' => $this->category_code]))->with('success', __('alerts.record_update', ['month' => $this->month->getName(), 'category' => $this->category_name]));
+        $this->bill->calculateStats();
+        $this->bill->save();
+
+        $this->submission->calculateStats();
+        $this->submission->save();
+
+        redirect(route('community.contest.submission.list', ['competition_id' => $this->competition_id, 'category' => $this->category_code]))->with('success', __('alerts.record_update', ['month' => $this->month->getName(), 'category' => __($this->category_description)]));
     }
 
     public function render()

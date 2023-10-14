@@ -13,6 +13,11 @@ trait BillTrait
         return Bill::find($id);
     }
 
+    public function getBillByMonth($month_id)
+    {
+        return Bill::where('month_id', $month_id)->first();
+    }
+
     public function getCurrentBillBySubmission($submission)
     {
         $currentMonth = $this->getCurrentMonthByCompetitionID($submission->competition_id);
