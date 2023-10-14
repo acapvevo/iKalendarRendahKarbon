@@ -153,4 +153,11 @@ class Submission extends Model
             $total_carbon_emission_by_category
         ];
     }
+
+    public function getEvidensByCategory($category)
+    {
+        return $this->evidences->filter(function($evidence) use ($category) {
+            return $evidence->category == $category;
+        });
+    }
 }

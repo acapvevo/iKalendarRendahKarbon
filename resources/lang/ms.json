@@ -202,6 +202,11 @@
     "Bill Charge": "Bayaran Bil",
     "Evidence": "Bukti",
     "No Evidence": "Tiada Bukti",
+    "Add Evidence": "Tambah Bukti",
+    "Insert your Evidence Title": "Sila Masukkan Tajuk Bukti Anda",
+    "Upload your Evidence File": "Sila Muatnaik Fail Bukti Anda",
+    "File": "Fail",
+    "Browse": "Lihat",
     "Carbon Emission": "Pelepasan Karbon",
     "Total Weight": "Jumlah Berat",
     "Total Sell Value": "Jumlah Nilai Jualan",
@@ -349,5 +354,6 @@
     "Wait for more news from us": "Nantikan berita lanjut dari kami",
     "Submission Stats": "Statistik Penyertaan",
     "Current Year": "Tahun Semasa",
-    "Current Month": "Bulan Semasa"
+    "Current Month": "Bulan Semasa",
+    "Accepted Format: .jpg, .pdf, .png, .doc, .docx | Max File Size: 4MB": "Format yang diterima: .jpg, .pdf, .png, .doc, .docx | Max Saiz Fail: 4MB"
 }

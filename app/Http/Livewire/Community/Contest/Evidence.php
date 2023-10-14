@@ -63,14 +63,14 @@ class Evidence extends Component
             'file_label' => __("Upload your Evidence File")
         ]);
 
-        $this->evidences = $this->submission->evidences;
         $category_obj = $this->getSubmissionCategory($category);
-
         $this->fill([
             'category_name' => $category_obj->name,
             'category_description' => $category_obj->description,
             'category_code' => $category_obj->code,
         ]);
+
+        $this->evidences = $this->submission->getEvidensByCategory($category_obj->code);
     }
 
     public function getEvidenceProperty()
@@ -86,7 +86,7 @@ class Evidence extends Component
     public function changePlaceholder()
     {
         $file = $this->file;
-        $this->file_label = $file ? $file->getClientOriginalName()  : __('Insert your Evidence File');
+        $this->file_label = $file ? $file->getClientOriginalName()  : __('Upload your Evidence File');
     }
 
     public function create()
