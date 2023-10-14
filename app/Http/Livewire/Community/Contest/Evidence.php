@@ -22,6 +22,8 @@ class Evidence extends Component
     public $evidences;
 
     public $evidence_id;
+    public $community_id;
+    public $competition_id;
 
     public $category_name;
     public $category_description;
@@ -41,7 +43,7 @@ class Evidence extends Component
     {
         return [
             'evidence.title' => 'required|string|max:255',
-            'file' => 'required|mimes:jpg,pdf,png,doc,docx|max:2048'
+            'file' => 'required|mimes:jpg,pdf,png,doc,docx|max:4096'
         ];
     }
 
@@ -52,8 +54,12 @@ class Evidence extends Component
 
     public function mount($submission, $category)
     {
+        $this->submission_id = $submission->id;
+        $this->competition_id = $submission->competition_id;
+        $this->community_id = $submission->community_id;
+
         $this->fill([
-            'submission' => $submission,
+            'submission' => $this->getSubmissionProperty(),
             'evidence' => $this->getEvidenceProperty(),
             'file_label' => __("Upload your Evidence File")
         ]);
@@ -73,6 +79,14 @@ class Evidence extends Component
         return $this->getEvidence($this->evidence_id);
     }
 
+    public function getSubmissionProperty()
+    {
+        return $this->submission_id ? Submission::find($this->submission_id) : new Submission([
+            'competition_id' => $this->competition_id,
+            'community_id' => $this->community_id,
+        ]);
+    }
+
     public function changePlaceholder()
     {
         $file = $this->file;
@@ -82,6 +96,10 @@ class Evidence extends Component
     public function create()
     {
         $this->validate();
+
+        $this->submission = $this->getSubmissionProperty();
+        if (!$this->submission->id)
+            $this->submission->save();
 
         $this->evidence->category = $this->category_code;
         $this->evidence->file = $this->evidence->formatTitleForFileName() . '.' . $this->file->getClientOriginalExtension();
