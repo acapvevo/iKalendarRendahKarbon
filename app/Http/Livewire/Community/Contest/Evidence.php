@@ -54,7 +54,6 @@ class Evidence extends Component
 
     public function mount($submission, $category)
     {
-        $this->submission_id = $submission->id;
         $this->competition_id = $submission->competition_id;
         $this->community_id = $submission->community_id;
 
@@ -81,10 +80,7 @@ class Evidence extends Component
 
     public function getSubmissionProperty()
     {
-        return $this->submission_id ? Submission::find($this->submission_id) : new Submission([
-            'competition_id' => $this->competition_id,
-            'community_id' => $this->community_id,
-        ]);
+        return $this->getSubmissionByCompetitionIDAndCommunityID($this->competition_id, $this->community_id);
     }
 
     public function changePlaceholder()

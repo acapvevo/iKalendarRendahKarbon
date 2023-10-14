@@ -23,7 +23,6 @@ class Record extends Component
 
     public $community_id;
     public $competition_id;
-    public $submission_id;
     public $month_id;
 
     protected $category;
@@ -84,7 +83,6 @@ class Record extends Component
 
     public function mount($submission, $category)
     {
-        $this->submission_id = $submission->id;
         $this->competition_id = $submission->competition_id;
         $this->community_id = $submission->community_id;
 
@@ -127,34 +125,6 @@ class Record extends Component
     {
         return $this->getSubmissionCategoryClass($this->category_code, $this->bill);
     }
-
-    // public function getElectricProperty()
-    // {
-    //     return $this->bill->electric ?? new Electric([
-    //         'bill_id' => $this->bill->id
-    //     ]);
-    // }
-
-    // public function getWaterProperty()
-    // {
-    //     return $this->bill->water ?? new Water([
-    //         'bill_id' => $this->bill->id
-    //     ]);
-    // }
-
-    // public function getRecycleProperty()
-    // {
-    //     return $this->bill->recycle ?? new Recycle([
-    //         'bill_id' => $this->bill->id
-    //     ]);
-    // }
-
-    // public function getUsedOilProperty()
-    // {
-    //     return $this->bill->used_oil ?? new UsedOil([
-    //         'bill_id' => $this->bill->id
-    //     ]);
-    // }
 
     public function open($month_id)
     {
