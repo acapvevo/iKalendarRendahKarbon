@@ -88,6 +88,62 @@ class Submission extends Model
             return __('Partially Submitted');
     }
 
+    public function calculateTotalCarbonEmission()
+    {
+        $this->calculateStats();
+    }
+
+    public function getTotalCarbonEmissionByMonthID($month_id)
+    {
+        $bill = $this->getBillByMonthID($month_id);
+
+        return $bill->total_carbon_emission ?? 0;
+    }
+
+    public function getBillByMonthID($month_id)
+    {
+        return $this->bills->where('month_id', $month_id)->first() ?? new Bill([
+            'month_id' => $month_id,
+            'submission_id' => $this->id,
+        ]);
+    }
+
+    public function getAnswerByQuestionID($question_id)
+    {
+        return $this->answers->where('question_id', $question_id)->first() ?? new Answer([
+            'question_id' => $question_id,
+            'submission_id' => $this->id,
+        ]);
+    }
+
+    public function getTotalCarbonEmission()
+    {
+        return number_format($this->total_carbon_emission, 2) . ' kgCO<sub>2</sub>';
+    }
+
+    public function checkSubmissionByCategory($category)
+    {
+        return $this->bills->contains(function ($bill) use ($category) {
+            return isset($bill->{$category});
+        });
+    }
+
+    public function getCarbonEmissionStats()
+    {
+        $total_carbon_emission_by_category = $this->initCalculationBySubmissionCategory();
+
+        foreach ($this->bills as $bill) {
+            foreach ($total_carbon_emission_by_category as $category => $value) {
+                if ($bill->{$category})
+                    $total_carbon_emission_by_category[$category] += $bill->{$category}->carbon_emission;
+            }
+        }
+
+        return [
+            $total_carbon_emission_by_category
+        ];
+    }
+
     public function calculateStats()
     {
         $total_carbon_emission = $total_charge = $total_usage = $total_weight = $total_value = 0;
@@ -183,60 +239,23 @@ class Submission extends Model
         $calculation->save();
     }
 
-    public function calculateTotalCarbonEmission()
+    public function getSubmissionStats($variables)
     {
-        $this->calculateStats();
-    }
+        if($this->checkCalculationByClassAndID($this->id, Submission::class))
+            $calculation = $this->calculation;
+        else
+            $calculation = $this->initCalculation();
 
-    public function getTotalCarbonEmissionByMonthID($month_id)
-    {
-        $bill = $this->getBillByMonthID($month_id);
+        if ($variables == 'all') {
+        } else {
+            $stats = [];
 
-        return $bill->total_carbon_emission ?? 0;
-    }
-
-    public function getBillByMonthID($month_id)
-    {
-        return $this->bills->where('month_id', $month_id)->first() ?? new Bill([
-            'month_id' => $month_id,
-            'submission_id' => $this->id,
-        ]);
-    }
-
-    public function getAnswerByQuestionID($question_id)
-    {
-        return $this->answers->where('question_id', $question_id)->first() ?? new Answer([
-            'question_id' => $question_id,
-            'submission_id' => $this->id,
-        ]);
-    }
-
-    public function getTotalCarbonEmission()
-    {
-        return number_format($this->total_carbon_emission, 2) . ' kgCO<sub>2</sub>';
-    }
-
-    public function checkSubmissionByCategory($category)
-    {
-        return $this->bills->contains(function ($bill) use ($category) {
-            return isset($bill->{$category});
-        });
-    }
-
-    public function getCarbonEmissionStats()
-    {
-        $total_carbon_emission_by_category = $this->initCalculationBySubmissionCategory();
-
-        foreach ($this->bills as $bill) {
-            foreach ($total_carbon_emission_by_category as $category => $value) {
-                if ($bill->{$category})
-                    $total_carbon_emission_by_category[$category] += $bill->{$category}->carbon_emission;
+            foreach($variables as $variable){
+                $stats[] = $calculation->{$variable};
             }
-        }
 
-        return [
-            $total_carbon_emission_by_category
-        ];
+            return $stats;
+        }
     }
 
     public function getEvidensByCategory($category)

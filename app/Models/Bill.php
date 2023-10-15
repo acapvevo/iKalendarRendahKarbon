@@ -120,17 +120,16 @@ class Bill extends Model
         $this->save();
     }
 
-    public function getCarbonEmissionStats()
+    public function getSubmissionStats($variable = 'all')
     {
-        $total_carbon_emission_by_category = $this->initCalculationBySubmissionCategory();
+        if($this->checkCalculationByClassAndID($this->id, Bill::class))
+            $calculation = $this->calculation;
+        else
+            $calculation = $this->initCalculation();
 
-        foreach ($total_carbon_emission_by_category as $category => $value) {
-            if ($this->{$category})
-                $total_carbon_emission_by_category[$category] += $this->{$category}->carbon_emission;
+        if ($variable == 'all') {
+        } else {
+            return $calculation->{$variable};
         }
-
-        return [
-            $total_carbon_emission_by_category
-        ];
     }
 }

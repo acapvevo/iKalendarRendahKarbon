@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\SubmissionTrait;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
