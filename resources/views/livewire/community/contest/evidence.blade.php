@@ -23,7 +23,8 @@
                             <div class="btn-toolbar justify-content-center" role="toolbar"
                                 aria-label="Toolbar with button groups">
                                 <div class="btn-group" role="group" aria-label="Action Button">
-                                    <form action="{{ route('community.contest.submission.download') }}" method="post" target="_blank">
+                                    <form action="{{ route('community.contest.submission.download') }}" method="post"
+                                        target="_blank">
                                         @csrf
 
                                         <button type="submit" class="btn btn-primary btn-sm"
@@ -81,12 +82,15 @@
                                     class="form-control {{ $errors->has('file') ? 'is-invalid' : '' }}"
                                     id="eviden-label" role="button">{{ $file_label }}</label>
                                 <input type="file" required class="d-none form-control" id="file"
-                                    wire:model.lazy="file">
+                                    wire:model.lazy="file" aria-describedby="fileHelpText">
                                 @error('file')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
+                            </div>
+                            <div id="fileHelpText" class="form-text">
+                                {{ __('Accepted Format: .jpg, .pdf, .png, .doc, .docx | Max File Size: 4MB') }}
                             </div>
                         </div>
                     </form>

@@ -55,10 +55,10 @@
                     <label for="password" class="form-label">{{ __('Password') }}:</label>
                     <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
                         placeholder="{{ __('Enter Your Password') }}" id="password" aria-label="password"
-                        aria-describedby="password" wire:model.lazy="password" required>
-<div id="passwordHelpBlock" class="form-text">
-  Your password must be more than 8 characters.
-</div>
+                        aria-describedby="passwordHelpBlock" wire:model.lazy="password" required>
+                    <div id="passwordHelpBlock" class="form-text">
+                        {{__('Your password must be more than 8 characters')}}
+                    </div>
                     @error('password')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -143,7 +143,8 @@
             @endif
             <div class="mx-3">
                 @if ($tab_state == 2)
-                    <button class="btn btn-primary btn-block" type="button" wire:loading.attr="disabled" wire:click.prevent="create">
+                    <button class="btn btn-primary btn-block" type="button" wire:loading.attr="disabled"
+                        wire:click.prevent="create">
                         <span wire:loading.remove>{{ __('Create Account') }}</span>
                         <div wire:loading wire:target="create">
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>

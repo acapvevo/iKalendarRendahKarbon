@@ -23,7 +23,6 @@ class Record extends Component
 
     public $community_id;
     public $competition_id;
-    public $submission_id;
     public $month_id;
 
     protected $category;
@@ -84,7 +83,6 @@ class Record extends Component
 
     public function mount($submission, $category)
     {
-        $this->submission_id = $submission->id;
         $this->competition_id = $submission->competition_id;
         $this->community_id = $submission->community_id;
 
@@ -110,10 +108,7 @@ class Record extends Component
 
     public function getSubmissionProperty()
     {
-        return $this->submission_id ? Submission::find($this->submission_id) : new Submission([
-            'competition_id' => $this->competition_id,
-            'community_id' => $this->community_id,
-        ]);
+        return $this->getSubmissionByCompetitionIDAndCommunityID($this->competition_id, $this->community_id);
     }
 
     public function getBillProperty()
@@ -126,32 +121,9 @@ class Record extends Component
         return $this->bill->month;
     }
 
-    public function getElectricProperty()
+    public function getCategoryProperty()
     {
-        return $this->bill->electric ?? new Electric([
-            'bill_id' => $this->bill->id
-        ]);
-    }
-
-    public function getWaterProperty()
-    {
-        return $this->bill->water ?? new Water([
-            'bill_id' => $this->bill->id
-        ]);
-    }
-
-    public function getRecycleProperty()
-    {
-        return $this->bill->recycle ?? new Recycle([
-            'bill_id' => $this->bill->id
-        ]);
-    }
-
-    public function getUsedOilProperty()
-    {
-        return $this->bill->used_oil ?? new UsedOil([
-            'bill_id' => $this->bill->id
-        ]);
+        return $this->getSubmissionCategoryClass($this->category_code, $this->bill);
     }
 
     public function open($month_id)
@@ -159,7 +131,7 @@ class Record extends Component
         $this->month_id = $month_id;
         $this->bill = $this->getBillProperty();
         $this->month = $this->getMonthProperty();
-        $this->{$this->category_name} = $this->{'get' . preg_replace('/\s+/', '', $this->category_description) . 'Property'}();
+        $this->{$this->category_name} = $this->getCategoryProperty();
     }
 
     public function close()
@@ -211,10 +183,17 @@ class Record extends Component
             $this->bill->save();
 
         $this->{$this->category_name}->calculateCarbonEmission();
-        $this->bill->{$this->category_name}()->save($this->{$this->category_name});
-        $this->submission->calculateTotalCarbonEmission();
+        $this->{$this->category_name}->parent_id = $this->bill->id;
+        $this->{$this->category_name}->parent_type = Bill::class;
+        $this->{$this->category_name}->save();
 
-        redirect(route('community.contest.submission.list', ['competition_id' => $this->competition_id, 'category' => $this->category_code]))->with('success', __('alerts.record_update', ['month' => $this->month->getName(), 'category' => $this->category_name]));
+        $this->bill->calculateStats();
+        $this->bill->save();
+
+        $this->submission->calculateStats();
+        $this->submission->save();
+
+        redirect(route('community.contest.submission.list', ['competition_id' => $this->competition_id, 'category' => $this->category_code]))->with('success', __('alerts.record_update', ['month' => $this->month->getName(), 'category' => __($this->category_description)]));
     }
 
     public function render()

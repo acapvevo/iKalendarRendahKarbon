@@ -43,8 +43,11 @@
                     <div class="mb-3">
                         <label class="small mb-1" for="password">{{ __('Password') }}</label>
                         <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" id="password"
-                            name="password" type="password" aria-describedby="password"
+                            name="password" type="password" aria-describedby="password" aria-describedby="passwordHelpBlock"
                             placeholder="{{ __('Enter Your Password') }}" required />
+                        <div id="passwordHelpBlock" class="form-text">
+                            {{ __('Your password must be more than 8 characters') }}
+                        </div>
                         @error('password')
                             <div class="invalid-feedback">
                                 {{ $message }}

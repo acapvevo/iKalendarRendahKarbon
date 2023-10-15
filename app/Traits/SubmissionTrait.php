@@ -43,6 +43,18 @@ trait SubmissionTrait
         return DB::table('category')->where('code', $code)->first();
     }
 
+    public function getSubmissionCategoryClass($code, $bill)
+    {
+        $category = $this->getSubmissionCategory($code);
+
+        if ($bill->{$category->name})
+            return $bill->{$category->name};
+        else
+            return resolve($category->class, [
+                'bill_id' => $bill->id
+            ]);
+    }
+
     public function initCalculationBySubmissionCategory()
     {
         return $this->getSubmissionCategories()->mapWithKeys(function ($category) {

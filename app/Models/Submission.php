@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\BillTrait;
+use App\Traits\CalculationTrait;
 use App\Traits\SubmissionTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Submission extends Model
 {
-    use HasFactory, SubmissionTrait;
+    use HasFactory, SubmissionTrait, BillTrait, CalculationTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -68,6 +70,14 @@ class Submission extends Model
         return $this->hasMany(Answer::class);
     }
 
+    /**
+     * Get the Calculation associated with the Submission.
+     */
+    public function calculation()
+    {
+        return $this->morphOne(Calculation::class, 'parent');
+    }
+
     public function checkBillsSubmit()
     {
         if ($this->bills->isEmpty())
@@ -78,16 +88,104 @@ class Submission extends Model
             return __('Partially Submitted');
     }
 
-    public function calculateTotalCarbonEmission()
+    public function calculateStats()
     {
-        $this->total_carbon_emission = 0;
+        $total_carbon_emission = $total_charge = $total_usage = $total_weight = $total_value = 0;
+        $total_carbon_reduction = $total_usage_reduction = $total_charge_reduction = 0;
 
-        foreach ($this->bills as $bill) {
-            $bill->calculateTotalCarbonEmission();
-            $this->total_carbon_emission += $bill->total_carbon_emission;
+        $total_carbon_emission_each_type = $total_usage_each_type = $total_charge_each_type = $total_weight_each_type = $total_value_each_type = $this->initCalculationBySubmissionCategory();
+        $total_carbon_reduction_each_type = $usage_reduction_each_type = $charge_reduction_each_type = $this->initCalculationBySubmissionCategory();
+
+        for ($i = 0; $i < $this->competition->months->count(); $i++) {
+            $month = $this->competition->months->get($i);
+
+            if ($this->bills->contains('month_id', $month->id)) {
+                $bill = $this->getBillByMonth($month->id);
+
+                if (!isset($bill->calculation)) {
+                    $bill->calculateStats();
+                }
+
+                $total_carbon_emission += $bill->calculation->total_carbon_emission;
+                $total_charge += $bill->calculation->total_charge;
+                $total_usage += $bill->calculation->total_usage;
+                $total_weight += $bill->calculation->total_weight;
+                $total_value += $bill->calculation->total_value;
+
+                foreach ($this->getSubmissionCategories() as $category) {
+                    $total_carbon_emission_each_type[$category->name] += round($bill->{$category->name}->carbon_emission ?? 0, 2);
+                    $total_usage_each_type[$category->name] += round($bill->{$category->name}->usage ?? 0, 2);
+                    $total_charge_each_type[$category->name] += round($bill->{$category->name}->charge ?? 0, 2);
+                    $total_weight_each_type[$category->name] += round($bill->{$category->name}->weight ?? 0, 2);
+                    $total_value_each_type[$category->name] += round($bill->{$category->name}->value ?? 0, 2);
+                }
+
+                if ($i !== 0) {
+                    $lastMonth = $this->competition->months->get($i - 1);
+
+                    if ($this->bills->contains('month_id', $lastMonth->id)) {
+                        $lastBill = $this->getBillByMonth($lastMonth->id);
+
+                        $carbon_reduction = $bill->calculation->total_carbon_emission - $lastBill->calculation->total_carbon_emission;
+                        if ($carbon_reduction < 0)
+                            $total_carbon_reduction += $carbon_reduction;
+
+                        $usage_reduction = $bill->calculation->total_usage - $lastBill->calculation->total_usage;
+                        if ($usage_reduction < 0)
+                            $total_usage_reduction += $usage_reduction;
+
+                        $charge_reduction = $bill->calculation->total_charge - $lastBill->calculation->total_charge;
+                        if ($charge_reduction < 0)
+                            $total_charge_reduction += $charge_reduction;
+
+                        foreach ($this->getSubmissionCategories() as $category) {
+                            if (isset($bill->{$category->name}) && isset($lastBill->{$category->name})) {
+                                $carbon_reduction = ($bill->{$category->name}->carbon_emission ?? 0) - ($lastBill->{$category->name}->carbon_emission ?? 0);
+                                if ($carbon_reduction < 0)
+                                    $total_carbon_reduction_each_type[$category->name] += $carbon_reduction;
+
+                                $charge_reduction = ($bill->{$category->name}->charge ?? 0) - ($lastBill->{$category->name}->charge ?? 0);
+                                if ($charge_reduction < 0)
+                                    $charge_reduction_each_type[$category->name] += $charge_reduction;
+
+                                $usage_reduction = ($bill->{$category->name}->usage ?? 0) - ($lastBill->{$category->name}->usage ?? 0);
+                                if ($usage_reduction < 0)
+                                    $usage_reduction_each_type[$category->name] += $usage_reduction;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
-        $this->save();
+        $calculation = $this->getCalculationByClassAndID($this->id, Submission::class);
+
+        $calculation->total_carbon_emission = $total_carbon_emission;
+        $calculation->total_charge = $total_charge;
+        $calculation->total_usage = $total_usage;
+        $calculation->total_weight = $total_weight;
+        $calculation->total_value = $total_value;
+
+        $calculation->total_carbon_emission_each_type = $total_carbon_emission_each_type;
+        $calculation->total_usage_each_type = $total_usage_each_type;
+        $calculation->total_charge_each_type = $total_charge_each_type;
+        $calculation->total_weight_each_type = $total_weight_each_type;
+        $calculation->total_value_each_type = $total_value_each_type;
+
+        $calculation->total_carbon_reduction = $total_carbon_reduction;
+        $calculation->total_usage_reduction = $total_usage_reduction;
+        $calculation->total_charge_reduction = $total_charge_reduction;
+
+        $calculation->total_carbon_reduction_each_type = $total_carbon_reduction_each_type;
+        $calculation->usage_reduction_each_type = $usage_reduction_each_type;
+        $calculation->charge_reduction_each_type = $charge_reduction_each_type;
+
+        $calculation->save();
+    }
+
+    public function calculateTotalCarbonEmission()
+    {
+        $this->calculateStats();
     }
 
     public function getTotalCarbonEmissionByMonthID($month_id)
@@ -129,15 +227,22 @@ class Submission extends Model
     {
         $total_carbon_emission_by_category = $this->initCalculationBySubmissionCategory();
 
-        foreach($this->bills as $bill){
-            foreach($total_carbon_emission_by_category as $category => $value){
-                if($bill->{$category})
-                $total_carbon_emission_by_category[$category] += $bill->{$category}->carbon_emission;
+        foreach ($this->bills as $bill) {
+            foreach ($total_carbon_emission_by_category as $category => $value) {
+                if ($bill->{$category})
+                    $total_carbon_emission_by_category[$category] += $bill->{$category}->carbon_emission;
             }
         }
 
         return [
             $total_carbon_emission_by_category
         ];
+    }
+
+    public function getEvidensByCategory($category)
+    {
+        return $this->evidences->filter(function ($evidence) use ($category) {
+            return $evidence->category == $category;
+        });
     }
 }
