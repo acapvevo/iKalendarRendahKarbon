@@ -79,10 +79,6 @@
 </div>
 @push('scripts')
     <script>
-        $(document).ready(function() {
-            $("img").addClass("img-responsive");
-        });
-
         const viewNewsletterModalEl = document.getElementById('viewNewsletterModal')
         viewNewsletterModalEl.addEventListener('hidden.bs.modal', event => {
             Livewire.emit('closeModal')

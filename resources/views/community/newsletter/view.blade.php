@@ -45,11 +45,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        $(document).ready(function() {
-            $("img").addClass("img-responsive");
-        });
-    </script>
-@endpush
