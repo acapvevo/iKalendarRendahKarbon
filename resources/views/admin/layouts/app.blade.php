@@ -159,8 +159,8 @@
         </nav>
     </div>
     <!-- Sidenav Accordion (Analysis Management)-->
-    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseAnalysis"
-        aria-expanded="false" aria-controls="collapseAnalysis">
+    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
+        data-bs-target="#collapseAnalysis" aria-expanded="false" aria-controls="collapseAnalysis">
         <div class="nav-link-icon"><i data-feather="bar-chart-2"></i></div>
         {{ __('Analysis Management') }}
         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -187,3 +187,11 @@
         {{ __('Newsletter Management') }}
     </a>
 @endsection
+
+@push('scripts')
+    <script>
+        Livewire.onPageExpired((response, message) => {
+            window.location.replace("{{ route('admin.login') }}");
+        })
+    </script>
+@endpush
