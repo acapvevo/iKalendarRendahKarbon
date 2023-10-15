@@ -38,6 +38,7 @@ class Newsletter extends Component
         return [
             'thumbnail' => [
                 Rule::requiredIf(fn () => !$this->newsletter->thumbnail),
+                'nullable',
                 'image',
                 'max:2048'
             ],
@@ -110,6 +111,7 @@ class Newsletter extends Component
 
     public function update()
     {
+        // dd($this->newsletter);
         $this->validate();
 
         if ($this->thumbnail) {

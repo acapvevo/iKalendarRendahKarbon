@@ -87,4 +87,9 @@ class Community extends Authenticatable
     {
         return preg_replace('/[^a-zA-Z0-9\-\._]/','', $this->name);
     }
+
+    public function checkCompletion()
+    {
+        return isset($this->name) && isset($this->phone_number) && isset($this->identification_number) && $this->address->checkCompletion();
+    }
 }

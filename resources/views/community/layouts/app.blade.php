@@ -137,3 +137,22 @@
         {{ __('Newsletter') }}
     </a>
 @endsection
+
+@if (url()->current() !== route('community.user.profile.view') && !request()->user()->checkCompletion())
+    @push('scripts')
+        <script>
+            Swal.fire({
+                title: "{{ __('Profile Incomplete') }}",
+                text: "{{ __('Your Profile is Incomplete. Please Complete your Profile') }}",
+                icon: 'warning',
+                confirmButtonText: "{{ __('Go to Profile Page') }}",
+                allowOutsideClick: false,
+                allowEscapeKey: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.replace("{{ route('community.user.profile.view') }}");
+                }
+            })
+        </script>
+    @endpush
+@endif

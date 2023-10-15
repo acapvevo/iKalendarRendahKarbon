@@ -52,7 +52,7 @@ class Address extends Model
         return DB::table('address_category')->where('code', $this->category)->first();
     }
 
-    public function checkAddressField()
+    public function checkCompletion()
     {
         return isset($this->line_1) && isset($this->line_2) && isset($this->city) && isset($this->postcode) && isset($this->category);
     }
@@ -88,7 +88,7 @@ class Address extends Model
 
     public function findLongitudeLatitude()
     {
-        if ($this->checkAddressField()) {
+        if ($this->checkCompletion()) {
             $coordinate = Geocoder::using('arcgis_online')->geocode($this->getFullAddressInSingleLine())->get()[0]->getCoordinates();
 
             $longitude = $coordinate->getLongitude();

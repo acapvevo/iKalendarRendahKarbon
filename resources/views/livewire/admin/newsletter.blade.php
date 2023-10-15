@@ -4,7 +4,8 @@
 
 <div>
     <div class="py-3 d-flex justify-content-end">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createNewsletterModal" wire:click.prevent="open">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createNewsletterModal"
+            wire:click.prevent="open">
             {{ __('Create Newsletter') }}
         </button>
     </div>
@@ -330,7 +331,31 @@
             callbacks: {
                 onChange: function(contents, $editable) {
                     @this.set('newsletter.content', contents);
-                }
+                },
+                onImageUpload: function(files) {}
+            }
+        }
+
+        function onImageUpload(files, summernote_div_id) {
+            if (!files.length) return;
+
+            var file = files[0];
+
+            // create FileReader
+            var reader = new FileReader();
+            reader.onloadend = function() {
+
+                var img = $("<img>").attr({
+                    src: reader.result,
+                    width: "100%"
+                }); // << Add here img attributes !
+
+                $(summernote_div_id).summernote("insertNode", img[0]);
+            }
+
+            if (file) {
+                // convert fileObject to datauri
+                reader.readAsDataURL(file);
             }
         }
 
@@ -341,6 +366,9 @@
         const editNewsletterModalEl = document.getElementById('editNewsletterModal')
         editNewsletterModalEl.addEventListener('show.bs.modal', event => {
             $('#content_update').summernote(options);
+            $('#content_update').on('summernote.image.upload', function(we, files) {
+                onImageUpload(files, '#content_update');
+            });
         })
         editNewsletterModalEl.addEventListener('hidden.bs.modal', event => {
             Livewire.emit('closeModal')
@@ -352,6 +380,9 @@
         const createNewsletterModalEl = document.getElementById('createNewsletterModal')
         createNewsletterModalEl.addEventListener('show.bs.modal', event => {
             $('#content_create').summernote(options);
+            $('#content_create').on('summernote.image.upload', function(we, files) {
+                onImageUpload(files, '#content_create');
+            });
         })
 
         const viewNewsletterModalEl = document.getElementById('viewNewsletterModal')

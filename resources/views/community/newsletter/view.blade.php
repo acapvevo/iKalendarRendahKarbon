@@ -31,8 +31,8 @@
 @section('content')
     <div class="container-xl px-4 mt-n10">
         <div class="card">
-            <img src="{{ route('community.newsletter.thumbnail', ['newsletter_id' => $newsletter->id]) }}" class="card-img-top"
-                alt="{{ $newsletter->thumbnail }}" style="height: 500px; object-fit: contain;">
+            <img src="{{ route('community.newsletter.thumbnail', ['newsletter_id' => $newsletter->id]) }}"
+                class="card-img-top" alt="{{ $newsletter->thumbnail }}" style="height: 500px; object-fit: contain;">
             <div class="card-body">
                 <h5 class="card-title">{{ $newsletter->title }}</h5>
                 <small>{{ __($newsletter->getCategory()->description ?? '') }} /

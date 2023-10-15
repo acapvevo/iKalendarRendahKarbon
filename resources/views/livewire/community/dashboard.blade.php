@@ -9,28 +9,26 @@
             <div class="card-body">
                 <ul class="nav nav-pills nav-justified mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="pills-year-tab" data-bs-toggle="pill"
-                            data-bs-target="#pills-year" type="button" role="tab" aria-controls="pills-year"
-                            aria-selected="true">{{ __('Current Year') }}: {{ $competition->year }}
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-month-tab" data-bs-toggle="pill"
+                        <button class="nav-link active" id="pills-month-tab" data-bs-toggle="pill"
                             data-bs-target="#pills-month" type="button" role="tab" aria-controls="pills-month"
                             aria-selected="false">{{ __('Current Month') }}: {{ $bill->month->getName() }}
                         </button>
                     </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-year-tab" data-bs-toggle="pill" data-bs-target="#pills-year"
+                            type="button" role="tab" aria-controls="pills-year"
+                            aria-selected="true">{{ __('Current Year') }}: {{ $competition->year }}
+                        </button>
+                    </li>
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade show active" id="pills-year" role="tabpanel"
-                        aria-labelledby="pills-year-tab" tabindex="0">
+                    <div class="tab-pane fade show active" id="pills-month" role="tabpanel"
+                        aria-labelledby="pills-month-tab" tabindex="0">
 
                         <div class="row">
                             @php
                                 $colNumXL = floor(12 / $submission_categories->count());
                                 $colNumMD = floor(24 / $submission_categories->count());
-
-                                [$total_carbon_emission_by_category] = $submission->getCarbonEmissionStats();
                             @endphp
 
                             @foreach ($submission_categories as $category)
@@ -42,14 +40,32 @@
                                                     <div class="small fw-bold text-primary mb-1">
                                                         {{ __($category->description) }}
                                                     </div>
-                                                    <div class="h3">
-                                                        {{ number_format($total_carbon_emission_by_category[$category->name], 2) }}
-                                                        kgCO<sub>2</sub>
-                                                    </div>
-                                                    <div
-                                                        class="text-xs fw-bold text-success d-inline-flex align-items-center">
-                                                        <i class="me-1" data-feather="trending-up"></i>
-                                                        12%
+                                                    <div class="small">
+                                                        @switch($category->code)
+                                                            @case('E')
+                                                            @case('W')
+                                                                <p><strong>{{ __('Consumption') }}</strong>: <br>
+                                                                    {{ number_format($bill->{$category->name}->usage ?? 0, 2) }}
+                                                                    {!! $category->symbol !!}
+                                                                </p>
+                                                                <p><strong>{{ __('Bill Charge') }}</strong>: <br>
+                                                                    RM
+                                                                    {{ number_format($bill->{$category->name}->charge ?? 0, 2) }}
+                                                                </p>
+                                                            @break
+
+                                                            @case('R')
+                                                            @case('UO')
+                                                                <p><strong>{{ __('Total Weight') }}</strong>: <br>
+                                                                    {{ number_format($bill->{$category->name}->weight ?? 0, 2) }}
+                                                                    {!! $category->symbol !!}
+                                                                </p>
+                                                                <p><strong>{{ __('Total Sell Value') }}</strong>: <br>
+                                                                    RM
+                                                                    {{ number_format($bill->{$category->name}->value ?? 0, 2) }}
+                                                                </p>
+                                                            @break
+                                                        @endswitch
                                                     </div>
                                                 </div>
                                                 <div class="ms-2">
@@ -64,7 +80,7 @@
                         </div>
 
                     </div>
-                    <div class="tab-pane fade" id="pills-month" role="tabpanel" aria-labelledby="pills-month-tab"
+                    <div class="tab-pane fade" id="pills-year" role="tabpanel" aria-labelledby="pills-year-tab"
                         tabindex="0">
 
                         <div class="row">
@@ -72,7 +88,7 @@
                                 $colNumXL = floor(12 / $submission_categories->count());
                                 $colNumMD = floor(24 / $submission_categories->count());
 
-                                [$total_carbon_emission_by_category] = $bill->getCarbonEmissionStats();
+                                [$total_usage_each_type, $total_charge_each_type, $total_weight_each_type, $total_value_each_type] = $submission->getSubmissionStats(['total_usage_each_type', 'total_charge_each_type', 'total_weight_each_type', 'total_value_each_type']);
                             @endphp
 
                             @foreach ($submission_categories as $category)
@@ -84,14 +100,32 @@
                                                     <div class="small fw-bold text-primary mb-1">
                                                         {{ __($category->description) }}
                                                     </div>
-                                                    <div class="h3">
-                                                        {{ number_format($total_carbon_emission_by_category[$category->name], 2) }}
-                                                        kgCO<sub>2</sub>
-                                                    </div>
-                                                    <div
-                                                        class="text-xs fw-bold text-success d-inline-flex align-items-center">
-                                                        <i class="me-1" data-feather="trending-up"></i>
-                                                        12%
+                                                    <div class="small">
+                                                        @switch($category->code)
+                                                            @case('E')
+                                                            @case('W')
+                                                                <p><strong>{{ __('Consumption') }}</strong>: <br>
+                                                                    {{ number_format($total_usage_each_type[$category->name] ?? 0, 2) }}
+                                                                    {!! $category->symbol !!}
+                                                                </p>
+                                                                <p><strong>{{ __('Bill Charge') }}</strong>: <br>
+                                                                    RM
+                                                                    {{ number_format($total_charge_each_type[$category->name] ?? 0, 2) }}
+                                                                </p>
+                                                            @break
+
+                                                            @case('R')
+                                                            @case('UO')
+                                                                <p><strong>{{ __('Total Weight') }}</strong>: <br>
+                                                                    {{ number_format($total_weight_each_type[$category->name] ?? 0, 2) }}
+                                                                    {!! $category->symbol !!}
+                                                                </p>
+                                                                <p><strong>{{ __('Total Sell Value') }}</strong>: <br>
+                                                                    RM
+                                                                    {{ number_format($total_value_each_type[$category->name] ?? 0, 2) }}
+                                                                </p>
+                                                            @break
+                                                        @endswitch
                                                     </div>
                                                 </div>
                                                 <div class="ms-2">
@@ -154,7 +188,8 @@
                                                 @php
                                                     $newsletter = $newsletterList->get($i);
                                                 @endphp
-                                                <div class="carousel-item {!! $i === 0 ? 'active' : '' !!}">
+                                                <div class="carousel-item {!! $i === 0 ? 'active' : '' !!}"
+                                                    wire:click="redirectNewsletter({{ $newsletter->id }})">
                                                     <img src="{{ route('community.newsletter.thumbnail', ['newsletter_id' => $newsletter->id]) }}"
                                                         class="d-block w-100 ratio ratio-16x9"
                                                         alt="{{ $newsletter->thumbnail }}">
@@ -201,4 +236,5 @@
 </div>
 
 @push('scripts')
+    <script></script>
 @endpush
