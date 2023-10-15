@@ -55,9 +55,9 @@
                     <label for="password" class="form-label">{{ __('Password') }}:</label>
                     <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
                         placeholder="{{ __('Enter Your Password') }}" id="password" aria-label="password"
-                        aria-describedby="password" wire:model.lazy="password" required>
+                        aria-describedby="passwordHelpBlock" wire:model.lazy="password" required>
                     <div id="passwordHelpBlock" class="form-text">
-                        Your password must be more than 8 characters
+                        {{__('Your password must be more than 8 characters')}}
                     </div>
                     @error('password')
                         <div class="invalid-feedback">
