@@ -154,7 +154,7 @@
                                                 @php
                                                     $newsletter = $newsletterList->get($i);
                                                 @endphp
-                                                <div class="carousel-item {!! $i === 0 ? 'active' : '' !!}">
+                                                <div class="carousel-item {!! $i === 0 ? 'active' : '' !!}" wire:click="redirectNewsletter({{$newsletter->id}})">
                                                     <img src="{{ route('community.newsletter.thumbnail', ['newsletter_id' => $newsletter->id]) }}"
                                                         class="d-block w-100 ratio ratio-16x9"
                                                         alt="{{ $newsletter->thumbnail }}">
@@ -201,4 +201,7 @@
 </div>
 
 @push('scripts')
+<script>
+
+</script>
 @endpush

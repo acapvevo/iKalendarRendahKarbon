@@ -46,6 +46,11 @@ class Dashboard extends Component
         $this->bill = $this->getCurrentBillBySubmission($this->submission);
     }
 
+    public function redirectNewsletter($newsletter_id)
+    {
+        return redirect(route('community.newsletter.view', ['id' => $newsletter_id]));
+    }
+
     public function render()
     {
         return view('livewire.community.dashboard');
