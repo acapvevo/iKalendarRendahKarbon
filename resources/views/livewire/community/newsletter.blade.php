@@ -54,7 +54,8 @@
 
                     <div class="card">
                         <img src="{{ route('community.newsletter.thumbnail', ['newsletter_id' => $newsletter->id]) }}"
-                            class="card-img-top" alt="Thumbnail for {{ $newsletter->title ?? '' }}" style="height: 500px; object-fit: contain;">
+                            class="card-img-top" alt="Thumbnail for {{ $newsletter->title ?? '' }}"
+                            style="height: 500px; object-fit: contain;">
                         <div class="card-body">
                             <h3 class="card-title">{{ $newsletter->title ?? '' }}</h3>
                             <small>{{ $newsletter ? __($newsletter->getCategory()->description ?? '') : '' }} /
@@ -78,6 +79,10 @@
 </div>
 @push('scripts')
     <script>
+        $(document).ready(function() {
+            $("img").addClass("img-responsive");
+        });
+
         const viewNewsletterModalEl = document.getElementById('viewNewsletterModal')
         viewNewsletterModalEl.addEventListener('hidden.bs.modal', event => {
             Livewire.emit('closeModal')
