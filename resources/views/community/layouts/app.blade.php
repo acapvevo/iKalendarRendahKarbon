@@ -138,9 +138,10 @@
     </a>
 @endsection
 
-@if (url()->current() !== route('community.user.profile.view') && !request()->user()->checkCompletion())
-    @push('scripts')
-        <script>
+@push('scripts')
+    <script>
+        @if (url()->current() !== route('community.user.profile.view') &&
+                !request()->user()->checkCompletion())
             Swal.fire({
                 title: "{{ __('Profile Incomplete') }}",
                 text: "{{ __('Your Profile is Incomplete. Please Complete your Profile') }}",
@@ -153,6 +154,10 @@
                     window.location.replace("{{ route('community.user.profile.view') }}");
                 }
             })
-        </script>
-    @endpush
-@endif
+        @endif
+
+        Livewire.onPageExpired((response, message) => {
+            window.location.replace("{{ route('community.login') }}");
+        })
+    </script>
+@endpush

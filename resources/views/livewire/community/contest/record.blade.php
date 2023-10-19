@@ -7,7 +7,19 @@
             <thead class="table-primary">
                 <tr>
                     <th>{{ __('Month') }}</th>
-                    <th>{{ __('Total Carbon Emission') }}</th>
+                    @switch($category_code)
+                        @case('E')
+                        @case('W')
+                            <th>{{ __('Consumption') }}</th>
+                            <th>{{ __('Bill Charge') }}</th>
+                        @break
+
+                        @case('UO')
+                        @case('R')
+                            <th>{{ __('Total Weight') }}</th>
+                            <th>{{ __('Total Sell Value') }}</th>
+                        @break
+                    @endswitch
                     <th>{{ __('Menu') }}</th>
                 </tr>
             </thead>
@@ -15,14 +27,34 @@
                 @foreach ($submission->competition->months as $monthObj)
                     <tr>
                         <td>{{ $monthObj->getName() }}</td>
-                        <td>{{ number_format($submission->getBillByMonthID($monthObj->id)->{$category_name}->carbon_emission ?? 0, 2) }}
-                            kgCO<sub>2</sub></td>
+                        @switch($category_code)
+                            @case('E')
+                            @case('W')
+                                @php
+                                    $charge = $submission->getBillByMonthID($monthObj->id)->{$category_name}->charge ?? 0;
+                                    $usage = $submission->getBillByMonthID($monthObj->id)->{$category_name}->usage ?? 0;
+                                @endphp
+                                <td>{{ number_format($usage, 2) }} {!! $category_symbol !!}</td>
+                                <td>RM {{ number_format($charge ?? 0, 2) }}</td>
+                            @break
+
+                            @case('UO')
+                            @case('R')
+                                @php
+                                    $value = $submission->getBillByMonthID($monthObj->id)->{$category_name}->value ?? 0;
+                                    $weight = $submission->getBillByMonthID($monthObj->id)->{$category_name}->weight ?? 0;
+                                @endphp
+                                <td>{{ number_format($weight, 2) }} {!! $category_symbol !!}</td>
+                                <td>RM {{ number_format($value ?? 0, 2) }}</td>
+                            @break
+                        @endswitch
                         <td>
                             <div class="btn-toolbar justify-content-center" role="toolbar"
                                 aria-label="Toolbar with button groups">
                                 <div class="btn-group" role="group" aria-label="Action Button">
                                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#viewMonthModal" wire:click.prevent='open({{ $monthObj->id }})'>
+                                        data-bs-target="#viewMonthModal"
+                                        wire:click.prevent='open({{ $monthObj->id }})'>
                                         <i data-bs-toggle="tooltip"
                                             data-bs-title="{{ __('View Submission for') }} {{ $monthObj->getName() }}"
                                             data-feather="eye"></i>
