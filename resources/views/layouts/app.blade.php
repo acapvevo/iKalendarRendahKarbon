@@ -77,6 +77,37 @@
                         href="#!">{{ __('Read All Messages') }}</a>
                 </div>
             </li>
+            <!-- Locale Dropdown-->
+            <li class="nav-item dropdown no-caret me-3 dropdown-notifications">
+                <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownMessages"
+                    href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">{{ strtoupper(LaravelLocalization::getCurrentLocale()) }}</a>
+                <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up"
+                    aria-labelledby="navbarDropdownMessages">
+                    <h6 class="dropdown-header dropdown-notifications-header">
+                        <i class="me-2" data-feather="mail"></i>
+                        {{ __('Language') }}
+                    </h6>
+                    @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                        @php
+                            if (isset($attributes) && !strpos(LaravelLocalization::getLocalizedURL($localeCode, null, [], true), '?')) {
+                                $url = LaravelLocalization::getLocalizedURL($localeCode, null, [], true) . '?';
+                                foreach ($attributes as $key => $value) {
+                                    $url = $url . $key . '=' . $value . '&';
+                                }
+                            } else {
+                                $url = LaravelLocalization::getLocalizedURL($localeCode, null, [], true);
+                            }
+                        @endphp
+                        <a class="dropdown-item dropdown-notifications-item" href="{{ $url }}"
+                            hreflang="{{ $localeCode }}">
+                            <div class="dropdown-notifications-item-content">
+                                <div class="dropdown-notifications-item-content-text">{{ $properties['native'] }}</div>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+            </li>
             <!-- User Dropdown-->
             <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
                 <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage"
