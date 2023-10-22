@@ -30,7 +30,7 @@
                             aria-expanded="false" aria-label="Toggle navigation"><i data-feather="menu"></i></button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ms-auto me-lg-5">
-                                <li class="nav-item"><a class="nav-link" href="{{ route('welcome') }}">Home</a></li>
+                                {{-- <li class="nav-item"><a class="nav-link" href="{{ route('welcome') }}">Home</a></li> --}}
                                 {{-- <li class="nav-item dropdown dropdown-xl no-caret">
                                     <a class="nav-link dropdown-toggle" id="navbarDropdownDemos" href="#"
                                         role="button" data-bs-toggle="dropdown" aria-haspopup="true"
@@ -203,8 +203,8 @@
                                     </div>
                                 </li>
                             </ul>
-                            <a class="btn fw-500 ms-lg-4 btn-teal" href="https://shop.startbootstrap.com/sb-ui-kit-pro">
-                                Buy Now
+                            <a class="btn fw-500 ms-lg-4 btn-teal" href="{{route('community.register')}}">
+                                {{ __('Register Now') }}
                                 <i class="ms-2" data-feather="arrow-right"></i>
                             </a>
                         </div>
@@ -216,16 +216,16 @@
                         <div class="container px-5">
                             <div class="row gx-5 align-items-center">
                                 <div class="col-lg-6" data-aos="fade-up">
-                                    <h1 class="page-header-ui-title">Build your next project faster with SB UI Kit Pro
+                                    <h1 class="page-header-ui-title">
+                                        {{ __('Lets Join Iskandar Puteri Low Carbon Calendar Competition') }}
                                     </h1>
-                                    <p class="page-header-ui-text mb-5">Welcome to SB UI Kit Pro, a toolkit for
-                                        building beautiful web interfaces, created by the development team at Start
-                                        Bootstrap</p>
-                                    <a class="btn btn-teal fw-500 me-2" href="#!">
-                                        Get Started
+                                    <p class="page-header-ui-text mb-5">
+                                        {{ __('Participate in the Iskandar Puteri Low Carbon Calendar Competition by recording your bills and usage as evidence of your commitment to reducing carbon emissions and inspire a greener community') }}
+                                    </p>
+                                    <a class="btn btn-teal fw-500 me-2" href="{{route('community.register')}}">
+                                        {{ __('Register Now') }}
                                         <i class="ms-2" data-feather="arrow-right"></i>
                                     </a>
-                                    <a class="btn btn-link fw-500" href="#!">Learn More</a>
                                 </div>
                                 <div class="col-lg-6 d-none d-lg-block" data-aos="fade-up" data-aos-delay="100"><img
                                         class="img-fluid" src="assets/img/illustrations/windows.svg" /></div>

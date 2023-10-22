@@ -140,7 +140,7 @@
 
 @push('scripts')
     <script>
-        @if (url()->current() !== route('community.user.profile.view') &&
+        @if ((url()->current() != route('community.user.profile.view')) &&
                 !request()->user()->checkCompletion())
             Swal.fire({
                 title: "{{ __('Profile Incomplete') }}",
