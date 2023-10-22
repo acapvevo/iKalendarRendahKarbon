@@ -24,7 +24,7 @@
                             @endphp
                             <a class="dropdown-item" rel="alternate" hreflang="{{ $localeCode }}"
                                 href="{{ $url }}">
-                                {{ $properties['native'] }}
+                                {{ __($properties['native']) }}
                             </a>
                         </li>
                     @endforeach

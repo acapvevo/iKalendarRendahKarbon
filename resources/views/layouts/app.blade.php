@@ -102,7 +102,7 @@
                         <a class="dropdown-item dropdown-notifications-item" href="{{ $url }}"
                             hreflang="{{ $localeCode }}">
                             <div class="dropdown-notifications-item-content">
-                                <div class="dropdown-notifications-item-content-text">{{ $properties['native'] }}</div>
+                                <div class="dropdown-notifications-item-content-text">{{ __($properties['native']) }}</div>
                             </div>
                         </a>
                     @endforeach
