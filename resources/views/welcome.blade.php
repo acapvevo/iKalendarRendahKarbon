@@ -189,7 +189,7 @@
                                             <div class="icon-stack bg-primary-soft text-primary me-4"><i
                                                     data-feather="edit"></i></div>
                                             <div>
-                                                {{ __('As Admin') }}
+                                                {{ __('Admin') }}
                                             </div>
                                         </a>
                                         <div class="dropdown-divider m-0"></div>
@@ -197,13 +197,51 @@
                                             <div class="icon-stack bg-primary-soft text-primary me-4"><i
                                                     data-feather="user"></i></div>
                                             <div>
-                                                {{ __('As Community') }}
+                                                {{ __('Community') }}
                                             </div>
                                         </a>
                                     </div>
                                 </li>
+                                <li class="nav-item dropdown no-caret">
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdownDocs" href="#"
+                                        role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        {{ strtoupper(LaravelLocalization::getCurrentLocale()) }}
+                                        <i class="fas fa-chevron-right dropdown-arrow"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end animated--fade-in-up"
+                                        aria-labelledby="navbarDropdownDocs">
+                                        @php
+                                            $l = 0;
+                                        @endphp
+                                        @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                            @php
+                                                if (isset($attributes) && !strpos(LaravelLocalization::getLocalizedURL($localeCode, null, [], true), '?')) {
+                                                    $url = LaravelLocalization::getLocalizedURL($localeCode, null, [], true) . '?';
+                                                    foreach ($attributes as $key => $value) {
+                                                        $url = $url . $key . '=' . $value . '&';
+                                                    }
+                                                } else {
+                                                    $url = LaravelLocalization::getLocalizedURL($localeCode, null, [], true);
+                                                }
+                                            @endphp
+                                            @if ($l != 0)
+                                                <div class="dropdown-divider m-0"></div>
+                                            @endif
+                                            <a class="dropdown-item py-3" href="{{ $url }}"
+                                                hreflang="{{ $localeCode }}">
+                                                <div>
+                                                    {{ __($properties['native']) }}
+                                                </div>
+                                            </a>
+                                            @php
+                                                $l++;
+                                            @endphp
+                                        @endforeach
+                                    </div>
+                                </li>
                             </ul>
-                            <a class="btn fw-500 ms-lg-4 btn-teal" href="{{route('community.register')}}">
+                            <a class="btn fw-500 ms-lg-4 btn-teal" href="{{ route('community.register') }}">
                                 {{ __('Register Now') }}
                                 <i class="ms-2" data-feather="arrow-right"></i>
                             </a>
@@ -222,7 +260,7 @@
                                     <p class="page-header-ui-text mb-5">
                                         {{ __('Participate in the Iskandar Puteri Low Carbon Calendar Competition by recording your bills and usage as evidence of your commitment to reducing carbon emissions and inspire a greener community') }}
                                     </p>
-                                    <a class="btn btn-teal fw-500 me-2" href="{{route('community.register')}}">
+                                    <a class="btn btn-teal fw-500 me-2" href="{{ route('community.register') }}">
                                         {{ __('Register Now') }}
                                         <i class="ms-2" data-feather="arrow-right"></i>
                                     </a>

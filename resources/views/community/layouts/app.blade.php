@@ -99,7 +99,7 @@
     </a>
 @endsection
 
-@section('name', Auth::user()->name)
+@section('name', Auth::user()->name ?? Auth::user()->username)
 @section('email', Auth::user()->email)
 @section('picture', Auth::user()->image ? route('community.user.picture.show') :
     asset('assets/img/illustrations/profiles/profile-1.png'))
