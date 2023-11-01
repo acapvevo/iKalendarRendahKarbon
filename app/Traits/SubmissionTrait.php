@@ -33,19 +33,29 @@ trait SubmissionTrait
         return Submission::where('competition_id', $competition_id)->get();
     }
 
+    public function checkSubmissionCategory($column, $value)
+    {
+        return DB::table('category')->where('forCompetition', true)->where($column, $value)->exists();
+    }
+
     public function getSubmissionCategories()
     {
         return DB::table('category')->where('forCompetition', true)->get();
     }
 
-    public function getSubmissionCategory($code)
+    public function getSubmissionCategory($column, $value)
+    {
+        return DB::table('category')->where($column, $value)->first();
+    }
+
+    public function getSubmissionCategoryByCode($code)
     {
         return DB::table('category')->where('code', $code)->first();
     }
 
     public function getSubmissionCategoryClass($code, $bill)
     {
-        $category = $this->getSubmissionCategory($code);
+        $category = $this->getSubmissionCategoryByCode($code);
 
         if ($bill->{$category->name})
             return $bill->{$category->name};

@@ -12,10 +12,13 @@ trait BillTrait
     {
         return Bill::find($id);
     }
-
-    public function getBillByMonth($month_id)
+    
+    public function getBillByMonthAndSubmission($month_id, $submission_id)
     {
-        return Bill::where('month_id', $month_id)->first();
+        return Bill::firstOrNew([
+            'submission_id' => $submission_id,
+            'month_id' => $month_id
+        ]);
     }
 
     public function getCurrentBillBySubmission($submission)

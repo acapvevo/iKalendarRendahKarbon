@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Community\Contest\FormController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Community\DashboardController;
 use App\Http\Controllers\Community\NewsletterController;
@@ -42,6 +43,12 @@ Route::prefix('community')->name('community.')->group(function () {
 
         Route::post('/reset-password', [NewPasswordController::class, 'store'])
             ->name('password.update');
+
+        // Form routes
+        Route::prefix('form')->name('form.')->group(function () {
+            Route::get('', [FormController::class, 'view'])->name('view');
+            Route::get('/success', [FormController::class, 'success'])->name('success');
+        });
     });
 
     Route::middleware('auth:community')->group(function () {

@@ -25,7 +25,8 @@
         "mcamara/laravel-localization": "^1.8",
         "owen-it/laravel-auditing": "^13.5",
         "predis/predis": "^1.0",
-        "toin0u/geocoder-laravel": "^4.4"
+        "toin0u/geocoder-laravel": "^4.4",
+        "victorybiz/laravel-tel-input": "^1.5"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",

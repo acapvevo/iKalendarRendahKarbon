@@ -93,7 +93,7 @@ class Record extends Component
             'month' => new Month,
         ]);
 
-        $this->category = $this->getSubmissionCategory($category);
+        $this->category = $this->getSubmissionCategoryByCode($category);
 
         $this->fill([
             'category_name' => $this->category->name,

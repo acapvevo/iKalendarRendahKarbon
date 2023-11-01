@@ -6,9 +6,9 @@
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = require('axios');
+// window.axios = require('axios');
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -27,6 +27,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     forceTLS: true
 // });
 
-window.Country = require('country-state-city').Country;
-window.State = require('country-state-city').State;
-window.City = require('country-state-city').City;
+// import {City, Country, State} from 'country-state-city';
+
+// window.Country = Country;
+// window.State = State;
+// window.City = City;

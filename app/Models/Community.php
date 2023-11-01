@@ -90,6 +90,6 @@ class Community extends Authenticatable
 
     public function checkCompletion()
     {
-        return isset($this->name) && isset($this->phone_number) && isset($this->identification_number) && $this->address->checkCompletion();
+        return isset($this->username) && isset($this->email) && isset($this->name) && isset($this->phone_number) && isset($this->identification_number) && ($this->address ? $this->address->checkCompletion() : true);
     }
 }

@@ -50,7 +50,7 @@ class Question extends Model
 
     public function getCategory()
     {
-        return $this->getSubmissionCategory($this->category);
+        return $this->getSubmissionCategoryByCode($this->category);
     }
 
     public function getValue($attribute)
