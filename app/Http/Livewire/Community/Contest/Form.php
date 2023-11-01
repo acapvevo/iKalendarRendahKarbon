@@ -78,16 +78,16 @@ class Form extends Component
                 return [
                     'records.*.month_id' => 'numeric|exists:months,id',
                     'records.*.category' => 'string|exists:category,code',
-                    'records.*.usage' => 'numeric|min:0',
-                    'records.*.charge' => 'numeric|min:0',
+                    'records.*.usage' => 'numeric|min:0|required_with:records.*.charge',
+                    'records.*.charge' => 'numeric|min:0|required_with:records.*.usage',
                 ];
             case 'recycle':
             case 'used_oil':
                 return [
                     'records.*.month_id' => 'numeric|exists:months,id',
                     'records.*.category' => 'string|exists:category,code',
-                    'records.*.value' => 'numeric|min:0',
-                    'records.*.weight' => 'numeric|min:0',
+                    'records.*.value' => 'numeric|min:0|required_with:records.*.weight',
+                    'records.*.weight' => 'numeric|min:0|required_with:records.*.value',
                 ];
         }
     }
@@ -175,11 +175,17 @@ class Form extends Component
 
     public function saveRecords()
     {
+        if(!$this->submission->id)
+            $this->submission->save();
+
         foreach ($this->records ?? [] as $record) {
             if ($this->checkRecordValue($record))
                 continue;
 
             $bill = $this->getBillByMonthAndSubmission($record['month_id'], $this->submission->id);
+            if(!$bill->id)
+                $bill->save();
+
             $category = $this->getCategoryByBill($this->category_code, $bill->id);
 
             switch ($this->category_code) {
@@ -197,7 +203,13 @@ class Form extends Component
 
             $category->calculateCarbonEmission();
             $category->save();
+
+            $bill->calculateStats();
+            $bill->save();
         }
+
+        $this->submission->calculateStats();
+        $this->submission->save();
     }
 
     public function initRecords()
