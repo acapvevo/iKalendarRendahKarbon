@@ -63,7 +63,7 @@ class Evidence extends Component
             'file_label' => __("Upload your Evidence File")
         ]);
 
-        $category_obj = $this->getSubmissionCategory($category);
+        $category_obj = $this->getSubmissionCategoryByCode($category);
         $this->fill([
             'category_name' => $category_obj->name,
             'category_description' => $category_obj->description,

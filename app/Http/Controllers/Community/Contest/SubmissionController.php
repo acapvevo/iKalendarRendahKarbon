@@ -35,7 +35,7 @@ class SubmissionController extends Controller
         $community = Auth::user();
 
         $submission = $this->getSubmissionByCompetitionIDAndCommunityID($validated['competition_id'], $community->id);
-        $categoryDescription = $this->getSubmissionCategory($validated['category'])->description;
+        $categoryDescription = $this->getSubmissionCategoryByCode($validated['category'])->description;
 
         return view('community.contest.submission.list')->with([
             'submission' => $submission,

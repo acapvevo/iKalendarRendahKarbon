@@ -1,10 +1,6 @@
 <script>
     @if (Session::has('success'))
-        Swal.fire(
-            "{{ __('Success') }}",
-            "{{ session('success') }}",
-            'success'
-        );
+        success("{{ session('success') }}");
         @php
             Session::forget('success');
         @endphp
@@ -12,11 +8,7 @@
 
 
     @if (Session::has('error'))
-        Swal.fire(
-            "{{ __('Error') }}",
-            "{{ session('error') }}",
-            'error'
-        );
+        error("{{ session('error') }}");
         @php
             Session::forget('error');
         @endphp
@@ -25,18 +17,14 @@
     @if ($errors->any())
         Swal.fire(
             "{{ __('Form Validation Error') }}",
-            "{{ __("Please Check Your Input") }}",
+            "{{ __('Please Check Your Input') }}",
             'error'
         );
     @endif
 
 
     @if (Session::has('info'))
-        Swal.fire(
-            "{{ __('Information') }}",
-            "{{ session('info') }}",
-            'info'
-        );
+        info("{{ session('info') }}");
         @php
             Session::forget('info');
         @endphp
@@ -44,15 +32,60 @@
 
 
     @if (Session::has('warning'))
-        Swal.fire(
-            "{{ __('Warning') }}",
-            "{{ session('warning') }}",
-            'warning'
-        );
+        warning("{{ session('warning') }}");
         @php
             Session::forget('warning');
         @endphp
     @endif
+
+    window.addEventListener('alert', event => {
+        switch (event.detail.type) {
+            case 'success':
+                success(event.detail.message);
+                break;
+            case 'error':
+                error(event.detail.message);
+                break;
+            case 'warning':
+                warning(event.detail.message);
+                break;
+            case 'info':
+                info(event.detail.message);
+                break;
+        }
+    });
+
+    function success(message) {
+        Swal.fire(
+            "{{ __('Success') }}",
+            message,
+            'success'
+        );
+    }
+
+    function error(message) {
+        Swal.fire(
+            "{{ __('Error') }}",
+            message,
+            'error'
+        );
+    }
+
+    function info(message) {
+        Swal.fire(
+            "{{ __('Information') }}",
+            message,
+            'info'
+        );
+    }
+
+    function warning(message) {
+        Swal.fire(
+            "{{ __('Warning') }}",
+            message,
+            'warning'
+        );
+    }
 
     function confirmation(question, then) {
         Swal.fire(
@@ -65,7 +98,7 @@
     function apiError() {
         Swal.fire(
             "{{ __('API Error') }}",
-            "{{ __("Please Try Again Later") }}",
+            "{{ __('Please Try Again Later') }}",
             'error'
         );
     }

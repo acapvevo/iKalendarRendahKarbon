@@ -56,7 +56,7 @@ class Answer extends Component
             'answer' => new AnswerModel,
         ]);
 
-        $category_obj = $this->getSubmissionCategory($category);
+        $category_obj = $this->getSubmissionCategoryByCode($category);
 
         $this->fill([
             'category_name' => $category_obj->name,

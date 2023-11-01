@@ -28,8 +28,7 @@ class Evidence extends Model
      *
      * @var array
      */
-    protected $casts = [
-    ];
+    protected $casts = [];
 
     /**
      * Get the Submission that owns the Bill.
@@ -41,7 +40,7 @@ class Evidence extends Model
 
     public function formatTitleForFileName()
     {
-        return preg_replace('/[^a-zA-Z0-9\-\._]/','', $this->title);
+        return preg_replace('/[^a-zA-Z0-9\-\._]/', '', $this->title);
     }
 
     public function downloadFile()
@@ -56,6 +55,6 @@ class Evidence extends Model
 
     public function getCategory()
     {
-        return $this->getSubmissionCategory($this->category);
+        return $this->getSubmissionCategoryByCode($this->category);
     }
 }

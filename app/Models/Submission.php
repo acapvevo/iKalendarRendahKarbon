@@ -156,7 +156,7 @@ class Submission extends Model
             $month = $this->competition->months->get($i);
 
             if ($this->bills->contains('month_id', $month->id)) {
-                $bill = $this->getBillByMonth($month->id);
+                $bill = $this->getBillByMonthAndSubmission($month->id, $this->id);
 
                 if (!isset($bill->calculation)) {
                     $bill->calculateStats();
@@ -180,7 +180,7 @@ class Submission extends Model
                     $lastMonth = $this->competition->months->get($i - 1);
 
                     if ($this->bills->contains('month_id', $lastMonth->id)) {
-                        $lastBill = $this->getBillByMonth($lastMonth->id);
+                        $lastBill = $this->getBillByMonthAndSubmission($lastMonth->id, $this->id);
 
                         $carbon_reduction = $bill->calculation->total_carbon_emission - $lastBill->calculation->total_carbon_emission;
                         if ($carbon_reduction < 0)

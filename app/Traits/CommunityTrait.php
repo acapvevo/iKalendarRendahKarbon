@@ -24,9 +24,12 @@ trait CommunityTrait
      */
     public function createCommunity($community, $address, $occupation)
     {
-        $community = Community::create($community);
+        $community = Community::firstOrCreate($community);
+        
+        $address = new Address($address);
+        $address->setZone();
+        $community->address()->save($address);
 
-        $community->address()->save(new Address($address));
         $community->occupation()->save(new Occupation($occupation));
 
         VerifyEmail::createUrlUsing(function ($notifiable) {
@@ -53,5 +56,25 @@ trait CommunityTrait
     public function getCommunity($id)
     {
         return Community::find($id);
+    }
+
+    public function getCommunityByEmail($email)
+    {
+        return Community::firstOrNew([
+            'email' => $email
+        ]);
+    }
+
+    public function getAddressByCommunityId($community_id)
+    {
+        if($community_id)
+            return Address::firstOrNew([
+                'community_id' => $community_id
+            ]);
+        else
+            return new Address([
+                'state' => 'JOHOR',
+                'country' => 'MALAYSIA'
+            ]);
     }
 }
