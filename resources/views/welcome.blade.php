@@ -241,7 +241,7 @@
                                     </div>
                                 </li>
                             </ul>
-                            <a class="btn fw-500 ms-lg-4 btn-teal" href="{{ route('community.register') }}">
+                            <a class="btn fw-500 ms-lg-4 btn-teal" href="{{ route('community.form.view') }}">
                                 {{ __('Register Now') }}
                                 <i class="ms-2" data-feather="arrow-right"></i>
                             </a>
@@ -260,7 +260,7 @@
                                     <p class="page-header-ui-text mb-5">
                                         {{ __('Participate in the Iskandar Puteri Low Carbon Calendar Competition by recording your bills and usage as evidence of your commitment to reducing carbon emissions and inspire a greener community') }}
                                     </p>
-                                    <a class="btn btn-teal fw-500 me-2" href="{{ route('community.register') }}">
+                                    <a class="btn btn-teal fw-500 me-2" href="{{ route('community.form.view') }}">
                                         {{ __('Register Now') }}
                                         <i class="ms-2" data-feather="arrow-right"></i>
                                     </a>
