@@ -49,9 +49,26 @@
                             @break
                         @endswitch
                         <td>
-                            <div class="btn-toolbar justify-content-center" role="toolbar"
-                                aria-label="Toolbar with button groups">
-                                <div class="btn-group" role="group" aria-label="Action Button">
+                            <div class="justify-content-center">
+                                <div class="btn-group-vertical d-lg-none" role="group"
+                                    aria-label="Vertical button group">
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#viewMonthModal"
+                                        wire:click.prevent='open({{ $monthObj->id }})'>
+                                        <i data-bs-toggle="tooltip"
+                                            data-bs-title="{{ __('View Submission for') }} {{ $monthObj->getName() }}"
+                                            data-feather="eye"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#editSubmisssionModal"
+                                        wire:click.prevent='open({{ $monthObj->id }})'>
+                                        <i data-bs-toggle="tooltip"
+                                            data-bs-title="{{ __('Edit Submission for') }} {{ $monthObj->getName() }}"
+                                            data-feather="edit-2"></i>
+                                    </button>
+                                </div>
+                                <div class="btn-group d-none d-lg-inline-flex" role="group"
+                                    aria-label="Horizontal button group">
                                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#viewMonthModal"
                                         wire:click.prevent='open({{ $monthObj->id }})'>

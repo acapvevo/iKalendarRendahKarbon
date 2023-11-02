@@ -39,9 +39,26 @@
                         <td>{{ $questionObj->getAnswerBySubmissionID($submission_id) ? $questionObj->getAnswerBySubmissionID($submission_id)->text : __('No Answer Given') }}
                         </td>
                         <td>
-                            <div class="btn-toolbar justify-content-center" role="toolbar"
-                                aria-label="Toolbar with button groups">
-                                <div class="btn-group" role="group" aria-label="Action Button">
+                            <div class="justify-content-center">
+                                <div class="btn-group-vertical d-lg-none" role="group"
+                                    aria-label="Vertical button group">
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#viewAnswerModal"
+                                        wire:click.prevent='open({{ $questionObj->id }})'>
+                                        <i data-bs-toggle="tooltip"
+                                            data-bs-title="{{ __('View Answer for this Question') }}"
+                                            data-feather="eye"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#updateAnswerModal"
+                                        wire:click.prevent='open({{ $questionObj->id }})'>
+                                        <i data-bs-toggle="tooltip"
+                                            data-bs-title="{{ __('Edit Answer for this Question') }}"
+                                            data-feather="edit-2"></i>
+                                    </button>
+                                </div>
+                                <div class="btn-group d-none d-lg-inline-flex" role="group"
+                                    aria-label="Horizontal button group">
                                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#viewAnswerModal"
                                         wire:click.prevent='open({{ $questionObj->id }})'>

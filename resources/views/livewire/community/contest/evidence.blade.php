@@ -20,9 +20,27 @@
                     <tr>
                         <td>{{ $evidenceObj->title }}</td>
                         <td>
-                            <div class="btn-toolbar justify-content-center" role="toolbar"
-                                aria-label="Toolbar with button groups">
-                                <div class="btn-group" role="group" aria-label="Action Button">
+                            <div class="justify-content-center">
+                                <div class="btn-group-vertical d-lg-none" role="group"
+                                    aria-label="Vertical button group">
+                                    <form action="{{ route('community.contest.submission.download') }}" method="post"
+                                        target="_blank">
+                                        @csrf
+
+                                        <button type="submit" class="btn btn-primary btn-sm"
+                                            value="{{ $evidenceObj->id }}" name="evidence_id">
+                                            <i data-bs-toggle="tooltip" data-bs-title="{{ __('View Evidence') }}"
+                                                data-feather="eye"></i>
+                                        </button>
+                                    </form>
+                                    <button type="button" class="btn btn-primary btn-sm"
+                                        wire:click.prevent='askDelete({{ $evidenceObj->id }})'>
+                                        <i data-bs-toggle="tooltip" data-bs-title="{{ __('Delete Evidence') }}"
+                                            data-feather="trash-2"></i>
+                                    </button>
+                                </div>
+                                <div class="btn-group d-none d-lg-inline-flex" role="group"
+                                    aria-label="Horizontal button group">
                                     <form action="{{ route('community.contest.submission.download') }}" method="post"
                                         target="_blank">
                                         @csrf
