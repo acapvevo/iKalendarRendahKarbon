@@ -17,25 +17,32 @@
                         <td>{{ $competition->name }}</td>
                         <td>{{ $competition->checkSubmissionStatus() }}</td>
                         <td>
-                            <div class="btn-toolbar justify-content-center" role="toolbar"
-                                aria-label="Toolbar with button groups">
-                                <div class="btn-group" role="group" aria-label="Action Button">
+                            <div class="justify-content-center">
+                                <div class="btn-group-vertical d-lg-none" role="group"
+                                    aria-label="Vertical button group">
                                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#viewCompetitionModal"
                                         wire:click.prevent='open({{ $competition->id }})'>
                                         <i data-bs-toggle="tooltip" data-bs-title="{{ __('View Competition') }}"
                                             data-feather="eye"></i>
                                     </button>
+                                    <button type="button" class="btn btn-primary btn-sm"
+                                        wire:click='view({{ $competition->id }})' name="competition_id"><i
+                                            data-bs-toggle="tooltip" data-bs-title="{{ __('View Submission') }}"
+                                            data-feather="file-text"></i></button>
                                 </div>
-                                <div class="ps-3 btn-group" role="group" aria-label="Question">
-                                    <form action="{{ route('community.contest.submission.category') }}" method="post">
-                                        @csrf
-
-                                        <button type="submit" data-bs-toggle="tooltip"
-                                            data-bs-title="{{ __('View Submission') }}" class="btn btn-primary btn-sm"
-                                            value="{{ $competition->id }}" name="competition_id"><i
-                                                class="fa-solid fa-file-lines"></i></button>
-                                    </form>
+                                <div class="btn-group d-none d-lg-inline-flex" role="group"
+                                    aria-label="Horizontal button group">
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#viewCompetitionModal"
+                                        wire:click.prevent='open({{ $competition->id }})'>
+                                        <i data-bs-toggle="tooltip" data-bs-title="{{ __('View Competition') }}"
+                                            data-feather="eye"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-primary btn-sm"
+                                        wire:click='view({{ $competition->id }})' name="competition_id"><i
+                                            data-bs-toggle="tooltip" data-bs-title="{{ __('View Submission') }}"
+                                            data-feather="file-text"></i></button>
                                 </div>
                             </div>
                         </td>

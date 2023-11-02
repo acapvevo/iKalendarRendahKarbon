@@ -49,6 +49,11 @@ class Competition extends Component
         $this->resetErrorBag();
     }
 
+    public function view($competition_id)
+    {
+        return redirect(route('community.contest.submission.category', ['competition_id' => $competition_id]));
+    }
+
     public function render()
     {
         return view('livewire.community.contest.competition');
