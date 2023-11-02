@@ -1,6 +1,12 @@
 @push('styles')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
     @laravelTelInputStyles
+
+    <style>
+        table {
+            min-width: 576px;
+        }
+    </style>
 @endpush
 
 <div>
@@ -43,23 +49,25 @@
                 <div class="wizard-step-icon">4</div>
                 <div class="wizard-step-text">
                     <div class="wizard-step-text-name">{{ __('Recycle Record') }}</div>
-                    <div class="wizard-step-text-details">{{ __('Record Total Sell Value and Weight for Recycle') }}</div>
+                    <div class="wizard-step-text-details">{{ __('Record Total Sell Value and Weight for Recycle') }}
+                    </div>
                 </div>
             </button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="used_oil-tab" data-bs-toggle="tab" data-bs-target="#used_oil" type="button"
                 role="tab" aria-controls="used_oil" aria-selected="false" wire:ignore.self disabled>
-                <div class="wizard-step-icon">4</div>
+                <div class="wizard-step-icon">5</div>
                 <div class="wizard-step-text">
                     <div class="wizard-step-text-name">{{ __('Used Oil Record') }}</div>
-                    <div class="wizard-step-text-details">{{ __('Record Total Sell Value and Weight for Used Oil') }}</div>
+                    <div class="wizard-step-text-details">{{ __('Record Total Sell Value and Weight for Used Oil') }}
+                    </div>
                 </div>
             </button>
         </li>
     </ul>
 
-    <div class="tab-content" id="cardTabContent">
+    <div class="tab-content py-2" id="cardTabContent">
 
         <div class="tab-pane py-xl-10 fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab"
             tabindex="0" wire:ignore.self>
@@ -114,7 +122,8 @@
                                 <label class="form-label" for="password">{{ __('Password') }}</label>
                                 <input type="password"
                                     class="form-control password {{ $errors->has('password') ? 'is-invalid' : '' }}"
-                                    id="password" wire:model='password' placeholder="{{ __('Enter Your Password') }}"
+                                    id="password" wire:model='password'
+                                    placeholder="{{ __('Enter Your Password') }}"
                                     aria-describedby="passwordHelpBlock"
                                     {{ $isRetrieved ? ($isSaved ? 'disabled' : '') : 'disabled' }} />
                                 <div id="passwordHelpBlock" class="form-text">
@@ -347,8 +356,8 @@
                         <tbody>
                             @foreach ($competition->months as $m => $month)
                                 <tr>
-                                    <td>{{ $month->getName() }}</td>
-                                    <td>
+                                    <td data-th="{{ __('Month') }}">{{ $month->getName() }}</td>
+                                    <td data-th="{{ __('Bill Charge') }}">
                                         <div class="input-group mb-3">
                                             <span class="input-group-text"
                                                 id="records_{{ $m }}_charge">RM</span>
@@ -363,7 +372,7 @@
                                             </div>
                                         @enderror
                                     </td>
-                                    <td>
+                                    <td data-th="{{ __('Consumption') }}">
                                         <div class="input-group mb-3">
                                             <input type="number" wire:model='records.{{ $m }}.usage'
                                                 id="records_{{ $m }}_usage"
@@ -625,10 +634,10 @@
                         </div>
                     </button>
                     <button class="btn btn-success" type="button" wire:click='submit'>
-                        <span wire:loading.remove>{{__("Submit")}}</span>
+                        <span wire:loading.remove>{{ __('Submit') }}</span>
                         <div wire:loading wire:target='submit'>
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            {{__("Submit")}}
+                            {{ __('Submit') }}
                         </div>
                     </button>
                 </div>
