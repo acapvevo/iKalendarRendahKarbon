@@ -21,3 +21,4 @@ require __DIR__.'/template.php';
 require __DIR__.'/web/super_admin.php';
 require __DIR__.'/web/admin.php';
 require __DIR__.'/web/community.php';
+require __DIR__.'/web/resident.php';

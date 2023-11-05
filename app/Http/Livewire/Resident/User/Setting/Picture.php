@@ -1,22 +1,23 @@
 <?php
 
-namespace App\Http\Livewire\Community\User\Setting;
+namespace App\Http\Livewire\Resident\User\Setting;
 
 use Livewire\Component;
-use App\Models\Community;
+use App\Models\Resident;
 use Livewire\WithFileUploads;
 use App\Traits\Livewire\CheckGuard;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Picture extends Component
 {
     use WithFileUploads, CheckGuard;
 
-    protected $guard = 'community';
+    protected $guard = 'resident';
 
     public $image;
-    public Community $user;
+    public Resident $user;
 
     public function mount($user)
     {
@@ -41,11 +42,11 @@ class Picture extends Component
         $request = $this->validate();
 
         $imageName = $this->user->id . '.' . $request['image']->extension();
-        $imagePath = "app/profile_picture/community";
+        $imagePath = "app/profile_picture/resident";
 
         $img = Image::make($request['image']);
-        if (!Storage::exists("profile_picture/community")) {
-            Storage::makeDirectory("profile_picture/community"); //creates directory
+        if (!Storage::exists("profile_picture/resident")) {
+            Storage::makeDirectory("profile_picture/resident"); //creates directory
         }
         $img->fit(200)->save(storage_path($imagePath . '/' . $imageName));
 
@@ -53,11 +54,11 @@ class Picture extends Component
 
         $this->user->save();
 
-        redirect(route('community.user.setting.view'))->with('success', __('alerts.picture_update'));
+        redirect(route('resident.user.setting.view'))->with('success', __('alerts.picture_update'));
     }
 
     public function render()
     {
-        return view('livewire.community.user.setting.picture');
+        return view('livewire.resident.user.setting.picture');
     }
 }

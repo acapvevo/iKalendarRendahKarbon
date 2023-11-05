@@ -1,22 +1,23 @@
 <?php
 
-namespace App\Http\Livewire\Community\User\Setting;
+namespace App\Http\Livewire\Resident\User\Setting;
 
 use Livewire\Component;
-use App\Models\Community;
+use App\Models\Resident;
 use App\Traits\Livewire\CheckGuard;
 use Illuminate\Support\Facades\Hash;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Password extends Component
 {
     use CheckGuard;
 
-    protected $guard = 'community';
+    protected $guard = 'resident';
 
     public $password;
     public $password_confirmation;
 
-    public Community $user;
+    public Resident $user;
 
     public function mount($user)
     {
@@ -43,11 +44,11 @@ class Password extends Component
 
         $this->user->save();
 
-        return redirect(route('community.user.setting.view'))->with('success', __("alerts.password_update"));
+        return redirect(route('resident.user.setting.view'))->with('success', __("alerts.password_update"));
     }
 
     public function render()
     {
-        return view('livewire.community.user.setting.password');
+        return view('livewire.resident.user.setting.password');
     }
 }
