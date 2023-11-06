@@ -31,7 +31,7 @@
                 @endif
 
                 <!-- Forgot password form-->
-                <form method="post" action="{{ route('community.password.email') }}">
+                <form method="post" action="{{ route('resident.password.email') }}">
                     @csrf
 
                     <!-- Form Group (email address)-->
@@ -48,13 +48,13 @@
                     </div>
                     <!-- Form Group (submit options)-->
                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                        <a class="small" href="{{ route('community.login') }}">{{ __('Return to login') }}</a>
+                        <a class="small" href="{{ route('resident.login') }}">{{ __('Return to login') }}</a>
                         <button class="btn btn-primary" type="submit">{{ __('Reset Password') }}</button>
                     </div>
                 </form>
             </div>
             <div class="card-footer text-center">
-                <div class="small"><a href="{{ route('community.register') }}">{{ __('Need an account? Sign up!') }}</a>
+                <div class="small"><a href="{{ route('resident.register') }}">{{ __('Need an account? Sign up!') }}</a>
                 </div>
             </div>
         </div>

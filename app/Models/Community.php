@@ -18,6 +18,7 @@ class Community extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'resident_id',
         'name',
         'identification_number',
         'phone_number',
@@ -51,6 +52,14 @@ class Community extends Authenticatable
     ];
 
     /**
+     * Get the Resident associated with the Community.
+     */
+    public function resident()
+    {
+        return $this->belongsTo(Resident::class);
+    }
+
+    /**
      * Get the Address associated with the Community.
      */
     public function address()
@@ -64,6 +73,11 @@ class Community extends Authenticatable
     public function occupation()
     {
         return $this->hasOne(Occupation::class);
+    }
+
+    public function viewProfilePicture()
+    {
+        return Storage::response('profile_picture/community/' . $this->image);
     }
 
     public function toggleSubscription()

@@ -21,7 +21,7 @@
                 @endif
 
                 <!-- password confirmation form-->
-                <form method="post" action="{{ route('community.password.confirm') }}">
+                <form method="post" action="{{ route('resident.password.confirm') }}">
                     @csrf
 
                     <input type="hidden" name="token" value="{{ $request->route('token') }}">

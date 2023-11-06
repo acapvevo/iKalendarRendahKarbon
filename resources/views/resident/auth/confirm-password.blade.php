@@ -24,7 +24,7 @@
                 @endif
 
                 <!-- password confirmation form-->
-                <form method="post" action="{{ route('community.password.confirm') }}">
+                <form method="post" action="{{ route('resident.password.confirm') }}">
                     @csrf
 
                     <!-- Form Group (password)-->

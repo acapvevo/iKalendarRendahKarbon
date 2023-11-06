@@ -18,8 +18,12 @@ class Resident extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'phone_number',
+        'image',
+        'username',
         'email',
         'password',
+        'timezone',
     ];
 
     /**

@@ -13,7 +13,7 @@
             </div>
             <div class="card-body">
                 <!-- Login form-->
-                <form class="auth-form login-form" action="{{ route('community.login') }}" method="post">
+                <form class="auth-form login-form" action="{{ route('resident.login') }}" method="post">
                     @csrf
 
                     @if (session('status'))
@@ -66,13 +66,13 @@
 
                     <!-- Form Group (login box)-->
                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                        <a class="small" href="{{ route('community.password.request') }}">{{ __('Forgot Password?') }}</a>
+                        <a class="small" href="{{ route('resident.password.request') }}">{{ __('Forgot Password?') }}</a>
                         <button type="submit" class="btn btn-primary">{{ __('Login') }}</button>
                     </div>
                 </form>
             </div>
             <div class="card-footer text-center">
-                <div class="small"><a href="{{ route('community.register') }}">{{ __('Need an account? Sign up!') }}</a>
+                <div class="small"><a href="{{ route('resident.register') }}">{{ __('Need an account? Sign up!') }}</a>
                 </div>
             </div>
         </div>

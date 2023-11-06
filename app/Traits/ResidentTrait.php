@@ -8,9 +8,15 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Support\Facades\Auth;
 
 trait ResidentTrait
 {
+    public function getCurrentResident()
+    {
+        return Auth::guard('resident')->user();
+    }
+
     public function getResident($id)
     {
         return Resident::find($id);

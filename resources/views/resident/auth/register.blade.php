@@ -12,10 +12,10 @@
                 <h3 class="fw-light my-4 text-center">{{ __('Create Account As Community') }}</h3>
             </div>
             <div class="card-body">
-                @livewire('community.auth.register')
+                @livewire('resident.auth.register')
             </div>
             <div class="card-footer text-center">
-                <div class="small"><a href="{{ route('community.login') }}">{{ __('Have an account? Go to login') }}</a>
+                <div class="small"><a href="{{ route('resident.login') }}">{{ __('Have an account? Go to login') }}</a>
                 </div>
             </div>
         </div>

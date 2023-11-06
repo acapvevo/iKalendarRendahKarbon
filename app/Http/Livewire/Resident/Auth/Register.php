@@ -24,8 +24,8 @@ class Register extends Component
     public $isVisible = false;
 
     protected $rules = [
-        'user.username' => 'required|string|max:255|unique:communities,username',
-        'user.email' => 'required|string|email|max:255|unique:communities,email',
+        'user.username' => 'required|string|max:255|unique:residents,username',
+        'user.email' => 'required|string|email|max:255|unique:residents,email',
         'password' => 'required|string|confirmed|min:8',
     ];
 
@@ -67,8 +67,8 @@ class Register extends Component
     {
         $this->validate([
             'captcha' => 'recaptcha',
-            'user.username' => 'required|string|max:255|unique:communities,username',
-            'user.email' => 'required|string|email|max:255|unique:communities,email',
+            'user.username' => 'required|string|max:255|unique:residents,username',
+            'user.email' => 'required|string|email|max:255|unique:residents,email',
             'password' => 'required|string|confirmed|min:8',
         ]);
 

@@ -31,7 +31,7 @@
                 @endif
 
                 <!-- email verification form-->
-                <form method="post" action="{{ route('community.verification.send') }}">
+                <form method="post" action="{{ route('resident.verification.send') }}">
                     @csrf
 
                     <!-- Form Group (submit options)-->
@@ -41,7 +41,7 @@
                 </form>
 
                 <!-- log out form-->
-                <form method="post" action="{{ route('community.logout') }}">
+                <form method="post" action="{{ route('resident.logout') }}">
                     @csrf
 
                     <!-- Form Group (submit options)-->

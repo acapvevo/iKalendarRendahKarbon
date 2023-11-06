@@ -8,6 +8,7 @@ use App\Http\Controllers\Resident\User\SettingController;
 use App\Http\Controllers\Resident\Auth\NewPasswordController;
 use App\Http\Controllers\Resident\Auth\VerifyEmailController;
 use App\Http\Controllers\Resident\Auth\RegisteredUserController;
+use App\Http\Controllers\Resident\Participant\CommunityController;
 use App\Http\Controllers\Resident\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Resident\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Resident\Auth\AuthenticatedSessionController;
@@ -87,6 +88,17 @@ Route::prefix('resident')->name('resident.')->group(function () {
             //Profile Picture
             Route::prefix('picture')->name('picture.')->group(function () {
                 Route::get('', [PictureController::class, 'show'])->name('show');
+            });
+        });
+
+        // Participant Management routes
+        Route::prefix('participant')->name('participant.')->group(function () {
+
+            //Community
+            Route::prefix('community')->name('community.')->group(function () {
+                Route::get('', [CommunityController::class, 'list'])->name('list');
+                Route::match(['get', 'post'], '/filter', [CommunityController::class, 'filter'])->name('filter');
+                Route::match(['get', 'post'], '/select', [CommunityController::class, 'select'])->name('select');
             });
         });
     });

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @php
-    $home = route('community.dashboard');
+    $home = route('resident.dashboard');
 @endphp
 
 @section('alerts')
@@ -101,19 +101,19 @@
 
 @section('name', Auth::user()->name ?? Auth::user()->username)
 @section('email', Auth::user()->email)
-@section('picture', Auth::user()->image ? route('community.user.picture.show') :
+@section('picture', Auth::user()->image ? route('resident.user.picture.show') :
     asset('assets/img/illustrations/profiles/profile-1.png'))
 
 @section('topmenu')
-    <a class="dropdown-item" href="{{ route('community.user.profile.view') }}">
+    <a class="dropdown-item" href="{{ route('resident.user.profile.view') }}">
         <div class="dropdown-item-icon"><i data-feather="user"></i></div>
         {{ __('Profile') }}
     </a>
-    <a class="dropdown-item" href="{{ route('community.user.setting.view') }}">
+    <a class="dropdown-item" href="{{ route('resident.user.setting.view') }}">
         <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
         {{ __('Setting') }}
     </a>
-    <form action="{{ route('community.logout') }}" method="post">
+    <form action="{{ route('resident.logout') }}" method="post">
         @csrf
         <a class="dropdown-item" href="#!" onclick="event.preventDefault(); this.closest('form').submit();">
             <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
@@ -124,40 +124,37 @@
 
 @section('sidemenu')
     <!-- Sidenav Link (Dashboard)-->
-    <a class="nav-link" href="{{ route('community.dashboard') }}">
+    <a class="nav-link" href="{{ route('resident.dashboard') }}">
         <div class="nav-link-icon"><i data-feather="activity"></i></div>
         {{ __('Dashboard') }}
     </a>
-    <a class="nav-link" href="{{ route('community.contest.competition.list') }}">
+    <!-- Sidenav Accordion (Participant Management)-->
+    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseParticipant"
+        aria-expanded="false" aria-controls="collapseParticipant">
+        <div class="nav-link-icon"><i data-feather="users"></i></div>
+        {{ __('Participant Management') }}
+        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+    </a>
+    <div class="collapse" id="collapseParticipant" data-bs-parent="#participant">
+        <nav class="sidenav-menu-nested nav accordion" id="participant">
+            <!-- Sidenav Link (Resident)-->
+            <a class="nav-link" href="{{ route('resident.participant.community.list') }}">{{ __('Resident') }}</a>
+        </nav>
+    </div>
+    {{-- <a class="nav-link" href="{{ route('resident.contest.competition.list') }}">
         <div class="nav-link-icon"><i class="fa-solid fa-trophy"></i></div>
         {{ __('Competition Submission') }}
-    </a>
-    <a class="nav-link" href="{{ route('community.newsletter.list') }}">
+    </a> --}}
+    {{-- <a class="nav-link" href="{{ route('resident.newsletter.list') }}">
         <div class="nav-link-icon"><i class="fa-regular fa-newspaper"></i></div>
         {{ __('Newsletter') }}
-    </a>
+    </a> --}}
 @endsection
 
 @push('scripts')
     <script>
-        @if ((url()->current() != route('community.user.profile.view')) &&
-                !request()->user()->checkCompletion())
-            Swal.fire({
-                title: "{{ __('Profile Incomplete') }}",
-                text: "{{ __('Your Profile is Incomplete. Please Complete your Profile') }}",
-                icon: 'warning',
-                confirmButtonText: "{{ __('Go to Profile Page') }}",
-                allowOutsideClick: false,
-                allowEscapeKey: false
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.replace("{{ route('community.user.profile.view') }}");
-                }
-            })
-        @endif
-
         Livewire.onPageExpired((response, message) => {
-            window.location.replace("{{ route('community.login') }}");
+            window.location.replace("{{ route('resident.login') }}");
         })
     </script>
 @endpush
