@@ -30,6 +30,8 @@ class SubmissionController extends Controller
         else
             $competition = $competitions->get(0);
 
+        $competition->recalculateStats();
+
         return view('admin.contest.submission.list')->with([
             'competitions' => $competitions,
             'currentCompetition' => $competition,

@@ -11,13 +11,14 @@ use App\Models\UsedOil;
 use Livewire\Component;
 use App\Models\Electric;
 use App\Models\Submission;
+use App\Traits\CalculationTrait;
 use App\Traits\Livewire\CheckGuard;
 use App\Traits\SubmissionTrait;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Record extends Component
 {
-    use LivewireAlert, CheckGuard, SubmissionTrait;
+    use LivewireAlert, CheckGuard, SubmissionTrait, CalculationTrait;
 
     protected $guard = 'admin';
 
@@ -86,10 +87,7 @@ class Record extends Component
 
     public function getCalculationProperty()
     {
-        return $this->bill->calculation ?? new Calculation([
-            'parent_id' => $this->bill->id,
-            'parent_type' => Bill::class,
-        ]);
+        return $this->bill->calculation ?? $this->getCalculationByClassAndID($this->bill->id, Bill::class);
     }
 
     public function getMonthProperty()
