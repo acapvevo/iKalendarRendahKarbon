@@ -162,11 +162,13 @@ class Submission extends Model
                     $bill->calculateStats();
                 }
 
-                $total_carbon_emission += $bill->calculation->total_carbon_emission;
-                $total_charge += $bill->calculation->total_charge;
-                $total_usage += $bill->calculation->total_usage;
-                $total_weight += $bill->calculation->total_weight;
-                $total_value += $bill->calculation->total_value;
+                $calculation = $bill->calculation;
+
+                $total_carbon_emission += $calculation->total_carbon_emission;
+                $total_charge += $calculation->total_charge;
+                $total_usage += $calculation->total_usage;
+                $total_weight += $calculation->total_weight;
+                $total_value += $calculation->total_value;
 
                 foreach ($this->getSubmissionCategories() as $category) {
                     $total_carbon_emission_each_type[$category->name] += round($bill->{$category->name}->carbon_emission ?? 0, 2);
@@ -181,16 +183,17 @@ class Submission extends Model
 
                     if ($this->bills->contains('month_id', $lastMonth->id)) {
                         $lastBill = $this->getBillByMonthAndSubmission($lastMonth->id, $this->id);
+                        $lastCalculation = $lastBill->calculation;
 
-                        $carbon_reduction = $bill->calculation->total_carbon_emission - $lastBill->calculation->total_carbon_emission;
+                        $carbon_reduction = $calculation->total_carbon_emission - $lastCalculation->total_carbon_emission;
                         if ($carbon_reduction < 0)
                             $total_carbon_reduction += $carbon_reduction;
 
-                        $usage_reduction = $bill->calculation->total_usage - $lastBill->calculation->total_usage;
+                        $usage_reduction = $calculation->total_usage - $lastCalculation->total_usage;
                         if ($usage_reduction < 0)
                             $total_usage_reduction += $usage_reduction;
 
-                        $charge_reduction = $bill->calculation->total_charge - $lastBill->calculation->total_charge;
+                        $charge_reduction = $calculation->total_charge - $lastCalculation->total_charge;
                         if ($charge_reduction < 0)
                             $total_charge_reduction += $charge_reduction;
 

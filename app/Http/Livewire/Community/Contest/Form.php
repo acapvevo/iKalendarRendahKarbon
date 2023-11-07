@@ -151,6 +151,7 @@ class Form extends Component
         if (!isset($this->community->id)) {
             if ($this->community->checkCompletion() && $this->address->checkCompletion()) {
                 $this->createCommunity(array_merge($this->community->attributesToArray(), ['password' => Hash::make($this->password)]), $this->address->attributesToArray(), []);
+                $this->community = $this->getCommunityProperty();
             } else {
                 $this->dispatchBrowserEvent('alert', [
                     'type' => 'warning',
@@ -175,15 +176,16 @@ class Form extends Component
 
     public function saveRecords()
     {
-        if(!$this->submission->id)
-            $this->submission->save();
-
-        foreach ($this->records ?? [] as $record) {
+        $isRecordsZero = true;
+        foreach ($this->records ?? [] as $r => $record) {
             if ($this->checkRecordValue($record))
                 continue;
 
+            if (!$this->submission->id)
+                $this->submission->save();
+
             $bill = $this->getBillByMonthAndSubmission($record['month_id'], $this->submission->id);
-            if(!$bill->id)
+            if (!$bill->id)
                 $bill->save();
 
             $category = $this->getCategoryByBill($this->category_code, $bill->id);
@@ -206,10 +208,12 @@ class Form extends Component
 
             $bill->calculateStats();
             $bill->save();
+
+            $isRecordsZero = false;
         }
 
-        $this->submission->calculateStats();
-        $this->submission->save();
+        if (isset($this->records) && $this->records->isNotEmpty() && !$isRecordsZero)
+            $this->submission->calculateStats();
     }
 
     public function initRecords()
@@ -273,6 +277,7 @@ class Form extends Component
             $this->fill([
                 'community' => $this->getCommunityProperty(),
                 'address' => $this->getAddressProperty(),
+                'submission' => new Submission,
             ]);
 
             $this->reset([
