@@ -673,6 +673,9 @@
                 $(".community_phone_number").prop("disabled", true);
                 $("[data-phone-input-id=community_phone_number]").val($("#community_phone_number").val());
             }
+
+            $("#password").val("");
+            $("#password_confirmation").val("");
         });
 
         $('#community_identification_number').mask('000000d00d0000', {
