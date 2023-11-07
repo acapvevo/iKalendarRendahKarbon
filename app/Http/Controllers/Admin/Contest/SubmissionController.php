@@ -69,8 +69,9 @@ class SubmissionController extends Controller
                 'title' => __('Zone')
             ),
             array(
-                'db' => 'submissions.total_carbon_emission',
-                'dt' => 2, 'as' => 'total_carbon_emission',
+                'db' => 'calculations.total_carbon_emission',
+                'dt' => 2,
+                'as' => 'total_carbon_emission',
                 'title' => 'Total Carbon Emission',
                 'formatter' => function ($d, $row) {
                     return number_format($d, 2) . ' kgCO<sub>2</sub>';
@@ -146,14 +147,16 @@ class SubmissionController extends Controller
         $dbObj = DB::table('submissions')
             ->join('communities', 'submissions.community_id', '=', 'communities.id')
             ->join('addresses', 'addresses.community_id', '=', 'communities.id')
+            ->join('calculations', 'calculations.parent_id', '=', 'submissions.id')
             ->leftJoin('zones', 'addresses.zone_id', '=', 'zones.id')
             ->where('submissions.competition_id', '=', $request->competition_id)
+            ->where('calculations.parent_type', '=', 'App\Models\Submission')
             ->select([
                 'communities.name',
                 'communities.username',
                 'zones.number',
                 'submissions.id',
-                'submissions.total_carbon_emission',
+                'calculations.total_carbon_emission',
             ]);
 
         return response()->json(Datatable::simple($request->all(), $dbObj, $columns));

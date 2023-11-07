@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Contest;
 
 use App\Models\Bill;
+use App\Models\Calculation;
 use App\Models\Month;
 use App\Models\Water;
 use App\Models\Recycle;
@@ -31,6 +32,7 @@ class Record extends Component
     public Water $water;
     public Recycle $recycle;
     public UsedOil $used_oil;
+    public Calculation $calculation;
 
     public $submission_categories;
 
@@ -45,6 +47,7 @@ class Record extends Component
             'water' => new Water,
             'recycle' => new Recycle,
             'used_oil' => new UsedOil,
+            'calculation' => new Calculation,
         ]);
     }
 
@@ -81,6 +84,14 @@ class Record extends Component
         ]);
     }
 
+    public function getCalculationProperty()
+    {
+        return $this->bill->calculation ?? new Calculation([
+            'parent_id' => $this->bill->id,
+            'parent_type' => Bill::class,
+        ]);
+    }
+
     public function getMonthProperty()
     {
         return $this->bill->month;
@@ -102,6 +113,7 @@ class Record extends Component
             'water' => $this->getWaterProperty(),
             'recycle' => $this->getRecycleProperty(),
             'used_oil' => $this->getUsedOilProperty(),
+            'calculation' => $this->getCalculationProperty(),
         ]);
     }
 
@@ -114,6 +126,7 @@ class Record extends Component
             'water' => new Water,
             'recycle' => new Recycle,
             'used_oil' => new UsedOil,
+            'calculation' => new Calculation,
         ]);
     }
 

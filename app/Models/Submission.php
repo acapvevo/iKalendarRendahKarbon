@@ -97,7 +97,7 @@ class Submission extends Model
     {
         $bill = $this->getBillByMonthID($month_id);
 
-        return $bill->total_carbon_emission ?? 0;
+        return $bill->calculation->total_carbon_emission ?? 0;
     }
 
     public function getBillByMonthID($month_id)
