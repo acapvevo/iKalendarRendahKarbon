@@ -7,6 +7,7 @@ use App\Models\Admin;
 use App\Models\Address;
 use App\Models\Community;
 use App\Models\Occupation;
+use App\Models\Resident;
 use App\Models\SuperAdmin;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -38,14 +39,22 @@ class UserSeeder extends Seeder
             'email' => 'admin@gmail.com',
         ]);
 
+        //Resident
+        Resident::create([
+            'username' => 'community',
+            'password' => Hash::make('community'),
+            'name' => 'COMMUNITY',
+            'email' => 'community@gmail.com',
+        ]);
+
         //Community
         $community = Community::create([
-            'name' => 'COMMUNITY',
+            'name' => 'RESIDENT',
             'identification_number' => '990101-01-5619',
             'phone_number' => '+60182901888',
-            'username' => 'community',
-            'email' => 'community@gmail.com',
-            'password' => Hash::make('community'),
+            'username' => 'resident',
+            'email' => 'resident@gmail.com',
+            'password' => Hash::make('resident'),
         ]);
 
         Occupation::create([
