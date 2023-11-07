@@ -5,12 +5,12 @@
     <div class="py-3 d-flex justify-content-end">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createCommunityModal"
             wire:click.prevent='open'>
-            {{ __('Register Community') }}
+            {{ __('Register Resident') }}
         </button>
         &nbsp;
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#batchCreateCommunityModal"
             wire:click.prevent='open'>
-            {{ __('Batch Register Community') }}
+            {{ __('Batch Register Resident') }}
         </button>
     </div>
     <div class="table-resposive" wire:ignore>
@@ -32,7 +32,7 @@
         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="createCommunityModalLabel">{{ __('Register Community') }}</h1>
+                    <h1 class="modal-title fs-5" id="createCommunityModalLabel">{{ __('Register Resident') }}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                         wire:click.prevent="close()"></button>
                 </div>
@@ -43,7 +43,7 @@
                             <label for="community.username" class="form-label">{{ __('Username') }}:</label>
                             <input type="text"
                                 class="form-control {{ $errors->has('community.username') ? 'is-invalid' : '' }}"
-                                placeholder="{{ __('Enter Community Username') }}" id="community.username"
+                                placeholder="{{ __('Enter Resident Username') }}" id="community.username"
                                 aria-label="username" aria-describedby="username" wire:model.lazy="community.username"
                                 required>
                             @error('community.username')
@@ -57,7 +57,7 @@
                             <label for="community.email" class="form-label">{{ __('Email Address') }}:</label>
                             <input type="email"
                                 class="form-control {{ $errors->has('community.email') ? 'is-invalid' : '' }}"
-                                placeholder="{{ __('Enter Community Email Address') }}" id="community.email"
+                                placeholder="{{ __('Enter Resident Email Address') }}" id="community.email"
                                 aria-label="email" aria-describedby="email" wire:model.lazy="community.email" required>
                             @error('community.email')
                                 <div class="invalid-feedback">
@@ -91,7 +91,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="batchCreateCommunityModalLabel">
-                        {{ __('Batch Register Community') }}</h1>
+                        {{ __('Batch Register Resident') }}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                         wire:click.prevent="close"></button>
                 </div>
@@ -101,7 +101,7 @@
 
                         <div class="mb-3">
                             <label for="input_file_label"
-                                class="form-label">{{ __('Community Registration File') }}</label>
+                                class="form-label">{{ __('Resident Registration File') }}</label>
                             <div class="input-group custom-file-button" id="input_file_label">
                                 <label class="input-group-text" for="community_batch_registration_file"
                                     role="button">{{ __('Browse') }}</label>
@@ -143,7 +143,7 @@
         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="viewCommunityModalLabel">{{ __('View Community') }}</h1>
+                    <h1 class="modal-title fs-5" id="viewCommunityModalLabel">{{ __('View Resident') }}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                         wire:click.prevent="close()"></button>
                 </div>
@@ -235,7 +235,7 @@
         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="editCommunityModalLabel">{{ __('Edit Community') }}</h1>
+                    <h1 class="modal-title fs-5" id="editCommunityModalLabel">{{ __('Edit Resident') }}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                         wire:click.prevent="close()"></button>
                 </div>
@@ -254,7 +254,7 @@
                                     <input type="text"
                                         class="form-control {{ $errors->has('community.name') ? 'is-invalid' : '' }}"
                                         id="name" wire:model.lazy="community.name"
-                                        placeholder="{{ __('Enter Community Name') }}"
+                                        placeholder="{{ __('Enter Resident Name') }}"
                                         oninput="this.value = this.value.toUpperCase()">
                                     @error('community.name')
                                         <div class="invalid-feedback">
@@ -268,7 +268,7 @@
                                     <input type="text"
                                         class="form-control {{ $errors->has('community.identification_number') ? 'is-invalid' : '' }}"
                                         id="identification_number" wire:model.lazy="community.identification_number"
-                                        placeholder="{{ __('Enter Community Identification Card Number') }}">
+                                        placeholder="{{ __('Enter Resident Identification Card Number') }}">
                                     @error('community.identification_number')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -283,7 +283,7 @@
                                     <input type="email"
                                         class="form-control {{ $errors->has('community.email') ? 'is-invalid' : '' }}"
                                         id="email" wire:model.lazy="community.email" required
-                                        placeholder="{{ __('Enter Community Email Address') }}">
+                                        placeholder="{{ __('Enter Resident Email Address') }}">
                                     @error('community.email')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -296,7 +296,7 @@
                                         <input type="text"
                                             class="form-control {{ $errors->has('community.phone_number') ? 'is-invalid' : '' }}"
                                             id="phone_number" wire:model.lazy="community.phone_number"
-                                            placeholder="{{ __('Enter Community Phone Number') }}">
+                                            placeholder="{{ __('Enter Resident Phone Number') }}">
                                     </div>
                                     @error('community.phone_number')
                                         <div class="invalid-feedback">
@@ -320,7 +320,7 @@
                                     class="form-label">{{ __('Occupation Place') }}:</label>
                                 <input type="text"
                                     class="form-control {{ $errors->has('occupation.place') ? 'is-invalid' : '' }}"
-                                    placeholder="{{ __('Enter Community Occuaption Place') }}" id="occupation.place"
+                                    placeholder="{{ __('Enter Resident Occuaption Place') }}" id="occupation.place"
                                     oninput="this.value = this.value.toUpperCase()" wire:model.lazy="occupation.place"
                                     aria-label="place" aria-describedby="place">
                                 @error('occupation.place')
@@ -335,7 +335,7 @@
                                     class="form-label">{{ __('Occupation Position') }}:</label>
                                 <input type="text"
                                     class="form-control {{ $errors->has('occupation.position') ? 'is-invalid' : '' }}"
-                                    placeholder="{{ __('Enter Community Occuaption Position') }}"
+                                    placeholder="{{ __('Enter Resident Occuaption Position') }}"
                                     id="occupation.position" oninput="this.value = this.value.toUpperCase()"
                                     wire:model.lazy="occupation.position" aria-label="position"
                                     aria-describedby="position">
@@ -353,7 +353,7 @@
                                     class="form-select {{ $errors->has('occupation.sector') ? 'is-invalid' : '' }}"
                                     id="occupation.sector" wire:model="occupation.sector"
                                     aria-label="Default select example">
-                                    <option value="" selected>{{ __('Choose Community Occuaption Sector') }}
+                                    <option value="" selected>{{ __('Choose Resident Occuaption Sector') }}
                                     </option>
                                     @foreach (DB::table('occupation_sector_type')->get() as $sector)
                                         <option value="{{ $sector->code }}" wire:key="sector-{{ $sector->code }}">
@@ -380,7 +380,7 @@
                                 <select class="form-select {{ $errors->has('address.category') ? 'is-invalid' : '' }}"
                                     id="address.category" aria-label="Default select example"
                                     wire:model="address.category">
-                                    <option selected value="">{{ __('Choose Community Address Category') }}
+                                    <option selected value="">{{ __('Choose Resident Address Category') }}
                                     </option>
                                     @foreach (DB::table('address_category')->get() as $category)
                                         <option value="{{ $category->code }}"
@@ -402,7 +402,7 @@
                                     <input type="text"
                                         class="form-control {{ $errors->has('address.line_1') ? 'is-invalid' : '' }}"
                                         id="address.line_1" wire:model.lazy="address.line_1"
-                                        placeholder="{{ __('Enter Community Address Line 1') }}">
+                                        placeholder="{{ __('Enter Resident Address Line 1') }}">
                                     @error('address.line_1')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -414,7 +414,7 @@
                                     <input type="text"
                                         class="form-control {{ $errors->has('address.line_2') ? 'is-invalid' : '' }}"
                                         id="address.line_2" wire:model.lazy="address.line_2"
-                                        placeholder="{{ __('Enter Community Address Line 2') }}">
+                                        placeholder="{{ __('Enter Resident Address Line 2') }}">
                                     @error('address.line_2')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -427,7 +427,7 @@
                                     <input type="text"
                                         class="form-control {{ $errors->has('address.line_3') ? 'is-invalid' : '' }}"
                                         id="address.line_3" wire:model.lazy="address.line_3"
-                                        placeholder="{{ __('Enter Community Address Line 3') }}">
+                                        placeholder="{{ __('Enter Resident Address Line 3') }}">
                                     @error('address.line_3')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -442,7 +442,7 @@
                                     <input type="text"
                                         class="form-control {{ $errors->has('address.postcode') ? 'is-invalid' : '' }}"
                                         id="address.postcode" wire:model.lazy="address.postcode"
-                                        placeholder="{{ __('Enter Community Postcode') }}">
+                                        placeholder="{{ __('Enter Resident Postcode') }}">
                                     @error('address.postcode')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -454,7 +454,7 @@
                                     <input type="text"
                                         class="form-control {{ $errors->has('address.city') ? 'is-invalid' : '' }}"
                                         id="address.city" wire:model.lazy="address.city"
-                                        placeholder="{{ __('Enter Community City') }}">
+                                        placeholder="{{ __('Enter Resident City') }}">
                                     @error('address.city')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -469,7 +469,7 @@
                                     <input type="text"
                                         class="form-control {{ $errors->has('address.state') ? 'is-invalid' : '' }}"
                                         id="address.state" wire:model.lazy="address.state"
-                                        placeholder="{{ __('Enter Community State') }}" readonly>
+                                        placeholder="{{ __('Enter Resident State') }}" readonly>
                                     @error('address.state')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -481,7 +481,7 @@
                                     <input type="text"
                                         class="form-control {{ $errors->has('address.country') ? 'is-invalid' : '' }}"
                                         id="address.country" wire:model.lazy="address.country"
-                                        placeholder="{{ __('Enter Community Country') }}" readonly>
+                                        placeholder="{{ __('Enter Resident Country') }}" readonly>
                                     @error('address.country')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -515,7 +515,7 @@
         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="verifyCommunityModalLabel">{{ __('Verify Community') }}</h1>
+                    <h1 class="modal-title fs-5" id="verifyCommunityModalLabel">{{ __('Verify Resident') }}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                         wire:click.prevent="close()"></button>
                 </div>

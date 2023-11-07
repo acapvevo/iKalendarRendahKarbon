@@ -140,7 +140,7 @@
     <div class="collapse" id="collapseParticipant" data-bs-parent="#participant">
         <nav class="sidenav-menu-nested nav accordion" id="participant">
             <!-- Sidenav Link (Community)-->
-            <a class="nav-link" href="{{ route('admin.participant.community.list') }}">{{ __('Community') }}</a>
+            <a class="nav-link" href="{{ route('admin.participant.community.list') }}">{{ __('Resident') }}</a>
         </nav>
     </div>
     <!-- Sidenav Accordion (Contest Management)-->

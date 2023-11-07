@@ -101,6 +101,10 @@ class Community extends Component
             'address' => $this->community->address,
             'occupation' => $this->community->occupation,
         ]);
+
+        $this->dispatchBrowserEvent('set_phone_number', [
+            'phone_number' => $this->community->phone_number
+        ]);
     }
 
     public function close()

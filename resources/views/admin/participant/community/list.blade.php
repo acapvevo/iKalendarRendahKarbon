@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', __('List of Community'))
+@section('title', __('List of Resident'))
 
 @section('header')
     <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
@@ -13,12 +13,12 @@
                             {{__("Participant Management")}}
                         </h1>
                     </div>
-                    <div class="col-12 col-xl-auto mt-4">{{ __('List of Community') }}</div>
+                    <div class="col-12 col-xl-auto mt-4">{{ __('List of Resident') }}</div>
                 </div>
                 <nav class="mt-4 rounded" aria-label="breadcrumb">
                     <ol class="breadcrumb px-3 py-2 rounded mb-0">
                         <li class="breadcrumb-item"><a href="#">{{ __('Participant Management') }}</a></li>
-                        <li class="breadcrumb-item active">{{ __('List of Community') }}</li>
+                        <li class="breadcrumb-item active">{{ __('List of Resident') }}</li>
                     </ol>
                 </nav>
             </div>
@@ -29,7 +29,7 @@
 @section('content')
     <div class="container-xl px-4 mt-n10">
         <div class="card">
-            <div class="card-header text-center">{{ __('List of Community') }}</div>
+            <div class="card-header text-center">{{ __('List of Resident') }}</div>
             <div class="card-body">
                 @livewire('admin.participant.community')
             </div>

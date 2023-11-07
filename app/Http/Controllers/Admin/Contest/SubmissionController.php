@@ -147,7 +147,7 @@ class SubmissionController extends Controller
             ->join('communities', 'submissions.community_id', '=', 'communities.id')
             ->join('addresses', 'addresses.community_id', '=', 'communities.id')
             ->leftJoin('zones', 'addresses.zone_id', '=', 'zones.id')
-            ->where('submissions.id', '=', $request->competition_id)
+            ->where('submissions.competition_id', '=', $request->competition_id)
             ->select([
                 'communities.name',
                 'communities.username',
