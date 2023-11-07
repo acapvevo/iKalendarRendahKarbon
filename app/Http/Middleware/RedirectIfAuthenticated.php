@@ -19,6 +19,9 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next, ...$guards)
     {
+        if(in_array('resident', $guards, true) && Auth::guard('resident')->check()) {
+            return redirect(route('resident.dashboard'));
+        }
         if(in_array('community', $guards, true) && Auth::guard('community')->check()) {
             return redirect(route('community.dashboard'));
         }

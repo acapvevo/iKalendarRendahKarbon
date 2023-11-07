@@ -71,7 +71,7 @@ class Profile extends Component
         $this->address->save();
         $this->occupation->save();
 
-        redirect(route('community.user.profile.view'))->with('success', 'Your Profile has been updated successfully');
+        redirect(route('community.user.profile.view'))->with('success', __('alerts.profile_update'));
     }
 
     public function render()

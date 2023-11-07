@@ -43,7 +43,7 @@ class Password extends Component
 
         $this->user->save();
 
-        return redirect(route('community.user.setting.view'))->with('success', 'Your Password have been updated successfully');
+        return redirect(route('community.user.setting.view'))->with('success', __("alerts.password_update"));
     }
 
     public function render()

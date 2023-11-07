@@ -25,8 +25,11 @@ trait CommunityTrait
     public function createCommunity($community, $address, $occupation)
     {
         $community = Community::firstOrCreate($community);
-        
-        $address = new Address($address);
+
+        $address = new Address(array_merge($address, [
+            'state' => 'JOHOR',
+            'country' => 'MALAYSIA'
+        ]));
         $address->setZone();
         $community->address()->save($address);
 
@@ -65,9 +68,21 @@ trait CommunityTrait
         ]);
     }
 
+    public function searchCommunities($term, $resident_id)
+    {
+        $communities = Community::with(['address'])
+            ->whereNull('resident_id')
+            ->where(function ($query) use ($term) {
+                $query->where('name', 'like', '%' . $term . '%')
+                    ->orWhere('username', 'like', '%' . $term . '%');
+            });
+
+        return $communities->paginate(10);
+    }
+
     public function getAddressByCommunityId($community_id)
     {
-        if($community_id)
+        if ($community_id)
             return Address::firstOrNew([
                 'community_id' => $community_id
             ]);

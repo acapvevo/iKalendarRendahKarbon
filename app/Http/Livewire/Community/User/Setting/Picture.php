@@ -53,7 +53,7 @@ class Picture extends Component
 
         $this->user->save();
 
-        redirect(route('community.user.setting.view'))->with('success', 'Your Profile Picture has been updated successfully');
+        redirect(route('community.user.setting.view'))->with('success', __('alerts.picture_update'));
     }
 
     public function render()

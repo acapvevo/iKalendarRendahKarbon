@@ -2,14 +2,14 @@
 
 @section('apps', 'iKalendar Karbon')
 
-@section('title', __('Login As Community'))
+@section('title', __('Login As Resident'))
 
 @section('content')
     <div class="col-lg-5">
         <!-- Basic login form-->
         <div class="card shadow-lg border-0 rounded-lg mt-5">
             <div class="card-header justify-content-center">
-                <h3 class="fw-light my-4 text-center">{{ __('Login As Community') }}</h3>
+                <h3 class="fw-light my-4 text-center">{{ __('Login As Resident') }}</h3>
             </div>
             <div class="card-body">
                 <!-- Login form-->

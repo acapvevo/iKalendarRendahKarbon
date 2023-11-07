@@ -187,9 +187,17 @@
                                         aria-labelledby="navbarDropdownDocs">
                                         <a class="dropdown-item py-3" href="{{ route('admin.login') }}">
                                             <div class="icon-stack bg-primary-soft text-primary me-4"><i
-                                                    data-feather="edit"></i></div>
+                                                    data-feather="user-plus"></i></div>
                                             <div>
                                                 {{ __('Admin') }}
+                                            </div>
+                                        </a>
+                                        <div class="dropdown-divider m-0"></div>
+                                        <a class="dropdown-item py-3" href="{{ route('resident.login') }}">
+                                            <div class="icon-stack bg-primary-soft text-primary me-4"><i
+                                                    data-feather="users"></i></div>
+                                            <div>
+                                                {{ __('Community') }}
                                             </div>
                                         </a>
                                         <div class="dropdown-divider m-0"></div>
@@ -197,7 +205,7 @@
                                             <div class="icon-stack bg-primary-soft text-primary me-4"><i
                                                     data-feather="user"></i></div>
                                             <div>
-                                                {{ __('Community') }}
+                                                {{ __('Penduduk') }}
                                             </div>
                                         </a>
                                     </div>

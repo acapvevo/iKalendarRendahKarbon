@@ -52,6 +52,10 @@ return [
             'driver' => 'session',
             'provider' => 'communities',
         ],
+        'resident' => [
+            'driver' => 'session',
+            'provider' => 'residents',
+        ],
     ],
 
     /*
@@ -93,6 +97,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Community::class,
         ],
+        'residents' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Resident::class,
+        ],
     ],
 
     /*
@@ -131,6 +139,12 @@ return [
         ],
         'communities' => [
             'provider' => 'communities',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'residents' => [
+            'provider' => 'residents',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
