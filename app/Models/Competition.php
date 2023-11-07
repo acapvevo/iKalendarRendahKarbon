@@ -101,6 +101,13 @@ class Competition extends Model
         return $monthNames;
     }
 
+    public function recalculateStats()
+    {
+        foreach($this->submissions as $submission){
+            $submission->calculateStats();
+        }
+    }
+
     public function getCarbonEmissionStats()
     {
         $total_carbon_emission_by_month = collect();
