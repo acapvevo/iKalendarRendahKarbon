@@ -10,6 +10,7 @@
         "barryvdh/laravel-translation-manager": "^0.6.3",
         "biscolab/laravel-recaptcha": "^6.0",
         "caneara/axiom": "^3.2",
+        "doctrine/dbal": "^3.7",
         "fruitcake/laravel-cors": "^2.0",
         "geocoder-php/arcgis-online-provider": "^4.4",
         "geocoder-php/open-cage-provider": "^4.6",

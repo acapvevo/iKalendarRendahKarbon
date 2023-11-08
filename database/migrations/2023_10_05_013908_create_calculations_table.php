@@ -21,22 +21,25 @@ class CreateCalculationsTable extends Migration
 
             $table->double('total_carbon_emission')->default(0);
             $table->double('average_carbon_emission')->default(0);
-            $table->double('total_carbon_reduction')->default(0);
             $table->json('total_carbon_emission_each_type')->nullable();
             $table->json('average_carbon_emission_each_type')->nullable();
+
+            $table->double('total_carbon_reduction')->default(0);
             $table->json('total_carbon_reduction_each_type')->nullable();
 
             $table->double('total_usage')->default(0);
-            $table->double('total_usage_reduction')->default(0);
             $table->json('total_usage_each_type')->nullable();
             $table->json('average_usage_each_type')->nullable();
+            
+            $table->double('total_usage_reduction')->default(0);
             $table->json('usage_reduction_each_type')->nullable();
 
             $table->double('total_charge')->default(0);
             $table->double('average_charge')->default(0);
-            $table->double('total_charge_reduction')->default(0);
             $table->json('total_charge_each_type')->nullable();
             $table->json('average_charge_each_type')->nullable();
+
+            $table->double('total_charge_reduction')->default(0);
             $table->json('charge_reduction_each_type')->nullable();
 
             $table->double('total_weight')->default(0);
