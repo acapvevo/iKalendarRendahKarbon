@@ -117,7 +117,7 @@
                                                         {{ __($category->description) }}</div>
                                                     <div class="text-lg fw-bold">
                                                         {{ number_format($calculation->total_carbon_emission_each_type[$category->name], 2) }}
-                                                        {!! $category->symbol !!}</div>
+                                                        kgCO<sub>2</sub></div>
                                                 </div>
                                                 <iconify-icon icon="{{ $category->icon }}"
                                                     height="60"></iconify-icon>
