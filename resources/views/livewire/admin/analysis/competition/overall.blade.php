@@ -33,18 +33,14 @@
                             <strong class="text-primary">{{ __('Collecting Analysis') }}...</strong>
                         </div>
                     @else
-                        @php
-                            [$total_carbon_emission_by_month, $total_carbon_emission_by_zone, $average_carbon_emission_by_month, $average_carbon_emission_by_zone, $total_carbon_emission_every_category, $total_carbon_emission] = $carbon_emission_stats;
-                        @endphp
-
                         <div class="py-3">
                             <h5 class="text-center">{{ __('Total Carbon Emission By Month') }}</h5>
                             <div class="row">
                                 <div class="col-lg-10">
-                                    <canvas id="total_carbon_emission_by_month_bar_chart"></canvas>
+                                    <canvas id="total_carbon_emission_each_month_bar_chart"></canvas>
                                 </div>
                                 <div class="col-lg-2 d-flex justify-content-center align-items-center">
-                                    <div id="legends_total_carbon_emission_by_month_bar_chart"></div>
+                                    <div id="legends_total_carbon_emission_each_month_bar_chart"></div>
                                 </div>
                             </div>
                         </div>
@@ -62,7 +58,7 @@
                                             <div class="me-3">
                                                 <div class="text-white-75 small">{{ __('Total Carbon Emission') }}</div>
                                                 <div class="text-lg fw-bold">
-                                                    {{ number_format($total_carbon_emission, 2) }}
+                                                    {{ number_format($calculation->total_carbon_emission, 2) }}
                                                     kgCO<sub>2</sub></div>
                                             </div>
                                             <iconify-icon icon="mdi:periodic-table-carbon-dioxide" height="60">
@@ -80,7 +76,7 @@
                                                     {{ __('Average Carbon Emission by Month') }}
                                                 </div>
                                                 <div class="text-lg fw-bold">
-                                                    {{ number_format($average_carbon_emission_by_month, 2) }}
+                                                    {{ number_format($calculation->average_carbon_emission_by_month, 2) }}
                                                     kgCO<sub>2</sub></div>
                                             </div>
                                             <iconify-icon icon="mdi:periodic-table-carbon-dioxide" height="60">
@@ -98,7 +94,7 @@
                                                     {{ __('Average Carbon Emission by Zone') }}
                                                 </div>
                                                 <div class="text-lg fw-bold">
-                                                    {{ number_format($average_carbon_emission_by_zone, 2) }}
+                                                    {{ number_format($calculation->average_carbon_emission_by_zone, 2) }}
                                                     kgCO<sub>2</sub></div>
                                             </div>
                                             <iconify-icon icon="mdi:periodic-table-carbon-dioxide" height="60">
@@ -111,26 +107,24 @@
 
                         <div class="py-3 row">
                             @foreach ($submission_categories as $category)
-                                @if ($category->forCompetition)
-                                    <div class="col-lg-{{ $colNum }} mb-4">
-                                        <div class="card bg-secondary text-white h-100">
-                                            <div class="card-body">
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="me-3">
-                                                        <div class="text-white-75 small">
-                                                            {{ __('Total Carbon Emission for') }} <br>
-                                                            {{ __($category->description) }}</div>
-                                                        <div class="text-lg fw-bold">
-                                                            {{ number_format($total_carbon_emission_every_category[$category->name], 2) }}
-                                                            {!! $category->symbol !!}</div>
-                                                    </div>
-                                                    <iconify-icon icon="{{ $category->icon }}"
-                                                        height="60"></iconify-icon>
+                                <div class="col-lg-{{ $colNum }} mb-4">
+                                    <div class="card bg-secondary text-white h-100">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="me-3">
+                                                    <div class="text-white-75 small">
+                                                        {{ __('Total Carbon Emission for') }} <br>
+                                                        {{ __($category->description) }}</div>
+                                                    <div class="text-lg fw-bold">
+                                                        {{ number_format($calculation->total_carbon_emission_each_type[$category->name], 2) }}
+                                                        {!! $category->symbol !!}</div>
                                                 </div>
+                                                <iconify-icon icon="{{ $category->icon }}"
+                                                    height="60"></iconify-icon>
                                             </div>
                                         </div>
                                     </div>
-                                @endif
+                                </div>
                             @endforeach
                         </div>
                     @endif
@@ -155,18 +149,14 @@
                             <strong class="text-primary">{{ __('Collecting Analysis') }}...</strong>
                         </div>
                     @else
-                        @php
-                            [$total_submission_by_month, $total_submission_by_zone, $average_submission_by_month, $average_submission_by_zone, $total_submission_every_category, $total_submission] = $submission_stats;
-                        @endphp
-
                         <div class="py-3">
                             <h5 class="text-center">{{ __('Total Submission By Month') }}</h5>
                             <div class="row">
                                 <div class="col-lg-10">
-                                    <canvas id="total_submission_by_month_bar_chart"></canvas>
+                                    <canvas id="total_submission_each_month_bar_chart"></canvas>
                                 </div>
                                 <div class="col-lg-2 d-flex justify-content-center align-items-center">
-                                    <div id="legends_total_submission_by_month_bar_chart"></div>
+                                    <div id="legends_total_submission_each_month_bar_chart"></div>
                                 </div>
                             </div>
                         </div>
@@ -183,8 +173,8 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="me-3">
                                                 <div class="text-white-75 small">{{ __('Total Submission') }}</div>
-                                                <div class="text-lg fw-bold">{{ $total_submission }}
-                                                    {{ __('Communities') }}</div>
+                                                <div class="text-lg fw-bold">{{ $stat->total_submission }}
+                                                    {{ __('Residents') }}</div>
                                             </div>
                                             <iconify-icon icon="vaadin:group" height="60"></iconify-icon>
                                         </div>
@@ -200,8 +190,8 @@
                                                     {{ __('Average Submission by Month') }}
                                                 </div>
                                                 <div class="text-lg fw-bold">
-                                                    {{ number_format($average_submission_by_month, 2) }}
-                                                    {{ __('Communities') }}</div>
+                                                    {{ number_format($stat->average_submission_by_month, 2) }}
+                                                    {{ __('Residents') }}</div>
                                             </div>
                                             <iconify-icon icon="vaadin:group" height="60"></iconify-icon>
                                         </div>
@@ -217,8 +207,8 @@
                                                     {{ __('Average Submission by Zone') }}
                                                 </div>
                                                 <div class="text-lg fw-bold">
-                                                    {{ number_format($average_submission_by_zone, 2) }}
-                                                    {{ __('Communities') }}</div>
+                                                    {{ number_format($stat->average_submission_by_zone, 2) }}
+                                                    {{ __('Residents') }}</div>
                                             </div>
                                             <iconify-icon icon="vaadin:group" height="60"></iconify-icon>
                                         </div>
@@ -239,8 +229,8 @@
                                                         {{ __($category->description) }}
                                                     </div>
                                                     <div class="text-lg fw-bold">
-                                                        {{ $total_submission_every_category[$category->name] }}
-                                                        {{ __('Communities') }}</div>
+                                                        {{ $stat->total_submission_each_type[$category->name] }}
+                                                        {{ __('Residents') }}</div>
                                                 </div>
                                                 <iconify-icon icon="{{ $category->icon }}"
                                                     height="60"></iconify-icon>
@@ -267,29 +257,30 @@
 
         window.addEventListener('initChartAndMap', event => {
 
-            generateChartByMonthOverall(event.detail.months, "total_carbon_emission_by_month_bar_chart",
+            generateChartEachMonthOverall(event.detail.months, "total_carbon_emission_each_month_bar_chart",
                 '{{ __('Total Carbon Emission') }}',
-                event.detail.total_carbon_emission_by_month,
-                'tooltips_total_carbon_emission_by_month_bar_chart', 'kgCO<sub>2</sub>',
-                'legends_total_carbon_emission_by_month_bar_chart', '{{ __('Month') }}',
+                event.detail.total_carbon_emission_each_month,
+                'tooltips_total_carbon_emission_each_month_bar_chart', 'kgCO<sub>2</sub>',
+                'legends_total_carbon_emission_each_month_bar_chart', '{{ __('Month') }}',
                 '{{ __('Total Carbon Emission') }}');
 
-            generateChartByMonthOverall(event.detail.months, "total_submission_by_month_bar_chart",
+            generateChartEachMonthOverall(event.detail.months, "total_submission_each_month_bar_chart",
                 '{{ __('Total Submission') }}',
-                event.detail.total_submission_by_month,
-                'tooltips_total_submission_by_month_bar_chart', 'Communities',
-                'legends_total_submission_by_month_bar_chart', '{{ __('Month') }}',
+                event.detail.total_submission_each_month,
+                'tooltips_total_submission_each_month_bar_chart', 'Residents',
+                'legends_total_submission_each_month_bar_chart', '{{ __('Month') }}',
                 '{{ __('Total Submission') }}');
 
             initMapOverall('map_carbon_emission_overall', event.detail.zones, event.detail
-                .total_carbon_emission_by_zone, 'kgCO<sub>2</sub>');
+                .total_carbon_emission_each_zone, 'kgCO<sub>2</sub>');
 
-            initMapOverall('map_submission_overall', event.detail.zones, event.detail.total_submission_by_zone,
-                @js(__('Communities')));
+            initMapOverall('map_submission_overall', event.detail.zones, event.detail.total_submission_each_zone,
+                @js(__('Residents')));
 
         })
 
-        function generateChartByMonthOverall(months, canvasID, label, dataByMonth, tooltipsID, symbol, legendsID, xTitle, yTitle) {
+        function generateChartEachMonthOverall(months, canvasID, label, dataByMonth, tooltipsID, symbol, legendsID, xTitle,
+            yTitle) {
             const canvas_element = document.getElementById(canvasID);
 
             const labels = months;

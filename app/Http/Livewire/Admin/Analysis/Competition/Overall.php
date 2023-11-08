@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire\Admin\Analysis\Competition;
 
+use App\Models\Calculation;
 use Livewire\Component;
 use App\Models\Competition;
+use App\Models\Stat;
 use App\Traits\Livewire\CheckGuard;
 use App\Traits\SubmissionTrait;
 use App\Traits\ZoneTrait;
@@ -16,10 +18,10 @@ class Overall extends Component
     protected $guard = 'admin';
 
     public Competition $competition;
+    public Calculation $calculation;
+    public Stat $stat;
     public $zones;
 
-    public $carbon_emission_stats;
-    public $submission_stats;
     public $submission_categories;
 
     public $isLoading = true;
@@ -44,19 +46,21 @@ class Overall extends Component
 
     public function getAnalysis()
     {
-        $this->carbon_emission_stats = $this->competition->getCarbonEmissionStats();
-        $this->submission_stats = $this->competition->getSubmissionStats();
+        $this->competition->calculateCarbonEmissionStats();
+        $this->competition->calculateSubmissionStats();
 
-        [$total_carbon_emission_by_month, $total_carbon_emission_by_zone] = $this->carbon_emission_stats;
-        [$total_submission_by_month, $total_submission_by_zone] = $this->submission_stats;
+        $this->fill([
+            'calculation' => $this->competition->calculation,
+            'stat' => $this->competition->stat,
+        ]);
 
         $this->dispatchBrowserEvent('initChartAndMap', [
             'months' => $this->competition->getMonthNames(),
-            'total_carbon_emission_by_month' => $total_carbon_emission_by_month,
-            'total_submission_by_month' => $total_submission_by_month,
+            'total_carbon_emission_each_month' => $this->calculation->total_carbon_emission_each_month->values(),
+            'total_submission_each_month' => $this->stat->total_submission_each_month->values(),
             'zones' => $this->zones,
-            'total_carbon_emission_by_zone' => $total_carbon_emission_by_zone,
-            'total_submission_by_zone' => $total_submission_by_zone,
+            'total_carbon_emission_each_zone' => $this->calculation->total_carbon_emission_each_zone,
+            'total_submission_each_zone' => $this->stat->total_submission_each_zone,
         ]);
 
         $this->isLoading = false;
