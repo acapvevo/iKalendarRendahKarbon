@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 trait SubmissionTrait
 {
+    use ZoneTrait;
+
     public function getSubmission($id)
     {
         if ($id)
@@ -69,6 +71,42 @@ trait SubmissionTrait
     {
         return $this->getSubmissionCategories()->mapWithKeys(function ($category) {
             return [$category->name => 0];
+        })->toArray();
+    }
+
+    public function initCalculationEachMonth($competition)
+    {
+        return $competition->months->mapWithKeys(function ($month) {
+            return [$month->id => 0];
+        })->toArray();
+    }
+
+    public function initCalculationEachZone()
+    {
+        return $this->getZones()->mapWithKeys(function ($zone) {
+            return [$zone->id => 0];
+        })->toArray();
+    }
+
+    public function initCalculationBySubmissionCategoryEachMonth($competition)
+    {
+        return $competition->months->mapWithKeys(function ($month) {
+            return [
+                $month->id => $this->getSubmissionCategories()->mapWithKeys(function ($category) {
+                    return [$category->name => 0];
+                })->toArray()
+            ];
+        })->toArray();
+    }
+
+    public function initCalculationBySubmissionCategoryEachZone()
+    {
+        return $this->getZones()->mapWithKeys(function ($zone) {
+            return [
+                $zone->id => $this->getSubmissionCategories()->mapWithKeys(function ($category) {
+                    return [$category->name => 0];
+                })->toArray()
+            ];
         })->toArray();
     }
 }

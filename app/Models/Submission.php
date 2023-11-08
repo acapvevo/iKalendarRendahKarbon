@@ -146,8 +146,8 @@ class Submission extends Model
 
     public function calculateStats()
     {
-        $total_carbon_emission = $total_charge = $total_usage = $total_weight = $total_value = 0;
-        $total_carbon_reduction = $total_usage_reduction = $total_charge_reduction = 0;
+        $total_carbon_emission = 0;
+        $total_carbon_reduction = 0;
 
         $total_carbon_emission_each_type = $total_usage_each_type = $total_charge_each_type = $total_weight_each_type = $total_value_each_type = $this->initCalculationBySubmissionCategory();
         $total_carbon_reduction_each_type = $usage_reduction_each_type = $charge_reduction_each_type = $this->initCalculationBySubmissionCategory();
@@ -162,13 +162,9 @@ class Submission extends Model
                     $bill->calculateStats();
                 }
 
-                $calculation = $bill->calculation;
+                $calculation = $this->getCalculationByClassAndID($this->id, Bill::class);
 
                 $total_carbon_emission += $calculation->total_carbon_emission;
-                $total_charge += $calculation->total_charge;
-                $total_usage += $calculation->total_usage;
-                $total_weight += $calculation->total_weight;
-                $total_value += $calculation->total_value;
 
                 foreach ($this->getSubmissionCategories() as $category) {
                     $total_carbon_emission_each_type[$category->name] += round($bill->{$category->name}->carbon_emission ?? 0, 2);
@@ -188,14 +184,6 @@ class Submission extends Model
                         $carbon_reduction = $calculation->total_carbon_emission - $lastCalculation->total_carbon_emission;
                         if ($carbon_reduction < 0)
                             $total_carbon_reduction += $carbon_reduction;
-
-                        $usage_reduction = $calculation->total_usage - $lastCalculation->total_usage;
-                        if ($usage_reduction < 0)
-                            $total_usage_reduction += $usage_reduction;
-
-                        $charge_reduction = $calculation->total_charge - $lastCalculation->total_charge;
-                        if ($charge_reduction < 0)
-                            $total_charge_reduction += $charge_reduction;
 
                         foreach ($this->getSubmissionCategories() as $category) {
                             if (isset($bill->{$category->name}) && isset($lastBill->{$category->name})) {
@@ -220,10 +208,6 @@ class Submission extends Model
         $calculation = $this->getCalculationByClassAndID($this->id, Submission::class);
 
         $calculation->total_carbon_emission = $total_carbon_emission;
-        $calculation->total_charge = $total_charge;
-        $calculation->total_usage = $total_usage;
-        $calculation->total_weight = $total_weight;
-        $calculation->total_value = $total_value;
 
         $calculation->total_carbon_emission_each_type = $total_carbon_emission_each_type;
         $calculation->total_usage_each_type = $total_usage_each_type;
@@ -232,8 +216,6 @@ class Submission extends Model
         $calculation->total_value_each_type = $total_value_each_type;
 
         $calculation->total_carbon_reduction = $total_carbon_reduction;
-        $calculation->total_usage_reduction = $total_usage_reduction;
-        $calculation->total_charge_reduction = $total_charge_reduction;
 
         $calculation->total_carbon_reduction_each_type = $total_carbon_reduction_each_type;
         $calculation->usage_reduction_each_type = $usage_reduction_each_type;
