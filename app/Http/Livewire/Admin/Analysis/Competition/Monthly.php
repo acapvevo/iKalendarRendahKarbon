@@ -2,25 +2,29 @@
 
 namespace App\Http\Livewire\Admin\Analysis\Competition;
 
+use App\Models\Stat;
 use App\Models\Month;
 use Livewire\Component;
-use App\Models\Competition;
-use App\Traits\Livewire\CheckGuard;
-use App\Traits\MonthTrait;
-use App\Traits\SubmissionTrait;
 use App\Traits\ZoneTrait;
+use App\Traits\MonthTrait;
+use App\Models\Calculation;
+use App\Models\Competition;
+use App\Traits\CalculationTrait;
+use App\Traits\SubmissionTrait;
+use App\Traits\Livewire\CheckGuard;
+use App\Traits\StatTrait;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Monthly extends Component
 {
-    use LivewireAlert, CheckGuard, MonthTrait, SubmissionTrait, ZoneTrait;
+    use LivewireAlert, CheckGuard, MonthTrait, SubmissionTrait, ZoneTrait, CalculationTrait, StatTrait;
     protected $guard = 'admin';
 
     public Competition $competition;
     public Month $month;
+    public Calculation $calculation;
+    public Stat $stat;
 
-    public $carbon_emission_stats;
-    public $submission_stats;
     public $submission_categories;
 
     public $competition_id;
@@ -31,8 +35,8 @@ class Monthly extends Component
     protected function getListeners()
     {
         return [
-            'getAnalysis',
-            'initMap'
+            'analysis',
+            'map'
         ];
     }
 
@@ -58,8 +62,8 @@ class Monthly extends Component
         $this->month = $this->competition->months->get(0);
         $this->month_id = $this->month->id;
 
-        $this->carbon_emission_stats = $this->month->getCarbonEmissionStats();
-        $this->submission_stats = $this->month->getSubmissionStats();
+        $this->calculate();
+        $this->map();
     }
 
     public function getMonthProperty()
@@ -67,23 +71,44 @@ class Monthly extends Component
         return $this->getMonth($this->month_id);
     }
 
-    public function getAnalysis()
+    public function getCalculationProperty()
+    {
+        return $this->getCalculationByClassAndID($this->month->id, Month::class);
+    }
+
+    public function getStatProperty()
+    {
+        return $this->getStatByClassAndID($this->month->id, Month::class);
+    }
+
+    public function calculate()
+    {
+        $this->month->calculateCarbonEmissionStats();
+        $this->month->calculateSubmissionStats();
+
+        $this->fill([
+            'calculation' => $this->getCalculationProperty(),
+            'stat' => $this->getStatProperty(),
+        ]);
+    }
+
+    public function map()
+    {
+        $this->dispatchBrowserEvent('initMap', [
+            'zones' => $this->getZones(),
+            'total_carbon_emission_each_zone' => $this->calculation->total_carbon_emission_each_zone,
+            'total_submission_each_zone' => $this->stat->total_submission_each_zone,
+        ]);
+    }
+
+    public function analysis()
     {
         $this->isLoading = true;
 
         $this->month = $this->getMonthProperty();
 
-        $this->carbon_emission_stats = $this->month->getCarbonEmissionStats();
-        $this->submission_stats = $this->month->getSubmissionStats();
-
-        [$total_carbon_emission_by_zone] = $this->carbon_emission_stats;
-        [$total_submission_by_zone] = $this->submission_stats;
-
-        $this->dispatchBrowserEvent('initMap', [
-            'zones' => $this->getZones(),
-            'total_carbon_emission_by_zone' => $total_carbon_emission_by_zone,
-            'total_submission_by_zone' => $total_submission_by_zone,
-        ]);
+        $this->calculate();
+        $this->map();
 
         $this->isLoading = false;
     }

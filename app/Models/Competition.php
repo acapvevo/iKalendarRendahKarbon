@@ -218,10 +218,10 @@ class Competition extends Model
         $average_submission_by_zone = round($total_submission / $this->getZones()->count(), 2);
 
         foreach ($this->getZones() as $zone) {
-            $bills = $zone->getSubmissions()->filter(function ($submission) {
-                return $submission->competition_id = $this->id;
+            $submissions = $zone->getSubmissions()->filter(function ($submission) {
+                return $submission->competition_id == $this->id;
             });
-            $total_submission_each_zone[$zone->id] = $bills->count();
+            $total_submission_each_zone[$zone->id] = $submissions->count();
 
             // foreach ($bills as $bill) {
             //     foreach ($total_submission_every_category as $category => $value) {

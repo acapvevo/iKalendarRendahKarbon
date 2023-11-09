@@ -44,7 +44,7 @@ class Overall extends Component
         ]);
     }
 
-    public function getAnalysis()
+    public function analysis()
     {
         $this->competition->calculateCarbonEmissionStats();
         $this->competition->calculateSubmissionStats();
