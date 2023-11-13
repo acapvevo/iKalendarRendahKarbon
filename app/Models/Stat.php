@@ -22,6 +22,8 @@ class Stat extends Model
         'total_submission',
         'total_submission_each_month',
         'total_submission_each_zone',
+        'total_submission_each_type_each_month',
+        'total_submission_each_type_each_zone',
         'total_submission_each_type',
         'average_submission_by_month',
         'average_submission_by_zone',
@@ -36,6 +38,8 @@ class Stat extends Model
         'total_submission_each_month' => AsCollection::class,
         'total_submission_each_zone' => AsCollection::class,
         'total_submission_each_type' => AsCollection::class,
+        'total_submission_each_type_each_month' => AsCollection::class,
+        'total_submission_each_type_each_zone' => AsCollection::class,
     ];
 
     /**

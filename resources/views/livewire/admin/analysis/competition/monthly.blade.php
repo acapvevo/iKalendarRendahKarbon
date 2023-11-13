@@ -54,10 +54,6 @@
                     <strong class="text-primary">{{ __('Collecting Analysis') }}...</strong>
                 </div>
             @else
-                @php
-                    [$total_carbon_emission_by_zone, $total_carbon_emission, $average_carbon_emission_by_zone, $total_carbon_emission_by_category] = $carbon_emission_stats;
-                @endphp
-
                 <div class="py-3">
                     <h5 class="text-center">{{ __('Total Carbon Emission By Zone') }}</h5>
                     <div id="map_carbon_emission_monthly"></div>
@@ -71,7 +67,7 @@
                                     <div class="me-3">
                                         <div class="text-white-75 small">{{ __('Total Carbon Emission') }}</div>
                                         <div class="text-lg fw-bold">
-                                            {{ number_format($total_carbon_emission, 2) }}
+                                            {{ number_format($calculation->total_carbon_emission, 2) }}
                                             kgCO<sub>2</sub></div>
                                     </div>
                                     <iconify-icon icon="mdi:periodic-table-carbon-dioxide"
@@ -88,7 +84,7 @@
                                         <div class="text-white-75 small">{{ __('Average Carbon Emission by Zone') }}
                                         </div>
                                         <div class="text-lg fw-bold">
-                                            {{ number_format($average_carbon_emission_by_zone, 2) }}
+                                            {{ number_format($calculation->average_carbon_emission_by_zone, 2) }}
                                             kgCO<sub>2</sub></div>
                                     </div>
                                     <iconify-icon icon="mdi:periodic-table-carbon-dioxide"
@@ -109,8 +105,8 @@
                                             <div class="text-white-75 small">{{ __('Total Carbon Emission for') }} <br>
                                                 {{ __($category->description) }}</div>
                                             <div class="text-lg fw-bold">
-                                                {{ number_format($total_carbon_emission_by_category[$category->name], 2) }}
-                                                {!! $category->symbol !!}</div>
+                                                {{ number_format($calculation->total_carbon_emission_each_type[$category->name], 2) }}
+                                                kgCO<sub>2</sub></div>
                                         </div>
                                         <iconify-icon icon="{{ $category->icon }}" height="60"></iconify-icon>
                                     </div>
@@ -138,10 +134,6 @@
                     <strong class="text-primary">{{ __('Collecting Analysis') }}...</strong>
                 </div>
             @else
-                @php
-                    [$total_submission_by_zone, $total_submission, $average_submission_by_zone, $total_submission_by_category] = $submission_stats;
-                @endphp
-
                 <div class="py-3">
                     <h5 class="text-center">{{ __('Total Submission By Zone') }}</h5>
                     <div id="map_submission_monthly"></div>
@@ -154,8 +146,8 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="me-3">
                                         <div class="text-white-75 small">{{ __('Total Submission') }}</div>
-                                        <div class="text-lg fw-bold">{{ $total_submission }}
-                                            {{ __('Communities') }}</div>
+                                        <div class="text-lg fw-bold">{{ $stat->total_submission }}
+                                            {{ __('Residents') }}</div>
                                     </div><iconify-icon icon="vaadin:group" height="60"></iconify-icon>
                                 </div>
                             </div>
@@ -168,8 +160,8 @@
                                     <div class="me-3">
                                         <div class="text-white-75 small">{{ __('Average Submission by Zone') }}</div>
                                         <div class="text-lg fw-bold">
-                                            {{ number_format($average_submission_by_zone, 2) }}
-                                            {{ __('Communities') }}</div>
+                                            {{ number_format($stat->average_submission_by_zone, 2) }}
+                                            {{ __('Residents') }}</div>
                                     </div><iconify-icon icon="vaadin:group" height="60"></iconify-icon>
                                 </div>
                             </div>
@@ -187,8 +179,8 @@
                                             <div class="text-white-75 small">{{ __('Total Submission for') }} <br>
                                                 {{ __($category->description) }}</div>
                                             <div class="text-lg fw-bold">
-                                                {{ $total_submission_by_category[$category->name] }}
-                                                {{ __('Communities') }}</div>
+                                                {{ $stat->total_submission_each_type[$category->name] }}
+                                                {{ __('Residents') }}</div>
                                         </div>
                                         <iconify-icon icon="{{ $category->icon }}" height="60"></iconify-icon>
                                     </div>
@@ -210,26 +202,27 @@
         };
 
         document.addEventListener('DOMContentLoaded', function() {
-            @this.getAnalysis();
+            @this.emit('map');
 
             $('#month_select').select2({
                 theme: 'bootstrap-5',
                 placeholder: '{{ __('Select Month') }}'
             });
+
             $('#month_select').val(@js($month_id)).trigger('change');
 
             $('#month_select').on('change', function(e) {
                 var selected_value = $('#month_select').select2("val");
                 @this.set('month_id', selected_value);
-                @this.emit('getAnalysis');
+                @this.emit('analysis');
             });
         });
 
         window.addEventListener('initMap', event => {
             initMapMonthly('map_carbon_emission_monthly', event.detail.zones, event.detail
-                .total_carbon_emission_by_zone, 'kgCO<sub>2</sub>');
-            initMapMonthly('map_submission_monthly', event.detail.zones, event.detail.total_submission_by_zone,
-                @js(__('Communities')));
+                .total_carbon_emission_each_zone, 'kgCO<sub>2</sub>');
+            initMapMonthly('map_submission_monthly', event.detail.zones, event.detail.total_submission_each_zone,
+                @js(__('Residents')));
         });
 
         function initMapMonthly(elementID, zones, data, symbol) {

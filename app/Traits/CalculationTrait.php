@@ -6,7 +6,7 @@ use App\Models\Calculation;
 
 trait CalculationTrait
 {
-    use SubmissionTrait;
+    use SubmissionTrait, MonthTrait;
 
     public function getCalculationByClassAndID($id, $class)
     {
@@ -32,5 +32,12 @@ trait CalculationTrait
         $calculation->total_carbon_reduction_each_type = $calculation->usage_reduction_each_type = $calculation->charge_reduction_each_type = $this->initCalculationBySubmissionCategory();
 
         return $calculation;
+    }
+
+    public function initCalculationEachMonthByCompetitionID($competition_id)
+    {
+        return $this->getMonthsByCompetitionID($competition_id)->mapWithKeys(function ($month){
+            return [$month->id => 0];
+        })->toArray();
     }
 }

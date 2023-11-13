@@ -252,7 +252,7 @@
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            @this.getAnalysis()
+            @this.analysis()
         });
 
         window.addEventListener('initChartAndMap', event => {
