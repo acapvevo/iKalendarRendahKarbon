@@ -17,7 +17,7 @@ trait SubmissionTrait
             return new Submission;
     }
 
-    public function getAllSubmissions()
+    public function getSubmissions()
     {
         return Submission::all();
     }
@@ -34,7 +34,7 @@ trait SubmissionTrait
     {
         return Submission::where('competition_id', $competition_id)->get();
     }
-
+    
     public function checkSubmissionCategory($column, $value)
     {
         return DB::table('category')->where('forCompetition', true)->where($column, $value)->exists();

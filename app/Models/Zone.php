@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Traits\CalculationTrait;
+use App\Traits\CompetitionTrait;
 use App\Traits\SubmissionTrait;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Zone extends Model
 {
-    use HasFactory, SubmissionTrait;
+    use HasFactory, SubmissionTrait, CalculationTrait, CompetitionTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -79,10 +81,34 @@ class Zone extends Model
         return __("Zone") . ' ' . $this->number . ": " . $this->name;
     }
 
-    public function getSubmissions()
+    public function calculateStatsByCompetition($competition_id)
     {
-        return $this->getAllSubmissions()->filter(function ($submission) {
-            return $submission->community->address->zone_id = $this->id;
-        });
+        $competition = $this->getCompetition($competition_id);
+        $months = $this->getMonthsByCompetitionID($competition_id);
+
+        $total_carbon_emission_each_month = $total_submission_each_month = $this->initCalculationEachMonthByCompetitionID($competition_id);
+
+
+        foreach ($months as $month) {
+            $bills = $month->bills->filter(function ($bill) {
+                return $bill->submission->community->address->zone_id === $this->id;
+            });
+
+            $total_submission_each_month[$month->id] = $bills->count();
+
+            foreach ($bills as $bill) {
+                $total_carbon_emission_each_month[$month->id] += $bill->calculation->total_carbon_emission;
+            }
+        }
+
+        $average_carbon_emission_by_month = round($competition->calculation->total_carbon_emission_each_zone[$this->id] / $months->count(), 2);
+        $average_submission_by_month = round($competition->stat->total_submission_each_zone[$this->id] / $months->count(), 2);
+
+        return [
+            $total_carbon_emission_each_month,
+            $total_submission_each_month,
+            $average_carbon_emission_by_month,
+            $average_submission_by_month
+        ];
     }
 }
