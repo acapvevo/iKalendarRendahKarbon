@@ -13,6 +13,11 @@ trait MonthTrait
         return Month::find($id);
     }
 
+    public function getMonthsByCompetitionID($competition_id)
+    {
+        return Month::where('competition_id', $competition_id)->get();
+    }
+
     public function getCurrentMonthByCompetitionID($competition_id)
     {
         $currentMonth = $this->getCurrentMonth();

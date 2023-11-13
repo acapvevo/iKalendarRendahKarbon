@@ -6,14 +6,16 @@ use App\Models\Calculation;
 use Livewire\Component;
 use App\Models\Competition;
 use App\Models\Stat;
+use App\Traits\CalculationTrait;
 use App\Traits\Livewire\CheckGuard;
+use App\Traits\StatTrait;
 use App\Traits\SubmissionTrait;
 use App\Traits\ZoneTrait;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Overall extends Component
 {
-    use LivewireAlert, CheckGuard, ZoneTrait, SubmissionTrait;
+    use LivewireAlert, CheckGuard, ZoneTrait, SubmissionTrait, CalculationTrait, StatTrait;
 
     protected $guard = 'admin';
 
@@ -44,14 +46,24 @@ class Overall extends Component
         ]);
     }
 
+    public function getCalculationProperty()
+    {
+        return $this->getCalculationByClassAndID($this->competition->id, Competition::class);
+    }
+
+    public function getStatProperty()
+    {
+        return $this->getStatByClassAndID($this->competition->id, Competition::class);
+    }
+
     public function analysis()
     {
         $this->competition->calculateCarbonEmissionStats();
         $this->competition->calculateSubmissionStats();
 
         $this->fill([
-            'calculation' => $this->competition->calculation,
-            'stat' => $this->competition->stat,
+            'calculation' => $this->getCalculationProperty(),
+            'stat' => $this->getStatProperty(),
         ]);
 
         $this->dispatchBrowserEvent('initChartAndMap', [

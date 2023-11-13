@@ -132,7 +132,7 @@ class Competition extends Model
         $total_carbon_emission_each_zone = $total_carbon_reduction_each_zone = $this->initCalculationEachZone();
 
         // $total_carbon_emission_each_type_each_month = $total_carbon_reduction_each_type_each_month = $this->initCalculationBySubmissionCategoryEachMonth($this);
-        // $total_carbon_emission_each_type_each_zone = $total_carbon_reduction_each_type_each_zone = $this->initCalculationBySubmissionCategoryEachZone();
+        $total_carbon_emission_each_type_each_zone = $total_carbon_reduction_each_type_each_zone = $this->initCalculationBySubmissionCategoryEachZone();
 
         foreach ($this->submissions as $submission) {
             if (!isset($submission->calculation))
@@ -153,8 +153,13 @@ class Competition extends Model
                 $total_carbon_emission_each_month[$month->id] += $billCalculation->total_carbon_emission;
             }
 
-            if (isset($submission->community->address->zone_id))
+            if (isset($submission->community->address->zone_id)) {
                 $total_carbon_emission_each_zone[$submission->community->address->zone_id] += $submissionCalculation->total_carbon_emission;
+
+                foreach ($this->getSubmissionCategories() as $category) {
+                    $total_carbon_emission_each_type_each_zone[$submission->community->address->zone_id][$category->name] += round($submissionCalculation->total_usage_each_type[$category->name], 2);
+                }
+            }
 
             // $total_carbon_reduction += $submissionCalculation->total_carbon_reduction;
 
@@ -182,6 +187,8 @@ class Competition extends Model
         $calculation->total_carbon_emission_each_month = $total_carbon_emission_each_month;
         $calculation->total_carbon_emission_each_zone = $total_carbon_emission_each_zone;
 
+        $calculation->total_carbon_emission_each_type_each_zone = $total_carbon_emission_each_type_each_zone;
+
         // $calculation->total_usage_each_type = $total_usage_each_type;
         // $calculation->total_charge_each_type = $total_charge_each_type;
         // $calculation->total_weight_each_type = $total_weight_each_type;
@@ -203,36 +210,30 @@ class Competition extends Model
         $total_submission_each_month = $this->initCalculationEachMonth($this);
         $total_submission_each_zone = $this->initCalculationByZone();
 
+        $total_submission_each_type_each_zone = $this->initCalculationBySubmissionCategoryEachZone();
+
         foreach ($this->months as $month) {
             $total_submission_each_month[$month->id] = $month->bills->count();
         }
 
-        foreach ($total_submission_each_type as $category => $value) {
-            foreach ($this->submissions as $submission) {
-                if ($submission->checkSubmissionByCategory($category))
-                    $total_submission_each_type[$category] += 1;
+        foreach ($this->submissions as $submission) {
+            foreach ($this->getSubmissionCategories() as $category) {
+                if ($submission->checkSubmissionByCategory($category->name))
+                    $total_submission_each_type[$category->name] += 1;
+            }
+
+            if ($submission->community->address->zone_id) {
+                $total_submission_each_zone[$submission->community->address->zone_id] += 1;
+
+                foreach ($this->getSubmissionCategories() as $category) {
+                    if ($submission->checkSubmissionByCategory($category->name))
+                        $total_submission_each_type_each_zone[$submission->community->address->zone_id][$category->name] += 1;
+                }
             }
         }
 
         $average_submission_by_month = round($total_submission / $this->months->count(), 2);
         $average_submission_by_zone = round($total_submission / $this->getZones()->count(), 2);
-
-        foreach ($this->getZones() as $zone) {
-            $submissions = $zone->getSubmissions()->filter(function ($submission) {
-                return $submission->competition_id == $this->id;
-            });
-            $total_submission_each_zone[$zone->id] = $submissions->count();
-
-            // foreach ($bills as $bill) {
-            //     foreach ($total_submission_every_category as $category => $value) {
-            //         if ($bill->{$category}) {
-            //             $total_submission_by_zone[$zone->id] += $bill->{$category}->submission;
-            //         }
-
-            //         $average_submission_every_category_by_zone[$category] = $total_submission_by_zone[$zone->id] / $this->getZones()->count();
-            //     }
-            // }
-        }
 
         $stat = $this->getStatByClassAndID($this->id, Competition::class);
 
@@ -240,6 +241,9 @@ class Competition extends Model
         $stat->total_submission_each_month = $total_submission_each_month;
         $stat->total_submission_each_zone = $total_submission_each_zone;
         $stat->total_submission_each_type = $total_submission_each_type;
+        
+        $stat->total_submission_each_type_each_zone = $total_submission_each_type_each_zone;
+
         $stat->average_submission_by_month = $average_submission_by_month;
         $stat->average_submission_by_zone = $average_submission_by_zone;
 

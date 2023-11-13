@@ -165,14 +165,14 @@ class Month extends Model
         $total_submission_each_type = $this->initCalculationBySubmissionCategory();
         $total_submission_each_zone = $this->initCalculationByZone();
 
-        foreach ($this->getSubmissionCategories() as $category) {
-            foreach ($this->bills as $bill) {
+        foreach ($this->bills as $bill) {
+            foreach ($this->getSubmissionCategories() as $category) {
                 if ($bill->{$category->name})
                     $total_submission_each_type[$category->name] += 1;
-
-                if ($bill->submission->community->address->zone_id)
-                    $total_submission_each_zone[$bill->submission->community->address->zone_id] += 1;
             }
+
+            if ($bill->submission->community->address->zone_id)
+                $total_submission_each_zone[$bill->submission->community->address->zone_id] += 1;
         }
 
         $average_submission_by_zone = round($total_submission / $this->getZones()->count(), 2);
