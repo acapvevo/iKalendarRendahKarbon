@@ -59,10 +59,10 @@
                             <h5 class="text-center">{{ __('Total Carbon Emission By Month') }}</h5>
                             <div class="row">
                                 <div class="col-lg-10 chart">
-                                    <canvas id="total_carbon_emission_each_month_bar_chart"></canvas>
+                                    <canvas id="total_carbon_emission_each_month_bar_chart_zones"></canvas>
                                 </div>
                                 <div class="col-lg-2 d-flex justify-content-center align-items-center">
-                                    <div id="legends_total_carbon_emission_each_month_bar_chart"></div>
+                                    <div id="legends_total_carbon_emission_each_month_bar_chart_zones"></div>
                                 </div>
                             </div>
                         </div>
@@ -158,10 +158,10 @@
                             <h5 class="text-center">{{ __('Total Submission By Month') }}</h5>
                             <div class="row">
                                 <div class="col-lg-10 chart">
-                                    <canvas id="total_submission_each_month_bar_chart"></canvas>
+                                    <canvas id="total_submission_each_month_bar_chart_zones"></canvas>
                                 </div>
                                 <div class="col-lg-2 d-flex justify-content-center align-items-center">
-                                    <div id="legends_total_submission_each_month_bar_chart"></div>
+                                    <div id="legends_total_submission_each_month_bar_chart_zones"></div>
                                 </div>
                             </div>
                         </div>
@@ -259,18 +259,18 @@
         });
 
         window.addEventListener('initChart', event => {
-            generateChartEachMonthZones(event.detail.months, "total_carbon_emission_each_month_bar_chart",
+            generateChartEachMonthZones(event.detail.months, "total_carbon_emission_each_month_bar_chart_zones",
                 '{{ __('Total Carbon Emission') }}',
                 event.detail.total_carbon_emission_each_month,
-                'tooltips_total_carbon_emission_each_month_bar_chart', 'kgCO<sub>2</sub>',
-                'legends_total_carbon_emission_each_month_bar_chart', '{{ __('Month') }}',
+                'tooltips_total_carbon_emission_each_month_bar_chart_zones', 'kgCO<sub>2</sub>',
+                'legends_total_carbon_emission_each_month_bar_chart_zones', '{{ __('Month') }}',
                 '{{ __('Total Carbon Emission') }}');
 
-            generateChartEachMonthZones(event.detail.months, "total_submission_each_month_bar_chart",
+            generateChartEachMonthZones(event.detail.months, "total_submission_each_month_bar_chart_zones",
                 '{{ __('Total Submission') }}',
                 event.detail.total_submission_each_month,
-                'tooltips_total_submission_each_month_bar_chart', 'Residents',
-                'legends_total_submission_each_month_bar_chart', '{{ __('Month') }}',
+                'tooltips_total_submission_each_month_bar_chart_zones', 'Residents',
+                'legends_total_submission_each_month_bar_chart_zones', '{{ __('Month') }}',
                 '{{ __('Total Submission') }}');
         })
 
