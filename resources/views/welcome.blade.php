@@ -205,7 +205,7 @@
                                             <div class="icon-stack bg-primary-soft text-primary me-4"><i
                                                     data-feather="user"></i></div>
                                             <div>
-                                                {{ __('Penduduk') }}
+                                                {{ __('Resident') }}
                                             </div>
                                         </a>
                                     </div>

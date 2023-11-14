@@ -139,6 +139,8 @@
     </a>
     <div class="collapse" id="collapseParticipant" data-bs-parent="#participant">
         <nav class="sidenav-menu-nested nav accordion" id="participant">
+            <!-- Sidenav Link (Resident)-->
+            <a class="nav-link" href="{{ route('admin.participant.resident.list') }}">{{ __('Community') }}</a>
             <!-- Sidenav Link (Community)-->
             <a class="nav-link" href="{{ route('admin.participant.community.list') }}">{{ __('Resident') }}</a>
         </nav>
@@ -192,6 +194,9 @@
     <script>
         Livewire.onPageExpired((response, message) => {
             window.location.replace("{{ route('admin.login') }}");
-        })
+        });
+
+        const communityPictureUrl = "{{ route('admin.participant.community.picture', ['community_id' => '']) }}";
+        const residentPictureUrl = "{{ route('admin.participant.resident.picture', ['resident_id' => '']) }}";
     </script>
 @endpush

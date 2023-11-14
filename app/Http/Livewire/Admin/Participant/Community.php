@@ -27,9 +27,10 @@ class Community extends Component
     public $input_file_label;
 
     public $community_id;
+    public $resident_id;
 
     public $decision;
-
+    public $community_selection;
 
     protected function getListeners()
     {
@@ -41,6 +42,8 @@ class Community extends Component
     protected function rules()
     {
         return [
+            'community_selection' => 'array',
+            'community_selection.*' => 'numeric|exists:communities,id',
             'community.username' => 'required|string|max:255|unique:communities,username',
             'community.email' => [
                 'required',
@@ -77,9 +80,10 @@ class Community extends Component
         $this->validateOnly($propertyName);
     }
 
-    public function mount()
+    public function mount($resident_id)
     {
         $this->fill([
+            'resident_id' => $resident_id,
             'community' => new CommunityModel,
             'address' => new Address,
             'occupation' => new Occupation,
@@ -147,6 +151,7 @@ class Community extends Component
         ]);
 
         $this->community = $this->createCommunity([
+            'resident_id' => $this->resident_id,
             'username' => $this->community->username,
             'email' => $this->community->email,
             'password' => Hash::make($this->community->username),
@@ -155,7 +160,7 @@ class Community extends Component
             'country' => 'MALAYSIA',
         ], []);
 
-        return redirect(route('admin.participant.community.list'))->with('success', __('alerts.community_create', ['name' => $this->community->username]));
+        return redirect(route('admin.participant.community.list', ['resident_id' => $this->resident_id]))->with('success', __('alerts.community_create', ['name' => $this->community->username]));
     }
 
     public function batchCreate()
@@ -164,9 +169,26 @@ class Community extends Component
             'community_batch_registration_file' => 'required|file|mimes:csv,xls,xlsx|max:2048'
         ]);
 
-        $this->batchCreateCommunity($this->community_batch_registration_file);
+        $this->batchCreateCommunity($this->community_batch_registration_file, $this->resident_id);
 
-        return redirect(route('admin.participant.community.list'))->with('success', __('alerts.community_batch_create'));
+        return redirect(route('admin.participant.community.list', ['resident_id' => $this->resident_id]))->with('success', __('alerts.community_batch_create'));
+    }
+
+    public function add()
+    {
+        $this->validate([
+            'community_selection' => 'required'
+        ]);
+
+        foreach ($this->community_selection as $community_id) {
+            $community = $this->getCommunity($community_id);
+
+            $community->resident_id = $this->resident_id;
+
+            $community->save();
+        }
+
+        return redirect(route('admin.participant.community.list', ['resident_id' => $this->resident_id]))->with('success', __("alerts.comunity_add"));
     }
 
     public function update()
@@ -203,7 +225,7 @@ class Community extends Component
         $this->address->save();
         $this->occupation->save();
 
-        return redirect(route('admin.participant.community.list'))->with('success', __('alerts.community_update', ['name' => $this->community->name ?? $this->community->username]));
+        return redirect(route('admin.participant.community.list', ['resident_id' => $this->resident_id]))->with('success', __('alerts.community_update', ['name' => $this->community->name ?? $this->community->username]));
     }
 
     public function verify()

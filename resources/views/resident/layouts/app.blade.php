@@ -155,6 +155,8 @@
     <script>
         Livewire.onPageExpired((response, message) => {
             window.location.replace("{{ route('resident.login') }}");
-        })
+        });
+
+        const communityPictureUrl = "{{ route('resident.participant.community.picture', ['community_id' => '']) }}";
     </script>
 @endpush

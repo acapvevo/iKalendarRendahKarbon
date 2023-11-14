@@ -9,18 +9,32 @@ use App\Traits\CommunityTrait;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Universal\Participant\Community\ViewIdentificationCardRequest;
+use App\Http\Requests\Universal\Participant\Community\ViewProfileRequest;
+use App\Traits\ResidentTrait;
 
 class CommunityController extends Controller
 {
-    use CommunityTrait;
+    use CommunityTrait, ResidentTrait;
 
-    public function list()
+    public function list(Request $request)
     {
-        return view('admin.participant.community.list');
+        $request->validate([
+            'resident_id' => 'nullable|numeric|exists:residents,id'
+        ]);
+
+        $resident = $this->getResident($request->resident_id);
+
+        return view('admin.participant.community.list')->with([
+            'resident' => $resident
+        ]);
     }
 
     public function filter(Request $request)
     {
+        $request->validate([
+            'resident_id' => 'nullable|numeric|exists:residents,id'
+        ]);
+
         $columns = array(
             array(
                 'db' => ['communities.name', 'communities.username'],
@@ -66,9 +80,9 @@ class CommunityController extends Controller
                 'db' => 'menu',
                 'dt' => 3,
                 'formatter' => function ($d, $row) {
-                    $viewCommunityTitle = __('View Community');
-                    $editCommunityTitle = __('Edit Community');
-                    $verifyCommunityTitle = __('Verify Community');
+                    $viewCommunityTitle = __('View Resident');
+                    $editCommunityTitle = __('Edit Resident');
+                    $verifyCommunityTitle = __('Verify Resident');
 
                     $verifyCommunityButton = (!$row->isVerified && $row->identification_card_image) ? <<< EOT
                     <button type="button" class="btn btn-primary btn-sm openModal" data-bs-toggle="modal"
@@ -80,9 +94,9 @@ class CommunityController extends Controller
                     EOT : '';
 
                     return <<< EOT
-                    <div class="btn-toolbar justify-content-center" role="toolbar"
-                        aria-label="Toolbar with button groups">
-                        <div class="btn-group" role="group" aria-label="Action Button">
+                    <div class="justify-content-center">
+                        <div class="btn-group-vertical d-lg-none" role="group"
+                            aria-label="Vertical button group">
                             <button type="button" class="btn btn-primary btn-sm openModal" data-bs-toggle="modal"
                                 data-bs-target="#viewCommunityModal"
                                 id="$row->id">
@@ -96,6 +110,24 @@ class CommunityController extends Controller
                                     data-feather="edit-2"></i>
                             </button>
                             $verifyCommunityButton
+                        </div>
+                        <div class="btn-group d-none d-lg-inline-flex" role="group"
+                            aria-label="Horizontal button group">
+                            <button type="button" class="btn btn-primary btn-sm openModal" data-bs-toggle="modal"
+                                data-bs-target="#viewCommunityModal"
+                                id="$row->id">
+                                <i data-bs-toggle="tooltip" data-bs-title="$viewCommunityTitle"
+                                    data-feather="eye"></i>
+                            </button>
+                            <button type="button" class="btn btn-primary btn-sm openModal" data-bs-toggle="modal"
+                                data-bs-target="#editCommunityModal"
+                                id="$row->id">
+                                <i data-bs-toggle="tooltip" data-bs-title="$editCommunityTitle"
+                                    data-feather="edit-2"></i>
+                            </button>
+                            $verifyCommunityButton
+                        </div>
+                        <div class="btn-group" role="group" aria-label="Action Button">
                         </div>
                     </div>
                     EOT;
@@ -115,15 +147,44 @@ class CommunityController extends Controller
                 'communities.identification_card_image',
             ]);
 
+        if ($request->has('resident_id'))
+            $dbObj->where('resident_id', $request->resident_id);
+
         return response()->json(Datatable::simple($request->all(), $dbObj, $columns));
     }
 
-    public function ic(ViewIdentificationCardRequest $request)
+    public function select(Request $request)
+    {
+        $request->validate([
+            'resident_id' => 'nullable|numeric|exists:residents,id',
+            'term' => 'required|string|max:255'
+        ]);
+
+        $communities = $this->searchCommunities($request->term, $request->resident_id);
+
+        return response()->json([
+            "results" => $communities->items(),
+            "pagination" => [
+                "more" => $communities->hasMorePages()
+            ]
+        ]);
+    }
+
+    public function ic(ViewProfileRequest $request)
     {
         $validated = $request->validated();
 
         $community = $this->getCommunity($validated['community_id']);
 
         return $community->viewIdentificationCard();
+    }
+
+    public function picture(ViewProfileRequest $request)
+    {
+        $validated = $request->validated();
+
+        $community = $this->getCommunity($validated['community_id']);
+
+        return $community->viewProfilePicture();
     }
 }

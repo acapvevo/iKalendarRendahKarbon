@@ -102,7 +102,8 @@
                         <a class="dropdown-item dropdown-notifications-item" href="{{ $url }}"
                             hreflang="{{ $localeCode }}">
                             <div class="dropdown-notifications-item-content">
-                                <div class="dropdown-notifications-item-content-text">{{ __($properties['native']) }}</div>
+                                <div class="dropdown-notifications-item-content-text">{{ __($properties['native']) }}
+                                </div>
                             </div>
                         </a>
                     @endforeach
@@ -212,7 +213,7 @@
     <script src="{{ asset('js/scripts.js') }}"></script>
     <x-livewire-alert::scripts />
     @include('components.alert')
-
+    <script src="{{ asset('js/modal.js') }}"></script>
 
     <!-- Datatables Global Setting-->
     <script>
@@ -222,13 +223,17 @@
                 url: '{{ asset('js/datatables/lang/' . LaravelLocalization::getCurrentLocale() . '.json') }}'
             },
             columnDefs: [{
-                targets: '_all',
-                className: 'dt-center'
+                className: "dt-center",
+                targets: '_all'
             }],
             scrollX: true,
             fixedHeader: true
         });
         $.fn.dataTable.ext.errMode = 'none';
+    </script>
+
+    <script>
+        const imageDefault = "{{ asset('assets/img/illustrations/profiles/profile-1.png') }}";
     </script>
 
     <!-- PAGE SPECIFIC JS-->
