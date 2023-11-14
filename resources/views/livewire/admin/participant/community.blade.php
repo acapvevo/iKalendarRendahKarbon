@@ -1,4 +1,7 @@
 @push('styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
 @endpush
 
 <div>
@@ -8,10 +11,16 @@
             {{ __('Register Resident') }}
         </button>
         &nbsp;
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#batchCreateCommunityModal"
-            wire:click.prevent='open'>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+            data-bs-target="#batchCreateCommunityModal" wire:click.prevent='open'>
             {{ __('Batch Register Resident') }}
         </button>
+        @if ($resident_id)
+            &nbsp;
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCommunityModal">
+                {{ __('Add Registered Resident') }}
+            </button>
+        @endif
     </div>
     <div class="table-resposive" wire:ignore>
         <table class="table table-bordered" id="tableCommunity" style="width:100%">
@@ -137,6 +146,52 @@
         </div>
     </div>
 
+    <!--Add Community Modal -->
+    <div class="modal fade" id="addCommunityModal" tabindex="-1" aria-labelledby="addCommunityModalLabel"
+        aria-hidden="true" wire:ignore.self>
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="addCommunityModalLabel">
+                        {{ __('Add Registered Resident') }}</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        wire:click.prevent="close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <form>
+                        <div class="mb-3">
+                            <label for="input_file_label" class="form-label">{{ __('Residents') }}</label>
+                            <div wire:ignore>
+                                <select
+                                    class="form-select {{ $errors->has('community_selection') ? 'is-invalid' : '' }}"
+                                    id="addCommunity" multiple wire:model='community_selection'
+                                    data-placeholder="{{ __('Choose Resident(s) to be added under your community') }}">
+                                </select>
+                            </div>
+                            @error('community_selection')
+                                <div class="invalid-feedback" style="display: block">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">{{ __('Close') }}</button>
+                    <button class="btn btn-primary" type="button" wire:loading.attr="disabled" wire:click="add">
+                        <span wire:loading.remove>{{ __('Add') }}</span>
+                        <div wire:loading>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            {{ __('Adding...') }}
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- View Community Modal -->
     <div class="modal fade" id="viewCommunityModal" tabindex="-1" aria-labelledby="viewCommunityModalLabel"
         aria-hidden="true" wire:ignore.self>
@@ -210,7 +265,8 @@
                                                     target="_blank">
                                                     @csrf
 
-                                                    <button class="btn btn-link" type="submit" value="{{ $user->id }}"
+                                                    <button class="btn btn-link" type="submit"
+                                                        value="{{ $user->id }}"
                                                         name="community_id">{{ __('View Identification Card') }}</button>
                                                 </form>
                                             @endif
@@ -377,7 +433,8 @@
 
                             <div class="mb-3">
                                 <label for="address.category" class="form-label">{{ __('Category') }}:</label>
-                                <select class="form-select {{ $errors->has('address.category') ? 'is-invalid' : '' }}"
+                                <select
+                                    class="form-select {{ $errors->has('address.category') ? 'is-invalid' : '' }}"
                                     id="address.category" aria-label="Default select example"
                                     wire:model="address.category">
                                     <option selected value="">{{ __('Choose Resident Address Category') }}
@@ -398,7 +455,8 @@
 
                             <div class="mb-3 row">
                                 <div class="col-12 col-lg-4">
-                                    <label for="address.line_1" class="form-label">{{ __('Address Line 1') }}</label>
+                                    <label for="address.line_1"
+                                        class="form-label">{{ __('Address Line 1') }}</label>
                                     <input type="text"
                                         class="form-control {{ $errors->has('address.line_1') ? 'is-invalid' : '' }}"
                                         id="address.line_1" wire:model.lazy="address.line_1"
@@ -410,7 +468,8 @@
                                     @enderror
                                 </div>
                                 <div class="col-12 col-lg-4">
-                                    <label for="address.line_2" class="form-label">{{ __('Address Line 2') }}</label>
+                                    <label for="address.line_2"
+                                        class="form-label">{{ __('Address Line 2') }}</label>
                                     <input type="text"
                                         class="form-control {{ $errors->has('address.line_2') ? 'is-invalid' : '' }}"
                                         id="address.line_2" wire:model.lazy="address.line_2"
@@ -580,6 +639,9 @@
 </div>
 
 @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{ asset('js/select2/helper.js') }}"></script>
+
     <script>
         $('document').ready(function() {
             $('#tableCommunity').DataTable({
@@ -588,10 +650,10 @@
                 serverSide: true,
                 ajax: {
                     "type": "GET",
-                    "url": "{{ route('admin.participant.community.filter') }}",
+                    "url": "{{ route('admin.participant.community.filter', ['resident_id' => $resident_id]) }}",
                 },
                 searchBuilder: {
-                    columns: [1, 2, 3]
+                    columns: [0, 1, 2]
                 },
                 buttons: [
                     'searchBuilder',
@@ -602,7 +664,7 @@
                 ],
                 columnDefs: [{
                     className: "dt-center",
-                    targets: [0, 1, 2, 3]
+                    targets: '_all'
                 }, {
                     type: 'unknownType',
                     targets: [2]
@@ -620,6 +682,16 @@
                     registerOpenModalEventListener();
                 }
             });
+
+            initSelectionCommunity('#addCommunity', '#addCommunityModal',
+                '{{ route('admin.participant.community.select', ['resident_id' => $resident_id]) }}',
+                "{{ LaravelLocalization::getCurrentLocale() }}",
+                function(e) {
+                    const selection = $('#addCommunity').select2('data').map(function(community) {
+                        return community.id;
+                    });
+                    @this.set('community_selection', selection);
+                });
         });
 
         function registerOpenModalEventListener() {
