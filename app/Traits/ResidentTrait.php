@@ -41,4 +41,9 @@ trait ResidentTrait
 
         return $resident;
     }
+
+    public function initResident()
+    {
+        return new Resident;
+    }
 }

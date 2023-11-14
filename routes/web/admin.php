@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Admin\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Admin\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Admin\Participant\ResidentController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
@@ -98,11 +99,21 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Participant Management routes
         Route::prefix('participant')->name('participant.')->group(function () {
 
+            //Resident
+            Route::prefix('resident')->name('resident.')->group(function () {
+                Route::get('', [ResidentController::class, 'list'])->name('list');
+                Route::match(['get', 'post'], '/filter', [ResidentController::class, 'filter'])->name('filter');
+                Route::post('/ic', [ResidentController::class, 'ic'])->name('ic');
+                Route::get('/picture', [ResidentController::class, 'picture'])->name('picture');
+            });
+
             //Community
             Route::prefix('community')->name('community.')->group(function () {
                 Route::get('', [CommunityController::class, 'list'])->name('list');
                 Route::match(['get', 'post'], '/filter', [CommunityController::class, 'filter'])->name('filter');
+                Route::match(['get', 'post'], '/select', [CommunityController::class, 'select'])->name('select');
                 Route::post('/ic', [CommunityController::class, 'ic'])->name('ic');
+                Route::get('/picture', [CommunityController::class, 'picture'])->name('picture');
             });
         });
 

@@ -51,9 +51,9 @@ trait CommunityTrait
         return $community;
     }
 
-    public function batchCreateCommunity($file)
+    public function batchCreateCommunity($file, $resident_id)
     {
-        Excel::import(new BatchCommunityRegistrationImport, $file);
+        Excel::import(new BatchCommunityRegistrationImport($resident_id), $file);
     }
 
     public function getCommunity($id)

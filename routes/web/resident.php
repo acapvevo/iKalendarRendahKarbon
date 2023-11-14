@@ -99,6 +99,7 @@ Route::prefix('resident')->name('resident.')->group(function () {
                 Route::get('', [CommunityController::class, 'list'])->name('list');
                 Route::match(['get', 'post'], '/filter', [CommunityController::class, 'filter'])->name('filter');
                 Route::match(['get', 'post'], '/select', [CommunityController::class, 'select'])->name('select');
+                Route::get('/picture', [CommunityController::class, 'picture'])->name('picture');
             });
         });
     });
