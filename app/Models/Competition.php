@@ -241,12 +241,19 @@ class Competition extends Model
         $stat->total_submission_each_month = $total_submission_each_month;
         $stat->total_submission_each_zone = $total_submission_each_zone;
         $stat->total_submission_each_type = $total_submission_each_type;
-        
+
         $stat->total_submission_each_type_each_zone = $total_submission_each_type_each_zone;
 
         $stat->average_submission_by_month = $average_submission_by_month;
         $stat->average_submission_by_zone = $average_submission_by_zone;
 
         $stat->save();
+    }
+
+    public function getSubmissionsByResident($resident_id)
+    {
+        return $this->submissions->filter(function ($submission) use ($resident_id) {
+            return $submission->community->resident_id === $resident_id;
+        });
     }
 }

@@ -31,4 +31,9 @@ trait CompetitionTrait
             'year' => $year
         ]);
     }
+
+    public function initCompetition()
+    {
+        return new Competition;
+    }
 }

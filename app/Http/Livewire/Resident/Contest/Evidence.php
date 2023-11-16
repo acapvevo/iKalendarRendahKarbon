@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Community\Contest;
+namespace App\Http\Livewire\Resident\Contest;
 
 use Livewire\Component;
 use App\Models\Submission;
@@ -14,16 +14,16 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Evidence extends Component
 {
-    use LivewireAlert, WithFileUploads, CheckGuard, EvidenceTrait, SubmissionTrait;
+    use LivewireAlert, CheckGuard, WithFileUploads, SubmissionTrait, EvidenceTrait;
 
-    protected $guard = 'community';
+    protected $guard = 'resident';
 
     public EvidenceModel $evidence;
     public Submission $submission;
     public $evidences;
 
     public $evidence_id;
-    public $community_id;
+    public $submission_id;
     public $competition_id;
 
     public $category_name;
@@ -57,7 +57,7 @@ class Evidence extends Component
     public function mount($submission, $category)
     {
         $this->competition_id = $submission->competition_id;
-        $this->community_id = $submission->community_id;
+        $this->submission_id = $submission->id;
 
         $this->fill([
             'submission' => $this->getSubmissionProperty(),
@@ -82,7 +82,7 @@ class Evidence extends Component
 
     public function getSubmissionProperty()
     {
-        return $this->getSubmissionByCompetitionIDAndCommunityID($this->competition_id, $this->community_id);
+        return $this->getSubmission($this->submission_id);
     }
 
     public function changePlaceholder()
@@ -99,9 +99,8 @@ class Evidence extends Component
 
     public function close()
     {
-        $this->evidence_id = null;
-
         $this->fill([
+            'evidence_id' => null,
             'evidence' => $this->getEvidenceProperty(),
             'file' => null,
             'fileLabel' => __("Upload your Evidence File"),
@@ -110,20 +109,19 @@ class Evidence extends Component
 
     public function create()
     {
-        $this->validate();
+        $this->validate([
+            'evidence.title' => 'required',
+            'file' => 'required'
+        ]);
 
-        $this->submission = $this->getSubmissionProperty();
-        if (!$this->submission->id)
-            $this->submission->save();
-
-        $this->evidence->submission_id = $this->submission->id;
+        $this->evidence->submission_id = $this->submission_id;
         $this->evidence->category = $this->category_code;
         $this->evidence->file = $this->evidence->formatTitleForFileName($this->category_name) . '.' . $this->file->getClientOriginalExtension();
         $this->file->storeAs($this->evidence->getFilePath(), $this->evidence->file);
 
         $this->evidence->save();
 
-        return redirect(route('community.contest.submission.list', ['competition_id' => $this->submission->competition_id, 'category' => $this->category_code]))->with('success', __('alerts.evidence_create', ['title' => $this->evidence->title, 'category' => __($this->category_description)]));
+        return redirect(route('resident.contest.submission.view', ['submission_id' => $this->submission_id, 'category' => $this->category_code]))->with('success', __('alerts.evidence_create', ['title' => $this->evidence->title, 'category' => __($this->category_description)]));
     }
 
     public function update()
@@ -140,7 +138,7 @@ class Evidence extends Component
 
         $this->evidence->save();
 
-        return redirect(route('community.contest.submission.list', ['competition_id' => $this->submission->competition_id, 'category' => $this->category_code]))->with('success', __('alerts.evidence_update', ['title' => $this->evidence->title, 'category' => __($this->category_description)]));
+        return redirect(route('resident.contest.submission.view', ['submission_id' => $this->submission_id, 'category' => $this->category_code]))->with('success', __('alerts.evidence_update', ['title' => $this->evidence->title, 'category' => __($this->category_description)]));
     }
 
     public function askDelete($id)
@@ -172,13 +170,13 @@ class Evidence extends Component
 
         $evidence->delete();
 
-        redirect(route('community.contest.submission.list', ['competition_id' => $this->submission->competition_id, 'category' => $this->category_code]))->with('success', __("alerts.evidence_delete"));
+        redirect(route('resident.contest.submission.view', ['submission_id' => $this->submission_id, 'category' => $this->category_code]))->with('success', __("alerts.evidence_delete"));
     }
 
     public function render()
     {
         $this->changePlaceholder();
 
-        return view('livewire.community.contest.evidence');
+        return view('livewire.resident.contest.evidence');
     }
 }

@@ -51,7 +51,6 @@ class Form extends Component
 
     protected function rules()
     {
-
         switch ($this->current_tab) {
             case 'personal':
                 return [
@@ -152,12 +151,13 @@ class Form extends Component
             if ($this->community->checkCompletion() && $this->address->checkCompletion()) {
                 $this->createCommunity(array_merge($this->community->attributesToArray(), ['password' => Hash::make($this->password)]), $this->address->attributesToArray(), []);
                 $this->community = $this->getCommunityProperty();
+                return true;
             } else {
-                $this->dispatchBrowserEvent('alert', [
+                $this->dispatchBrowserEvent('fireAlert', [
                     'type' => 'warning',
                     'message' => __("Please complete your Personal Information first")
                 ]);
-                return;
+                return false;
             }
         }
     }
@@ -256,11 +256,13 @@ class Form extends Component
             ]);
             return;
         }
+        
+        if (!$this->checkProfileConpletion())
+            return;
 
         $this->current_tab = $tabIndex;
 
         if ($this->checkSubmissionCategory('name', $tabIndex)) {
-            $this->checkProfileConpletion();
 
             if (!$this->submission->id) {
                 $this->submission = $this->getSubmissionProperty();

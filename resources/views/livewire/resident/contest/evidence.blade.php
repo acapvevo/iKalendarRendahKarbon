@@ -27,7 +27,7 @@
                             <div class="justify-content-center">
                                 <div class="btn-group-vertical d-lg-none" role="group"
                                     aria-label="Vertical button group">
-                                    <form action="{{ route('community.contest.submission.download') }}" method="post"
+                                    <form action="{{ route('resident.contest.submission.download') }}" method="post"
                                         target="_blank">
                                         @csrf
 
@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="btn-group d-none d-lg-inline-flex" role="group"
                                     aria-label="Horizontal button group">
-                                    <form action="{{ route('community.contest.submission.download') }}" method="post"
+                                    <form action="{{ route('resident.contest.submission.download') }}" method="post"
                                         target="_blank">
                                         @csrf
 

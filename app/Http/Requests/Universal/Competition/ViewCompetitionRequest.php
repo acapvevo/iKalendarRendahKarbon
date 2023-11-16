@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Universal\Submission;
+namespace App\Http\Requests\Universal\Competition;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
-class DownloadEvidenceRequest extends FormRequest
+class ViewCompetitionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class DownloadEvidenceRequest extends FormRequest
     public function rules()
     {
         return [
-            'evidence_id' => 'required|numeric|exists:evidence,id',
+            'competition_id' => 'required|numeric|exists:competitions,id'
         ];
     }
 }
