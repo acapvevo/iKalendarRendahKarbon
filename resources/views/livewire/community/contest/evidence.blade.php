@@ -31,7 +31,7 @@
                                         target="_blank">
                                         @csrf
 
-                                        <button type="submit" class="btn btn-primary btn-sm"
+                                        <button type="submit" class="btn btn-primary btn-sm" {{$evidenceObj->checkFile() ? '' : 'disabled'}}
                                             value="{{ $evidenceObj->id }}" name="evidence_id">
                                             <i data-bs-toggle="tooltip" data-bs-title="{{ __('View Evidence') }}"
                                                 data-feather="eye"></i>
@@ -55,7 +55,7 @@
                                         target="_blank">
                                         @csrf
 
-                                        <button type="submit" class="btn btn-primary btn-sm"
+                                        <button type="submit" class="btn btn-primary btn-sm" {{$evidenceObj->checkFile() ? '' : 'disabled'}}
                                             value="{{ $evidenceObj->id }}" name="evidence_id">
                                             <i data-bs-toggle="tooltip" data-bs-title="{{ __('View Evidence') }}"
                                                 data-feather="eye"></i>
