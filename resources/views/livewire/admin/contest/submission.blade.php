@@ -35,7 +35,8 @@
                             </tr>
                             <tr>
                                 <th>{{ __('Zone') }}</th>
-                                <td>{{ ($submission && $submission->community && $submission->community->address->zone) ? $submission->community->address->zone->getFormalName() : '' }}</td>
+                                <td>{{ $submission && $submission->community && $submission->community->address->zone ? $submission->community->address->zone->getFormalName() : '' }}
+                                </td>
                             </tr>
                             <tr>
                                 <th>{{ __('Total Carbon Emission') }}</th>
@@ -55,6 +56,8 @@
 </div>
 
 @push('scripts')
+    <script src="{{ asset('js/modal.js') }}"></script>
+
     <script>
         $('document').ready(function() {
             $('#tableSubmission').DataTable({
@@ -96,6 +99,8 @@
                     registerOpenModalEventListener();
                 }
             });
+
+            closeModal('viewSubmissionModal');
         });
 
         function registerOpenModalEventListener() {

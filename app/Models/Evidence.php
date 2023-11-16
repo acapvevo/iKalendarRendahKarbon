@@ -38,19 +38,29 @@ class Evidence extends Model
         return $this->belongsTo(Submission::class);
     }
 
-    public function formatTitleForFileName()
+    public function formatTitleForFileName($category_name)
     {
-        return preg_replace('/[^a-zA-Z0-9\-\._]/', '', $this->title);
+        return $category_name . '_' . preg_replace('/[^a-zA-Z0-9\-\._]/', '', $this->title);
+    }
+
+    public function getFilePath()
+    {
+        return 'evidences/' . $this->submission->competition->year . '/' . $this->submission->community->id;
     }
 
     public function downloadFile()
     {
-        return response()->file(storage_path('app/evidences/' . $this->submission->competition->year . '/' . $this->submission->community->getFolderName() . '/' . $this->file));
+        return response()->file(storage_path('app/evidences/' . $this->submission->competition->year . '/' . $this->submission->community->id . '/' . $this->file));
     }
 
     public function deleteFile()
     {
-        Storage::delete('evidences/' . $this->submission->competition->year . '/' . $this->submission->community->getFolderName() . '/' . $this->file);
+        Storage::delete($this->getFilePath() . '/' . $this->file);
+    }
+
+    public function checkFile()
+    {
+        return Storage::exists($this->getFilePath() . '/' . $this->file);
     }
 
     public function getCategory()

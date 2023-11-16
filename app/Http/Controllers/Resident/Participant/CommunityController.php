@@ -101,7 +101,7 @@ class CommunityController extends Controller
             'term' => 'required|string|max:255'
         ]);
 
-        $communities = $this->searchCommunities($request->term, $this->getCurrentResident()->id);
+        $communities = $this->searchCommunitiesWithoutResident($request->term);
 
         return response()->json([
             "results" => $communities->items(),

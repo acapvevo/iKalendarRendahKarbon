@@ -6,11 +6,12 @@ use Livewire\Component;
 use App\Models\Competition;
 use App\Traits\Livewire\CheckGuard;
 use App\Models\Submission as SubmissionModel;
+use App\Traits\SubmissionTrait;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Submission extends Component
 {
-    use LivewireAlert, CheckGuard;
+    use LivewireAlert, CheckGuard, SubmissionTrait;
 
     protected $guard = 'admin';
 
@@ -19,7 +20,10 @@ class Submission extends Component
 
     public SubmissionModel $submission;
 
-    protected $listeners = ['openModal' => 'open'];
+    protected $listeners = [
+        'openModal' => 'open',
+        'closeModal' => 'close',
+    ];
 
     public function mount($competition_id)
     {
@@ -28,19 +32,19 @@ class Submission extends Component
 
     public function getSubmissionProperty()
     {
-        return SubmissionModel::find($this->submission_id);
+        return $this->getSubmission($this->submission_id);
     }
 
     public function open($submission_id)
     {
         $this->submission_id = $submission_id;
-
         $this->submission = $this->getSubmissionProperty();
     }
 
     public function close()
     {
-        $this->submission = new SubmissionModel;
+        $this->submission_id = null;
+        $this->submission = $this->initSubmission();
     }
 
     public function render()
