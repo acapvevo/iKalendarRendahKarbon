@@ -38,7 +38,7 @@
         @endphp
     @endif
 
-    window.addEventListener('alert', event => {
+    window.addEventListener('fireAlert', event => {
         switch (event.detail.type) {
             case 'success':
                 success(event.detail.message);

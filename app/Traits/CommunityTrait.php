@@ -68,10 +68,37 @@ trait CommunityTrait
         ]);
     }
 
-    public function searchCommunities($term, $resident_id)
+    public function searchCommunitiesWithoutResident($term)
     {
         $communities = Community::with(['address'])
             ->whereNull('resident_id')
+            ->where(function ($query) use ($term) {
+                $query->where('name', 'like', '%' . $term . '%')
+                    ->orWhere('username', 'like', '%' . $term . '%');
+            });
+
+        return $communities->paginate(10);
+    }
+
+    public function searchCommunitiesWithResidentID($term, $resident_id)
+    {
+        $communities = Community::with(['address'])
+            ->where('resident_id', $resident_id)
+            ->where(function ($query) use ($term) {
+                $query->where('name', 'like', '%' . $term . '%')
+                    ->orWhere('username', 'like', '%' . $term . '%');
+            });
+
+        return $communities->paginate(10);
+    }
+
+    public function searchCommunitiesWithResidentIDWithoutSubmission($term, $resident_id, $competition_id)
+    {
+        $communities = Community::with(['address'])
+            ->whereNotIn('id', function ($query) use ($competition_id) {
+                $query->select('community_id')->where('competition_id', $competition_id)->from('submissions');
+            })
+            ->where('resident_id', $resident_id)
             ->where(function ($query) use ($term) {
                 $query->where('name', 'like', '%' . $term . '%')
                     ->orWhere('username', 'like', '%' . $term . '%');

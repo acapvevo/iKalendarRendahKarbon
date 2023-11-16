@@ -5,7 +5,7 @@ namespace App\Http\Requests\Universal\Submission;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
-class DownloadEvidenceRequest extends FormRequest
+class ViewSubmissionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class DownloadEvidenceRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::guard('admin')->check() || Auth::guard('resident')->check() || Auth::guard('community')->check();
+        return  Auth::guard('admin')->check() || Auth::guard('resident')->check() || Auth::guard('community')->check() ;
     }
 
     /**
@@ -25,7 +25,7 @@ class DownloadEvidenceRequest extends FormRequest
     public function rules()
     {
         return [
-            'evidence_id' => 'required|numeric|exists:evidence,id',
+            'submission_id' => 'required|numeric|exists:submissions,id'
         ];
     }
 }

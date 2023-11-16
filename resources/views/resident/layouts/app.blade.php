@@ -141,10 +141,19 @@
             <a class="nav-link" href="{{ route('resident.participant.community.list') }}">{{ __('Resident') }}</a>
         </nav>
     </div>
-    {{-- <a class="nav-link" href="{{ route('resident.contest.competition.list') }}">
+    <!-- Sidenav Accordion (Competition Management)-->
+    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseCompetition"
+        aria-expanded="false" aria-controls="collapseCompetition">
         <div class="nav-link-icon"><i class="fa-solid fa-trophy"></i></div>
-        {{ __('Competition Submission') }}
-    </a> --}}
+        {{ __('Competition Management') }}
+        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+    </a>
+    <div class="collapse" id="collapseCompetition" data-bs-parent="#competition">
+        <nav class="sidenav-menu-nested nav accordion" id="competition">
+            <!-- Sidenav Link (Resident)-->
+            <a class="nav-link" href="{{ route('resident.contest.competition.list') }}">{{ __('Submission') }}</a>
+        </nav>
+    </div>
     {{-- <a class="nav-link" href="{{ route('resident.newsletter.list') }}">
         <div class="nav-link-icon"><i class="fa-regular fa-newspaper"></i></div>
         {{ __('Newsletter') }}

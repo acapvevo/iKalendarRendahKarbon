@@ -9,6 +9,11 @@ trait SubmissionTrait
 {
     use ZoneTrait;
 
+    public function initSubmission()
+    {
+        return new Submission;
+    }
+
     public function getSubmission($id)
     {
         if ($id)
@@ -34,7 +39,7 @@ trait SubmissionTrait
     {
         return Submission::where('competition_id', $competition_id)->get();
     }
-    
+
     public function checkSubmissionCategory($column, $value)
     {
         return DB::table('category')->where('forCompetition', true)->where($column, $value)->exists();

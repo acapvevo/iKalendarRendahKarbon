@@ -7,7 +7,9 @@ use App\Http\Controllers\Resident\User\ProfileController;
 use App\Http\Controllers\Resident\User\SettingController;
 use App\Http\Controllers\Resident\Auth\NewPasswordController;
 use App\Http\Controllers\Resident\Auth\VerifyEmailController;
+use App\Http\Controllers\Resident\Contest\SubmissionController;
 use App\Http\Controllers\Resident\Auth\RegisteredUserController;
+use App\Http\Controllers\Resident\Contest\CompetitionController;
 use App\Http\Controllers\Resident\Participant\CommunityController;
 use App\Http\Controllers\Resident\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Resident\Auth\ConfirmablePasswordController;
@@ -100,6 +102,25 @@ Route::prefix('resident')->name('resident.')->group(function () {
                 Route::match(['get', 'post'], '/filter', [CommunityController::class, 'filter'])->name('filter');
                 Route::match(['get', 'post'], '/select', [CommunityController::class, 'select'])->name('select');
                 Route::get('/picture', [CommunityController::class, 'picture'])->name('picture');
+            });
+        });
+
+        // Contest Management routes
+        Route::prefix('contest')->name('contest.')->group(function () {
+
+            //Competition
+            Route::prefix('competition')->name('competition.')->group(function () {
+                Route::get('', [CompetitionController::class, 'list'])->name('list');
+            });
+
+            //Submission
+            Route::prefix('submission')->name('submission.')->group(function () {
+                Route::match(['get', 'post'], '', [SubmissionController::class, 'list'])->name('list');
+                Route::match(['get', 'post'], '/filter', [SubmissionController::class, 'filter'])->name('filter');
+                Route::match(['get', 'post'], '/select', [SubmissionController::class, 'select'])->name('select');
+                Route::match(['get', 'post'], '/category', [SubmissionController::class, 'category'])->name('category');
+                Route::match(['get', 'post'], '/download', [SubmissionController::class, 'download'])->name('download');
+                Route::match(['get', 'post'], '/{submission_id}', [SubmissionController::class, 'view'])->name('view');
             });
         });
     });

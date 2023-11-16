@@ -7,7 +7,7 @@
             <thead class="table-primary">
                 <tr>
                     <th>{{ __('Competition') }}</th>
-                    <th>{{ __('Status') }}</th>
+                    <th>{{ __('No. of Submissions') }}</th>
                     <th>{{ __('Menu') }}</th>
                 </tr>
             </thead>
@@ -15,7 +15,7 @@
                 @foreach ($competitions as $competitionObj)
                     <tr>
                         <td>{{ $competitionObj->name }}</td>
-                        <td>{{ $competitionObj->checkSubmissionStatus() }}</td>
+                        <td>{{ $competitionObj->getSubmissionsByResident(request()->user()->id)->count() }}</td>
                         <td>
                             <div class="justify-content-center">
                                 <div class="btn-group-vertical d-lg-none" role="group"
@@ -27,8 +27,8 @@
                                             data-feather="eye"></i>
                                     </button>
                                     <button type="button" class="btn btn-primary btn-sm"
-                                        wire:click='view({{ $competitionObj->id }})' name="competition_id"><i
-                                            data-bs-toggle="tooltip" data-bs-title="{{ __('View Submission') }}"
+                                        wire:click='view({{ $competitionObj->id }})'><i data-bs-toggle="tooltip"
+                                            data-bs-title="{{ __('View Submissions') }}"
                                             data-feather="file-text"></i></button>
                                 </div>
                                 <div class="btn-group d-none d-lg-inline-flex" role="group"
@@ -40,9 +40,9 @@
                                             data-feather="eye"></i>
                                     </button>
                                     <button type="button" class="btn btn-primary btn-sm"
-                                        wire:click='view({{ $competitionObj->id }})' name="competition_id"><i
-                                            data-bs-toggle="tooltip" data-bs-title="{{ __('View Submission') }}"
-                                            data-feather="file-text"></i></button>
+                                        wire:click='view({{ $competitionObj->id }})'><i data-bs-toggle="tooltip"
+                                            data-bs-title="{{ __('View Submissions') }}" data-feather="file-text"></i>
+                                    </button>
                                 </div>
                             </div>
                         </td>
@@ -70,21 +70,9 @@
                                 <td>{{ $competition->name ?? '' }}</td>
                             </tr>
                             <tr>
-                                <th>{{ __('Status') }}</th>
-                                <td>{{ $submission ? $submission->checkBillsSubmit() : __('Not Submitted') }}</td>
-                            </tr>
-                            <tr>
-                                <th colspan="2" class="h3 text-center">{{ __('Submission Statistic') }}</th>
-                            </tr>
-                            <tr>
-                                <th>{{ __('Total Carbon Emission') }}</th>
-                                <td>
-                                    @if ($submission)
-                                        {{ $submission->total_carbon_emission }} KgCO<sub>2</sub>
-                                    @else
-                                        0 KgCO<sub>2</sub>
-                                    @endif
-                                </td>
+                                <th>{{ __('No. of Submissions') }}</th>
+                                <td>{{ $competition ? $competition->getSubmissionsByResident(request()->user()->id)->count() : 0 }}
+                                    {{ __('Submissions') }}</td>
                             </tr>
                         </table>
                     </div>
@@ -100,6 +88,8 @@
 </div>
 
 @push('scripts')
+    <script src="{{ asset('js/modal.js') }}"></script>
+
     <script type="text/javascript">
         $(document).ready(function() {
             $('#competitionTable').DataTable({
@@ -109,5 +99,7 @@
                 }]
             });
         });
+
+        closeModal('viewCompetitionModal');
     </script>
 @endpush
