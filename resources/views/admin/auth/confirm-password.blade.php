@@ -1,36 +1,50 @@
-<x-admin-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+@extends('layouts.guest')
 
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
+@section('apps', 'iKalendar Karbon')
+
+@section('title', __('Password Confirmation'))
+
+@section('content')
+    <div class="col-lg-5">
+        <!-- Basic forgot password form-->
+        <div class="card shadow-lg border-0 rounded-lg mt-5">
+            <div class="card-header justify-content-center">
+                <h3 class="fw-light my-4">{{ __('Password Confirmation') }}</h3>
+            </div>
+            <div class="card-body">
+                <div class="small mb-3 text-muted">
+                    {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
+                </div>
+
+                @if ($errors->any())
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ __('Oops!, Something went wrong.') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                <!-- password confirmation form-->
+                <form method="post" action="{{ route('admin.password.confirm') }}">
+                    @csrf
+
+                    <!-- Form Group (password)-->
+                    <div class="mb-3">
+                        <label class="small mb-1" for="password">{{ __('Password') }}</label>
+                        <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" id="password"
+                            name="password" type="password" aria-describedby="password"
+                            placeholder="{{ __('Enter Your Password') }}" required />
+                        @error('password')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    <!-- Form Group (submit options)-->
+                    <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                        <button class="btn btn-primary" type="submit">{{ __('Confirm') }}</button>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-        <form method="POST" action="{{ route('admin.password.confirm') }}">
-            @csrf
-
-            <!-- Password -->
-            <div>
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="current-password" />
-            </div>
-
-            <div class="flex justify-end mt-4">
-                <x-button>
-                    {{ __('Confirm') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-admin-guest-layout>
+    </div>
+@endsection
