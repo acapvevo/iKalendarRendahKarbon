@@ -270,10 +270,10 @@ class Competition extends Model
                 return $submission->community->address->category == $cateogry_code;
             })
             ->sortBy(function ($submission) {
-                if (!$this->checkCalculationByClassAndID(Submission::class, $submission->id))
+                if (!$this->checkCalculationByClassAndID($submission->id, Submission::class))
                     $submission->calculateStats();
 
-                return $submission->calculation->total_carbon_reduction;
+                return abs($submission->calculation->total_carbon_reduction);
             })
             ->values();
     }

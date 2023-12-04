@@ -153,7 +153,6 @@ class Submission extends Model
 
     public function calculateStats()
     {
-        dump($this->id);
         $total_carbon_emission = 0;
         $total_carbon_reduction = 0;
 
@@ -170,10 +169,9 @@ class Submission extends Model
                     $bill->calculateStats();
                 }
 
-                $calculation = $this->getCalculationByClassAndID($this->id, Bill::class);
+                $calculation = $this->getCalculationByClassAndID($bill->id, Bill::class);
 
                 $total_carbon_emission += $calculation->total_carbon_emission;
-                dump($total_carbon_emission);
 
                 foreach ($this->getSubmissionCategories() as $category) {
                     foreach(json_decode($category->variables) as $variable){

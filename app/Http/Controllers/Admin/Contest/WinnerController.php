@@ -45,9 +45,9 @@ class WinnerController extends Controller
             $submission->calculateStats();
         }
 
-        return response()->json([
-            'message' => 'ok'
-        ]);
+        // return response()->json([
+        //     'message' => 'ok'
+        // ]);
     }
 
     public function export(SelectCompetitionRequest $request)
