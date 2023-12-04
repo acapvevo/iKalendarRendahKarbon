@@ -80,7 +80,7 @@
                 ],
                 columnDefs: [{
                     className: "dt-center",
-                    targets: [0, 1, 2, 3, 4]
+                    targets: '_all'
                 }, {
                     type: 'unknownType',
                     targets: [3]

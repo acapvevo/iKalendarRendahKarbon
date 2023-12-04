@@ -16,11 +16,13 @@ function initEventModal(modalElId, openFunc, closeFunc) {
 }
 
 function showLoadingModal() {
+    console.log(1);
     const modal = bootstrap.Modal.getOrCreateInstance('#loadingModal');
     modal.show();
 }
 
 function hideLoadingModal() {
+    console.log(2);
     const modal = bootstrap.Modal.getOrCreateInstance('#loadingModal');
     modal.hide();
 }

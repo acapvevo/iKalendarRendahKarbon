@@ -144,6 +144,9 @@
         closeModal('viewSubmissionModal');
         const option = {
             columnDefs: [{
+                className: "dt-center",
+                targets: '_all'
+            }, {
                 type: 'natural',
                 targets: 2
             }]
@@ -213,7 +216,7 @@
                 activeTooltips();
                 registerButtonEventListener();
 
-                hideLoadingModal();
+                setTimeout(() => hideLoadingModal(), 1000);
             });
         });
 

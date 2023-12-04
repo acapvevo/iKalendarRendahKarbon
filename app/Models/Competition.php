@@ -269,7 +269,7 @@ class Competition extends Model
             ->filter(function ($submission) use ($cateogry_code) {
                 return $submission->community->address->category == $cateogry_code;
             })
-            ->sortBy(function ($submission) {
+            ->sortByDesc(function ($submission) {
                 if (!$this->checkCalculationByClassAndID($submission->id, Submission::class))
                     $submission->calculateStats();
 
