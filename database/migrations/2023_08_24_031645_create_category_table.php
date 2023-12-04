@@ -24,6 +24,7 @@ class CreateCategoryTable extends Migration
             $table->string('icon');
             $table->boolean('forCompetition');
             $table->boolean('forActivity');
+            $table->json('variables');
 
             $table->timestamps();
         });

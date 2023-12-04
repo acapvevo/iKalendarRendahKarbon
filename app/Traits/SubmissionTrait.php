@@ -81,7 +81,7 @@ trait SubmissionTrait
 
     public function initCalculationEachMonth($competition)
     {
-        return $competition->months->mapWithKeys(function ($month) {
+        return $competition->getMonthRange()->mapWithKeys(function ($month) {
             return [$month->id => 0];
         })->toArray();
     }

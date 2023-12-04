@@ -177,6 +177,8 @@
         </div>
     </div>
 
+    @include('components.loading')
+
     <!-- JQUERY JS-->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" crossorigin="anonymous">
@@ -201,7 +203,7 @@
     <script
         src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.5/b-2.4.1/b-html5-2.4.1/fc-4.3.0/fh-3.4.0/sb-1.5.0/datatables.min.js">
     </script>
-    <script src="https://cdn.datatables.net/plug-ins/1.13.4/sorting/natural.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.13.5/sorting/natural.js"></script>
 
     <!-- SWEET ALERT 2 JS-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.10/dist/sweetalert2.all.min.js"></script>

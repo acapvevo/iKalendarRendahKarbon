@@ -7,10 +7,18 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Propaganistas\LaravelPhone\PhoneNumber;
 
 class Community extends Authenticatable
 {
     use HasFactory, Notifiable;
+
+    /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = ['address'];
 
     /**
      * The attributes that are mass assignable.
@@ -73,6 +81,11 @@ class Community extends Authenticatable
     public function occupation()
     {
         return $this->hasOne(Occupation::class);
+    }
+
+    public function getPhoneNumber()
+    {
+        return (string) PhoneNumber::make($this->phone_number)->ofCountry('MY');
     }
 
     public function viewProfilePicture()

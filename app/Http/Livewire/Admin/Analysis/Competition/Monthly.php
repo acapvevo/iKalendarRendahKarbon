@@ -21,7 +21,7 @@ class Monthly extends Component
     protected $guard = 'admin';
 
     public Competition $competition;
-    public Month $month;
+    public $month;
     public Calculation $calculation;
     public Stat $stat;
 
@@ -59,7 +59,7 @@ class Monthly extends Component
             'competition_id' => $competition->id,
         ]);
 
-        $this->month = $this->competition->months->get(0);
+        $this->month = $this->competition->getMonthRange()->get(0);
         $this->month_id = $this->month->id;
 
         $this->calculate();

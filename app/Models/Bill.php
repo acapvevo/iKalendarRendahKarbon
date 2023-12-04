@@ -90,6 +90,11 @@ class Bill extends Model
         return $this->electric->carbon_emission && $this->water->carbon_emission && $this->recycle->carbon_emission && $this->used_oil->carbon_emission;
     }
 
+    public function getVariableByCategory($variable, $category)
+    {
+        return $this->{$category} ? round($this->{$category}->{$variable}, 2) : 0;
+    }
+
     public function calculateStats()
     {
         $total_carbon_emission = 0;

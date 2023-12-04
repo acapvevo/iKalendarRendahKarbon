@@ -158,6 +158,8 @@
             <a class="nav-link" href="{{ route('admin.contest.competition.list') }}">{{ __('Competition') }}</a>
             <!-- Sidenav Link (Submission)-->
             <a class="nav-link" href="{{ route('admin.contest.submission.list') }}">{{ __('Submission') }}</a>
+            <!-- Sidenav Link (Winner)-->
+            <a class="nav-link" href="{{ route('admin.contest.winner.list') }}">{{ __('Winner') }}</a>
         </nav>
     </div>
     <!-- Sidenav Accordion (Analysis Management)-->

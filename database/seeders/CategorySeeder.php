@@ -33,6 +33,11 @@ class CategorySeeder extends Seeder
             'icon' => 'material-symbols:electric-bolt',
             'forCompetition' => true,
             'forActivity' => false,
+            'variables' => json_encode([
+                'carbon_emission',
+                'usage',
+                'charge'
+            ]),
         ]);
 
         $translation = Translation::firstOrNew([
@@ -55,6 +60,11 @@ class CategorySeeder extends Seeder
             'icon' => 'ion:water',
             'forCompetition' => true,
             'forActivity' => false,
+            'variables' => json_encode([
+                'carbon_emission',
+                'usage',
+                'charge'
+            ]),
         ]);
 
         $translation = Translation::firstOrNew([
@@ -77,6 +87,11 @@ class CategorySeeder extends Seeder
             'icon' => 'mdi:recycle',
             'forCompetition' => true,
             'forActivity' => true,
+            'variables' => json_encode([
+                'carbon_emission',
+                'value',
+                'weight'
+            ]),
         ]);
 
         $translation = Translation::firstOrNew([
@@ -99,6 +114,11 @@ class CategorySeeder extends Seeder
             'icon' => 'material-symbols:oil-barrel',
             'forCompetition' => true,
             'forActivity' => true,
+            'variables' => json_encode([
+                'carbon_emission',
+                'value',
+                'weight'
+            ]),
         ]);
 
         $translation = Translation::firstOrNew([
@@ -121,6 +141,11 @@ class CategorySeeder extends Seeder
             'icon' => 'iconoir:electronics-chip',
             'forCompetition' => false,
             'forActivity' => true,
+            'variables' => json_encode([
+                'carbon_emission',
+                'value',
+                'weight'
+            ]),
         ]);
 
         $translation = Translation::firstOrNew([
@@ -143,6 +168,11 @@ class CategorySeeder extends Seeder
             'icon' => 'icon-park:clothes-short-sleeve',
             'forCompetition' => false,
             'forActivity' => true,
+            'variables' => json_encode([
+                'carbon_emission',
+                'value',
+                'weight'
+            ]),
         ]);
 
         $translation = Translation::firstOrNew([

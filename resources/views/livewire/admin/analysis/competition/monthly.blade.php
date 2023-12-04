@@ -23,7 +23,7 @@
                     <div class="col-10 d-flex align-items-center">
                         <select class="form-select {{ $errors->has('month_id') ? 'is-invalid' : '' }}" id="month_select"
                             style="width: 100%">
-                            @foreach ($competition->months as $monthObj)
+                            @foreach ($competition->getMonthRange() as $monthObj)
                                 <option value="{{ $monthObj->id }}">{{ $monthObj->getName() }}</option>
                             @endforeach
                         </select>

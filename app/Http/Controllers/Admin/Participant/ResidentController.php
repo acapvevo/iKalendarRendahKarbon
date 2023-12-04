@@ -80,8 +80,6 @@ class ResidentController extends Controller
                                     data-feather="users"></i>
                             </button>
                         </div>
-                        <div class="btn-group" role="group" aria-label="Action Button">
-                        </div>
                     </div>
                     EOT;
                 },

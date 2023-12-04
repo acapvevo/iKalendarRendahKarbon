@@ -13,6 +13,13 @@ class Submission extends Model
     use HasFactory, SubmissionTrait, BillTrait, CalculationTrait;
 
     /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = ['community', 'calculation'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -152,7 +159,7 @@ class Submission extends Model
         $total_carbon_emission_each_type = $total_usage_each_type = $total_charge_each_type = $total_weight_each_type = $total_value_each_type = $this->initCalculationBySubmissionCategory();
         $total_carbon_reduction_each_type = $usage_reduction_each_type = $charge_reduction_each_type = $this->initCalculationBySubmissionCategory();
 
-        for ($i = 0; $i < $this->competition->months->count(); $i++) {
+        for ($i = (config('constant.min_month') - 1); $i < config('constant.max_month'); $i++) {
             $month = $this->competition->months->get($i);
 
             if ($this->bills->contains('month_id', $month->id)) {
@@ -174,7 +181,7 @@ class Submission extends Model
                     $total_value_each_type[$category->name] += round($bill->{$category->name}->value ?? 0, 2);
                 }
 
-                if ($i !== 0) {
+                if ($i !== config('constant.min_month') - 1) {
                     $lastMonth = $this->competition->months->get($i - 1);
 
                     if ($this->bills->contains('month_id', $lastMonth->id)) {
@@ -226,7 +233,7 @@ class Submission extends Model
 
     public function getSubmissionStats($variables)
     {
-        if($this->checkCalculationByClassAndID($this->id, Submission::class))
+        if ($this->checkCalculationByClassAndID($this->id, Submission::class))
             $calculation = $this->calculation;
         else
             $calculation = $this->initCalculation();
@@ -235,7 +242,7 @@ class Submission extends Model
         } else {
             $stats = [];
 
-            foreach($variables as $variable){
+            foreach ($variables as $variable) {
                 $stats[] = $calculation->{$variable};
             }
 

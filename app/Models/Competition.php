@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use App\Traits\BillTrait;
-use App\Traits\CalculationTrait;
 use App\Traits\StatTrait;
-use App\Traits\SubmissionTrait;
 use App\Traits\ZoneTrait;
+use App\Traits\SubmissionTrait;
+use App\Traits\CalculationTrait;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -109,11 +110,16 @@ class Competition extends Model
         return $this->questions->where('category', $questionCategory)->values();
     }
 
+    public function getMonthRange()
+    {
+        return $this->months->whereBetween('num', [config('constant.min_month'), config('constant.max_month')])->values();
+    }
+
     public function getMonthNames()
     {
         $monthNames = collect();
 
-        foreach ($this->months as $month) {
+        foreach ($this->getMonthRange() as $month) {
             $monthNames->push($month->getShortName());
         }
 
@@ -142,7 +148,7 @@ class Competition extends Model
 
             $total_carbon_emission += $submissionCalculation->total_carbon_emission;
 
-            foreach ($this->months as $month) {
+            foreach ($this->getMonthRange() as $month) {
                 $bill = $this->getBillByMonthAndSubmission($month->id, $submission->id);
 
                 if ($bill->id && !isset($bill->calculation))
@@ -212,7 +218,7 @@ class Competition extends Model
 
         $total_submission_each_type_each_zone = $this->initCalculationBySubmissionCategoryEachZone();
 
-        foreach ($this->months as $month) {
+        foreach ($this->getMonthRange() as $month) {
             $total_submission_each_month[$month->id] = $month->bills->count();
         }
 
@@ -255,5 +261,20 @@ class Competition extends Model
         return $this->submissions->filter(function ($submission) use ($resident_id) {
             return $submission->community->resident_id === $resident_id;
         });
+    }
+
+    public function getRankingByAddressCategory($cateogry_code)
+    {
+        return $this->submissions
+            ->filter(function ($submission) use ($cateogry_code) {
+                return $submission->community->address->category == $cateogry_code;
+            })
+            ->sortBy(function ($submission) {
+                if (!$this->checkCalculationByClassAndID(Submission::class, $submission->id))
+                    $submission->calculateStats();
+
+                return $submission->calculation->total_carbon_reduction;
+            })
+            ->values();
     }
 }

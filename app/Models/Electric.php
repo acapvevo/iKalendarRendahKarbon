@@ -37,6 +37,7 @@ class Electric extends Model
     {
         return $this->morphTo();
     }
+
     public function calculateCarbonEmission()
     {
         $this->carbon_emission = round($this->usage * 0.584, 2);

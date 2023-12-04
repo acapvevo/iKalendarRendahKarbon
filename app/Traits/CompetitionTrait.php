@@ -32,6 +32,13 @@ trait CompetitionTrait
         ]);
     }
 
+    public function getCompetitionByYear($year)
+    {
+        return Competition::firstOrNew([
+            'year' => $year
+        ]);
+    }
+
     public function initCompetition()
     {
         return new Competition;
