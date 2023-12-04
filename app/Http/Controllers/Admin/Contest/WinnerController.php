@@ -38,6 +38,10 @@ class WinnerController extends Controller
         $competition = $this->getCompetitionByYear($year);
 
         foreach($competition->submissions as $submission){
+            foreach($submission->bills as $bill){
+                $bill->calculateStats();
+            }
+
             $submission->calculateStats();
         }
 
