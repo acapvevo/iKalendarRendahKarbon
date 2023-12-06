@@ -79,6 +79,9 @@ class Finance extends Component
             ],
         ]);
 
+        if (!$this->finance->community_id)
+            $this->finance->community_id = $this->community->id;
+
         if ($this->bank_statement)
             $this->finance->uploadBankStatement($this->bank_statement);
 

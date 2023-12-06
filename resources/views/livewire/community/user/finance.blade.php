@@ -14,19 +14,19 @@
     <div class="table-responsive-lg">
         <table class="table table-bordered">
             <tr>
-                <th>{{ __('Account Name') }}</th>
+                <th class="w-25">{{ __('Account Name') }}</th>
                 <td>{{ $finance->account_name }}</td>
             </tr>
             <tr>
-                <th>{{ __('Account Number') }}</th>
+                <th class="w-25">{{ __('Account Number') }}</th>
                 <td>{{ $finance->account_number }}</td>
             </tr>
             <tr>
-                <th>{{ __('Bank Name') }}</th>
+                <th class="w-25">{{ __('Bank Name') }}</th>
                 <td>{{ $finance->bank ? strtoupper($finance->getBank()->name) : '' }}</td>
             </tr>
             <tr>
-                <th>{{ __('Bank Statment') }}</th>
+                <th class="w-25">{{ __('Bank Statment') }}</th>
                 <td>
                     @if ($finance->bank_statement)
                         <form action="{{ route('community.user.finance.statement') }}" method="post" target="_blank">
