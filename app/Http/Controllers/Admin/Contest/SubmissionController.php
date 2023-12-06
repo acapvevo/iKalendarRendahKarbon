@@ -141,6 +141,7 @@ class SubmissionController extends Controller
                     EOT;
                 },
                 'as' => 'menu',
+                'inFilter' => false,
             ),
         );
 
