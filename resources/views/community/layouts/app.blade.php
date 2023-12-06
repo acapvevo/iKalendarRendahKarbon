@@ -109,6 +109,10 @@
         <div class="dropdown-item-icon"><i data-feather="user"></i></div>
         {{ __('Profile') }}
     </a>
+    <a class="dropdown-item" href="{{ route('community.user.finance.view') }}">
+        <div class="dropdown-item-icon"><i data-feather="dollar-sign"></i></div>
+        {{ __('Finance Information') }}
+    </a>
     <a class="dropdown-item" href="{{ route('community.user.setting.view') }}">
         <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
         {{ __('Setting') }}

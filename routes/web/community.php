@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Community\Contest\FormController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Community\DashboardController;
 use App\Http\Controllers\Community\NewsletterController;
+use App\Http\Controllers\Community\Contest\FormController;
+use App\Http\Controllers\Community\User\FinanceController;
 use App\Http\Controllers\Community\User\PictureController;
 use App\Http\Controllers\Community\User\ProfileController;
 use App\Http\Controllers\Community\User\SettingController;
@@ -88,6 +89,12 @@ Route::prefix('community')->name('community.')->group(function () {
             Route::prefix('profile')->name('profile.')->group(function () {
                 Route::get('', [ProfileController::class, 'view'])->name('view');
                 Route::post('/ic', [ProfileController::class, 'ic'])->name('ic');
+            });
+
+            //Finance
+            Route::prefix('finance')->name('finance.')->group(function () {
+                Route::get('', [FinanceController::class, 'view'])->name('view');
+                Route::post('/statement', [FinanceController::class, 'statement'])->name('statement');
             });
 
             //Setting
