@@ -22,7 +22,7 @@ class Verification extends Component
     protected function rules()
     {
         return [
-            'identification_card' => 'required|file|mimes:jpg,pdf,png|max:2048'
+            'identification_card' => 'required|file|mimes:jpg,pdf,png|max:4096'
         ];
     }
 
