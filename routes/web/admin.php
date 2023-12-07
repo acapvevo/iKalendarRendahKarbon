@@ -145,6 +145,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::get('/recalculate/{year}', [WinnerController::class, 'recalculate'])->name('recalculate');
                 Route::post('/export', [WinnerController::class, 'export'])->name('export');
                 Route::match(['get', 'post'], '/view', [WinnerController::class, 'view'])->name('view');
+                Route::post('/statement', [WinnerController::class, 'statement'])->name('statement');
             });
         });
 

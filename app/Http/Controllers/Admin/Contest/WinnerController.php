@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers\Admin\Contest;
 
-use App\Exports\WinnerListExport;
 use App\Plugins\Datatable;
-use App\Traits\CompetitionTrait;
 use Illuminate\Http\Request;
+use App\Traits\SubmissionTrait;
+use App\Traits\CompetitionTrait;
+use App\Exports\WinnerListExport;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Contest\SelectCompetitionRequest;
 use App\Http\Requests\Universal\Submission\ViewSubmissionRequest;
-use App\Traits\SubmissionTrait;
+use App\Http\Requests\Universal\Participant\Community\ViewFinanceRequest;
+use App\Traits\FinanceTrait;
 
 class WinnerController extends Controller
 {
-    use CompetitionTrait, SubmissionTrait;
+    use CompetitionTrait, SubmissionTrait, FinanceTrait;
 
     public function list(SelectCompetitionRequest $request)
     {
@@ -72,5 +74,14 @@ class WinnerController extends Controller
         return view('admin.contest.winner.view')->with([
             'submission' => $submission
         ]);
+    }
+
+    public function statement(ViewFinanceRequest $request)
+    {
+        $validated = $request->validated();
+
+        $finance = $this->getFinance($validated['finance_id']);
+
+        return $finance->downloadBankStatement();
     }
 }

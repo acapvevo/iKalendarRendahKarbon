@@ -51,6 +51,10 @@
                         <button class="nav-link" id="nav-answer-tab" data-bs-toggle="tab"
                             data-bs-target="#nav-answer-content" type="button" role="tab"
                             aria-controls="nav-answer-content" aria-selected="false">{{ __('Bonus Question') }}</button>
+                        <button class="nav-link" id="nav-finance-tab" data-bs-toggle="tab"
+                            data-bs-target="#nav-finance-content" type="button" role="tab"
+                            aria-controls="nav-finance-content"
+                            aria-selected="false">{{ __('Finance Information') }}</button>
                     </div>
                 </nav>
                 <div class="tab-content py-3" id="navContent">
@@ -73,6 +77,10 @@
                     <div class="tab-pane fade" id="nav-answer-content" role="tabpanel" aria-labelledby="nav-answer-tab"
                         tabindex="0">
 
+                    </div>
+                    <div class="tab-pane fade" id="nav-finance-content" role="tabpanel" aria-labelledby="nav-finance-tab"
+                        tabindex="0">
+                        @livewire('admin.contest.finance', ['submission' => $submission])
                     </div>
                 </div>
 

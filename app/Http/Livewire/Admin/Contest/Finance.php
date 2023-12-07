@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\Community\User;
+namespace App\Http\Livewire\Admin\Contest;
 
 use Livewire\Component;
-use App\Models\Community;
-use App\Traits\FinanceTrait;
+use App\Models\Submission;
 use Illuminate\Validation\Rule;
 use App\Traits\Livewire\CheckGuard;
-use App\Models\Finance as FinanceModel;
+use App\Models\Finance as FinanceModal;
+use App\Traits\FinanceTrait;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\WithFileUploads;
 
@@ -15,19 +15,20 @@ class Finance extends Component
 {
     use WithFileUploads, CheckGuard, FinanceTrait;
 
-    public Community $community;
-    public FinanceModel $finance;
+    protected $guard = 'admin';
+
+    public Submission $submission;
+    public FinanceModal $finance;
 
     public $bank_statement;
     public $bank_statement_label;
 
     public $bank_list;
 
-    protected $guard = 'community';
-
     protected function getListeners()
     {
         return [
+            'openModal' => 'close',
             'closeModal' => 'close',
         ];
     }
@@ -42,9 +43,9 @@ class Finance extends Component
         $this->validateOnly($propertyName);
     }
 
-    public function mount($user)
+    public function mount($submission)
     {
-        $this->community = $user;
+        $this->submission = $submission;
 
         $this->fill([
             'finance' => $this->getFinanceProperty(),
@@ -55,7 +56,7 @@ class Finance extends Component
 
     public function getFinanceProperty()
     {
-        return $this->getFinanceByCommunityID($this->community->id);
+        return $this->getFinanceByCommunityID($this->submission->community_id);
     }
 
     public function changePlaceholder()
@@ -74,16 +75,16 @@ class Finance extends Component
             ],
         ]);
 
-        $this->saveFinance($this->community->id, $this->finance->getAttributes(), $this->bank_statement);
+        $this->saveFinance($this->submission->community_id, $this->finance->getAttributes(), $this->bank_statement);
 
-        return redirect(route('community.user.finance.view'))->with('success', __('alerts.finance_update'));
+        return redirect(route('admin.contest.winner.view', ['submission_id' => $this->submission->id]))->with('success', __('alerts.finance_update'));
     }
 
     public function render()
     {
-        $this->bank_list = $this->getBankList();
         $this->changePlaceholder();
+        $this->bank_list = $this->getBankList();
 
-        return view('livewire.community.user.finance');
+        return view('livewire.admin.contest.finance');
     }
 }
