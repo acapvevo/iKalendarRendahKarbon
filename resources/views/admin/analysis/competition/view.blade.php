@@ -51,6 +51,9 @@
                                 @endforeach
                             </select>
                             <button type="submit" class="btn btn-primary">{{ __('Change Competition') }}</button>
+                            <button type="submit" class="btn btn-primary"
+                                formaction="{{ route('admin.analysis.competition.export') }}"
+                                formtarget="_target">{{ __('Export Analysis') }}</button>
                         </div>
                     </form>
                 </div>
@@ -100,8 +103,15 @@
     <script src="{{ asset('js/chart.js/fonts.js') }}"></script>
     <script src="{{ asset('js/chart.js/legends.js') }}"></script>
     <script src="{{ asset('js/chart.js/tooltips.js') }}"></script>
+    <script src="{{ asset('js/chart.js/helpers.js') }}"></script>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="{{ asset('js/leaflet/helpers.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/{{ LaravelLocalization::getCurrentLocale() }}.min.js">
+    </script>
+    <script script src="{{ asset('js/select2/helper.js') }}"></script>
 @endsection

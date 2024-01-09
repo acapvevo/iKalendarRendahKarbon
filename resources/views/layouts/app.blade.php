@@ -216,6 +216,7 @@
     <x-livewire-alert::scripts />
     @include('components.alert')
     <script src="{{ asset('js/modal.js') }}"></script>
+    <script src="{{ asset('js/feather/helpers.js') }}"></script>
 
     <!-- Datatables Global Setting-->
     <script>

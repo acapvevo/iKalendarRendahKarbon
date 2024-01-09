@@ -12,6 +12,13 @@ class Bill extends Model
     use HasFactory, SubmissionTrait, CalculationTrait;
 
     /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = ['month', 'calculation'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

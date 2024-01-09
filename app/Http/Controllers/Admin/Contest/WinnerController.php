@@ -35,23 +35,6 @@ class WinnerController extends Controller
         ]);
     }
 
-    public function recalculate($year)
-    {
-        $competition = $this->getCompetitionByYear($year);
-
-        foreach($competition->submissions as $submission){
-            foreach($submission->bills as $bill){
-                $bill->calculateStats();
-            }
-
-            $submission->calculateStats();
-        }
-
-        // return response()->json([
-        //     'message' => 'ok'
-        // ]);
-    }
-
     public function export(SelectCompetitionRequest $request)
     {
         $validated = $request->validated();

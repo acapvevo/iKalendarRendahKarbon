@@ -126,6 +126,24 @@ class Competition extends Model
         return $monthNames;
     }
 
+    public function getTwoMonthNames()
+    {
+        $monthsArray = collect();
+        $months = $this->getMonthRange();
+
+        for ($m = 0; $m < $months->count(); $m++) {
+            if ($m == 0)
+                continue;
+
+            $currentMonth = $months->get($m);
+            $lastMonth = $months->get($m - 1);
+
+            $monthsArray->push($lastMonth->getShortName() . '/' . $currentMonth->getShortName());
+        }
+
+        return $monthsArray;
+    }
+
     public function calculateCarbonEmissionStats()
     {
         $total_carbon_emission = 0;
@@ -263,15 +281,33 @@ class Competition extends Model
         });
     }
 
-    public function getRankingByAddressCategory($cateogry_code)
+    public function getRankingByAddressCategory($category_code)
+    {
+        return $this->getSubmissionsByAddressCategory($category_code)
+            ->sortByDesc(function ($submission) {
+                $submission->calculateStats();
+
+                return abs($submission->calculation->total_carbon_reduction);
+            })
+            ->values();
+    }
+
+    public function getSubmissionsByAddressCategory($category_code)
     {
         return $this->submissions
-            ->filter(function ($submission) use ($cateogry_code) {
-                return $submission->community->address->category == $cateogry_code;
+            ->filter(function ($submission) use ($category_code) {
+                return $submission->community->address->category == $category_code;
+            });
+    }
+
+    public function getRanking()
+    {
+        return $this->submissions
+            ->reject(function ($submission) {
+                return !$submission->community->identification_number;
             })
             ->sortByDesc(function ($submission) {
-                if (!$this->checkCalculationByClassAndID($submission->id, Submission::class))
-                    $submission->calculateStats();
+                $submission->calculateStats();
 
                 return abs($submission->calculation->total_carbon_reduction);
             })

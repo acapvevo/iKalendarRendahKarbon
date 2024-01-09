@@ -8,11 +8,16 @@ trait BillTrait
 {
     use MonthTrait;
 
+    public function initBill()
+    {
+        return new Bill;
+    }
+
     public function getBill($id)
     {
         return Bill::find($id);
     }
-    
+
     public function getBillByMonthAndSubmission($month_id, $submission_id)
     {
         return Bill::firstOrNew([

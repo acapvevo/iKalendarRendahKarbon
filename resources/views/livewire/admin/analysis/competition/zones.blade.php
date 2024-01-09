@@ -1,9 +1,9 @@
 @push('styles')
     <style>
         /* .chart{
-                    width: 80%;
-                    height: 80%;
-                } */
+                                width: 80%;
+                                height: 80%;
+                            } */
     </style>
 @endpush
 
@@ -17,7 +17,7 @@
                     </div>
                     <div class="col-10 d-flex align-items-center">
                         <select class="form-select {{ $errors->has('zone_id') ? 'is-invalid' : '' }}" id="zone_select"
-                            style="width: 100%">
+                            data-width="100%" data-placeholder="{{ __('Select Zone') }}">
                             @foreach ($zones as $zoneObj)
                                 <option value="{{ $zoneObj->id }}">{{ $zoneObj->getFormalName() }}</option>
                             @endforeach
@@ -73,7 +73,8 @@
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="me-3">
-                                                <div class="text-white-75 small">{{ __('Total Carbon Emission') }}</div>
+                                                <div class="text-white-75 small">{{ __('Total Carbon Emission') }}
+                                                </div>
                                                 <div class="text-lg fw-bold">
                                                     {{ number_format($calculation->total_carbon_emission_each_zone[$zone->id], 2) }}
                                                     kgCO<sub>2</sub></div>
@@ -203,11 +204,11 @@
 
                         <div class="py-3 row">
                             @foreach ($submission_categories as $category)
-                            @php
-                                if (gettype($category) === 'object') {
-                                    $category = (array) $category;
-                                }
-                            @endphp
+                                @php
+                                    if (gettype($category) === 'object') {
+                                        $category = (array) $category;
+                                    }
+                                @endphp
                                 <div class="col-lg-{{ $colNum }} mb-4">
                                     <div class="card bg-secondary text-white h-100">
                                         <div class="card-body">
@@ -239,23 +240,22 @@
 </div>
 
 @push('scripts')
-    <script src="{{ asset('js/chart.js/helpers.js') }}"></script>
     <script>
+        var chart = {
+            total_carbon_emission_each_month_bar_chart_zones: null,
+            total_submission_each_month_bar_chart_zones: null,
+        };
+
         document.addEventListener('DOMContentLoaded', function() {
-            $('#zone_select').select2({
-                theme: 'bootstrap-5',
-                placeholder: '{{ __('Select Month') }}'
-            });
-
-            $('#zone_select').val(@js($zone_id)).trigger('change');
-
             @this.emit('calculate');
 
-            $('#zone_select').on('change', function(e) {
+            initSelect2("{{ LaravelLocalization::getCurrentLocale() }}", '#zone_select', null, function(e) {
                 var selected_value = $('#zone_select').select2("val");
                 @this.set('zone_id', selected_value);
                 @this.emit('analysis');
             });
+
+            $('#zone_select').val(@js($zone_id)).trigger('change');
         });
 
         window.addEventListener('initChart', event => {
@@ -276,9 +276,9 @@
 
         function generateChartEachMonthZones(months, canvasID, label, dataByMonth, tooltipsID, symbol, legendsID, xTitle,
             yTitle) {
-            let chart = Chart.getChart(canvasID);
-            if (typeof chart !== 'undefined')
-                chart.destoy();
+            if (chart[canvasID] !== undefined && chart[canvasID] !== null) {
+                chart[canvasID].destroy();
+            }
 
             const canvas_element = document.getElementById(canvasID);
 
@@ -338,9 +338,9 @@
                 plugins: [htmlLegendPlugin],
             };
 
-            chart = new Chart(canvas_element, config);
+            chart[canvasID] = new Chart(canvas_element, config);
 
-            setObserverChart('pills-zones', chart)
+            setObserverChart('pills-zones', chart[canvasID]);
         }
     </script>
 @endpush

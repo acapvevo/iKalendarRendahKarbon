@@ -95,13 +95,18 @@ function formatCommunityResult(community) {
 }
 
 function initSelect2(locale, elId, modalId, changeFunc) {
-    $(elId).select2({
+    var option = {
         theme: 'bootstrap-5',
         width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
         placeholder: $(this).data('placeholder'),
-        dropdownParent: $(modalId),
         language: locale,
-    });
+    };
+
+    if (modalId != null) {
+        option.dropdownParent = $(modalId);
+    }
+
+    $(elId).select2(option);
 
     $(elId).on('change', changeFunc);
 }

@@ -61,13 +61,7 @@
                     <div class="tab-pane fade show active" id="nav-analysis-content" role="tabpanel"
                         aria-labelledby="nav-analysis-tab" tabindex="0">
 
-                        <div class="table-responsive-lg">
-                            <table class="table table-bordered">
-                                <tr>
-                                    <th></th>
-                                </tr>
-                            </table>
-                        </div>
+                        @livewire('admin.contest.analysis', ['submission' => $submission])
 
                     </div>
                     <div class="tab-pane fade" id="nav-record-content" role="tabpanel" aria-labelledby="nav-record-tab"

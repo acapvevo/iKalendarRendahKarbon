@@ -95,7 +95,7 @@ trait SubmissionTrait
 
     public function initCalculationBySubmissionCategoryEachMonth($competition)
     {
-        return $competition->months->mapWithKeys(function ($month) {
+        return $competition->getMonthRange()->mapWithKeys(function ($month) {
             return [
                 $month->id => $this->getSubmissionCategories()->mapWithKeys(function ($category) {
                     return [$category->name => 0];
@@ -113,5 +113,23 @@ trait SubmissionTrait
                 })->toArray()
             ];
         })->toArray();
+    }
+
+    public function initCalculationEachTwoMonths($competition)
+    {
+        $monthsArray = array();
+        $months = $competition->getMonthRange();
+
+        for ($m = 0; $m < $months->count(); $m++) {
+            if($m == 0)
+                continue;
+
+            $currentMonth = $months->get($m);
+            $lastMonth = $months->get($m - 1);
+
+            $monthsArray[$lastMonth->id . '|' . $currentMonth->id] = 0;
+        }
+
+        return $monthsArray;
     }
 }

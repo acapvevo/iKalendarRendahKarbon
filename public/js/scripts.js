@@ -77,9 +77,3 @@ function activeTooltips()
         return new bootstrap.Tooltip(tooltipTriggerEl);
     });
 }
-
-function activeFeatherIcon()
-{
-    // Activate feather
-    feather.replace();
-}

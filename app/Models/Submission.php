@@ -153,14 +153,19 @@ class Submission extends Model
 
     public function calculateStats()
     {
+        $months = $this->competition->getMonthRange();
+
         $total_carbon_emission = 0;
         $total_carbon_reduction = 0;
 
         $total_carbon_emission_each_type = $total_usage_each_type = $total_charge_each_type = $total_weight_each_type = $total_value_each_type = $this->initCalculationBySubmissionCategory();
         $total_carbon_reduction_each_type = $usage_reduction_each_type = $charge_reduction_each_type = $this->initCalculationBySubmissionCategory();
 
-        for ($i = (config('constant.min_month') - 1); $i < config('constant.max_month'); $i++) {
-            $month = $this->competition->months->get($i);
+        $total_carbon_emission_each_month = $this->initCalculationEachMonth($this->competition);
+        $total_carbon_reduction_each_month = $this->initCalculationEachTwoMonths($this->competition);
+
+        for ($i = 0; $i < $months->count(); $i++) {
+            $month = $months->get($i);
 
             if ($this->bills->contains('month_id', $month->id)) {
                 $bill = $this->getBillByMonthAndSubmission($month->id, $this->id);
@@ -171,16 +176,16 @@ class Submission extends Model
 
                 $calculation = $this->getCalculationByClassAndID($bill->id, Bill::class);
 
-                $total_carbon_emission += $calculation->total_carbon_emission;
+                $total_carbon_emission += $total_carbon_emission_each_month[$month->id] = $calculation->total_carbon_emission;
 
                 foreach ($this->getSubmissionCategories() as $category) {
-                    foreach(json_decode($category->variables) as $variable){
-                        ${'total_'. $variable . '_each_type'}[$category->name] += $bill->getVariableByCategory($variable, $category->name);
+                    foreach (json_decode($category->variables) as $variable) {
+                        ${'total_' . $variable . '_each_type'}[$category->name] += $bill->getVariableByCategory($variable, $category->name);
                     }
                 }
 
-                if ($i !== config('constant.min_month') - 1) {
-                    $lastMonth = $this->competition->months->get($i - 1);
+                if ($i !== 0) {
+                    $lastMonth = $months->get($i - 1);
 
                     if ($this->bills->contains('month_id', $lastMonth->id)) {
                         $lastBill = $this->getBillByMonthAndSubmission($lastMonth->id, $this->id);
@@ -189,6 +194,8 @@ class Submission extends Model
                         $carbon_reduction = $calculation->total_carbon_emission - $lastCalculation->total_carbon_emission;
                         if ($carbon_reduction < 0)
                             $total_carbon_reduction += abs($carbon_reduction);
+
+                        $total_carbon_reduction_each_month[$lastMonth->id . '|' . $month->id] = $carbon_reduction;
 
                         foreach ($this->getSubmissionCategories() as $category) {
                             if (isset($bill->{$category->name}) && isset($lastBill->{$category->name})) {
@@ -213,6 +220,7 @@ class Submission extends Model
         $calculation = $this->getCalculationByClassAndID($this->id, Submission::class);
 
         $calculation->total_carbon_emission = $total_carbon_emission;
+        $calculation->total_carbon_emission_each_month = $total_carbon_emission_each_month;
 
         $calculation->total_carbon_emission_each_type = $total_carbon_emission_each_type;
         $calculation->total_usage_each_type = $total_usage_each_type;
@@ -221,6 +229,7 @@ class Submission extends Model
         $calculation->total_value_each_type = $total_value_each_type;
 
         $calculation->total_carbon_reduction = $total_carbon_reduction;
+        $calculation->total_carbon_reduction_each_month = $total_carbon_reduction_each_month;
 
         $calculation->total_carbon_reduction_each_type = $total_carbon_reduction_each_type;
         $calculation->usage_reduction_each_type = $usage_reduction_each_type;

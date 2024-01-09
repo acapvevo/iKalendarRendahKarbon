@@ -142,7 +142,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
             //Winner
             Route::prefix('winner')->name('winner.')->group(function () {
                 Route::match(['get', 'post'], '', [WinnerController::class, 'list'])->name('list');
-                Route::get('/recalculate/{year}', [WinnerController::class, 'recalculate'])->name('recalculate');
                 Route::post('/export', [WinnerController::class, 'export'])->name('export');
                 Route::match(['get', 'post'], '/view', [WinnerController::class, 'view'])->name('view');
                 Route::post('/statement', [WinnerController::class, 'statement'])->name('statement');
@@ -153,6 +152,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::prefix('analysis')->name('analysis.')->group(function () {
             Route::prefix('competition')->name('competition.')->group(function () {
                 Route::match(['get', 'post'], '', [AnalysisCompetitionController::class, 'view'])->name('view');
+                Route::post('/export', [AnalysisCompetitionController::class, 'export'])->name('export');
             });
         });
 

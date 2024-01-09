@@ -22,7 +22,7 @@
                     </div>
                     <div class="col-10 d-flex align-items-center">
                         <select class="form-select {{ $errors->has('month_id') ? 'is-invalid' : '' }}" id="month_select"
-                            style="width: 100%">
+                            data-placeholder="{{ __('Select Month') }}" data-width="100%">
                             @foreach ($competition->getMonthRange() as $monthObj)
                                 <option value="{{ $monthObj->id }}">{{ $monthObj->getName() }}</option>
                             @endforeach
@@ -194,7 +194,6 @@
     </div>
 </div>
 @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         var map = {
             map_carbon_emission_monthly: null,
@@ -204,18 +203,13 @@
         document.addEventListener('DOMContentLoaded', function() {
             @this.emit('map');
 
-            $('#month_select').select2({
-                theme: 'bootstrap-5',
-                placeholder: '{{ __('Select Month') }}'
-            });
-
-            $('#month_select').val(@js($month_id)).trigger('change');
-
-            $('#month_select').on('change', function(e) {
+            initSelect2("{{ LaravelLocalization::getCurrentLocale() }}", '#month_select', null, function(e) {
                 var selected_value = $('#month_select').select2("val");
                 @this.set('month_id', selected_value);
                 @this.emit('analysis');
             });
+
+            $('#month_select').val(@js($month_id)).trigger('change');
         });
 
         window.addEventListener('initMap', event => {
