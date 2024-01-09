@@ -31,6 +31,7 @@ class CompetitionAnaysisExport implements WithMultipleSheets, WithEvents
         $sheets = [];
         $address_categories = $this->getAddressCategories();
 
+        $sheets[] = new CompetitionAnalysisStatsSheets($this->competition);
         $sheets[] = new CompetitionAnalysisOverallSheets($this->competition);
 
         foreach($address_categories as $category){

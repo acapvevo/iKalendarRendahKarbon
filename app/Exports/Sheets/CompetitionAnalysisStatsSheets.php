@@ -2,6 +2,7 @@
 
 namespace App\Exports\Sheets;
 
+use App\Traits\SubmissionTrait;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\WithTitle;
@@ -9,6 +10,8 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
 class CompetitionAnalysisStatsSheets implements FromView, WithTitle, ShouldAutoSize
 {
+    use SubmissionTrait;
+
     protected $competition;
 
     public function __construct($competition)
@@ -18,8 +21,13 @@ class CompetitionAnalysisStatsSheets implements FromView, WithTitle, ShouldAutoS
 
     public function view(): View
     {
+        $submission_categories = $this->getSubmissionCategories();
+
         return view('exports.sheets.competition_analysis_stats_sheet', [
             'competition' => $this->competition,
+            'calculation' => $this->competition->calculation,
+            'stat' => $this->competition->stat,
+            'submission_categories' => $submission_categories
         ]);
     }
 
@@ -28,6 +36,6 @@ class CompetitionAnalysisStatsSheets implements FromView, WithTitle, ShouldAutoS
      */
     public function title(): string
     {
-        return __("Stats");
+        return __("Statistic");
     }
 }
