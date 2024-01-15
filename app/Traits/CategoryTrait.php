@@ -2,13 +2,19 @@
 
 namespace App\Traits;
 
-use App\Models\Electric;
+use App\Models\Water;
 use App\Models\Recycle;
 use App\Models\UsedOil;
-use App\Models\Water;
+use App\Models\Electric;
+use Illuminate\Support\Facades\DB;
 
 trait CategoryTrait
 {
+    public function getCategories()
+    {
+        return DB::table('category')->get();
+    }
+
     public function getCategoryByBill($category_code, $bill_id)
     {
         switch ($category_code) {

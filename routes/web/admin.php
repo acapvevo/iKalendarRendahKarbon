@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\User\PictureController;
 use App\Http\Controllers\Admin\User\ProfileController;
 use App\Http\Controllers\Admin\User\SettingController;
 use App\Http\Controllers\Admin\Contest\WinnerController;
+use App\Http\Controllers\Admin\Analysis\OverallController;
 use App\Http\Controllers\Admin\Auth\NewPasswordController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\Contest\AnalysisController;
@@ -23,8 +24,8 @@ use App\Http\Controllers\Admin\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Admin\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Admin\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Admin\Analysis\CompetitionController as AnalysisCompetitionController;
 use App\Http\Controllers\Admin\Analysis\ActivityController as AnalysisActivityController;
+use App\Http\Controllers\Admin\Analysis\CompetitionController as AnalysisCompetitionController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
@@ -164,6 +165,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::prefix('activity')->name('activity.')->group(function () {
                 Route::match(['get', 'post'], '', [AnalysisActivityController::class, 'view'])->name('view');
                 Route::post('/export', [AnalysisActivityController::class, 'export'])->name('export');
+            });
+
+            Route::prefix('overall')->name('overall.')->group(function () {
+                Route::match(['get', 'post'], '', [OverallController::class, 'view'])->name('view');
+                Route::post('/export', [OverallController::class, 'export'])->name('export');
             });
         });
 

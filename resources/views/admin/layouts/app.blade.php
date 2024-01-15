@@ -180,6 +180,8 @@
             <a class="nav-link" href="{{ route('admin.analysis.competition.view') }}">{{ __('Competition') }}</a>
             <!-- Sidenav Link (Activity Analysis)-->
             <a class="nav-link" href="{{ route('admin.analysis.activity.view') }}">{{ __('Activity') }}</a>
+            <!-- Sidenav Link (Overall Analysis)-->
+            <a class="nav-link" href="{{ route('admin.analysis.overall.view') }}">{{ __('Overall') }}</a>
         </nav>
     </div>
     <!-- Sidenav Link (Zone Management)-->
