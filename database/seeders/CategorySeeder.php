@@ -165,7 +165,7 @@ class CategorySeeder extends Seeder
             'name' => 'fabric',
             'description' => 'Fabric',
             'symbol' => 'kg',
-            'icon' => 'icon-park:clothes-short-sleeve',
+            'icon' => 'icon-park-outline:clothes-short-sleeve',
             'forCompetition' => false,
             'forActivity' => true,
             'variables' => json_encode([

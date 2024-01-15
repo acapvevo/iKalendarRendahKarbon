@@ -51,7 +51,7 @@
                                                     {{ number_format($analysis['total_weight'], 2) }}
                                                     kg</div>
                                             </div>
-                                            <iconify-icon icon="mdi:periodic-table-carbon-dioxide" height="60">
+                                            <iconify-icon icon="mdi:weight-kilogram" height="60">
                                             </iconify-icon>
                                         </div>
                                     </div>
@@ -67,7 +67,7 @@
                                                     RM {{ number_format($analysis['total_value'], 2) }}
                                                 </div>
                                             </div>
-                                            <iconify-icon icon="mdi:periodic-table-carbon-dioxide" height="60">
+                                            <iconify-icon icon="mdi:cash" height="60">
                                             </iconify-icon>
                                         </div>
                                     </div>
