@@ -10,7 +10,7 @@ trait eLestariTrait
 
     public function getAuditTenagaData($year, $start_month, $finish_month)
     {
-        $response = Http::withJson()->get($this->url . 'auditTenaga/bulanan',[
+        $response = Http::acceptJson()->get($this->url . 'auditTenaga/bulanan',[
             'tahun' => $year,
             'bulan_mula' => $start_month,
             'bulan_akhir' => $finish_month,
