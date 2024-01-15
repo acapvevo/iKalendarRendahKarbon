@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Admin\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Admin\Analysis\CompetitionController as AnalysisCompetitionController;
+use App\Http\Controllers\Admin\Analysis\ActivityController as AnalysisActivityController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
@@ -148,17 +149,22 @@ Route::prefix('admin')->name('admin.')->group(function () {
             });
         });
 
+        // Activity Management routes
+        Route::prefix('activity')->name('activity.')->group(function () {
+            Route::get('', [ActivityController::class, 'list'])->name('list');
+        });
+
         //Analysis
         Route::prefix('analysis')->name('analysis.')->group(function () {
             Route::prefix('competition')->name('competition.')->group(function () {
                 Route::match(['get', 'post'], '', [AnalysisCompetitionController::class, 'view'])->name('view');
                 Route::post('/export', [AnalysisCompetitionController::class, 'export'])->name('export');
             });
-        });
 
-        // Activity Management routes
-        Route::prefix('activity')->name('activity.')->group(function () {
-            Route::get('', [ActivityController::class, 'list'])->name('list');
+            Route::prefix('activity')->name('activity.')->group(function () {
+                Route::match(['get', 'post'], '', [AnalysisActivityController::class, 'view'])->name('view');
+                Route::post('/export', [AnalysisActivityController::class, 'export'])->name('export');
+            });
         });
 
         // Zone Management routes

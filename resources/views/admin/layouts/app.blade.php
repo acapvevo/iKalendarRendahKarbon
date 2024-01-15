@@ -162,6 +162,11 @@
             <a class="nav-link" href="{{ route('admin.contest.winner.list') }}">{{ __('Winner') }}</a>
         </nav>
     </div>
+    <!-- Sidenav Link (Activity Management)-->
+    <a class="nav-link" href="{{ route('admin.activity.list') }}">
+        <div class="nav-link-icon"><i class="fa-solid fa-people-carry-box"></i></div>
+        {{ __('Activity Management') }}
+    </a>
     <!-- Sidenav Accordion (Analysis Management)-->
     <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
         data-bs-target="#collapseAnalysis" aria-expanded="false" aria-controls="collapseAnalysis">
@@ -173,13 +178,10 @@
         <nav class="sidenav-menu-nested nav accordion" id="analysis">
             <!-- Sidenav Link (Competition Analysis)-->
             <a class="nav-link" href="{{ route('admin.analysis.competition.view') }}">{{ __('Competition') }}</a>
+            <!-- Sidenav Link (Activity Analysis)-->
+            <a class="nav-link" href="{{ route('admin.analysis.activity.view') }}">{{ __('Activity') }}</a>
         </nav>
     </div>
-    <!-- Sidenav Link (Activity Management)-->
-    <a class="nav-link" href="{{ route('admin.activity.list') }}">
-        <div class="nav-link-icon"><i class="fa-solid fa-people-carry-box"></i></div>
-        {{ __('Activity Management') }}
-    </a>
     <!-- Sidenav Link (Zone Management)-->
     <a class="nav-link" href="{{ route('admin.zone.list') }}">
         <div class="nav-link-icon"><i class="fa-solid fa-map-location-dot"></i></div>

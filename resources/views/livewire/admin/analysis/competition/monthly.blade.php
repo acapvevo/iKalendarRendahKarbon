@@ -12,6 +12,11 @@
         }
     </style>
 @endpush
+
+@php
+    $colNum = 12 / $submission_categories->count();
+@endphp
+
 <div>
     <div class="py-3 row">
         <div class="col-lg-4 ms-auto">
@@ -38,160 +43,169 @@
         </div>
     </div>
 
-    @php
-        $colNum = 12 / $submission_categories->count();
-    @endphp
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#carbon_emission_stats" aria-expanded="true" aria-controls="carbon_emission_stats">
+                    <strong>{{ __('Carbon Emission Stats') }}</strong>
+                </button>
+            </h2>
+            <div id="carbon_emission_stats" class="accordion-collapse collapse show"
+                aria-labelledby="panelsStayOpen-headingOne">
+                <div class="accordion-body">
+                    @if ($isLoading)
+                        <div class="d-flex align-items-center justify-content-center loading">
+                            <span class="spinner-border text-primary" role="status">
+                            </span> &nbsp;
+                            <strong class="text-primary">{{ __('Collecting Analysis') }}...</strong>
+                        </div>
+                    @else
+                        <div class="py-3">
+                            <h5 class="text-center">{{ __('Total Carbon Emission By Zone') }}</h5>
+                            <div id="map_carbon_emission_monthly"></div>
+                        </div>
 
-    <div class="card">
-        <div class="card-header text-center">
-            {{ __('Carbon Emission Stats for') }} {{ $month ? $month->getName() : '' }}
+                        <div class="py-3 row">
+                            <div class="col-lg-6 mb-4">
+                                <div class="card bg-primary text-white h-100">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="me-3">
+                                                <div class="text-white-75 small">{{ __('Total Carbon Emission') }}</div>
+                                                <div class="text-lg fw-bold">
+                                                    {{ number_format($calculation->total_carbon_emission, 2) }}
+                                                    kgCO<sub>2</sub></div>
+                                            </div>
+                                            <iconify-icon icon="mdi:periodic-table-carbon-dioxide"
+                                                height="60"></iconify-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-4">
+                                <div class="card bg-primary text-white h-100">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="me-3">
+                                                <div class="text-white-75 small">{{ __('Average Carbon Emission by Zone') }}
+                                                </div>
+                                                <div class="text-lg fw-bold">
+                                                    {{ number_format($calculation->average_carbon_emission_by_zone, 2) }}
+                                                    kgCO<sub>2</sub></div>
+                                            </div>
+                                            <iconify-icon icon="mdi:periodic-table-carbon-dioxide"
+                                                height="60"></iconify-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="py-3 row">
+                            @foreach ($submission_categories as $category)
+                                <div class="col-lg-{{ $colNum }} mb-4">
+                                    <div class="card bg-secondary text-white h-100">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="me-3">
+                                                    <div class="text-white-75 small">{{ __('Total Carbon Emission for') }} <br>
+                                                        {{ __($category->description) }}</div>
+                                                    <div class="text-lg fw-bold">
+                                                        {{ number_format($calculation->total_carbon_emission_each_type[$category->name], 2) }}
+                                                        kgCO<sub>2</sub></div>
+                                                </div>
+                                                <iconify-icon icon="{{ $category->icon }}" height="60"></iconify-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-            @if ($isLoading)
-                <div class="d-flex align-items-center justify-content-center loading">
-                    <span class="spinner-border text-primary" role="status">
-                    </span> &nbsp;
-                    <strong class="text-primary">{{ __('Collecting Analysis') }}...</strong>
-                </div>
-            @else
-                <div class="py-3">
-                    <h5 class="text-center">{{ __('Total Carbon Emission By Zone') }}</h5>
-                    <div id="map_carbon_emission_monthly"></div>
-                </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                <button class="accordion-button text-center" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#submission_stats" aria-expanded="false" aria-controls="submission_stats">
+                    <strong>{{ __('Submission Stats') }}</strong>
+                </button>
+            </h2>
+            <div id="submission_stats" class="accordion-collapse collapse show"
+                aria-labelledby="panelsStayOpen-headingTwo">
+                <div class="accordion-body">
 
-                <div class="py-3 row">
-                    <div class="col-lg-6 mb-4">
-                        <div class="card bg-primary text-white h-100">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="me-3">
-                                        <div class="text-white-75 small">{{ __('Total Carbon Emission') }}</div>
-                                        <div class="text-lg fw-bold">
-                                            {{ number_format($calculation->total_carbon_emission, 2) }}
-                                            kgCO<sub>2</sub></div>
-                                    </div>
-                                    <iconify-icon icon="mdi:periodic-table-carbon-dioxide"
-                                        height="60"></iconify-icon>
-                                </div>
-                            </div>
+                    @if ($isLoading)
+                        <div class="d-flex align-items-center justify-content-center loading">
+                            <span class="spinner-border text-primary" role="status">
+                            </span> &nbsp;
+                            <strong class="text-primary">{{ __('Collecting Analysis') }}...</strong>
                         </div>
-                    </div>
-                    <div class="col-lg-6 mb-4">
-                        <div class="card bg-primary text-white h-100">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="me-3">
-                                        <div class="text-white-75 small">{{ __('Average Carbon Emission by Zone') }}
-                                        </div>
-                                        <div class="text-lg fw-bold">
-                                            {{ number_format($calculation->average_carbon_emission_by_zone, 2) }}
-                                            kgCO<sub>2</sub></div>
-                                    </div>
-                                    <iconify-icon icon="mdi:periodic-table-carbon-dioxide"
-                                        height="60"></iconify-icon>
-                                </div>
-                            </div>
+                    @else
+                        <div class="py-3">
+                            <h5 class="text-center">{{ __('Total Submission By Zone') }}</h5>
+                            <div id="map_submission_monthly"></div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="py-3 row">
-                    @foreach ($submission_categories as $category)
-                        <div class="col-lg-{{ $colNum }} mb-4">
-                            <div class="card bg-secondary text-white h-100">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="me-3">
-                                            <div class="text-white-75 small">{{ __('Total Carbon Emission for') }} <br>
-                                                {{ __($category->description) }}</div>
-                                            <div class="text-lg fw-bold">
-                                                {{ number_format($calculation->total_carbon_emission_each_type[$category->name], 2) }}
-                                                kgCO<sub>2</sub></div>
+                        <div class="py-3 row">
+                            <div class="col-lg-6 mb-4">
+                                <div class="card bg-primary text-white h-100">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="me-3">
+                                                <div class="text-white-75 small">{{ __('Total Submission') }}</div>
+                                                <div class="text-lg fw-bold">{{ $stat->total_submission }}
+                                                    {{ __('Residents') }}</div>
+                                            </div><iconify-icon icon="vaadin:group" height="60"></iconify-icon>
                                         </div>
-                                        <iconify-icon icon="{{ $category->icon }}" height="60"></iconify-icon>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-4">
+                                <div class="card bg-primary text-white h-100">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="me-3">
+                                                <div class="text-white-75 small">{{ __('Average Submission by Zone') }}</div>
+                                                <div class="text-lg fw-bold">
+                                                    {{ number_format($stat->average_submission_by_zone, 2) }}
+                                                    {{ __('Residents') }}</div>
+                                            </div><iconify-icon icon="vaadin:group" height="60"></iconify-icon>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+
+                        <div class="py-3 row">
+                            @foreach ($submission_categories as $category)
+                                <div class="col-lg-{{ $colNum }} mb-4">
+                                    <div class="card bg-secondary text-white h-100">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="me-3">
+                                                    <div class="text-white-75 small">{{ __('Total Submission for') }} <br>
+                                                        {{ __($category->description) }}</div>
+                                                    <div class="text-lg fw-bold">
+                                                        {{ $stat->total_submission_each_type[$category->name] }}
+                                                        {{ __('Residents') }}</div>
+                                                </div>
+                                                <iconify-icon icon="{{ $category->icon }}" height="60"></iconify-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+
                 </div>
-            @endif
+            </div>
         </div>
     </div>
 
-    <div class="p-3"></div>
-
-    <div class="card">
-        <div class="card-header text-center">
-            {{ __('Submission Stats for') }} {{ $month ? $month->getName() : '' }}
-        </div>
-        <div class="card-body">
-
-            @if ($isLoading)
-                <div class="d-flex align-items-center justify-content-center loading">
-                    <span class="spinner-border text-primary" role="status">
-                    </span> &nbsp;
-                    <strong class="text-primary">{{ __('Collecting Analysis') }}...</strong>
-                </div>
-            @else
-                <div class="py-3">
-                    <h5 class="text-center">{{ __('Total Submission By Zone') }}</h5>
-                    <div id="map_submission_monthly"></div>
-                </div>
-
-                <div class="py-3 row">
-                    <div class="col-lg-6 mb-4">
-                        <div class="card bg-primary text-white h-100">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="me-3">
-                                        <div class="text-white-75 small">{{ __('Total Submission') }}</div>
-                                        <div class="text-lg fw-bold">{{ $stat->total_submission }}
-                                            {{ __('Residents') }}</div>
-                                    </div><iconify-icon icon="vaadin:group" height="60"></iconify-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 mb-4">
-                        <div class="card bg-primary text-white h-100">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="me-3">
-                                        <div class="text-white-75 small">{{ __('Average Submission by Zone') }}</div>
-                                        <div class="text-lg fw-bold">
-                                            {{ number_format($stat->average_submission_by_zone, 2) }}
-                                            {{ __('Residents') }}</div>
-                                    </div><iconify-icon icon="vaadin:group" height="60"></iconify-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="py-3 row">
-                    @foreach ($submission_categories as $category)
-                        <div class="col-lg-{{ $colNum }} mb-4">
-                            <div class="card bg-secondary text-white h-100">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="me-3">
-                                            <div class="text-white-75 small">{{ __('Total Submission for') }} <br>
-                                                {{ __($category->description) }}</div>
-                                            <div class="text-lg fw-bold">
-                                                {{ $stat->total_submission_each_type[$category->name] }}
-                                                {{ __('Residents') }}</div>
-                                        </div>
-                                        <iconify-icon icon="{{ $category->icon }}" height="60"></iconify-icon>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            @endif
-        </div>
-    </div>
 </div>
 @push('scripts')
     <script>

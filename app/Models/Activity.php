@@ -32,7 +32,7 @@ class Activity extends Model
     ];
 
     /**
-     * Get all of the Activity's Used Oil.
+     * Get Activity's Used Oil.
      */
     public function used_oil()
     {
@@ -40,7 +40,7 @@ class Activity extends Model
     }
 
     /**
-     * Get all of the Activity's Recycle.
+     * Get Activity's Recycle.
      */
     public function recycle()
     {
@@ -48,7 +48,7 @@ class Activity extends Model
     }
 
     /**
-     * Get all of the Activity's Fabric.
+     * Get Activity's Fabric.
      */
     public function fabric()
     {
@@ -56,7 +56,7 @@ class Activity extends Model
     }
 
     /**
-     * Get all of the Activity's Electronic.
+     * Get Activity's Electronic.
      */
     public function electronic()
     {

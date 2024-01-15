@@ -17,6 +17,6 @@ trait eLestariTrait
             'pbt_kod' => '0102'
         ]);
 
-        return $response->json('data');
+        return $response->json('data', []);
     }
 }
