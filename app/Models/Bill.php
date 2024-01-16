@@ -104,16 +104,23 @@ class Bill extends Model
 
     public function calculateStats()
     {
-        $total_carbon_emission = 0;
+        $total_carbon_emission = $total_weight = $total_value = $total_usage = $total_charge = 0;
         $submission_category = $this->getSubmissionCategories();
 
         foreach ($submission_category as $category) {
-            $total_carbon_emission += $this->{$category->name}->carbon_emission ?? 0;
+            // foreach (json_decode($category->variables) as $variable) {
+            //     ${'total_' . $variable} += $this->getVariableByCategory($variable, $category->name);
+            // }
+            $total_carbon_emission += $this->getVariableByCategory('carbon_emission', $category->name);
         }
 
         $calculation = $this->getCalculationByClassAndID($this->id, Bill::class);
 
         $calculation->total_carbon_emission = $total_carbon_emission;
+        // $calculation->total_weight = $total_weight;
+        // $calculation->total_value = $total_value;
+        // $calculation->total_usage = $total_usage;
+        // $calculation->total_charge = $total_charge;
 
         $calculation->save();
     }

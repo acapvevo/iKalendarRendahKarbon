@@ -155,7 +155,7 @@ class Submission extends Model
     {
         $months = $this->competition->getMonthRange();
 
-        $total_carbon_emission = 0;
+        $total_carbon_emission = $total_weight = $total_value = $total_usage = $total_charge = 0;
         $total_carbon_reduction = 0;
 
         $total_carbon_emission_each_type = $total_usage_each_type = $total_charge_each_type = $total_weight_each_type = $total_value_each_type = $this->initCalculationBySubmissionCategory();
@@ -176,7 +176,13 @@ class Submission extends Model
 
                 $calculation = $this->getCalculationByClassAndID($bill->id, Bill::class);
 
-                $total_carbon_emission += $total_carbon_emission_each_month[$month->id] = $calculation->total_carbon_emission;
+                $total_carbon_emission += $calculation->total_carbon_emission;
+                // $total_usage += $calculation->total_usage;
+                // $total_charge += $calculation->total_charge;
+                // $total_weight += $calculation->total_weight;
+                // $total_value += $calculation->total_value;
+
+                $total_carbon_emission_each_month[$month->id] += $calculation->total_carbon_emission;
 
                 foreach ($this->getSubmissionCategories() as $category) {
                     foreach (json_decode($category->variables) as $variable) {
@@ -220,6 +226,11 @@ class Submission extends Model
         $calculation = $this->getCalculationByClassAndID($this->id, Submission::class);
 
         $calculation->total_carbon_emission = $total_carbon_emission;
+        // $calculation->total_weight = $total_weight;
+        // $calculation->total_value = $total_value;
+        // $calculation->total_usage = $total_usage;
+        // $calculation->total_charge = $total_charge;
+
         $calculation->total_carbon_emission_each_month = $total_carbon_emission_each_month;
 
         $calculation->total_carbon_emission_each_type = $total_carbon_emission_each_type;

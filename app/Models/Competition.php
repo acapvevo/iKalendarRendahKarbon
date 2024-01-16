@@ -146,7 +146,7 @@ class Competition extends Model
 
     public function calculateCarbonEmissionStats()
     {
-        $total_carbon_emission = 0;
+        $total_carbon_emission = $total_weight = $total_value = $total_usage = $total_charge = 0;
         // $total_carbon_reduction = 0;
 
         $total_carbon_emission_each_type = $total_usage_each_type = $total_charge_each_type = $total_weight_each_type = $total_value_each_type = $this->initCalculationBySubmissionCategory();
@@ -162,48 +162,48 @@ class Competition extends Model
             if (!isset($submission->calculation))
                 $submission->calculateStats();
 
-            $submissionCalculation = $this->getCalculationByClassAndID($submission->id, Submission::class);
+            $calculation = $this->getCalculationByClassAndID($submission->id, Submission::class);
 
-            $total_carbon_emission += $submissionCalculation->total_carbon_emission;
-
-            foreach ($this->getMonthRange() as $month) {
-                $bill = $this->getBillByMonthAndSubmission($month->id, $submission->id);
-
-                if ($bill->id && !isset($bill->calculation))
-                    $bill->calculateStats();
-
-                $billCalculation = $this->getCalculationByClassAndID($bill->id, Bill::class);
-
-                $total_carbon_emission_each_month[$month->id] += $billCalculation->total_carbon_emission;
-            }
+            $total_carbon_emission += $calculation->total_carbon_emission;
+            // $total_usage += $calculation->total_usage;
+            // $total_charge += $calculation->total_charge;
+            // $total_weight += $calculation->total_weight;
+            // $total_value += $calculation->total_value;
 
             if (isset($submission->community->address->zone_id)) {
-                $total_carbon_emission_each_zone[$submission->community->address->zone_id] += $submissionCalculation->total_carbon_emission;
+                $total_carbon_emission_each_zone[$submission->community->address->zone_id] += $calculation->total_carbon_emission;
 
                 foreach ($this->getSubmissionCategories() as $category) {
-                    $total_carbon_emission_each_type_each_zone[$submission->community->address->zone_id][$category->name] += round($submissionCalculation->total_usage_each_type[$category->name], 2);
+                    $total_carbon_emission_each_type_each_zone[$submission->community->address->zone_id][$category->name] += round($calculation->total_usage_each_type[$category->name], 2);
                 }
             }
 
-            // $total_carbon_reduction += $submissionCalculation->total_carbon_reduction;
+            // $total_carbon_reduction += $calculation->total_carbon_reduction;
 
             foreach ($this->getSubmissionCategories() as $category) {
-                $total_carbon_emission_each_type[$category->name] += $submissionCalculation->total_carbon_emission_each_type[$category->name];
-                // $total_usage_each_type[$category->name] += round($submissionCalculation->total_usage_each_type[$category->name], 2);
-                // $total_charge_each_type[$category->name] += round($submissionCalculation->total_charge_each_type[$category->name], 2);
-                // $total_weight_each_type[$category->name] += round($submissionCalculation->total_weight_each_type[$category->name], 2);
-                // $total_value_each_type[$category->name] += round($submissionCalculation->total_value_each_type[$category->name], 2);
+                foreach (json_decode($category->variables) as $variable) {
+                    ${'total_' . $variable . '_each_type'}[$category->name] += $calculation->{'total_' . $variable . '_each_type'}[$category->name];
+                }
 
-                // $total_carbon_reduction_each_type[$category->name] += round($submissionCalculation->total_carbon_reduction_each_type[$category->name], 2);
-                // $usage_reduction_each_type[$category->name] += round($submissionCalculation->usage_reduction_each_type[$category->name], 2);
-                // $charge_reduction_each_type[$category->name] += round($submissionCalculation->charge_reduction_each_type[$category->name], 2);
+                // $total_carbon_reduction_each_type[$category->name] += round($calculation->total_carbon_reduction_each_type[$category->name], 2);
+                // $usage_reduction_each_type[$category->name] += round($calculation->usage_reduction_each_type[$category->name], 2);
+                // $charge_reduction_each_type[$category->name] += round($calculation->charge_reduction_each_type[$category->name], 2);
             }
         }
 
+        // each month calculation
+        foreach ($this->getMonthRange() as $month) {
+            $total_carbon_emission_each_month[$month->id] += $calculation->total_carbon_emission_each_month[$month->id];
+        }
 
         $calculation = $this->getCalculationByClassAndID($this->id, Competition::class);
 
         $calculation->total_carbon_emission = $total_carbon_emission;
+        // $calculation->total_weight = $total_weight;
+        // $calculation->total_value = $total_value;
+        // $calculation->total_usage = $total_usage;
+        // $calculation->total_charge = $total_charge;
+
         $calculation->average_carbon_emission_by_month = round($total_carbon_emission / $this->months->count(), 2);
         $calculation->average_carbon_emission_by_zone = round($total_carbon_emission / $this->getZones()->count(), 2);
 
@@ -213,10 +213,10 @@ class Competition extends Model
 
         $calculation->total_carbon_emission_each_type_each_zone = $total_carbon_emission_each_type_each_zone;
 
-        // $calculation->total_usage_each_type = $total_usage_each_type;
-        // $calculation->total_charge_each_type = $total_charge_each_type;
-        // $calculation->total_weight_each_type = $total_weight_each_type;
-        // $calculation->total_value_each_type = $total_value_each_type;
+        $calculation->total_usage_each_type = $total_usage_each_type;
+        $calculation->total_charge_each_type = $total_charge_each_type;
+        $calculation->total_weight_each_type = $total_weight_each_type;
+        $calculation->total_value_each_type = $total_value_each_type;
 
         // $calculation->total_carbon_reduction = $total_carbon_reduction;
 

@@ -38,6 +38,9 @@ class Calculation extends Model
         'average_carbon_reduction_by_month',
         'average_carbon_reduction_by_zone',
 
+        'total_usage',
+        'total_usage_each_month',
+        'total_usage_each_zone',
         'total_usage_each_type',
         'total_usage_each_type_each_month',
         'total_usage_each_type_each_zone',
@@ -50,6 +53,9 @@ class Calculation extends Model
         'average_usage_reduction_each_type_by_month',
         'average_usage_reduction_each_type_by_zone',
 
+        'total_charge',
+        'total_charge_each_month',
+        'total_charge_each_zone',
         'total_charge_each_type',
         'total_charge_each_type_each_month',
         'total_charge_each_type_each_zone',
@@ -62,12 +68,18 @@ class Calculation extends Model
         'average_charge_reduction_each_type_by_month',
         'average_charge_reduction_each_type_by_zone',
 
+        'total_weight',
+        'total_weight_each_month',
+        'total_weight_each_zone',
         'total_weight_each_type',
         'total_weight_each_type_each_month',
         'total_weight_each_type_each_zone',
         'average_total_weight_each_type_by_month',
         'average_total_weight_each_type_by_zone',
 
+        'total_value',
+        'total_value_each_month',
+        'total_value_each_zone',
         'total_value_each_type',
         'total_value_each_type_each_month',
         'total_value_each_type_each_zone',

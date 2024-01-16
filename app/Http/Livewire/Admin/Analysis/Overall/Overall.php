@@ -21,8 +21,8 @@ class Overall extends Component
     public Competition $competition;
     public $categories;
 
-    public $total_carbon_emission;
-    public $total_carbon_emission_by_type;
+    public $total;
+    public $total_by_type;
 
     public $isLoading = true;
 
@@ -55,18 +55,24 @@ class Overall extends Component
         $this->competition->calculateCarbonEmissionStats();
         $competition_analysis = $this->getCalculationProperty();
 
-        $this->total_carbon_emission = $competition_analysis->total_carbon_emission + $activities_analysis['total_carbon_emission'];
+        $this->total['carbon_emission'] = $competition_analysis->total_carbon_emission + $activities_analysis['total_carbon_emission'];
+
         foreach ($this->categories as $category) {
-            $this->total_carbon_emission_by_type[$category['name']] = ($competition_analysis->total_carbon_emission_each_type[$category['name']] ?? 0) + ($activities_analysis['total_carbon_emission_each_category'][$category['name']] ?? 0);
+            foreach (json_decode($category['variables']) as $variable) {
+                $this->total_by_type[$variable][$category['name']] = ($competition_analysis->{'total_' . $variable . '_each_type'}[$category['name']] ?? 0) + ($activities_analysis['total_' . $variable . '_each_category'][$category['name']] ?? 0);
+            }
         }
 
         $elestari_data = $this->getAuditTenagaData($this->competition->year, 1, 12);
-        
-        $this->total_carbon_emission += $elestari_data['jumlahPenguranganPembebasanCO2Keseluruhan'];
-        $this->total_carbon_emission_by_type['electric'] = $elestari_data['jumlahPenguranganPembebasanCO2']['Elektrik'];
-        $this->total_carbon_emission_by_type['water'] = $elestari_data['jumlahPenguranganPembebasanCO2']['Air'];
-        $this->total_carbon_emission_by_type['recycle'] = $elestari_data['jumlahPenguranganPembebasanCO2']['KitarSemula'];
-        $this->total_carbon_emission_by_type['used_oil'] = $elestari_data['jumlahPenguranganPembebasanCO2']['Minyak'];
+
+        $this->total['carbon_emission'] += $elestari_data['jumlahPenguranganPembebasanCO2Keseluruhan'];
+        $this->total_by_type['carbon_emission']['electric'] += $elestari_data['jumlahPenguranganPembebasanCO2']['Elektrik'];
+        $this->total_by_type['carbon_emission']['water'] += $elestari_data['jumlahPenguranganPembebasanCO2']['Air'];
+        $this->total_by_type['carbon_emission']['recycle'] += $elestari_data['jumlahPenguranganPembebasanCO2']['KitarSemula'];
+        $this->total_by_type['carbon_emission']['used_oil'] += $elestari_data['jumlahPenguranganPembebasanCO2']['Minyak'];
+
+        $this->total_by_type['weight']['recycle'] += $elestari_data['jumlahKutipanKG']['KitarSemula'];
+        $this->total_by_type['weight']['used_oil'] += $elestari_data['jumlahKutipanKG']['Minyak'];
 
         $this->isLoading = false;
     }

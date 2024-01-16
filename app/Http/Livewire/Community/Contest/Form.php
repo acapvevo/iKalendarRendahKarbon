@@ -256,7 +256,7 @@ class Form extends Component
             ]);
             return;
         }
-        
+
         if (!$this->checkProfileConpletion())
             return;
 
