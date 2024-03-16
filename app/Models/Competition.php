@@ -7,6 +7,7 @@ use App\Traits\StatTrait;
 use App\Traits\ZoneTrait;
 use App\Traits\SubmissionTrait;
 use App\Traits\CalculationTrait;
+use App\Traits\DateTimeTrait;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Competition extends Model
 {
-    use HasFactory, SubmissionTrait, ZoneTrait, CalculationTrait, StatTrait, BillTrait;
+    use HasFactory, SubmissionTrait, ZoneTrait, CalculationTrait, StatTrait, BillTrait, DateTimeTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -312,5 +313,15 @@ class Competition extends Model
                 return abs($submission->calculation->total_carbon_reduction);
             })
             ->values();
+    }
+
+    public function checkCurrentCompetitionDuration()
+    {
+        $currentDate = $this->getCurrentDate();
+
+        if ($currentDate->month < 4 || $currentDate->month > 11)
+            return false;
+
+        return true;
     }
 }
