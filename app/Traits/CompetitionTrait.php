@@ -23,7 +23,7 @@ trait CompetitionTrait
         $currentDate = $this->getCurrentDate();
 
         if ($currentDate->month <= 3)
-            $year = $currentDate->year - 1;
+            return $this->getCompetitions()->last();
         else
             $year = $currentDate->year;
 

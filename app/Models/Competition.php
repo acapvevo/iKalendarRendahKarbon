@@ -319,7 +319,9 @@ class Competition extends Model
     {
         $currentDate = $this->getCurrentDate();
 
-        if ($currentDate->month < 4 || $currentDate->month > 11)
+        if($currentDate->year != $this->year)
+            return false;
+        else if ($currentDate->month < 3 || $currentDate->month > 11)
             return false;
 
         return true;
