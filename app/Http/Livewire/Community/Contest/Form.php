@@ -11,6 +11,7 @@ use App\Models\Competition;
 use App\Traits\CategoryTrait;
 use App\Traits\CommunityTrait;
 use App\Traits\SubmissionTrait;
+use Illuminate\Validation\Rule;
 use Axiom\Rules\TelephoneNumber;
 use Illuminate\Support\Facades\Hash;
 
@@ -148,6 +149,13 @@ class Form extends Component
     public function checkProfileConpletion()
     {
         if (!isset($this->community->id)) {
+
+            $this->validate([
+                'community.identification_number' => [
+                    Rule::unique('communities', 'identification_number'),
+                ],
+            ]);
+
             if ($this->community->checkCompletion() && $this->address->checkCompletion()) {
                 $this->createCommunity(array_merge($this->community->attributesToArray(), ['password' => Hash::make($this->password)]), $this->address->attributesToArray(), []);
                 $this->community = $this->getCommunityProperty();
@@ -160,6 +168,8 @@ class Form extends Component
                 return false;
             }
         }
+
+        return true;
     }
 
     public function checkRecordValue($record)
