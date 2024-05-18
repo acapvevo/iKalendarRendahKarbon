@@ -154,6 +154,9 @@ class Form extends Component
                 'community.identification_number' => [
                     Rule::unique('communities', 'identification_number'),
                 ],
+                'community.phone_number' => [
+                    Rule::unique('communities', 'phone_number'),
+                ],
             ]);
 
             if ($this->community->checkCompletion() && $this->address->checkCompletion()) {

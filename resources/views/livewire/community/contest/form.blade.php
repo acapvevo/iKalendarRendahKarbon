@@ -188,7 +188,7 @@
                                     class="form-control community_phone_number"
                                     placeholder="{{ __('Enter Your Phone Number') }}" required disabled />
                                 @error('community.phone_number')
-                                    <div class="invalid-feedback">
+                                    <div class="invalid-feedback d-block">
                                         {{ $message }}
                                     </div>
                                 @enderror
