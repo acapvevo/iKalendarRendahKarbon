@@ -119,4 +119,8 @@ trait CommunityTrait
                 'country' => 'MALAYSIA'
             ]);
     }
+
+    public function getCommunities(){
+        return Community::all();
+    }
 }
