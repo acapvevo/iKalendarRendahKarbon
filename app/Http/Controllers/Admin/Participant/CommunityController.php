@@ -52,6 +52,12 @@ class CommunityController extends Controller
             array(
                 'db' => 'communities.isVerified',
                 'dt' => 2,
+                'reader' => function ($val) {
+                    if($val == "V")
+                    return 1;
+                    else if($val == "UV")
+                    return 0;
+                },
                 'formatter' => function ($d, $row) {
 
                     switch ($d) {
