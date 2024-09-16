@@ -8,6 +8,7 @@ use App\Traits\ZoneTrait;
 use App\Traits\SubmissionTrait;
 use App\Traits\CalculationTrait;
 use App\Traits\DateTimeTrait;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -318,12 +319,9 @@ class Competition extends Model
     public function checkCurrentCompetitionDuration()
     {
         $currentDate = $this->getCurrentDate();
+        $start = new Carbon("{$this->year}-03-01");
+        $end = new Carbon( ($this->year + 1) . "-01-31");
 
-        if($currentDate->year != $this->year)
-            return false;
-        else if ($currentDate->month < 3 || $currentDate->month > 11)
-            return false;
-
-        return true;
+        return $currentDate->between($start->startOfDay(), $end->endOfDay());
     }
 }

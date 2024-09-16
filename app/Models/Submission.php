@@ -169,10 +169,7 @@ class Submission extends Model
 
             if ($this->bills->contains('month_id', $month->id)) {
                 $bill = $this->getBillByMonthAndSubmission($month->id, $this->id);
-
-                if (!isset($bill->calculation)) {
-                    $bill->calculateStats();
-                }
+                $bill->calculateStats();
 
                 $calculation = $this->getCalculationByClassAndID($bill->id, Bill::class);
 

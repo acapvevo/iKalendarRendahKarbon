@@ -43,6 +43,7 @@ class Dashboard extends Component
             'submission' => $this->getSubmissionByCompetitionIDAndCommunityID($this->competition->id, request()->user('community')->id),
         ]);
 
+        $this->submission->calculateStats();
         $this->bill = $this->getCurrentBillBySubmission($this->submission);
     }
 

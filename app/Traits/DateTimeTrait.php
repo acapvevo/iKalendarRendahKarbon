@@ -20,4 +20,9 @@ trait DateTimeTrait
     {
         return Carbon::now()->month;
     }
+
+    public function getNextYear()
+    {
+        return Carbon::now()->year + 1;
+    }
 }
