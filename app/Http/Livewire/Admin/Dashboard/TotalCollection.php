@@ -2,11 +2,13 @@
 
 namespace App\Http\Livewire\Admin\Dashboard;
 
+use Livewire\Component;
+use App\Models\Calculation;
+use App\Models\Competition;
 use App\Traits\CategoryTrait;
 use App\Traits\CompetitionTrait;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Traits\Livewire\CheckGuard;
-use Livewire\Component;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class TotalCollection extends Component
 {
@@ -14,8 +16,8 @@ class TotalCollection extends Component
 
     protected $guard = 'admin';
     public $categories;
-    public $competition;
-    public $calculation;
+    public Competition $competition;
+    public Calculation $calculation;
 
     protected function getListeners()
     {

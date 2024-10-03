@@ -195,7 +195,7 @@ class Competition extends Model
 
         // each month calculation
         foreach ($this->getMonthRange() as $month) {
-            $total_carbon_emission_each_month[$month->id] += $calculation->total_carbon_emission_each_month[$month->id];
+            $total_carbon_emission_each_month[$month->id] += $calculation->total_carbon_emission_each_month[$month->id] ?? 0;
         }
 
         $calculation = $this->getCalculationByClassAndID($this->id, Competition::class);

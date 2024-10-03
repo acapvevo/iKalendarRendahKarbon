@@ -35,7 +35,8 @@ class Community extends Component
     protected function getListeners()
     {
         return [
-            'openModal' => 'open'
+            'openModal' => 'open',
+            'resetPassword' => 'resetPass'
         ];
     }
 
@@ -226,6 +227,17 @@ class Community extends Component
         $this->occupation->save();
 
         return redirect(route('admin.participant.community.list', ['resident_id' => $this->resident_id]))->with('success', __('alerts.community_update', ['name' => $this->community->name ?? $this->community->username]));
+    }
+
+    public function resetPass($community_id){
+        $this->community_id = $community_id;
+
+        $this->community = $this->getCommunityProperty();
+        $this->community->password = Hash::make('password');
+
+        $this->community->save();
+
+        $this->alert('success', __('Password reset successfully'));
     }
 
     public function verify()

@@ -89,6 +89,7 @@ class CommunityController extends Controller
                     $viewCommunityTitle = __('View Resident');
                     $editCommunityTitle = __('Edit Resident');
                     $verifyCommunityTitle = __('Verify Resident');
+                    $resetPasswordTitle = __('Reset Password');
 
                     $verifyCommunityButton = (!$row->isVerified && $row->identification_card_image) ? <<< EOT
                     <button type="button" class="btn btn-primary btn-sm openModal" data-bs-toggle="modal"
@@ -115,6 +116,10 @@ class CommunityController extends Controller
                                 <i data-bs-toggle="tooltip" data-bs-title="$editCommunityTitle"
                                     data-feather="edit-2"></i>
                             </button>
+                            <button type="button" class="btn btn-primary btn-sm resetPassword" id="$row->id">
+                                <i data-bs-toggle="tooltip" data-bs-title="$resetPasswordTitle"
+                                    data-feather="rotate-ccw"></i>
+                            </button>
                             $verifyCommunityButton
                         </div>
                         <div class="btn-group d-none d-lg-inline-flex" role="group"
@@ -131,9 +136,11 @@ class CommunityController extends Controller
                                 <i data-bs-toggle="tooltip" data-bs-title="$editCommunityTitle"
                                     data-feather="edit-2"></i>
                             </button>
+                            <button type="button" class="btn btn-primary btn-sm resetPassword" id="$row->id">
+                                <i data-bs-toggle="tooltip" data-bs-title="$resetPasswordTitle"
+                                    data-feather="rotate-ccw"></i>
+                            </button>
                             $verifyCommunityButton
-                        </div>
-                        <div class="btn-group" role="group" aria-label="Action Button">
                         </div>
                     </div>
                     EOT;

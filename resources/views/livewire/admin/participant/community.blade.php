@@ -679,7 +679,7 @@
                 "drawCallback": function(settings) {
                     activeFeatherIcon();
                     activeTooltips();
-                    registerOpenModalEventListener();
+                    registerEventListener();
                 }
             });
 
@@ -694,11 +694,18 @@
                 });
         });
 
-        function registerOpenModalEventListener() {
+        function registerEventListener() {
             const openModalBtnList = document.querySelectorAll('.openModal');
             openModalBtnList.forEach(function(openModalBtn) {
                 openModalBtn.addEventListener('click', function(e) {
                     Livewire.emit('openModal', openModalBtn.id);
+                });
+            })
+
+            const resetPasswordBtnList = document.querySelectorAll('.resetPassword');
+            resetPasswordBtnList.forEach(function(resetPasswordBtn) {
+                resetPasswordBtn.addEventListener('click', function(e) {
+                    Livewire.emit('resetPassword', resetPasswordBtn.id);
                 });
             })
         }
