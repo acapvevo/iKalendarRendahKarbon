@@ -21,7 +21,7 @@ class CompetitionController extends Controller
         if (isset($validated['competition_id']))
             $competition = $this->getCompetition($validated['competition_id']);
         else
-            $competition = $competitions->get(0);
+            $competition = $this->getCurrentCompetition();
 
         return view('admin.analysis.competition.view')->with([
             'currentCompetition' => $competition,

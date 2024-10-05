@@ -161,9 +161,7 @@ class Competition extends Model
         $total_carbon_emission_each_type_each_zone = $total_carbon_reduction_each_type_each_zone = $this->initCalculationBySubmissionCategoryEachZone();
 
         foreach ($this->submissions as $submission) {
-            if (!isset($submission->calculation))
-                $submission->calculateStats();
-
+            $submission->calculateStats();
             $calculation = $this->getCalculationByClassAndID($submission->id, Submission::class);
 
             $total_carbon_emission += $calculation->total_carbon_emission;
@@ -191,11 +189,11 @@ class Competition extends Model
                 // $usage_reduction_each_type[$category->name] += round($calculation->usage_reduction_each_type[$category->name], 2);
                 // $charge_reduction_each_type[$category->name] += round($calculation->charge_reduction_each_type[$category->name], 2);
             }
-        }
 
-        // each month calculation
-        foreach ($this->getMonthRange() as $month) {
-            $total_carbon_emission_each_month[$month->id] += $calculation->total_carbon_emission_each_month[$month->id] ?? 0;
+            // each month calculation
+            foreach ($this->getMonthRange() as $month) {
+                $total_carbon_emission_each_month[$month->id] += $calculation->total_carbon_emission_each_month[$month->id] ?? 0;
+            }
         }
 
         $calculation = $this->getCalculationByClassAndID($this->id, Competition::class);
