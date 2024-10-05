@@ -175,7 +175,7 @@
                                             <div class="me-3">
                                                 <div class="text-white-75 small">{{ __('Total Submission') }}</div>
                                                 <div class="text-lg fw-bold">
-                                                    {{ $stat->total_submission_each_zone[$zone->id] }}
+                                                    {{ $stat->total_submission_each_zone[$zone->id] ?? 0 }}
                                                     {{ __('Residents') }}</div>
                                             </div>
                                             <iconify-icon icon="vaadin:group" height="60"></iconify-icon>
@@ -219,7 +219,7 @@
                                                         {{ __($category['description']) }}
                                                     </div>
                                                     <div class="text-lg fw-bold">
-                                                        {{ $stat->total_submission_each_type_each_zone[$zone->id][$category['name']] }}
+                                                        {{ $stat->total_submission_each_type_each_zone[$zone->id][$category['name']] ?? 0 }}
                                                         {{ __('Residents') }}</div>
                                                 </div>
                                                 <iconify-icon icon="{{ $category['icon'] }}"
