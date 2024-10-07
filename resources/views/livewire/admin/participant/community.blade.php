@@ -26,7 +26,8 @@
         <table class="table table-bordered" id="tableCommunity" style="width:100%">
             <thead class="table-primary">
                 <tr>
-                    <th>{{ __('Name/Username') }}</th>
+                    <th>{{ __('Name') }}</th>
+                    <th>{{ __('Username') }}</th>
                     <th>{{ __('Email Address') }}</th>
                     <th>{{ __('Status') }}</th>
                     <th>{{ __('Menu') }}</th>
@@ -653,7 +654,7 @@
                     "url": "{{ route('admin.participant.community.filter', ['resident_id' => $resident_id]) }}",
                 },
                 searchBuilder: {
-                    columns: [0, 1, 2]
+                    columns: [0, 1, 2, 3]
                 },
                 buttons: [
                     'searchBuilder',
@@ -667,11 +668,12 @@
                     targets: '_all'
                 }, {
                     type: 'unknownType',
-                    targets: [2]
+                    targets: [3]
                 }],
                 columns: [{
                         "width": "40%"
                     },
+                    null,
                     null,
                     null,
                     null

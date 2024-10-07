@@ -37,21 +37,16 @@ class CommunityController extends Controller
 
         $columns = array(
             array(
-                'db' => ['communities.name', 'communities.username'],
+                'db' => 'communities.name',
                 'dt' => 0,
                 'as' => 'name',
-                'formatter' => function ($d, $row) {
-                    if ($d) {
-                        return $d;
-                    } else {
-                        return $row->username;
-                    }
-                }
+                'title' => __('Name')
             ),
-            array('db' => 'communities.email', 'dt' => 1, 'as' => 'email', 'title' => __('Email Address')),
+            array('db' => 'communities.username', 'dt' => 1, 'as' => 'username', 'title' => __('Username')),
+            array('db' => 'communities.email', 'dt' => 2, 'as' => 'email', 'title' => __('Email Address')),
             array(
                 'db' => 'communities.isVerified',
-                'dt' => 2,
+                'dt' => 3,
                 'reader' => function ($val) {
                     if($val == "V")
                     return 1;
@@ -84,7 +79,7 @@ class CommunityController extends Controller
             ),
             array(
                 'db' => 'menu',
-                'dt' => 3,
+                'dt' => 4,
                 'formatter' => function ($d, $row) {
                     $viewCommunityTitle = __('View Resident');
                     $editCommunityTitle = __('Edit Resident');
