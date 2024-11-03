@@ -36,7 +36,7 @@
             </div>
             <div class="card-body">
                 <div class="py-3 d-flex justify-content-end row">
-                    <form action="{{ route('admin.analysis.competition.view') }}" method="post">
+                    <form action="{{ route('admin.analysis.overall.view') }}" method="post">
                         @csrf
 
                         <div class="input-group">
