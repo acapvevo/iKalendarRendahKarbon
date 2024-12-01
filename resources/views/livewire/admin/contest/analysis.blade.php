@@ -41,7 +41,7 @@
                                     aria-label="Toolbar with button groups">
                                     <div class="btn-group" role="group" aria-label="Action Button">
                                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#viewMonthModal"
+                                            data-bs-target="#viewAnalysisMonthModal"
                                             wire:click.prevent='open({{ $last_month->id }}, {{ $current_month->id }})'>
                                             <i data-bs-toggle="tooltip"
                                                 data-bs-title="{{ __('View Calculation for') }} {{ $last_month->getName() }}/{{ $current_month->getName() }}"
@@ -59,12 +59,12 @@
     @endif
 
     <!-- View Month Modal -->
-    <div class="modal fade" id="viewMonthModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="viewMonthModalLabel" aria-hidden="true" wire:ignore.self>
+    <div class="modal fade" id="viewAnalysisMonthModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="viewAnalysisMonthModalLabel" aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="viewMonthModalLabel">{{ __('View Calculation for') }}
+                    <h1 class="modal-title fs-5" id="viewAnalysisMonthModalLabel">{{ __('View Calculation for') }}
                         {{ $last_bill->month ? $last_bill->month->getName() : '' }}/{{ $current_bill->month ? $current_bill->month->getName() : '' }}
                     </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"

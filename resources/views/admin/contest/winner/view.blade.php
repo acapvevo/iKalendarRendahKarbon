@@ -67,9 +67,12 @@
                     <div class="tab-pane fade" id="nav-record-content" role="tabpanel" aria-labelledby="nav-record-tab"
                         tabindex="0">
 
+                        @livewire('admin.contest.record', ['submission' => $submission])
                     </div>
                     <div class="tab-pane fade" id="nav-answer-content" role="tabpanel" aria-labelledby="nav-answer-tab"
                         tabindex="0">
+
+                        @livewire('admin.contest.answer', ['submission' => $submission])
 
                     </div>
                     <div class="tab-pane fade" id="nav-finance-content" role="tabpanel" aria-labelledby="nav-finance-tab"
