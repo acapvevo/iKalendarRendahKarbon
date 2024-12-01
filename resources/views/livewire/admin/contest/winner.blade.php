@@ -124,6 +124,20 @@
                                     <td>{{ $submission && $submission->community ? abs($submission->calculation->total_carbon_reduction) : '' }}
                                         kgCO<sub>2</sub></td>
                                 </tr>
+                                <tr>
+                                    <th>{{ __('Identification Card') }}</th>
+                                    <td>
+                                        @if ($submission->community)
+                                            <form action="{{ route('admin.participant.community.ic') }}" method="post"
+                                                target="_blank">
+                                                @csrf
+
+                                                <button type="submit" class="btn btn-link" name="community_id" style="padding-left: 0%"
+                                                    value="{{ $submission->community->id ?? '' }}">{{ __('View Identification Card') }}</button>
+                                            </form>
+                                        @endif
+                                    </td>
+                                </tr>
                             </table>
                         </div>
                     @endif
